@@ -1,0 +1,17 @@
+{
+  "name": "yy-ui",
+  "version": "0.1.0",
+  "description": "基于vue3开发的组件库",
+  "author": "陈羽云 <897908015@qq.com>",
+  "license": "MIT",
+  "main": "index.ts",
+  "publishConfig": {
+    "registry": "https://registry.npm.taobao.org"
+  },
+  "scripts": {
+    "test": "node ./__tests__/yy.test.js"
+  },
+  "dependencies": {
+    "@yy/components": "^0.1.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "strict": true,
+		"noEmit": true,
+    "moduleResolution": "node",
+		"esModuleInterop": true,
+		"sourceMap": true
+  },
+  "include": ["build/**/*.ts"]
+}

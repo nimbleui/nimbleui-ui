@@ -1,0 +1,19 @@
+{
+  "name": "@yy/hooks",
+  "version": "0.1.0",
+  "description": "> TODO: description",
+  "author": "陈羽云 <897908015@qq.com>",
+  "license": "MIT",
+  "main": "index.ts",
+  "module": "index.ts",
+  "publishConfig": {
+    "registry": "https://registry.npm.taobao.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@toscode.gitee.com:fast_dev/yy-ui.git"
+  },
+  "dependencies": {
+    "@yy/tokens": "^0.1.0"
+  }
+}

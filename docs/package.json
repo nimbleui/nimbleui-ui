@@ -1,0 +1,20 @@
+{
+  "name": "@yy/docs",
+  "version": "0.1.0",
+  "description": "> TODO: description",
+  "author": "陈羽云 <897908015@qq.com>",
+  "homepage": "",
+  "license": "ISC",
+  "scripts": {
+    "docs:dev": "vitepress dev .",
+    "docs:build": "vitepress build .",
+    "docs:serve": "vitepress serve ."
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "unplugin-vue-macros": "^2.0.0",
+    "vite": "^4.2.1",
+    "vitepress": "^1.0.0-alpha.65",
+    "vue": "^3.2.47"
+  }
+}

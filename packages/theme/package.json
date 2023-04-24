@@ -1,0 +1,31 @@
+{
+  "name": "@yy/theme",
+  "version": "0.1.0",
+  "description": "组件样式和主题",
+  "author": "陈羽云 <897908015@qq.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.css",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "style": "index.css",
+  "scripts": {
+    "build": "gulp --require @esbuild-kit/cjs-loader"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  },
+  "dependencies": {
+    "@esbuild-kit/cjs-loader": "^2.4.1",
+    "chalk": "^5.2.0",
+    "consola": "^2.15.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.57.1"
+  }
+}

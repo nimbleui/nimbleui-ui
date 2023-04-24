@@ -1,0 +1,19 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "docs",
+    "build"
+  ],
+  "scripts": {
+    "build:theme": "lerna run --scope @yy/theme build",
+    "docs:dev": "lerna run --scope @yy/docs docs:dev",
+    "build": "lerna run --scope @yy/build build"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "lerna": "^6.1.0",
+    "vue": "^3.2.45"
+  }
+}

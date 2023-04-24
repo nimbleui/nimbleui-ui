@@ -1,0 +1,36 @@
+@use 'sass:math';
+@use "./config.scss" as *;
+
+@mixin set-color-level ($type, $number, $color) {
+  $name: --#{$namespace}-color-#{$type}-#{$number};
+
+  $valueRed: --#{$namespace}-#{$type}-red;
+  $valueGreen: --#{$namespace}-#{$type}-green;
+  $valueBlue: --#{$namespace}-#{$type}-blue;
+
+  $value: math.div($number, 10);
+  $valueLight: 1 - $value;
+
+  $red: --#{$namespace}-#{$color}-red;
+  $green: --#{$namespace}-#{$color}-green;
+  $blue: --#{$namespace}-#{$color}-blue;
+
+  @if ($number == 0) {
+    --#{$namespace}-color-#{$type}: rgb(var(#{$valueRed}), var(#{$valueGreen}), var(#{$valueBlue}));
+  } @else {
+    #{$name}: rgb(
+      calc(var($valueRed) * $valueLight + var($red) * $value), 
+      calc(var($valueGreen) * $valueLight + var($green) * $value),
+      calc(var($valueBlue) * $valueLight + var($blue) * $value)
+    )
+  }
+};
+
+@mixin set-color-transparency($type, $opacity) {
+  $name: --#{$namespace}-text-color-#{$type};
+  $red: --#{$namespace}-neutral-red;
+  $green: --#{$namespace}-neutral-green;
+  $blue: --#{$namespace}-neutral-blue;
+
+  #{$name}: rgba(var($red), var($green), var($blue), $opacity);
+}
