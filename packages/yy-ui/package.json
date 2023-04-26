@@ -12,6 +12,7 @@
     "test": "node ./__tests__/yy.test.js"
   },
   "dependencies": {
-    "@yy/components": "^0.1.0"
+    "@yy/components": "^0.1.0",
+    "stylelint-order": "^6.0.3"
   }
 }

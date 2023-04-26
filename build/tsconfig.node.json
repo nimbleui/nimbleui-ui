@@ -5,7 +5,7 @@
 		"noEmit": true,
     "moduleResolution": "node",
 		"esModuleInterop": true,
-		"sourceMap": true
+		"sourceMap": false
   },
-  "include": ["build/**/*.ts"]
+  "include": ["src"]
 }

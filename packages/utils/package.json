@@ -19,5 +19,8 @@
   },
   "scripts": {
     "test": "node ./__tests__/utils.test.js"
+  },
+  "dependencies": {
+    "stylelint-order": "^6.0.3"
   }
 }

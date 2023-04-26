@@ -12,5 +12,8 @@
   "repository": {
     "type": "git",
     "url": "git@toscode.gitee.com:fast_dev/yy-ui.git"
+  },
+  "dependencies": {
+    "stylelint-order": "^6.0.3"
   }
 }

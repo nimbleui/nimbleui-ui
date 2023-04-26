@@ -1,5 +1,5 @@
 import { CSSProperties, computed, defineComponent, provide } from "vue";
-import rowProps from "../src/types";
+import rowProps from "./types";
 
 import { rowContextKey } from "@yy/tokens";
 
