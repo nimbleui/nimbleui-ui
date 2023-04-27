@@ -11,7 +11,7 @@
   }
 }
 
-.#{$namespace}-col-0 {
+.#{$namespace}-col-0 { 
   display: none;
 
   @include when(guttered) {
