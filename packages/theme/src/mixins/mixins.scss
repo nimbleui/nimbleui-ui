@@ -1,9 +1,10 @@
 @use "./config.scss" as *;
 
+// BEM
 @mixin b($block) {
-  $B: $namespace + '-' + $block !global;
+  $b: $namespace + '-' + $block !global;
 
-  .#{$B} {
+  .#{$b} {
     @content;
   }
 }

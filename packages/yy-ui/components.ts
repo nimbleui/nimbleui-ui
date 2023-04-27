@@ -1,3 +1,3 @@
-import { YRow } from "@yy/components";
+import { YRow, YCol } from "@yy/components";
 
-export default [YRow];
+export default [YRow, YCol];
