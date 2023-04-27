@@ -2,6 +2,7 @@ import { CSSProperties, computed, defineComponent, provide } from "vue";
 import rowProps from "./types";
 
 import { rowContextKey } from "@yy/tokens";
+import { createNamespace } from "@yy/utils";
 
 export default defineComponent({
   name: "YRow",
@@ -12,6 +13,9 @@ export default defineComponent({
     provide(rowContextKey, {
       gutter,
     });
+
+    const bem = createNamespace("row");
+    const rowCls = computed(() => [bem.b(), bem.is(`justify-${props.justify}`), bem.is(`align-${props.align}`)]);
 
     const style = computed(() => {
       const styles: CSSProperties = {};
@@ -25,7 +29,7 @@ export default defineComponent({
     return () => {
       const { tag: Component = "div" } = props;
       return (
-        <Component class="y-row" style={style.value}>
+        <Component class={rowCls.value} style={style.value}>
           {slots.default?.()}
         </Component>
       );

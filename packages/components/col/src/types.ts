@@ -4,7 +4,10 @@ const colProps = () => ({
   // 自定义元素标签
   tag: String as PropType<keyof HTMLElementTagNameMap>,
   // 栅格占据的列数
-  span: Number,
+  span: {
+    type: Number,
+    default: 24,
+  },
   // 栅格左侧的间隔格数
   offset: Number,
   // 栅格向右移动格数
