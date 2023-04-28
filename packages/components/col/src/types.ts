@@ -1,18 +1,28 @@
 import { PropType, ExtractPropTypes } from "vue";
 
 const colProps = () => ({
-  // 自定义元素标签
+  /**
+   * @description 自定义元素标签
+   */
   tag: String as PropType<keyof HTMLElementTagNameMap>,
-  // 栅格占据的列数
+  /**
+   * @description 栅格占据的列数
+   */
   span: {
     type: Number,
     default: 24,
   },
-  // 栅格左侧的间隔格数
+  /**
+   * @description 栅格左侧的间隔格数
+   */
   offset: Number,
-  // 栅格向右移动格数
+  /**
+   * @description 栅格向右移动格数
+   */
   pull: Number,
-  // 栅格向左移动格数
+  /**
+   * @description 栅格向左移动格数
+   */
   push: Number,
 });
 

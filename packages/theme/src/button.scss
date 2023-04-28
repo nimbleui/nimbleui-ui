@@ -5,6 +5,10 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
-  color: getCssVar('text', 'color-primary');
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  color: get-css-var('button', 'text-color');
 }

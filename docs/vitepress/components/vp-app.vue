@@ -19,10 +19,15 @@
         <div class="item"></div>
       </YCol>
     </YRow>
+    <YButton :content="renderContent" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="tsx">
+import { h } from "vue";
+
+const renderContent = () => h("div", {}, "23432432dfasdf");
+</script>
 <style>
 .item {
   height: 20px;

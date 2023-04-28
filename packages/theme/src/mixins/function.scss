@@ -1,7 +1,9 @@
 @use "./config.scss" as *;
 
-@function joinVarName($list) {
+// 获取变量名
+@function join-var-name($list) {
   $name: '--' + $namespace;
+
   @each $item in $list {
     @if $item != '' {
       $name: $name + '-' + $item;
@@ -11,12 +13,12 @@
   @return $name;
 }
 
-@function getCssVarName($args...) {
+@function get-css-var-name($args...) {
   @return joinVarName($args);
 }
 
-@function getCssVar($args...) {
-  @return var(#{joinVarName($args)});
+@function get-css-var($args...) {
+  @return var(#{join-var-name($args)});
 }
 
 // bem规范
