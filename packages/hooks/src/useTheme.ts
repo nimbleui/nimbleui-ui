@@ -22,6 +22,8 @@ const defaultOpt: Required<Opts> = {
 
 // 文字的梯度
 const textGradient = [0.88, 0.65, 0.45, 0.25];
+// 填充色
+const fillGradient = [0.15, 0.06, 0.04, 0.02];
 
 function setProperty(key: string, value: string) {
   document.documentElement.style.setProperty(`--y-color-${key}`, value);
@@ -38,9 +40,13 @@ export function useTheme(opt: Opts = {}) {
     });
   });
 
+  const rgb = hexToRgb(baseColor);
   // 文字颜色的设置
   for (let i = 0; i < textGradient.length; i++) {
-    const rgb = hexToRgb(baseColor);
     setProperty(`text-${i + 1}`, `rgba(${rgb.join(",")}, ${textGradient[i]})`);
+  }
+
+  for (let i = 0; i < fillGradient.length; i++) {
+    setProperty(`fill-${i + 1}`, `rgba(${rgb.join(",")}, ${fillGradient[i]})`);
   }
 }
