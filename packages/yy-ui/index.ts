@@ -4,6 +4,7 @@ import "@yy/theme";
 import { useTheme } from "@yy/hooks";
 useTheme({
   theme: "#000000",
+  baseColor: "#ffffff",
 });
 export const install = installer.install;
 export default installer;

@@ -7,6 +7,7 @@ interface Opts {
   error?: string;
   info?: string;
   theme?: string;
+  baseColor?: string;
 }
 
 const defaultOpt: Required<Opts> = {
@@ -16,6 +17,7 @@ const defaultOpt: Required<Opts> = {
   error: "#f56c6c",
   info: "#909399",
   theme: "#ffffff",
+  baseColor: "#000000",
 };
 
 // 文字的梯度
@@ -26,7 +28,7 @@ function setProperty(key: string, value: string) {
 }
 
 export function useTheme(opt: Opts = {}) {
-  const { theme, ...options } = Object.assign(defaultOpt, opt);
+  const { theme, baseColor, ...options } = Object.assign(defaultOpt, opt);
   Object.keys(options).forEach((key) => {
     // 计算颜色梯度
     generate(options[key as keyof typeof options], {
@@ -38,7 +40,7 @@ export function useTheme(opt: Opts = {}) {
 
   // 文字颜色的设置
   for (let i = 0; i < textGradient.length; i++) {
-    const rgb = hexToRgb(theme);
+    const rgb = hexToRgb(baseColor);
     setProperty(`text-${i + 1}`, `rgba(${rgb.join(",")}, ${textGradient[i]})`);
   }
 }
