@@ -4,7 +4,7 @@ const hexReg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
  * 十六进制转化rgb
  * @param color 目标
  */
-function hexToRgb(color: string) {
+export function hexToRgb(color: string) {
   if (!hexReg.test(color)) {
     throw new Error(`${color}不是真确的十六进制值`);
   }
