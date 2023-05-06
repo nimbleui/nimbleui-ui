@@ -1,4 +1,4 @@
-import { generate, hexToRgb } from "@yy/utils";
+import { generate, setAlphaColor } from "@yy/utils";
 
 interface Opts {
   primary?: string;
@@ -40,13 +40,13 @@ export function useTheme(opt: Opts = {}) {
     });
   });
 
-  const rgb = hexToRgb(baseColor);
   // 文字颜色的设置
   for (let i = 0; i < textGradient.length; i++) {
-    setProperty(`text-${i + 1}`, `rgba(${rgb.join(",")}, ${textGradient[i]})`);
+    setProperty(`text-${i + 1}`, setAlphaColor(baseColor, textGradient[i]));
   }
 
+  // 填充颜色的设置
   for (let i = 0; i < fillGradient.length; i++) {
-    setProperty(`fill-${i + 1}`, `rgba(${rgb.join(",")}, ${fillGradient[i]})`);
+    setProperty(`fill-${i + 1}`, setAlphaColor(baseColor, fillGradient[i]));
   }
 }

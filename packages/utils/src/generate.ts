@@ -23,6 +23,17 @@ export function hexToRgb(color: string) {
   return result;
 }
 
+/**
+ * 把目标颜色转成透明度的颜色
+ * @param color 目标颜色
+ * @param alpha 透明度
+ * @returns 返回rgba
+ */
+export function setAlphaColor(color: string, alpha = 1) {
+  const rgb = hexToRgb(color);
+  return `rgba(${rgb.join(",")},${alpha})`;
+}
+
 function sunMix(color1: string, color2: string, weight = 50) {
   const rbg1 = hexToRgb(color1);
   const rbg2 = hexToRgb(color2);

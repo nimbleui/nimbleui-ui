@@ -1,6 +1,11 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
 
+// 设置变量
+@include b(button) {
+  --y-button-text-color: var(--y-color-text-1);
+}
+
 @include b(button) {
   display: inline-flex;
   justify-content: center;
