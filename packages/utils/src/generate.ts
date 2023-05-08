@@ -34,39 +34,29 @@ export function setAlphaColor(color: string, alpha = 1) {
   return `rgba(${rgb.join(",")},${alpha})`;
 }
 
+/**
+ * 把rgb转成hsl
+ * @param r
+ * @param g
+ * @param b
+ * @returns
+ */
 function rgbToHsl(r: number, g: number, b: number) {
   r /= 255;
   g /= 255;
   b /= 255;
-
-  const min = Math.min(r, g, b);
-  const max = Math.max(r, g, b);
-  let h = 0;
-  let s = 0;
-  const l = (max + min) / 2;
-  if (max === min) {
-    s = 0;
-    h = 0;
-  } else {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0);
-        break;
-      case g:
-        h = (b - r) / d + 2;
-        break;
-      case b:
-        h = (r - g) / d + 4;
-        break;
-    }
-
-    h /= 6;
-  }
-
-  return { h, s, l };
+  const l = Math.max(r, g, b);
+  const s = l - Math.min(r, g, b);
+  const h = s ? (l === r ? (g - b) / s : l === g ? 2 + (b - r) / s : 4 + (r - g) / s) : 0;
+  return [
+    60 * h < 0 ? 60 * h + 360 : 60 * h,
+    s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0,
+    (2 * l - s) / 2,
+  ];
 }
+// hsl.l -= amount / 100;
+// hsl.l = clamp01(hsl.l);
+// Math.min(1, Math.max(0, val))
 
 function sunMix(color1: string, color2: string, weight = 50) {
   const rbg1 = hexToRgb(color1);
