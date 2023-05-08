@@ -54,6 +54,23 @@ function rgbToHsl(r: number, g: number, b: number) {
     (2 * l - s) / 2,
   ];
 }
+
+const HslToRgb = (h: number, s: number, l: number) => {
+  s /= 100;
+  l /= 100;
+  const k = (n: number) => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  return [255 * f(0), 255 * f(8), 255 * f(4)];
+};
+
+export function setSolidColor(color: string, amount: number) {
+  const rgb = hexToRgb(color) as [number, number, number];
+  const hsl = rgbToHsl(...rgb);
+  hsl[2] -= amount / 100;
+  hsl[2] = Math.min(1, Math.max(0, hsl[2]));
+  return hsl;
+}
 // hsl.l -= amount / 100;
 // hsl.l = clamp01(hsl.l);
 // Math.min(1, Math.max(0, val))
