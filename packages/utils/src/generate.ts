@@ -57,7 +57,23 @@ function rgbToHsl(r: number, g: number, b: number) {
 // hsl.l -= amount / 100;
 // hsl.l = clamp01(hsl.l);
 // Math.min(1, Math.max(0, val))
+/**
+ * colorBgLayout: getSolidColor(colorBgBase, 4),
+    colorBgContainer: getSolidColor(colorBgBase, 0),
+    colorBgElevated: getSolidColor(colorBgBase, 0),
+    colorBgSpotlight: getAlphaColor(colorTextBase, 0.85),
 
+    colorBorder: getSolidColor(colorBgBase, 15),
+    colorBorderSecondary: getSolidColor(colorBgBase, 6),
+ */
+
+/**
+ * 两种颜色根据一定的比例混合在一起，生成另一种颜色
+ * @param color1 颜色
+ * @param color2 颜色
+ * @param weight 选择权重
+ * @returns
+ */
 function sunMix(color1: string, color2: string, weight = 50) {
   const rbg1 = hexToRgb(color1);
   const rbg2 = hexToRgb(color2);
