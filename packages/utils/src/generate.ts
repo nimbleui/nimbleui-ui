@@ -9,7 +9,7 @@ type ReturnType = [number, number, number];
  * @returns
  */
 function rgbToHex(r: number, g: number, b: number) {
-  return `#${((r << 16) + (g << 8) + b).toString(16).padStart(6, "0")}`;
+  return `#${((Math.ceil(r) << 16) + (Math.ceil(g) << 8) + Math.ceil(b)).toString(16).padStart(6, "0")}`;
 }
 
 /**
@@ -68,8 +68,6 @@ function rgbToHsl(r: number, g: number, b: number): ReturnType {
 }
 
 const hslToRgb = (h: number, s: number, l: number): ReturnType => {
-  s /= 100;
-  l /= 100;
   const k = (n: number) => (n + h / 30) % 12;
   const a = s * Math.min(l, 1 - l);
   const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
@@ -81,7 +79,6 @@ export function setSolidColor(color: string, amount: number) {
   const hsl = rgbToHsl(...rgb);
   hsl[2] -= amount / 100;
   hsl[2] = Math.min(1, Math.max(0, hsl[2]));
-
   return rgbToHex(...hslToRgb(...hsl));
 }
 
