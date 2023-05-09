@@ -1,4 +1,4 @@
-import { generate, setAlphaColor } from "@yy/utils";
+import { generate, setAlphaColor, setSolidColor } from "@yy/utils";
 
 interface Opts {
   primary?: string;
@@ -49,4 +49,8 @@ export function useTheme(opt: Opts = {}) {
   for (let i = 0; i < fillGradient.length; i++) {
     setProperty(`fill-${i + 1}`, setAlphaColor(baseColor, fillGradient[i]));
   }
+
+  // 边框颜色的设置
+  setProperty(`border-1`, setSolidColor(theme, 15));
+  setProperty(`border-2`, setSolidColor(theme, 6));
 }

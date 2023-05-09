@@ -1,10 +1,22 @@
 const hexReg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
 
+type ReturnType = [number, number, number];
+/**
+ * RGB 转十六进制
+ * @param r RGB中r
+ * @param g RGB中g
+ * @param b RGB中b
+ * @returns
+ */
+function rgbToHex(r: number, g: number, b: number) {
+  return `#${((r << 16) + (g << 8) + b).toString(16).padStart(6, "0")}`;
+}
+
 /**
  * 十六进制转化rgb
  * @param color 目标
  */
-export function hexToRgb(color: string) {
+export function hexToRgb(color: string): ReturnType {
   if (!hexReg.test(color)) {
     throw new Error(`${color}不是真确的十六进制值`);
   }
@@ -20,7 +32,7 @@ export function hexToRgb(color: string) {
   for (let i = 1; i <= 6; i += 2) {
     result.push(parseInt(`0x${resStr.slice(i, i + 2)}`));
   }
-  return result;
+  return result as ReturnType;
 }
 
 /**
@@ -35,13 +47,13 @@ export function setAlphaColor(color: string, alpha = 1) {
 }
 
 /**
- * 把rgb转成hsl
- * @param r
- * @param g
- * @param b
+ * 把RGB转成hsl
+ * @param r RGB中r
+ * @param g RGB中g
+ * @param b RGB中b
  * @returns
  */
-function rgbToHsl(r: number, g: number, b: number) {
+function rgbToHsl(r: number, g: number, b: number): ReturnType {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -55,7 +67,7 @@ function rgbToHsl(r: number, g: number, b: number) {
   ];
 }
 
-const HslToRgb = (h: number, s: number, l: number) => {
+const hslToRgb = (h: number, s: number, l: number): ReturnType => {
   s /= 100;
   l /= 100;
   const k = (n: number) => (n + h / 30) % 12;
@@ -65,15 +77,14 @@ const HslToRgb = (h: number, s: number, l: number) => {
 };
 
 export function setSolidColor(color: string, amount: number) {
-  const rgb = hexToRgb(color) as [number, number, number];
+  const rgb = hexToRgb(color);
   const hsl = rgbToHsl(...rgb);
   hsl[2] -= amount / 100;
   hsl[2] = Math.min(1, Math.max(0, hsl[2]));
-  return hsl;
+
+  return rgbToHex(...hslToRgb(...hsl));
 }
-// hsl.l -= amount / 100;
-// hsl.l = clamp01(hsl.l);
-// Math.min(1, Math.max(0, val))
+
 /**
  * colorBgLayout: getSolidColor(colorBgBase, 4),
     colorBgContainer: getSolidColor(colorBgBase, 0),
