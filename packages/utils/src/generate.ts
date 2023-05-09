@@ -87,9 +87,6 @@ export function setSolidColor(color: string, amount: number) {
     colorBgContainer: getSolidColor(colorBgBase, 0),
     colorBgElevated: getSolidColor(colorBgBase, 0),
     colorBgSpotlight: getAlphaColor(colorTextBase, 0.85),
-
-    colorBorder: getSolidColor(colorBgBase, 15),
-    colorBorderSecondary: getSolidColor(colorBgBase, 6),
  */
 
 /**
