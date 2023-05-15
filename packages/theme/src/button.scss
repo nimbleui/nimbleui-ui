@@ -4,6 +4,9 @@
 // 设置变量
 @include b(button) {
   --y-button-text-color: var(--y-color-text-1);
+  --y-button-hover-text-color: var(--y-base-color);
+  --y-button-hover-bg-color: var(--y-color-primary-3);
+  --y-button-hover-border-color: var(--y-color-primary-3);
 }
 
 @include b(button) {
@@ -12,8 +15,23 @@
   align-items: center;
   line-height: 1;
   white-space: nowrap;
+  outline: none;
+  transition: 0.1s;
   cursor: pointer;
   text-align: center;
   box-sizing: border-box;
+  user-select: none;
+  vertical-align: middle;
   color: get-css-var('button', 'text-color');
+  background-color: get-css-var('button', 'bg-color');
+  border: get-css-var('border');
+  border-color: get-css-var('button', 'border-color');
+
+  &:hover,
+  &:focus {
+    color: get-css-var('button', 'hover', 'text-color');
+    border-color: get-css-var('button', 'hover', 'border-color');
+    background-color: get-css-var('button', 'hover', 'bg-color');
+    outline: none;
+  }
 }

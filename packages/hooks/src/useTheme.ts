@@ -53,4 +53,7 @@ export function useTheme(opt: Opts = {}) {
   // 边框颜色的设置
   setProperty(`border-1`, setSolidColor(theme, 15));
   setProperty(`border-2`, setSolidColor(theme, 6));
+
+  setProperty("theme", theme);
+  setProperty("base-color", baseColor);
 }
