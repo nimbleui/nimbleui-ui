@@ -12,7 +12,8 @@
   },
   "style": "index.css",
   "scripts": {
-    "build": "gulp --require @esbuild-kit/cjs-loader"
+    "build": "cross-env NODE_ENV=prod gulp --require @esbuild-kit/cjs-loader",
+    "dev": "cross-env NODE_ENV=dev gulp --require @esbuild-kit/cjs-loader"
   },
   "devDependencies": {
     "@types/node": "^18.11.18"
@@ -21,6 +22,7 @@
     "@esbuild-kit/cjs-loader": "^2.4.1",
     "chalk": "^5.2.0",
     "consola": "^2.15.3",
+    "cross-env": "^7.0.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",

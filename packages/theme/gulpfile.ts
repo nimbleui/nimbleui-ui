@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import chalk from "chalk";
-import { dest, parallel, series, src } from "gulp";
+import { dest, parallel, series, src, watch } from "gulp";
 import gulpSass from "gulp-sass";
 import * as dartSass from "sass";
 import autoprefixer from "gulp-autoprefixer";
@@ -12,6 +12,8 @@ const projRoot = resolve(__dirname, "..", "..");
 
 const distFolder = resolve(__dirname, "dist");
 const distBundle = resolve(projRoot, "yy", "theme");
+
+const { NODE_ENV } = process.env;
 
 function buildThemeChalk() {
   const sass = gulpSass(dartSass);
@@ -46,6 +48,15 @@ export function copyThemeChalkSource() {
   return src(resolve(__dirname, "src/**")).pipe(dest(resolve(distBundle, "src")));
 }
 
-export const build = parallel(series(buildThemeChalk, copyThemeChalkBundle));
+export function watchFile() {
+  console.log(NODE_ENV);
+  if (NODE_ENV === "dev") {
+    return watch(["src/*.scss"], build);
+  }
+  return new Promise((resolve) => {
+    resolve(true);
+  });
+}
+export const build = parallel(series(buildThemeChalk, copyThemeChalkBundle, watchFile));
 
 export default build;
