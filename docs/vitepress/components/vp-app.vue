@@ -19,7 +19,11 @@
         <div class="item"></div>
       </YCol>
     </YRow>
-    <YButton :content="renderContent" />
+    <YButton shape="round" :content="renderContent" />
+    <YButton disabled :content="renderContent" />
+    <YButton shape="circle">
+      <div class="circle">圆</div>
+    </YButton>
   </div>
 </template>
 
@@ -33,5 +37,12 @@ const renderContent = () => h("div", {}, "23432432dfasdf");
   height: 20px;
   background-color: aliceblue;
   margin-bottom: 5px;
+}
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
 }
 </style>

@@ -13,7 +13,8 @@ export default defineComponent({
 
     const bem = createNamespace("button");
     const buttonCls = computed(() => {
-      return [bem.b()];
+      const { shape } = props;
+      return [bem.b(), bem.is(shape, shape !== "default"), bem.is("disabled", props.disabled)];
     });
 
     return () => {

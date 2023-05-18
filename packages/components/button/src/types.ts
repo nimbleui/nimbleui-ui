@@ -1,7 +1,9 @@
 import { PropType, ExtractPropTypes } from "vue";
 import type { VNodeChild } from "vue";
 
-type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "danger";
+type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "danger" | "dashed";
+
+type ButtonShape = "default" | "circle" | "round";
 
 const buttonProps = () => ({
   /**
@@ -33,11 +35,18 @@ const buttonProps = () => ({
     type: [Function, String] as PropType<string | VNodeChild | (() => VNodeChild)>,
   },
   /**
-   * @description
+   * @description 其他信息
    */
   details: {
     type: Object,
     default: () => ({}),
+  },
+  /**
+   * @description 按钮的形状
+   */
+  shape: {
+    type: String as PropType<ButtonShape>,
+    default: "default",
   },
 });
 
