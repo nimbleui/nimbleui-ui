@@ -8,6 +8,7 @@ interface Opts {
   info?: string;
   theme?: string;
   baseColor?: string;
+  disabledOpacity?: number;
 }
 
 const defaultOpt: Required<Opts> = {
@@ -18,6 +19,7 @@ const defaultOpt: Required<Opts> = {
   info: "#909399",
   theme: "#ffffff",
   baseColor: "#000000",
+  disabledOpacity: 0.5,
 };
 
 // 文字的梯度
@@ -30,7 +32,7 @@ function setProperty(key: string, value: string) {
 }
 
 export function useTheme(opt: Opts = {}) {
-  const { theme, baseColor, ...options } = Object.assign(defaultOpt, opt);
+  const { theme, baseColor, disabledOpacity, ...options } = Object.assign(defaultOpt, opt);
   Object.keys(options).forEach((key) => {
     // 计算颜色梯度
     generate(options[key as keyof typeof options], {
@@ -56,4 +58,7 @@ export function useTheme(opt: Opts = {}) {
 
   setProperty("theme", theme);
   setProperty("base-color", baseColor);
+
+  // 禁用状态的样式
+  setProperty("disabled-opacity", String(disabledOpacity));
 }

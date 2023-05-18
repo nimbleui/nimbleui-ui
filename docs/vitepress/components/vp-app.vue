@@ -24,6 +24,12 @@
     <YButton shape="circle">
       <div class="circle">圆</div>
     </YButton>
+
+    <YButtonGroup>
+      <YButton>1111</YButton>
+      <YButton>2222</YButton>
+      <YButton>3333</YButton>
+    </YButtonGroup>
   </div>
 </template>
 

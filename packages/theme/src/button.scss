@@ -8,6 +8,7 @@
   --y-button-hover-text-color: var(--y-base-color);
   --y-button-hover-bg-color: var(--y-color-primary-1);
   --y-button-hover-border-color: var(--y-color-primary-3);
+  --y-button-disabled-opacity: var(--y-color-disabled-opacity);
 }
 
 @include b(button) {
@@ -38,6 +39,10 @@
     outline: none;
   }
 
+  &:active {
+    // color: ;
+  }
+
   @include when(round) {
     border-radius: 500px;
   }
@@ -49,5 +54,6 @@
 
   @include when(disabled) {
     cursor: not-allowed;
+    opacity: var(--y-button-disabled-opacity);
   }
 }
