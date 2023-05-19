@@ -1,3 +1,3 @@
-import { YRow, YCol, YButton } from "@yy/components";
+import { YRow, YCol, YButton, YButtonGroup } from "@yy/components";
 
-export default [YRow, YCol, YButton];
+export default [YRow, YCol, YButton, YButtonGroup];

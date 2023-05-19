@@ -32,7 +32,7 @@ const buttonProps = () => ({
    * @description 按钮的显示内容
    */
   content: {
-    type: [Function, String] as PropType<string | VNodeChild | (() => VNodeChild)>,
+    type: [Function, String] as PropType<string | VNodeChild | ((details: any) => VNodeChild)>,
   },
   /**
    * @description 其他信息

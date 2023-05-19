@@ -18,10 +18,10 @@ export default defineComponent({
     });
 
     return () => {
-      const { nativeType, content } = props;
+      const { nativeType, content, details } = props;
       return (
         <button class={buttonCls.value} type={nativeType} onClick={onClick}>
-          {isFunction(content) ? content() : content || ctx.slots.default?.()}
+          {isFunction(content) ? content(details) : content || ctx.slots.default?.()}
         </button>
       );
     };
