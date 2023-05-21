@@ -1,32 +1,29 @@
 import { PropType, ExtractPropTypes } from "vue";
 import type { VNodeChild } from "vue";
+import type { ButtonShape, ButtonTypes } from "@yy/tokens";
 
-type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "danger" | "dashed";
+import { mergeFunctionProp, mergeCommonProp, Fun } from "@yy/utils";
 
-type ButtonShape = "default" | "circle" | "round";
-
-const buttonGroupProps = () => ({
+const buttonGroupProps = mergeCommonProp({
   /**
    * @description 按钮组的显示内容
    */
   content: {
-    type: [Function, String] as PropType<string | VNodeChild | (() => VNodeChild)>,
+    type: [Function, String, Object] as PropType<string | VNodeChild | Fun<VNodeChild>>,
   },
   /**
    * @description 按钮类型
    */
-  type: {
-    type: String as PropType<ButtonTypes>,
-    default: "default",
-  },
+  type: mergeFunctionProp<ButtonTypes>(String, "default"),
   /**
    * @description 按钮的形状
    */
-  shape: {
-    type: String as PropType<ButtonShape>,
-    default: "default",
-  },
+  shape: mergeFunctionProp<ButtonShape>(String, "default"),
+  /**
+   * @description 禁用按钮
+   */
+  disabled: mergeFunctionProp<boolean>(Boolean),
 });
 
 export default buttonGroupProps;
-export type ButtonGroupProps = ExtractPropTypes<ReturnType<typeof buttonGroupProps>>;
+export type ButtonGroupProps = ExtractPropTypes<typeof buttonGroupProps>;
