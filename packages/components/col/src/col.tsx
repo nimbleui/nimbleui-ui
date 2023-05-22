@@ -1,6 +1,6 @@
 import { CSSProperties, computed, defineComponent, inject } from "vue";
 import { rowContextKey } from "@yy/tokens";
-import { createNamespace, isNumber, handlePropOrContext } from "@yy/utils";
+import { createNamespace, handlePropOrContext } from "@yy/utils";
 
 import colProps from "./types";
 
@@ -8,25 +8,25 @@ export default defineComponent({
   name: "YCol",
   props: colProps,
   setup(props, ctx) {
-    const { gutter } = inject(rowContextKey, { gutter: computed(() => 0) });
+    const rowContext = inject(rowContextKey, undefined);
 
     const bem = createNamespace("col");
     const rowCls = computed(() => {
-      const result = handlePropOrContext(props, undefined, ["span", "offset", "pull", "push"]);
+      const result = handlePropOrContext(props, rowContext, ["span"]);
 
       return [
         bem.b(),
         bem.b(`${result.span}`),
-        bem.b(`pull-${result.pull}`, Number(result.pull) > 0),
-        bem.b(`push-${result.push}`, Number(result.push) > 0),
-        bem.b(`offset-${result.offset}`, Number(result.offset) > 0),
+        bem.b(`pull-${props.pull}`, !!props.pull),
+        bem.b(`push-${props.push}`, !!props.push),
+        bem.b(`offset-${props.offset}`, !!props.offset),
       ];
     });
 
     const style = computed(() => {
       const styles: CSSProperties = {};
-      if (gutter.value) {
-        styles.paddingLeft = styles.paddingRight = `${gutter.value / 2}px`;
+      if (rowContext?.gutter.value) {
+        styles.paddingLeft = styles.paddingRight = `${rowContext?.gutter.value / 2}px`;
       }
       return styles;
     });

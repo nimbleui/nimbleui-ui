@@ -1,4 +1,4 @@
-import { CSSProperties, computed, defineComponent, provide } from "vue";
+import { CSSProperties, computed, defineComponent, provide, watch } from "vue";
 import rowProps from "./types";
 
 import { rowContextKey } from "@yy/tokens";
@@ -8,10 +8,15 @@ export default defineComponent({
   name: "YRow",
   props: rowProps,
   setup(props, { slots }) {
-    const gutter = computed(() => props.gutter);
-
+    const details = computed(() => props.details);
     provide(rowContextKey, {
-      gutter,
+      span: computed(() => props.span),
+      gutter: computed(() => props.gutter),
+      details: computed(() => props.details),
+    });
+
+    watch(details, (val) => {
+      console.log("watch", val);
     });
 
     const bem = createNamespace("row");

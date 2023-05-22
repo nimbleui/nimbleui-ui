@@ -1,5 +1,5 @@
 import { PropType, ExtractPropTypes } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 export type RowAlign = "top" | "middle" | "bottom";
 export type RowJustify = "start" | "center" | "end" | "space-around" | "space-between" | "space-evenly";
@@ -8,7 +8,10 @@ const rowProps = mergeCommonProp({
   /**
    * @description 栅格间隔
    */
-  gutter: Number,
+  gutter: {
+    type: Number,
+    default: 0,
+  },
   /**
    * @description 自定义元素标签
    */
@@ -27,6 +30,7 @@ const rowProps = mergeCommonProp({
     type: String as PropType<RowJustify>,
     default: "start",
   },
+  span: mergeFunctionProp<number>(Number),
 });
 
 export default rowProps;

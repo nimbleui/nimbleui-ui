@@ -23,13 +23,13 @@ export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
  * @param props 组件参数
  * @returns 整合公共参数的对象
  */
-export const mergeCommonProp = <T extends ObjectType>(props: T) => ({
-  ...props,
-  details: {
-    type: Object as PropType<ObjectType>,
-    default: () => ({}),
-  },
-});
+export const mergeCommonProp = <T extends ObjectType>(props: T) =>
+  Object.assign({}, props, {
+    details: {
+      type: Object as PropType<ObjectType>,
+      default: () => ({}),
+    },
+  });
 
 /**
  * 把两个对象，根据属性(keys)合并处理value
@@ -37,7 +37,7 @@ export const mergeCommonProp = <T extends ObjectType>(props: T) => ({
  * @param context 对象2
  * @param keys 对象属性
  * @param callback 回调函数
- * @returns 新的对象
+ * @returns 整合后的新对象
  */
 export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, K extends Extract<keyof T, keyof D>>(
   props: T,
@@ -48,7 +48,7 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
   let index = -1;
   const length = keys.length;
   const result = {} as Record<K, T[K]>;
-  const details = props.details || context?.details || {};
+  const details = props.details || context?.details.value || {};
 
   while (props != null && ++index < length) {
     const key = keys[index];

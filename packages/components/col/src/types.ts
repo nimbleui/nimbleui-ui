@@ -14,15 +14,15 @@ const colProps = mergeCommonProp({
   /**
    * @description 栅格左侧的间隔格数
    */
-  offset: mergeFunctionProp<number>(Number),
+  offset: Number,
   /**
    * @description 栅格向右移动格数
    */
-  pull: mergeFunctionProp<number>(Number),
+  pull: Number,
   /**
    * @description 栅格向左移动格数
    */
-  push: mergeFunctionProp<number>(Number),
+  push: Number,
   /**
    * @description 栅格间隔
    */

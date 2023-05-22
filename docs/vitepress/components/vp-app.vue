@@ -11,14 +11,14 @@
         <div class="item"></div>
       </YCol>
     </YRow>
-    <YRow :gutter="20">
+    <!-- <YRow :gutter="20">
       <YCol :span="8" :offset="2">
         <div class="item"></div>
       </YCol>
       <YCol :span="8" :offset="4">
         <div class="item"></div>
       </YCol>
-    </YRow>
+    </YRow> -->
     <YButton shape="round" :content="renderContent" />
     <YButton disabled :content="renderContent" />
     <YButton shape="circle">
@@ -43,7 +43,6 @@ const a = reactive({
 });
 setTimeout(() => {
   a.num = 6;
-  console.log(22);
 }, 5000);
 const span = (d: any) => {
   console.log(d);
