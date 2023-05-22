@@ -3,8 +3,8 @@ class BEM {
   constructor(name: string) {
     this.block = `y-${name}`;
   }
-  b(name?: string) {
-    return name ? `${this.block}-${name}` : this.block;
+  b(name?: string, state = true) {
+    return name ? (state ? `${this.block}-${name}` : undefined) : this.block;
   }
 
   e(element: string) {

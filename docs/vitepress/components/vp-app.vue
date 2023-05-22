@@ -1,7 +1,7 @@
 <template>
   <div>
-    <YRow justify="space-around" :gutter="8">
-      <YCol :span="8">
+    <YRow :details="a" justify="space-around" :gutter="8">
+      <YCol :span="span">
         <div class="item"></div>
       </YCol>
       <YCol :span="8">
@@ -34,9 +34,21 @@
 </template>
 
 <script setup lang="tsx">
+import { reactive } from "vue";
 import { h } from "vue";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
+const a = reactive({
+  num: 0,
+});
+setTimeout(() => {
+  a.num = 6;
+  console.log(22);
+}, 5000);
+const span = (d: any) => {
+  console.log(d);
+  return d.num ? 8 : 4;
+};
 </script>
 <style>
 .item {

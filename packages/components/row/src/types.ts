@@ -1,9 +1,10 @@
 import { PropType, ExtractPropTypes } from "vue";
+import { mergeCommonProp } from "@yy/utils";
 
 export type RowAlign = "top" | "middle" | "bottom";
 export type RowJustify = "start" | "center" | "end" | "space-around" | "space-between" | "space-evenly";
 
-const rowProps = () => ({
+const rowProps = mergeCommonProp({
   /**
    * @description 栅格间隔
    */
@@ -29,4 +30,4 @@ const rowProps = () => ({
 });
 
 export default rowProps;
-export type RowProps = ExtractPropTypes<ReturnType<typeof rowProps>>;
+export type RowProps = ExtractPropTypes<typeof rowProps>;

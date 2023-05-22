@@ -1,6 +1,8 @@
 import { PropType, ExtractPropTypes } from "vue";
 
-const colProps = () => ({
+import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+
+const colProps = mergeCommonProp({
   /**
    * @description 自定义元素标签
    */
@@ -8,23 +10,24 @@ const colProps = () => ({
   /**
    * @description 栅格占据的列数
    */
-  span: {
-    type: Number,
-    default: 24,
-  },
+  span: mergeFunctionProp<number>(Number, 24),
   /**
    * @description 栅格左侧的间隔格数
    */
-  offset: Number,
+  offset: mergeFunctionProp<number>(Number),
   /**
    * @description 栅格向右移动格数
    */
-  pull: Number,
+  pull: mergeFunctionProp<number>(Number),
   /**
    * @description 栅格向左移动格数
    */
-  push: Number,
+  push: mergeFunctionProp<number>(Number),
+  /**
+   * @description 栅格间隔
+   */
+  gutter: Number,
 });
 
 export default colProps;
-export type ColProps = ExtractPropTypes<ReturnType<typeof colProps>>;
+export type ColProps = ExtractPropTypes<typeof colProps>;

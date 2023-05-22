@@ -24,5 +24,15 @@
     &:not(:last-child) {
       margin-right: -1px;
     }
+
+    &:first-child:last-child {
+      &.is-round {
+        border-radius: get-css-var('border-radius', 'round');
+      }
+
+      &.is-circle {
+        border-radius: 50%;
+      }
+    }
   }
 }

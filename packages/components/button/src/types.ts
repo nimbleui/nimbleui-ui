@@ -7,7 +7,7 @@ const buttonProps = mergeCommonProp({
   /**
    * @description 按钮是否为禁用状态
    */
-  disabled: mergeFunctionProp<boolean>(Boolean),
+  disabled: mergeFunctionProp<boolean>(Boolean, false),
   /**
    * @description button原生type属性
    */
@@ -18,7 +18,7 @@ const buttonProps = mergeCommonProp({
   /**
    * @description 按钮的类型
    */
-  type: mergeFunctionProp<ButtonTypes>(String),
+  type: mergeFunctionProp<ButtonTypes>(String, "default"),
   /**
    * @description 按钮是否显示为块级
    */
@@ -39,7 +39,7 @@ const buttonProps = mergeCommonProp({
   /**
    * @description 按钮的形状
    */
-  shape: mergeFunctionProp<ButtonShape>(String),
+  shape: mergeFunctionProp<ButtonShape>(String, "default"),
 });
 
 export default buttonProps;

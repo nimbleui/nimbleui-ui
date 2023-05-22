@@ -22,7 +22,7 @@ export default defineComponent({
       const { content, details } = props;
       return (
         <div class={buttonGroupCls.value}>
-          {isFunction(content) ? content(details) : content || ctx.slots.default?.()}
+          {isFunction(content) ? content(details) : content || ctx.slots.default?.({ details })}
         </div>
       );
     };

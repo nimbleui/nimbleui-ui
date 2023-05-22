@@ -6,7 +6,7 @@ import { createNamespace } from "@yy/utils";
 
 export default defineComponent({
   name: "YRow",
-  props: rowProps(),
+  props: rowProps,
   setup(props, { slots }) {
     const gutter = computed(() => props.gutter);
 

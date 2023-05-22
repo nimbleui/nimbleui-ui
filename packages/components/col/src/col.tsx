@@ -1,26 +1,26 @@
 import { CSSProperties, computed, defineComponent, inject } from "vue";
 import { rowContextKey } from "@yy/tokens";
-import { createNamespace, isNumber } from "@yy/utils";
+import { createNamespace, isNumber, handlePropOrContext } from "@yy/utils";
 
 import colProps from "./types";
 
 export default defineComponent({
   name: "YCol",
-  props: colProps(),
+  props: colProps,
   setup(props, ctx) {
     const { gutter } = inject(rowContextKey, { gutter: computed(() => 0) });
 
     const bem = createNamespace("col");
-    const pos = ["span", "offset", "pull", "push"] as const;
     const rowCls = computed(() => {
-      return pos.reduce((acc, prop) => {
-        const size = props[prop];
-        if (isNumber(size)) {
-          if (prop === "span") acc.push(bem.b(`${props[prop]}`));
-          else if (size > 0) acc.push(bem.b(`${prop}-${props[prop]}`));
-        }
-        return acc;
-      }, [] as string[]);
+      const result = handlePropOrContext(props, undefined, ["span", "offset", "pull", "push"]);
+
+      return [
+        bem.b(),
+        bem.b(`${result.span}`),
+        bem.b(`pull-${result.pull}`, Number(result.pull) > 0),
+        bem.b(`push-${result.push}`, Number(result.push) > 0),
+        bem.b(`offset-${result.offset}`, Number(result.offset) > 0),
+      ];
     });
 
     const style = computed(() => {
