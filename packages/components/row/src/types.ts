@@ -4,7 +4,7 @@ import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 export type RowAlign = "top" | "middle" | "bottom";
 export type RowJustify = "start" | "center" | "end" | "space-around" | "space-between" | "space-evenly";
 
-const rowProps = mergeCommonProp({
+export const rowUniqueProp = {
   /**
    * @description 栅格间隔
    */
@@ -34,7 +34,9 @@ const rowProps = mergeCommonProp({
    * @description 栅格占据的列数
    */
   span: mergeFunctionProp<number>(Number),
-});
+} as const;
+
+const rowProps = mergeCommonProp(rowUniqueProp);
 
 export default rowProps;
 export type RowProps = ExtractPropTypes<ReturnType<typeof rowProps>>;
