@@ -1,4 +1,4 @@
-import { computed, defineComponent, provide, toRef } from "vue";
+import { computed, defineComponent, provide } from "vue";
 import buttonGroupProps from "./types";
 import { createNamespace, isFunction } from "@yy/utils";
 import { buttonGroupContextKey } from "@yy/tokens";
@@ -12,11 +12,11 @@ export default defineComponent({
       return [bem.b()];
     });
 
-    provide(buttonGroupContextKey, {
-      type: toRef(props, "type"),
-      shape: toRef(props, "shape"),
-      disabled: toRef(props, "disabled"),
+    const buttonGroupContext = computed(() => {
+      const { type, shape, disabled, details } = props;
+      return { type, shape, disabled, details };
     });
+    provide(buttonGroupContextKey, buttonGroupContext);
 
     return () => {
       const { content, details } = props;

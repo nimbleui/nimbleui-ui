@@ -1,9 +1,9 @@
-import { Prop, PropType } from "vue";
+import { PropType } from "vue";
 import { isFunction } from "./type";
 
 export type ObjectType = { [key: string]: any };
 
-export type Fun<T> = (details: any) => T;
+export type Fun<T> = (details: any, uuId?: string | number | symbol) => T;
 
 export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
   if (defaultVal) {
@@ -23,12 +23,14 @@ export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
  * @param props 组件参数
  * @returns 整合公共参数的对象
  */
-export const mergeCommonProp = <T extends { [key: string]: Prop<any, any> }>(props: T) => {
+export const mergeCommonProp = <T extends { [key: string]: ObjectType }>(props: T) => {
   return () =>
     Object.assign({}, props, {
       details: {
-        type: [Object, Array],
+        type: [Object, Array] as PropType<ObjectType | Array<any>>,
       },
+      // 组件唯一标识
+      uuId: [String, Number, Symbol],
     });
 };
 
@@ -58,7 +60,8 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
       result[key] = callback(props[key], context?.[key], key);
     } else {
       const value: unknown = props[key] ?? context?.[key];
-      const _value = isFunction(value) ? value(details) : value;
+
+      const _value = isFunction(value) ? value(details, props.uuId) : value;
       result[key] = _value;
     }
   }

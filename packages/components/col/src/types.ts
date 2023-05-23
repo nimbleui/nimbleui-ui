@@ -10,7 +10,7 @@ const colProps = mergeCommonProp({
   /**
    * @description 栅格占据的列数
    */
-  span: mergeFunctionProp<number>(Number, 24),
+  span: mergeFunctionProp<number>(Number),
   /**
    * @description 栅格左侧的间隔格数
    */

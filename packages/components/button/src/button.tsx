@@ -16,7 +16,7 @@ export default defineComponent({
 
     const bem = createNamespace("button");
     const buttonCls = computed(() => {
-      const res = handlePropOrContext(props, buttonGroupContext, ["type", "shape", "disabled"]);
+      const res = handlePropOrContext(props, buttonGroupContext?.value, ["type", "shape", "disabled"]);
 
       return [
         bem.b(),

@@ -16,7 +16,7 @@ export default defineComponent({
 
       return [
         bem.b(),
-        bem.b(`${result.span}`),
+        bem.b(`${result.span || 24}`),
         bem.b(`pull-${props.pull}`, !!props.pull),
         bem.b(`push-${props.push}`, !!props.push),
         bem.b(`offset-${props.offset}`, !!props.offset),

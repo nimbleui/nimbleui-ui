@@ -30,6 +30,9 @@ const rowProps = mergeCommonProp({
     type: String as PropType<RowJustify>,
     default: "start",
   },
+  /**
+   * @description 栅格占据的列数
+   */
   span: mergeFunctionProp<number>(Number),
 });
 

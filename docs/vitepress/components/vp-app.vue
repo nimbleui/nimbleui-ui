@@ -1,24 +1,24 @@
 <template>
   <div>
-    <YRow :details="a" justify="space-around" :gutter="8" :span="8">
-      <YCol :span="span">
+    <YRow :details="a" justify="space-around" :gutter="8" :span="span">
+      <YCol uu-id="1">
         <div class="item"></div>
       </YCol>
-      <YCol :span="8">
+      <YCol uu-id="2">
         <div class="item"></div>
       </YCol>
-      <YCol :span="8">
+      <YCol uu-id="3">
         <div class="item"></div>
       </YCol>
     </YRow>
-    <!-- <YRow :gutter="20">
+    <YRow :gutter="20">
       <YCol :span="8" :offset="2">
         <div class="item"></div>
       </YCol>
       <YCol :span="8" :offset="4">
         <div class="item"></div>
       </YCol>
-    </YRow> -->
+    </YRow>
     <YButton shape="round" :content="renderContent" />
     <YButton disabled :content="renderContent" />
     <YButton shape="circle">
@@ -44,8 +44,9 @@ const a = reactive({
 setTimeout(() => {
   a.num = 6;
 }, 5000);
-const span = (d: any) => {
+const span = (d: any, uuId: number) => {
   console.log(d);
+  console.log(uuId);
   return d.num ? 8 : 4;
 };
 </script>
