@@ -6,13 +6,13 @@ import colProps from "./types";
 
 export default defineComponent({
   name: "YCol",
-  props: colProps,
+  props: colProps(),
   setup(props, ctx) {
     const rowContext = inject(rowContextKey, undefined);
 
     const bem = createNamespace("col");
     const rowCls = computed(() => {
-      const result = handlePropOrContext(props, rowContext, ["span"]);
+      const result = handlePropOrContext(props, rowContext?.value, ["span"]);
 
       return [
         bem.b(),
@@ -25,8 +25,8 @@ export default defineComponent({
 
     const style = computed(() => {
       const styles: CSSProperties = {};
-      if (rowContext?.gutter.value) {
-        styles.paddingLeft = styles.paddingRight = `${rowContext?.gutter.value / 2}px`;
+      if (rowContext?.value.gutter) {
+        styles.paddingLeft = styles.paddingRight = `${rowContext.value.gutter / 2}px`;
       }
       return styles;
     });

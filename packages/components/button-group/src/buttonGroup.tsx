@@ -5,7 +5,7 @@ import { buttonGroupContextKey } from "@yy/tokens";
 
 export default defineComponent({
   name: "YButtonGroup",
-  props: buttonGroupProps,
+  props: buttonGroupProps(),
   setup(props, ctx) {
     const bem = createNamespace("button-group");
     const buttonGroupCls = computed(() => {

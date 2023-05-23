@@ -1,4 +1,4 @@
-import { PropType } from "vue";
+import { Prop, PropType } from "vue";
 import { isFunction } from "./type";
 
 export type ObjectType = { [key: string]: any };
@@ -23,13 +23,14 @@ export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
  * @param props 组件参数
  * @returns 整合公共参数的对象
  */
-export const mergeCommonProp = <T extends ObjectType>(props: T) =>
-  Object.assign({}, props, {
-    details: {
-      type: Object as PropType<ObjectType>,
-      default: () => ({}),
-    },
-  });
+export const mergeCommonProp = <T extends { [key: string]: Prop<any, any> }>(props: T) => {
+  return () =>
+    Object.assign({}, props, {
+      details: {
+        type: [Object, Array],
+      },
+    });
+};
 
 /**
  * 把两个对象，根据属性(keys)合并处理value
@@ -48,7 +49,7 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
   let index = -1;
   const length = keys.length;
   const result = {} as Record<K, T[K]>;
-  const details = props.details || context?.details.value || {};
+  const details = props.details || context?.details || {};
 
   while (props != null && ++index < length) {
     const key = keys[index];
@@ -56,7 +57,7 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
     if (callback) {
       result[key] = callback(props[key], context?.[key], key);
     } else {
-      const value = props[key] ?? context?.[key]?.value;
+      const value: unknown = props[key] ?? context?.[key];
       const _value = isFunction(value) ? value(details) : value;
       result[key] = _value;
     }

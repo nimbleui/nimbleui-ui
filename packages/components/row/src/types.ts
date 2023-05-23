@@ -34,4 +34,4 @@ const rowProps = mergeCommonProp({
 });
 
 export default rowProps;
-export type RowProps = ExtractPropTypes<typeof rowProps>;
+export type RowProps = ExtractPropTypes<ReturnType<typeof rowProps>>;

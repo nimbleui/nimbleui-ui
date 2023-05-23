@@ -6,18 +6,13 @@ import { createNamespace } from "@yy/utils";
 
 export default defineComponent({
   name: "YRow",
-  props: rowProps,
+  props: rowProps(),
   setup(props, { slots }) {
-    const details = computed(() => props.details);
-    provide(rowContextKey, {
-      span: computed(() => props.span),
-      gutter: computed(() => props.gutter),
-      details: computed(() => props.details),
+    const rowContext = computed(() => {
+      const { span, gutter, details } = props;
+      return { span, gutter, details };
     });
-
-    watch(details, (val) => {
-      console.log("watch", val);
-    });
+    provide(rowContextKey, rowContext);
 
     const bem = createNamespace("row");
     const rowCls = computed(() => [bem.b(), bem.is(`justify-${props.justify}`), bem.is(`align-${props.align}`)]);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <YRow :details="a" justify="space-around" :gutter="8">
+    <YRow :details="a" justify="space-around" :gutter="8" :span="8">
       <YCol :span="span">
         <div class="item"></div>
       </YCol>
@@ -30,12 +30,12 @@
       <YButton>2222</YButton>
       <YButton>3333</YButton>
     </YButtonGroup>
+    {{ a.num }}
   </div>
 </template>
 
 <script setup lang="tsx">
-import { reactive } from "vue";
-import { h } from "vue";
+import { reactive, h } from "vue";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({

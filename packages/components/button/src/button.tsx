@@ -5,7 +5,7 @@ import { buttonGroupContextKey } from "@yy/tokens";
 
 export default defineComponent({
   name: "YButton",
-  props: buttonProps,
+  props: buttonProps(),
   emits: ["click"],
   setup(props, ctx) {
     const buttonGroupContext = inject(buttonGroupContextKey, undefined);

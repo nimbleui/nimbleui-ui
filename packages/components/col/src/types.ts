@@ -30,4 +30,4 @@ const colProps = mergeCommonProp({
 });
 
 export default colProps;
-export type ColProps = ExtractPropTypes<typeof colProps>;
+export type ColProps = ExtractPropTypes<ReturnType<typeof colProps>>;
