@@ -1,8 +1,10 @@
-import { mergeCommonProp } from "@yy/utils";
 import { ExtractPropTypes, ComponentPublicInstance } from "vue";
-import { rowUniqueProp } from "@yy/yy-ui";
+import { rowUniqueProp } from "@yy/components";
+import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 const formProps = mergeCommonProp({
+  // row组件的参数
+  ...rowUniqueProp,
   /**
    * @description 是否在提交表单且校验不通过时滚动至错误的表单项
    */
@@ -16,7 +18,10 @@ const formProps = mergeCommonProp({
   validateTrigger: {
     type: String,
   },
-  ...rowUniqueProp,
+  /**
+   * @description 是否为禁用状态
+   */
+  disabled: mergeFunctionProp<boolean>(Boolean),
 });
 
 export default formProps;

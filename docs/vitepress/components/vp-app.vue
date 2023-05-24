@@ -31,6 +31,19 @@
       <YButton>3333</YButton>
     </YButtonGroup>
     {{ a.num }}
+
+    <YForm id="form" :span="8" :gutter="8" @submit="onSubmit">
+      <YFormItem>
+        <YInput v-model="values.name" name="name" />
+      </YFormItem>
+      <YFormItem>
+        <YInput v-model="values.value" name="value" />
+      </YFormItem>
+      <YFormItem>
+        <YInput v-model="values.age" name="age" />
+      </YFormItem>
+    </YForm>
+    <YButton form="form" native-type="submit">提交</YButton>
   </div>
 </template>
 
@@ -49,6 +62,14 @@ const span = (d: any, uuId: number) => {
   console.log(uuId);
   return d.num ? 8 : 4;
 };
+const values = reactive({
+  name: "11",
+  value: "22",
+  age: 33,
+});
+const onSubmit = (val: any) => {
+  console.log(val);
+};
 </script>
 <style>
 .item {
@@ -62,5 +83,9 @@ const span = (d: any, uuId: number) => {
   justify-content: center;
   width: 16px;
   height: 16px;
+}
+.bg {
+  height: 20px;
+  background-color: var(--y-color-primary);
 }
 </style>
