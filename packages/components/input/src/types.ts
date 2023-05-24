@@ -40,6 +40,12 @@ const inputProp = mergeCommonProp({
    * @description 输入框占位提示文字
    */
   placeholder: String,
+  /**
+   * @description 表单校验规则
+   */
+  rules: {
+    type: Array,
+  },
 });
 
 export type InputExpose = {

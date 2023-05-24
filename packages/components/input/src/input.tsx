@@ -23,6 +23,7 @@ export default defineComponent({
     const formValue = computed(() => props.modelValue);
     const getModelValue = () => String(props.modelValue ?? "");
 
+    // 更新内容
     const updateValue = (value: string, trigger: TriggerEventType = "onChange") => {
       if (value !== props.modelValue) {
         console.log(trigger);
@@ -31,11 +32,22 @@ export default defineComponent({
       inputRef.value && (inputRef.value.value = value);
     };
 
+    // 输入框内容发生变化
     const onInput = (event: Event) => {
       const { target } = event;
       if (!(target as any).composing) {
         updateValue((target as HTMLInputElement).value);
       }
+    };
+
+    // 输入框失去焦点
+    const onBlur = (event: Event) => {
+      ctx.emit("blur", event);
+    };
+
+    // 输入框获取焦点
+    const onFocus = (event: Event) => {
+      ctx.emit("focus", event);
     };
 
     watch(
@@ -54,14 +66,17 @@ export default defineComponent({
     });
 
     return () => {
-      const { type } = props;
+      const { type, placeholder } = props;
       return (
         <input
-          ref={inputRef}
-          onCompositionstart={startComposing}
-          onCompositionend={endComposing}
-          onInput={onInput}
           type={type}
+          ref={inputRef}
+          placeholder={placeholder}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onInput={onInput}
+          onCompositionend={endComposing}
+          onCompositionstart={startComposing}
         />
       );
     };
