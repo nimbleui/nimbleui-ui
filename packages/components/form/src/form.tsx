@@ -16,10 +16,12 @@ export default defineComponent({
 
     // 获取所有form组件的value
     const getValues = () => {
+      console.log(children);
       return children.reduce<Record<string, unknown>>((acc, child) => {
         const proxy = child.public;
-        if (proxy?.name) {
-          acc[proxy.name] = proxy.formValue.value;
+        if (proxy?.inputPublic && proxy.inputPublic.value) {
+          const { name, value } = proxy.inputPublic.value;
+          acc[name] = value;
         }
         return acc;
       }, {});

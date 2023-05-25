@@ -27,7 +27,7 @@ const formItemProp = mergeCommonProp({
 export default formItemProp;
 
 export type FormItemExpose = {
-  formValue: ComputedRef<unknown>;
+  inputPublic: ComputedRef<{ name?: string; value?: string }>;
 };
 
 export type FormItemProps = ExtractPropTypes<ReturnType<typeof formItemProp>>;

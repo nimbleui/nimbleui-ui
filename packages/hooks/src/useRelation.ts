@@ -4,7 +4,6 @@ import type { ProvideContext, ChildrenType } from "@yy/tokens";
 
 export function useChildren<T>(key: InjectionKey<ProvideContext<T>>) {
   const children: ChildrenType[] = reactive([]);
-
   const linkChildren = (value?: T) => {
     const link = (child: ComponentInternalInstance | null) => {
       if (child?.proxy) {
@@ -16,7 +15,7 @@ export function useChildren<T>(key: InjectionKey<ProvideContext<T>>) {
     };
 
     const unlink = (child: ComponentInternalInstance | null) => {
-      const index = children.findIndex((item) => item.internal == child);
+      const index = children.findIndex((item) => item.internal.uid == child?.uid);
       if (index > -1) {
         children.splice(index, 1);
       }

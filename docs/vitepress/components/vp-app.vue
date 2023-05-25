@@ -42,7 +42,7 @@
       <YFormItem>
         <YInput v-model="values.age" name="age" />
       </YFormItem>
-      <YFormItem>
+      <YFormItem v-if="show">
         <YInput v-model="values.test" name="test" />
       </YFormItem>
     </YForm>
@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="tsx">
-import { reactive, h } from "vue";
+import { reactive, h, ref } from "vue";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -74,6 +74,17 @@ const values = reactive({
 const onSubmit = (val: any) => {
   console.log(val);
 };
+const show = ref(true);
+
+setTimeout(() => {
+  show.value = false;
+}, 5000);
+setTimeout(() => {
+  show.value = true;
+}, 10000);
+setTimeout(() => {
+  show.value = false;
+}, 15000);
 </script>
 <style>
 .item {

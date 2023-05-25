@@ -4,7 +4,7 @@ import { FormProps } from "@yy/components";
 
 export type TriggerEventType = "onBlur" | "onChange" | "onSubmit" | "onFocus";
 
-interface Rule {
+export interface Rule {
   required?: boolean;
   message?: string | ((value: any, rule: Rule, details: any) => VNodeChild);
   validator?: (value: any, rule: Rule, details: any) => boolean | Promise<boolean>;
