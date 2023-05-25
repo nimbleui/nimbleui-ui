@@ -34,7 +34,7 @@
 
     <YForm id="form" :span="8" :gutter="8" @submit="onSubmit">
       <YFormItem>
-        <YInput v-model="values.name" name="name" />
+        <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
       <YFormItem>
         <YInput v-model="values.value" name="value" />

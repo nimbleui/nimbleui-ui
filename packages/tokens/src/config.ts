@@ -1,3 +1,3 @@
-import { InjectionKey, Ref } from "vue";
+import { InjectionKey } from "vue";
 
-export const configContextKey: InjectionKey<Ref<any>> = Symbol("CONFIG_CONTEXT_KEY");
+export const configContextKey: InjectionKey<any> = Symbol("CONFIG_CONTEXT_KEY");

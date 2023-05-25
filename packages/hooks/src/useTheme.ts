@@ -1,6 +1,6 @@
 import { generate, setAlphaColor, setSolidColor } from "@yy/utils";
 
-interface Opts {
+export interface Opts {
   primary?: string;
   success?: string;
   warning?: string;

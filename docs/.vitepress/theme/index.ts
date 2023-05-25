@@ -5,7 +5,11 @@ import VPApp from "../../vitepress/index"
 const theme: Theme = {
   Layout: VPApp,
   enhanceApp ({ app }) {
-    app.use(YUI)
+    app.use(YUI, {
+      theme: {
+        primary: '#18a058'
+      }
+    })
   }
 }
 export default theme

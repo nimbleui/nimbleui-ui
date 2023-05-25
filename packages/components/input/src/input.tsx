@@ -1,7 +1,7 @@
 import { defineComponent, inject, getCurrentInstance, onUnmounted, computed, watch, ref, onMounted } from "vue";
 import { formContextKey, TriggerEventType } from "@yy/tokens";
 import { useExpose } from "@yy/hooks";
-import { endComposing, startComposing } from "@yy/utils";
+import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@yy/utils";
 
 import inputProp from "./types";
 import type { InputExpose } from "./types";
@@ -23,7 +23,14 @@ export default defineComponent({
     const formValue = computed(() => props.modelValue);
     const getModelValue = () => String(props.modelValue ?? "");
 
-    // 更新内容
+    // 根据props生成className
+    const bem = createNamespace("input");
+    const inputCls = computed(() => {
+      const res = handlePropOrContext(props, undefined, ["disabled"]);
+      return [bem.b(), bem.is("disabled", res.disabled as boolean), bem.is("border", props.bordered)];
+    });
+
+    // 更新输入框内容
     const updateValue = (value: string, trigger: TriggerEventType = "onChange") => {
       if (value !== props.modelValue) {
         console.log(trigger);
@@ -71,6 +78,7 @@ export default defineComponent({
         <input
           type={type}
           ref={inputRef}
+          class={inputCls.value}
           placeholder={placeholder}
           onBlur={onBlur}
           onFocus={onFocus}

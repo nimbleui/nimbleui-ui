@@ -1,9 +1,13 @@
-import { ComputedRef, ExtractPropTypes, PropType } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from "vue";
+import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 type InputType = "text" | "number";
 
 const inputProp = mergeCommonProp({
+  /**
+   * @description 输入框是否为禁用状态
+   */
+  disabled: mergeFunctionProp<boolean>(Boolean),
   /**
    * @description 名称，作为提交表单时的标识符
    */
@@ -44,13 +48,15 @@ const inputProp = mergeCommonProp({
    * @description 表单校验规则
    */
   rules: {
-    type: Array,
+    type: [Array, Function],
   },
 });
+
+export default inputProp;
 
 export type InputExpose = {
   formValue: ComputedRef<unknown>;
 };
 
-export default inputProp;
 export type InputProps = ExtractPropTypes<ReturnType<typeof inputProp>>;
+export type InputInstance = ComponentPublicInstance<InputProps, InputExpose>;

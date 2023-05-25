@@ -1,0 +1,48 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+
+@include b(input) {
+  --y-input-border-color: var(--y-color-border-1);
+  --y-input-hover-border-color: var(--y-color-primary-8);
+  --y-input-focus-shadow-color: var(--y-color-primary-1);
+  --y-input-disabled-opacity: var(--y-color-disabled-opacity);
+}
+
+@include b(input) {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border-color: transparent;
+  border-radius: 4px;
+  padding: 4px 11px;
+  line-height: 1.5;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  @include when(border) {
+    border: 1px solid;
+    border-color: var(--y-input-border-color);
+    
+    &:hover {
+      border-color: var(--y-input-hover-border-color);
+      border-inline-end-width: 1px;
+    }
+
+    &:focus {
+      border-color: var(--y-input-hover-border-color);
+      box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
+      border-inline-end-width: 1px;
+      outline: 0;
+    }
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+    opacity: var(--y-input-disabled-opacity);
+  }
+}
