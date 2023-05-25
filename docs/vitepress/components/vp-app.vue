@@ -32,7 +32,7 @@
     </YButtonGroup>
     {{ a.num }}
 
-    <YForm id="form" :span="8" :gutter="8" @submit="onSubmit">
+    <YForm id="form" :span="6" :gutter="8" @submit="onSubmit">
       <YFormItem>
         <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
@@ -41,6 +41,9 @@
       </YFormItem>
       <YFormItem>
         <YInput v-model="values.age" name="age" />
+      </YFormItem>
+      <YFormItem>
+        <YInput v-model="values.test" name="test" />
       </YFormItem>
     </YForm>
     <YButton form="form" native-type="submit">提交</YButton>
@@ -66,6 +69,7 @@ const values = reactive({
   name: "11",
   value: "22",
   age: 33,
+  test: "",
 });
 const onSubmit = (val: any) => {
   console.log(val);

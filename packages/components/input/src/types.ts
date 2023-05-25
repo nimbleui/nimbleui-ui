@@ -3,7 +3,7 @@ import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 type InputType = "text" | "number";
 
-const inputProp = mergeCommonProp({
+export const inputUniqueProp = {
   /**
    * @description 输入框是否为禁用状态
    */
@@ -44,13 +44,9 @@ const inputProp = mergeCommonProp({
    * @description 输入框占位提示文字
    */
   placeholder: String,
-  /**
-   * @description 表单校验规则
-   */
-  rules: {
-    type: [Array, Function],
-  },
-});
+};
+
+const inputProp = mergeCommonProp(inputUniqueProp);
 
 export default inputProp;
 

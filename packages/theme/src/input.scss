@@ -2,8 +2,10 @@
 @use "./mixins/function.scss" as *;
 
 @include b(input) {
+  --y-input-text-color: var(--y-color-text-1);
   --y-input-border-color: var(--y-color-border-1);
   --y-input-hover-border-color: var(--y-color-primary-8);
+  --y-input-focus-border-color: var(--y-color-primary-8);
   --y-input-focus-shadow-color: var(--y-color-primary-1);
   --y-input-disabled-opacity: var(--y-color-disabled-opacity);
 }
@@ -19,6 +21,7 @@
   padding: 4px 11px;
   line-height: 1.5;
   outline: none;
+  color: var(--y-input-text-color);
 
   &:focus {
     outline: none;
@@ -34,7 +37,7 @@
     }
 
     &:focus {
-      border-color: var(--y-input-hover-border-color);
+      border-color: var(--y-input-focus-border-color);
       box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
       border-inline-end-width: 1px;
       outline: 0;

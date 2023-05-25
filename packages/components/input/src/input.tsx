@@ -1,7 +1,7 @@
-import { defineComponent, inject, getCurrentInstance, onUnmounted, computed, watch, ref, onMounted } from "vue";
-import { formContextKey, TriggerEventType } from "@yy/tokens";
-import { useExpose } from "@yy/hooks";
+import { defineComponent, inject, computed, watch, ref, onMounted } from "vue";
 import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@yy/utils";
+import { TriggerEventType, formItemContextKey } from "@yy/tokens";
+import { useExpose, useParent } from "@yy/hooks";
 
 import inputProp from "./types";
 import type { InputExpose } from "./types";
@@ -11,13 +11,8 @@ export default defineComponent({
   props: inputProp(),
   emits: ["blur", "focus", "change", "update:modelValue"],
   setup(props, ctx) {
-    // 处理form组件穿过的数据
-    const instance = getCurrentInstance();
-    const formContext = inject(formContextKey, null);
-    formContext?.link(instance);
-    onUnmounted(() => {
-      formContext?.unLink(instance);
-    });
+    // 处理formItem组件传过的数据
+    const formItemContext = useParent(formItemContextKey);
 
     const inputRef = ref<HTMLInputElement>();
     const formValue = computed(() => props.modelValue);
@@ -50,6 +45,7 @@ export default defineComponent({
     // 输入框失去焦点
     const onBlur = (event: Event) => {
       ctx.emit("blur", event);
+      formItemContext?.parent.events("onBlur", formValue.value);
     };
 
     // 输入框获取焦点
@@ -61,11 +57,13 @@ export default defineComponent({
       () => props.modelValue,
       () => {
         updateValue(getModelValue());
+        formItemContext?.parent.events("onChange", formValue.value);
       }
     );
 
     onMounted(() => {
       updateValue(getModelValue());
+      formItemContext?.parent.events("onChange", formValue.value);
     });
 
     useExpose<InputExpose>({

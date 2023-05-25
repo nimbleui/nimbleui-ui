@@ -83,13 +83,6 @@ export function setSolidColor(color: string, amount: number) {
 }
 
 /**
- * colorBgLayout: getSolidColor(colorBgBase, 4),
-    colorBgContainer: getSolidColor(colorBgBase, 0),
-    colorBgElevated: getSolidColor(colorBgBase, 0),
-    colorBgSpotlight: getAlphaColor(colorTextBase, 0.85),
- */
-
-/**
  * 两种颜色根据一定的比例混合在一起，生成另一种颜色
  * @param color1 颜色
  * @param color2 颜色

@@ -1,7 +1,8 @@
-import { ComponentInternalInstance, defineComponent, provide } from "vue";
+import { defineComponent } from "vue";
 import { formContextKey } from "@yy/tokens";
 import { YRow } from "@yy/components";
 import { pick } from "@yy/utils";
+import { useChildren } from "@yy/hooks";
 
 import formProps from "./types";
 
@@ -10,26 +11,13 @@ export default defineComponent({
   props: formProps(),
   emits: ["submit", "failed"],
   setup(props, ctx) {
-    const internalChildren: ComponentInternalInstance[] = [];
-    provide(formContextKey, {
-      link(child) {
-        child && internalChildren.push(child);
-        console.log(internalChildren);
-      },
-      unLink(child) {
-        if (child) {
-          const index = internalChildren.indexOf(child);
-          if (index > -1) {
-            internalChildren.splice(index, 1);
-          }
-        }
-      },
-    });
+    const { linkChildren, children } = useChildren(formContextKey);
+    linkChildren({ props });
 
     // 获取所有form组件的value
     const getValues = () => {
-      return internalChildren.reduce<Record<string, unknown>>((acc, child) => {
-        const proxy = child.proxy as any;
+      return children.reduce<Record<string, unknown>>((acc, child) => {
+        const proxy = child.public;
         if (proxy?.name) {
           acc[proxy.name] = proxy.formValue.value;
         }
