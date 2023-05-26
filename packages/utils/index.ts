@@ -6,3 +6,4 @@ export * from "./src/generate";
 export * from "./src/props";
 export * from "./src/object";
 export * from "./src/event";
+export * from "./src/array";

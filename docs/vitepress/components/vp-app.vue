@@ -36,10 +36,10 @@
       <YFormItem>
         <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
-      <YFormItem>
+      <YFormItem :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.value" name="value" />
       </YFormItem>
-      <YFormItem>
+      <YFormItem :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.age" name="age" />
       </YFormItem>
       <YFormItem v-if="show">

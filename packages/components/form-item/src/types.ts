@@ -3,6 +3,16 @@ import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 import { inputUniqueProp } from "@yy/components";
 import type { Rules } from "@yy/tokens";
 
+export interface FormItemState {
+  status: "failed" | "passed" | "init";
+  message: string;
+}
+
+export interface FormItemValidateError {
+  name?: string;
+  message: string;
+}
+
 const formItemProp = mergeCommonProp({
   // input组件参数
   ...inputUniqueProp,
@@ -27,6 +37,7 @@ const formItemProp = mergeCommonProp({
 export default formItemProp;
 
 export type FormItemExpose = {
+  validate(): Promise<FormItemValidateError | void>;
   inputPublic: ComputedRef<{ name?: string; value?: string }>;
 };
 
