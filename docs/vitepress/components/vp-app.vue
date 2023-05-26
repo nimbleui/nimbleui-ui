@@ -31,22 +31,22 @@
       <YButton>3333</YButton>
     </YButtonGroup>
     {{ a.num }}
-
-    <YForm id="form" :span="6" :gutter="8" @submit="onSubmit">
-      <YFormItem label="名称">
+    <YButton form="form" native-type="submit">提交</YButton>
+    <div style="height: 1000px"></div>
+    <YForm id="form" :span="6" scroll-to-error :gutter="8" @submit="onSubmit">
+      <YFormItem name="name" label="名称">
         <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
-      <YFormItem label="内容" :rules="{ required: true, message: '不能为空' }">
+      <YFormItem name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.value" name="value" />
       </YFormItem>
-      <YFormItem label="年龄" :rules="{ required: true, message: '不能为空' }">
+      <YFormItem name="age" label="年龄" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.age" name="age" />
       </YFormItem>
-      <YFormItem v-if="show" label="测试">
+      <YFormItem v-if="show" name="test" label="测试">
         <YInput v-model="values.test" name="test" />
       </YFormItem>
     </YForm>
-    <YButton form="form" native-type="submit">提交</YButton>
   </div>
 </template>
 
@@ -68,7 +68,7 @@ const span = (d: any, uuId: number) => {
 const values = reactive({
   name: "11",
   value: "22",
-  age: 33,
+  age: "",
   test: "",
 });
 const onSubmit = (val: any) => {

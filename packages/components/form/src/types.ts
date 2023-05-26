@@ -1,6 +1,7 @@
-import { ExtractPropTypes, ComponentPublicInstance } from "vue";
+import { ExtractPropTypes, ComponentPublicInstance, PropType } from "vue";
 import { rowUniqueProp } from "@yy/components/row";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { TriggerEventType, Rules } from "@yy/tokens";
 
 const formProps = mergeCommonProp({
   // row组件的参数
@@ -16,12 +17,18 @@ const formProps = mergeCommonProp({
    * @description 表单校验触发时机
    */
   validateTrigger: {
-    type: String,
+    type: [String, Array] as PropType<TriggerEventType | TriggerEventType[]>,
   },
   /**
    * @description 是否为禁用状态
    */
   disabled: mergeFunctionProp<boolean>(Boolean),
+  /**
+   * @description 表单校验规则
+   */
+  rules: {
+    type: Object as PropType<{ [key: string]: Rules }>,
+  },
 });
 
 export default formProps;

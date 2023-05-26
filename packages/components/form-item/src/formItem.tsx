@@ -21,6 +21,7 @@ export default defineComponent({
     const { linkChildren, children } = useChildren(formItemContextKey, true);
     linkChildren({
       props,
+      // input事件
       events(type) {
         if (type === "onChange") {
           state.message = "";
@@ -80,7 +81,7 @@ export default defineComponent({
         runRules(rules).then(() => {
           if (state.status === "failed") {
             resolve({
-              name: props.name,
+              name: props.name || children?.public.name,
               message: state.message,
             });
           } else {
@@ -115,7 +116,7 @@ export default defineComponent({
               <span>{isFunction(label) ? label(details.value, uuId) : label}</span>
               {state.status === "failed" ? <span>{state.message}</span> : null}
             </div>
-            {ctx.slots.default?.()}
+            <div class="y-form-item__content">{ctx.slots.default?.()}</div>
           </div>
         </YCol>
       );

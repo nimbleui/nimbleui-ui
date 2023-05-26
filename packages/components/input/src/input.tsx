@@ -63,7 +63,6 @@ export default defineComponent({
 
     onMounted(() => {
       updateValue(getModelValue());
-      formItemContext?.parent.events("onChange", formValue.value);
     });
 
     useExpose<InputExpose>({

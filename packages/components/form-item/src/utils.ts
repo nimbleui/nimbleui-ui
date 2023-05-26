@@ -62,7 +62,7 @@ export function runRuleValidator(value: unknown, rule: Rule, details: any) {
  * 把props中rules转成数组
  * @param rules 目标
  * @param details 其他信息
- * @returns {Array<Rules>}
+ * @returns {Array<Rule>}
  */
 export function formatRules(rules: Rules | undefined, details: any) {
   if (!rules) return [];
