@@ -1,7 +1,7 @@
 import type { ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
-import { inputUniqueProp } from "@yy/components";
-import type { Rules } from "@yy/tokens";
+import { inputUniqueProp } from "@yy/components/input";
+import type { Rules, TriggerEventType } from "@yy/tokens";
 
 export interface FormItemState {
   status: "failed" | "passed" | "init";
@@ -31,6 +31,16 @@ const formItemProp = mergeCommonProp({
    */
   rules: {
     type: [Array, Function, Object] as PropType<Rules>,
+  },
+  /**
+   * @description 输入框侧边文本
+   */
+  label: mergeFunctionProp<string>(String),
+  /**
+   * @description 表单校验触发时机
+   */
+  validateTrigger: {
+    type: [String, Array] as PropType<TriggerEventType | Array<TriggerEventType>>,
   },
 });
 

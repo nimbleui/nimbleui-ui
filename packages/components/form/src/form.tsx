@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { formContextKey } from "@yy/tokens";
-import { YRow } from "@yy/components";
+import { YRow } from "@yy/components/row";
 import { pick } from "@yy/utils";
 import { useChildren } from "@yy/hooks";
 
@@ -16,7 +16,6 @@ export default defineComponent({
 
     // 获取所有form组件的value
     const getValues = () => {
-      console.log(children);
       return children.reduce<Record<string, unknown>>((acc, child) => {
         const proxy = child.public;
         if (proxy?.inputPublic && proxy.inputPublic.value) {

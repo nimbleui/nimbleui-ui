@@ -1,5 +1,5 @@
 import { ExtractPropTypes, ComponentPublicInstance } from "vue";
-import { rowUniqueProp } from "@yy/components";
+import { rowUniqueProp } from "@yy/components/row";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 const formProps = mergeCommonProp({

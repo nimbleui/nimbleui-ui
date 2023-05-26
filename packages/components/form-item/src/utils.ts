@@ -76,7 +76,7 @@ export function formatRules(rules: Rules | undefined, details: any) {
  * @param trigger 过滤条件
  * @param rules 目标
  * @param details 其他信息
- * @returns {Array}
+ * @returns {boolean}
  */
 export function filterRules(trigger: TriggerEventType, rules: Rules | undefined, details: any) {
   return formatRules(rules, details).filter((rule) => {

@@ -33,16 +33,16 @@
     {{ a.num }}
 
     <YForm id="form" :span="6" :gutter="8" @submit="onSubmit">
-      <YFormItem>
+      <YFormItem label="名称">
         <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
-      <YFormItem :rules="{ required: true, message: '不能为空' }">
+      <YFormItem label="内容" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.value" name="value" />
       </YFormItem>
-      <YFormItem :rules="{ required: true, message: '不能为空' }">
+      <YFormItem label="年龄" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.age" name="age" />
       </YFormItem>
-      <YFormItem v-if="show">
+      <YFormItem v-if="show" label="测试">
         <YInput v-model="values.test" name="test" />
       </YFormItem>
     </YForm>
