@@ -9,6 +9,16 @@
   }
 }
 
+@mixin e($element) {
+  $e: $element !global;
+
+  @at-root {
+    #{'.' + $b + $element-separator + $element} {
+      @content;
+    }
+  }
+}
+
 @mixin when($state) {
   @at-root {
     &.#{$state-prefix + $state} {

@@ -9,6 +9,10 @@ export interface Opts {
   theme?: string;
   baseColor?: string;
   disabledOpacity?: number;
+  fontSize?: number;
+  fontSizeSM?: number;
+  fontSizeLG?: number;
+  fontSizeXL?: number;
 }
 
 const defaultOpt: Required<Opts> = {
@@ -20,6 +24,10 @@ const defaultOpt: Required<Opts> = {
   theme: "#ffffff",
   baseColor: "#000000",
   disabledOpacity: 0.5,
+  fontSize: 14,
+  fontSizeSM: 12,
+  fontSizeLG: 16,
+  fontSizeXL: 20,
 };
 
 // 文字的梯度
@@ -32,7 +40,10 @@ function setProperty(key: string, value: string) {
 }
 
 export function useTheme(opt: Opts = {}) {
-  const { theme, baseColor, disabledOpacity, ...options } = Object.assign(defaultOpt, opt);
+  const { theme, baseColor, disabledOpacity, fontSize, fontSizeLG, fontSizeSM, fontSizeXL, ...options } = Object.assign(
+    defaultOpt,
+    opt
+  );
   Object.keys(options).forEach((key) => {
     // 计算颜色梯度
     generate(options[key as keyof typeof options], {
@@ -61,4 +72,10 @@ export function useTheme(opt: Opts = {}) {
 
   // 禁用状态的样式
   setProperty("disabled-opacity", String(disabledOpacity));
+
+  // 字体大小的设置
+  setProperty("font-size", `${fontSize}px`);
+  setProperty("font-size-ms", `${fontSizeSM}px`);
+  setProperty("font-size-xl", `${fontSizeXL}px`);
+  setProperty("font-size-lg", `${fontSizeLG}px`);
 }

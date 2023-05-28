@@ -1,11 +1,11 @@
 import { computed, defineComponent, reactive } from "vue";
-import { formContextKey, formItemContextKey, Rule, TriggerEventType } from "@yy/tokens";
+import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@yy/tokens";
 import { useParent, useChildren, useExpose } from "@yy/hooks";
 import { createNamespace, isFunction } from "@yy/utils";
 import { YCol } from "@yy/components/col";
 
 import formItemProp from "./types";
-import type { FormItemExpose, FormItemState, FormItemValidateError } from "./types";
+import type { FormItemExpose, FormItemValidateError } from "./types";
 import { getRuleMessage, runSyncRule, isEmptyValue, runRuleValidator, formatRules, filterRules } from "./utils";
 
 export default defineComponent({
@@ -15,11 +15,13 @@ export default defineComponent({
     const state = reactive<FormItemState>({
       status: "init",
       message: "",
+      focus: false,
     });
     // 处理form组件传过的数据
     const formContext = useParent(formContextKey);
     const { linkChildren, children } = useChildren(formItemContextKey, true);
     linkChildren({
+      state,
       props,
       // input事件
       events(type) {
@@ -27,13 +29,19 @@ export default defineComponent({
           state.message = "";
           state.status = "init";
         }
+        if (type === "onFocus") {
+          state.focus = true;
+        }
+        if (type === "onBlur") {
+          state.focus = false;
+        }
 
         validateWithTrigger(type);
       },
     });
 
     const bem = createNamespace("form-item");
-    const formItemCls = computed(() => [bem.b()]);
+    const formItemCls = computed(() => [bem.b(), bem.b(props.labelAlign, props.labelAlign != "row")]);
     const details = computed(() => props.details || formContext?.parent.props.details);
 
     // 执行校验规则
@@ -100,6 +108,7 @@ export default defineComponent({
     };
 
     useExpose<FormItemExpose>({
+      state,
       validate,
       inputPublic: computed(() => ({
         name: children?.public.name,
@@ -112,11 +121,9 @@ export default defineComponent({
       return (
         <YCol tag="label" span={span}>
           <div class={formItemCls.value}>
-            <div class="y-form-item__title">
-              <span>{isFunction(label) ? label(details.value, uuId) : label}</span>
-              {state.status === "failed" ? <span>{state.message}</span> : null}
-            </div>
+            <div class="y-form-item__title">{isFunction(label) ? label(details.value, uuId) : label}</div>
             <div class="y-form-item__content">{ctx.slots.default?.()}</div>
+            {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
           </div>
         </YCol>
       );

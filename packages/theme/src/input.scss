@@ -8,6 +8,7 @@
   --y-input-focus-border-color: var(--y-color-primary-8);
   --y-input-focus-shadow-color: var(--y-color-primary-1);
   --y-input-disabled-opacity: var(--y-color-disabled-opacity);
+  --y-input-font-size: var(--y-color-font-size)
 }
 
 @include b(input) {
@@ -21,6 +22,7 @@
   padding: 4px 11px;
   line-height: 1.5;
   outline: none;
+  font-size: var(--y-input-font-size);
   color: var(--y-input-text-color);
 
   &:focus {

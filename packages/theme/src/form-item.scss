@@ -2,5 +2,38 @@
 @use "./mixins/function.scss" as *;
 
 @include b(form-item) {
+  --y-form-item-text-color: var(--y-color-text-1);
+  --y-form-item-font-size: var(--y-color-font-size);
+  --y-form-item-error-font-size: var(--y-color-font-size-ms);
+  --y-form-item-error-color: var(--y-color-error);
+}
+
+@include b(form-item) {
+  position: relative;
   display: flex;
+  font-size: var(--y-form-item-font-size);
+  color: var(--y-form-item-text-color);
+
+  @include when(column) {
+    flex-direction: column;
+  }
+
+  @include e(title) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 8px;
+  }
+
+  @include e(content) {
+    flex: 1;
+  }
+
+  @include e(error) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    font-size: var(--y-form-item-error-font-size);
+    color: var(--y-form-item-error-color);
+  }
 }

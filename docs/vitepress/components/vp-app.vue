@@ -32,8 +32,8 @@
     </YButtonGroup>
     {{ a.num }}
     <YButton form="form" native-type="submit">提交</YButton>
-    <div style="height: 1000px"></div>
-    <YForm id="form" :span="6" scroll-to-error :gutter="8" @submit="onSubmit">
+    <!-- <div style="height: 1000px"></div> -->
+    <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="8" @submit="onSubmit">
       <YFormItem name="name" label="名称">
         <YInput v-model="values.name" disabled name="name" />
       </YFormItem>
@@ -85,6 +85,9 @@ setTimeout(() => {
 setTimeout(() => {
   show.value = false;
 }, 15000);
+const formSpan = () => {
+  return show.value ? 6 : 8;
+};
 </script>
 <style>
 .item {

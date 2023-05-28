@@ -1,7 +1,8 @@
 import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
-type InputType = "text" | "number";
+type InputType = "text" | "number" | "password";
+type FunType = (value: string | number) => string;
 
 export const inputUniqueProp = {
   /**
@@ -44,6 +45,30 @@ export const inputUniqueProp = {
    * @description 输入框占位提示文字
    */
   placeholder: String,
+  /**
+   * @description 是否启用清除图标，点击清除图标后会清空输入框
+   */
+  allowClear: {
+    type: [Boolean, Function],
+  },
+  /**
+   * @description 显示清除图标的时机，always 表示输入框不为空时展示，focus 表示输入框聚焦且不为空时展示
+   */
+  clearTrigger: {
+    type: String as PropType<"focus" | "always">,
+  },
+  /**
+   * @description 指定输入值的格式
+   */
+  formatter: {
+    type: Function as PropType<FunType>,
+  },
+  /**
+   * @description 指定从格式化器输入中提取的值
+   */
+  parser: {
+    type: Function as PropType<FunType>,
+  },
 };
 
 const inputProp = mergeCommonProp(inputUniqueProp);

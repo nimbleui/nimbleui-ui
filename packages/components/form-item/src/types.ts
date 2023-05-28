@@ -1,17 +1,14 @@
 import type { ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 import { inputUniqueProp } from "@yy/components/input";
-import type { Rules, TriggerEventType } from "@yy/tokens";
-
-export interface FormItemState {
-  status: "failed" | "passed" | "init";
-  message: string;
-}
+import type { Rules, TriggerEventType, FormItemState } from "@yy/tokens";
 
 export interface FormItemValidateError {
   name?: string;
   message: string;
 }
+
+type LabelAlignType = "row" | "column";
 
 const formItemProp = mergeCommonProp({
   // input组件参数
@@ -42,11 +39,15 @@ const formItemProp = mergeCommonProp({
   validateTrigger: {
     type: [String, Array] as PropType<TriggerEventType | Array<TriggerEventType>>,
   },
+  labelAlign: {
+    type: String as PropType<LabelAlignType>,
+  },
 });
 
 export default formItemProp;
 
 export type FormItemExpose = {
+  state: FormItemState;
   validate(): Promise<FormItemValidateError | void>;
   inputPublic: ComputedRef<{ name?: string; value?: string }>;
 };
