@@ -34,17 +34,17 @@
     <YButton form="form" native-type="submit">提交</YButton>
     <!-- <div style="height: 1000px"></div> -->
     <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="8" @submit="onSubmit">
-      <YFormItem name="name" label="名称">
-        <YInput v-model="values.name" disabled name="name" />
+      <YFormItem disabled uu-id="1" name="name" label="名称">
+        <YInput v-model="values.name" placeholder="请输入" disabled name="name" />
       </YFormItem>
-      <YFormItem name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
-        <YInput v-model="values.value" name="value" />
+      <YFormItem uu-id="2" name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
+        <YInput v-model="values.value" placeholder="请输入" name="value" />
       </YFormItem>
-      <YFormItem name="age" label="年龄" :rules="{ required: true, message: '不能为空' }">
-        <YInput v-model="values.age" name="age" />
+      <YFormItem uu-id="3" name="age" label="年龄" :rules="{ required: true, message: '不能为空' }">
+        <YInput v-model="values.age" placeholder="请输入" name="age" />
       </YFormItem>
-      <YFormItem v-if="show" name="test" label="测试">
-        <YInput v-model="values.test" name="test" />
+      <YFormItem v-if="show" uu-id="4" name="test" label="测试">
+        <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
     </YForm>
   </div>
@@ -79,14 +79,11 @@ const show = ref(true);
 setTimeout(() => {
   show.value = false;
 }, 5000);
-setTimeout(() => {
-  show.value = true;
-}, 10000);
-setTimeout(() => {
-  show.value = false;
-}, 15000);
-const formSpan = () => {
-  return show.value ? 6 : 8;
+const formSpan = (details: any, uuId: string) => {
+  if (uuId === "3") {
+    return show.value ? 6 : 12;
+  }
+  return 6;
 };
 </script>
 <style>

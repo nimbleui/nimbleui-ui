@@ -1,7 +1,7 @@
 import { computed, defineComponent, reactive } from "vue";
 import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@yy/tokens";
 import { useParent, useChildren, useExpose } from "@yy/hooks";
-import { createNamespace, isFunction } from "@yy/utils";
+import { createNamespace, isFunction, runPropOrContextFunction } from "@yy/utils";
 import { YCol } from "@yy/components/col";
 
 import formItemProp from "./types";
@@ -41,7 +41,12 @@ export default defineComponent({
     });
 
     const bem = createNamespace("form-item");
-    const formItemCls = computed(() => [bem.b(), bem.b(props.labelAlign, props.labelAlign != "row")]);
+    const formItemCls = computed(() => {
+      const { labelAlign } = props;
+      const result = runPropOrContextFunction(props, formContext?.parent.props, ["disabled"]);
+
+      return [bem.b(), bem.b(labelAlign, labelAlign != "row"), bem.is("disabled", result.disabled)];
+    });
     const details = computed(() => props.details || formContext?.parent.props.details);
 
     // 执行校验规则
@@ -119,7 +124,7 @@ export default defineComponent({
     return () => {
       const { span, label, uuId } = props;
       return (
-        <YCol tag="label" span={span}>
+        <YCol uuId={uuId} tag="label" span={span}>
           <div class={formItemCls.value}>
             <div class="y-form-item__title">{isFunction(label) ? label(details.value, uuId) : label}</div>
             <div class="y-form-item__content">{ctx.slots.default?.()}</div>
