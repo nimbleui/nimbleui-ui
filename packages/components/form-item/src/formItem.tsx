@@ -1,7 +1,7 @@
 import { computed, defineComponent, reactive } from "vue";
 import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@yy/tokens";
 import { useParent, useChildren, useExpose } from "@yy/hooks";
-import { createNamespace, isFunction, runPropOrContextFunction } from "@yy/utils";
+import { createNamespace, isFunction, handlePropOrContext } from "@yy/utils";
 import { YCol } from "@yy/components/col";
 
 import formItemProp from "./types";
@@ -43,7 +43,7 @@ export default defineComponent({
     const bem = createNamespace("form-item");
     const formItemCls = computed(() => {
       const { labelAlign } = props;
-      const result = runPropOrContextFunction(props, formContext?.parent.props, ["disabled"]);
+      const result = handlePropOrContext(props, formContext?.parent.props, ["disabled"]);
 
       return [bem.b(), bem.b(labelAlign, labelAlign != "row"), bem.is("disabled", result.disabled)];
     });

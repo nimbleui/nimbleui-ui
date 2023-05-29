@@ -21,8 +21,9 @@ export default defineComponent({
 
       return [
         bem.b(),
-        bem.is(res.shape as string, res.shape !== "default"),
-        bem.is("disabled", res.disabled as boolean),
+        bem.is("disabled", res.disabled),
+        bem.is(res.type || "default", res.type !== "default"),
+        bem.is(res.shape || "default", res.shape !== "default"),
       ];
     });
 

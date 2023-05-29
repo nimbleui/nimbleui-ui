@@ -21,6 +21,11 @@
     </YRow>
     <YButton shape="round" :content="renderContent" />
     <YButton disabled :content="renderContent" />
+    <YButton type="primary" :content="renderContent" />
+    <YButton type="success" :content="renderContent" />
+    <YButton type="warning" :content="renderContent" />
+    <YButton type="error" :content="renderContent" />
+    <YButton type="info" :content="renderContent" />
     <YButton shape="circle">
       <div class="circle">圆</div>
     </YButton>
@@ -33,7 +38,7 @@
     {{ a.num }}
     <YButton form="form" native-type="submit">提交</YButton>
     <!-- <div style="height: 1000px"></div> -->
-    <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="8" @submit="onSubmit">
+    <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="10" @submit="onSubmit">
       <YFormItem disabled uu-id="1" name="name" label="名称">
         <YInput v-model="values.name" placeholder="请输入" disabled name="name" />
       </YFormItem>
@@ -89,7 +94,7 @@ const formSpan = (details: any, uuId: string) => {
 <style>
 .item {
   height: 20px;
-  background-color: aliceblue;
+  background-color: var(--y-color-primary-1);
   margin-bottom: 5px;
 }
 .circle {

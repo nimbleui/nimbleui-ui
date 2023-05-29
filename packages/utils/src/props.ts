@@ -42,15 +42,15 @@ export const mergeCommonProp = <T extends { [key: string]: ObjectType }>(props: 
  * @param callback 回调函数
  * @returns 整合后的新对象
  */
-export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, K extends Extract<keyof T, keyof D>>(
+export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, K extends keyof T & keyof D>(
   props: T,
   context: D | undefined,
   keys: Array<K>,
   callback?: (value: any, contextValue: any, key: K) => any
-): Record<K, T[K]> => {
+) => {
   let index = -1;
   const length = keys.length;
-  const result = {} as Record<K, T[K]>;
+  const result = {} as { [P in K]: Exclude<T[P], Fun<any>> };
   const details = props.details || context?.details || {};
 
   while (props != null && ++index < length) {
@@ -67,37 +67,3 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
   }
   return result;
 };
-
-/**
- * 执行对象中的keys属性函数
- * @param props
- * @param context
- * @param keys
- * @param callback
- * @returns
- */
-export function runPropOrContextFunction<T extends ObjectType, D extends ObjectType, K extends keyof T & keyof D>(
-  props: T,
-  context: D | undefined,
-  keys: Array<K>,
-  callback?: (value: any, contextValue: any, key: K) => any
-) {
-  let index = -1;
-  const length = keys.length;
-  const result = {} as Record<K, Exclude<T[K], Fun<any>>>;
-  const details = props.details || context?.details || {};
-
-  while (props != null && ++index < length) {
-    const key = keys[index];
-
-    if (callback) {
-      result[key] = callback(props[key], context?.[key], key);
-    } else {
-      const value: unknown = props[key] ?? context?.[key];
-
-      const _value = isFunction(value) ? value(details, props.uuId) : value;
-      result[key] = _value;
-    }
-  }
-  return result;
-}

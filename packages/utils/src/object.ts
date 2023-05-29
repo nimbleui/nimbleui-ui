@@ -11,7 +11,7 @@ export function pick<T extends { [key: string]: any }, U extends keyof T>(
 ): Pick<T, U> {
   let index = -1;
   const length = paths.length;
-  const result = {} as Record<U, any>;
+  const result = {} as Pick<T, U>;
 
   while (obj != null && ++index < length) {
     const path = paths[index];

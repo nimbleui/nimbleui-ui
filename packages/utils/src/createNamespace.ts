@@ -3,7 +3,7 @@ class BEM {
   constructor(name: string) {
     this.block = `y-${name}`;
   }
-  b(name?: string, state = true) {
+  b<T extends string>(name?: T, state = true) {
     return name ? (state ? `${this.block}-${name}` : undefined) : this.block;
   }
 
@@ -16,7 +16,7 @@ class BEM {
     return modifier ? `${this.block}--${modifier}` : undefined;
   }
 
-  is(name: string, state = true) {
+  is<T extends string>(name: T, state = true) {
     return name && state ? `is-${name}` : undefined;
   }
 }
