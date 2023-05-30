@@ -9,10 +9,11 @@ import type { InputExpose } from "./types";
 export default defineComponent({
   name: "YInput",
   props: inputProp(),
-  emits: ["blur", "focus", "change", "update:modelValue"],
+  emits: ["blur", "focus", "change", "update:modelValue", "clear"],
   setup(props, ctx) {
     // 处理formItem组件传过的数据
     const formItemContext = useParent(formItemContextKey);
+    const isFocus = computed(() => formItemContext?.parent.state.focus);
 
     const inputRef = ref<HTMLInputElement>();
     const formValue = computed(() => props.modelValue);
@@ -22,7 +23,7 @@ export default defineComponent({
     const bem = createNamespace("input");
     const inputCls = computed(() => {
       const res = handlePropOrContext(props, undefined, ["disabled"]);
-      return [bem.b(), bem.is("disabled", res.disabled as boolean), bem.is("border", props.bordered)];
+      return [bem.e("wrapper"), bem.is("disabled", res.disabled)];
     });
 
     // 更新输入框内容
@@ -51,6 +52,7 @@ export default defineComponent({
     // 输入框获取焦点
     const onFocus = (event: Event) => {
       ctx.emit("focus", event);
+      formItemContext?.parent.events("onFocus", formValue.value);
     };
 
     watch(
@@ -69,20 +71,44 @@ export default defineComponent({
       formValue,
     });
 
+    const onClear = () => {
+      ctx.emit("update:modelValue", "");
+      ctx.emit("change", "");
+      ctx.emit("focus", "");
+      ctx.emit("clear", "");
+    };
+
     return () => {
-      const { type, placeholder } = props;
+      const { bordered, type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } =
+        props;
+
       return (
-        <input
-          type={type}
-          ref={inputRef}
-          class={inputCls.value}
-          placeholder={placeholder}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          onInput={onInput}
-          onCompositionend={endComposing}
-          onCompositionstart={startComposing}
-        />
+        <div class={[bem.b(), bem.is("bordered", bordered), bem.is("focus", isFocus.value)]}>
+          <input
+            type={type}
+            ref={inputRef}
+            readonly={readonly}
+            maxlength={maxLength}
+            minlength={minLength}
+            autofocus={autofocus}
+            class={inputCls.value}
+            placeholder={placeholder}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            onInput={onInput}
+            onCompositionend={endComposing}
+            onCompositionstart={startComposing}
+          />
+          <span class={bem.e("suffix")}>
+            {allowClear &&
+              formValue.value &&
+              (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
+                <span onClick={onClear} class={bem.e("clear")}>
+                  清除
+                </span>
+              ) : null)}
+          </span>
+        </div>
       );
     };
   },

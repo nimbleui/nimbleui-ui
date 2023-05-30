@@ -43,7 +43,7 @@
         <YInput v-model="values.name" placeholder="请输入" disabled name="name" />
       </YFormItem>
       <YFormItem uu-id="2" name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
-        <YInput v-model="values.value" placeholder="请输入" name="value" />
+        <YInput v-model="values.value" clear-trigger="always" placeholder="请输入" name="value" />
       </YFormItem>
       <YFormItem uu-id="3" name="age" label="年龄" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.age" placeholder="请输入" name="age" />

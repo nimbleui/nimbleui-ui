@@ -46,16 +46,27 @@ export const inputUniqueProp = {
    */
   placeholder: String,
   /**
+   * @description 原生属性，最大输入长度
+   */
+  maxLength: Number,
+  /**
+   * @description 原生属性，最小输入长度
+   */
+  minLength: Number,
+  /**
+   * @description 原生属性，自动获取焦点
+   */
+  autofocus: Boolean,
+  /**
    * @description 是否启用清除图标，点击清除图标后会清空输入框
    */
-  allowClear: {
-    type: [Boolean, Function],
-  },
+  allowClear: Boolean,
   /**
    * @description 显示清除图标的时机，always 表示输入框不为空时展示，focus 表示输入框聚焦且不为空时展示
    */
   clearTrigger: {
     type: String as PropType<"focus" | "always">,
+    default: "focus",
   },
   /**
    * @description 指定输入值的格式

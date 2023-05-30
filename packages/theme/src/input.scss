@@ -12,42 +12,59 @@
 }
 
 @include b(input) {
+  padding: 4px 11px;
   position: relative;
   display: inline-flex;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
   vertical-align: middle;
+  border: 1px solid;
   border-color: transparent;
   border-radius: 4px;
-  padding: 4px 11px;
-  line-height: 1.5;
-  outline: none;
   font-size: var(--y-input-font-size);
   color: var(--y-input-text-color);
+  overflow: hidden;
 
-  &:focus {
+  @include e(wrapper) {
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+    line-height: 1.5;
     outline: none;
+    border: none;
+    font-size: var(--y-input-font-size);
+    color: var(--y-input-text-color);
+
+    &:focus {
+      outline: none;
+      outline: 0;
+    }
   }
 
-  @include when(border) {
+  @include when(bordered) {
     border: 1px solid;
     border-color: var(--y-input-border-color);
-    
+      
     &:hover {
       border-color: var(--y-input-hover-border-color);
       border-inline-end-width: 1px;
-    }
-
-    &:focus {
-      border-color: var(--y-input-focus-border-color);
-      box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
-      border-inline-end-width: 1px;
-      outline: 0;
     }
   }
 
   @include when(disabled) {
     cursor: not-allowed;
     opacity: var(--y-input-disabled-opacity);
+  }
+  
+  @include when(focus) {
+    border-color: var(--y-input-focus-border-color);
+    box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
+    border-inline-end-width: 1px;
+  }
+
+  @include e(clear) {
+    cursor: pointer;
+    font-size: 10px;
   }
 }
