@@ -19,7 +19,7 @@ export default defineComponent({
     });
     // 处理form组件传过的数据
     const formContext = useParent(formContextKey);
-    const { linkChildren, children } = useChildren(formItemContextKey, true);
+    const { linkChildren, children } = useChildren(formItemContextKey);
     linkChildren({
       state,
       props,
@@ -55,7 +55,7 @@ export default defineComponent({
         return promise.then(() => {
           if (state.status == "failed") return;
 
-          let value = children?.public.modelValue;
+          let value = children[0]?.public.modelValue;
 
           if (rule.formatter) {
             value = rule.formatter(value, rule, details.value);
@@ -94,7 +94,7 @@ export default defineComponent({
         runRules(rules).then(() => {
           if (state.status === "failed") {
             resolve({
-              name: props.name || children?.public.name,
+              name: props.name || children[0]?.public.name,
               message: state.message,
             });
           } else {
@@ -112,21 +112,29 @@ export default defineComponent({
       }
     };
 
+    const labelFor = computed(() => {
+      return props.for || children.length === 1 ? children[0]?.public.inputId.value : undefined;
+    });
+
     useExpose<FormItemExpose>({
       state,
       validate,
       inputPublic: computed(() => ({
-        name: children?.public.name,
-        value: children?.public.modelValue,
+        name: children[0]?.public.name,
+        value: children[0]?.public.modelValue,
       })),
     });
 
     return () => {
       const { span, label, uuId } = props;
       return (
-        <YCol uuId={uuId} tag="label" span={span}>
+        <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
-            <div class="y-form-item__title">{isFunction(label) ? label(details.value, uuId) : label}</div>
+            {label ? (
+              <label for={labelFor.value} class="y-form-item__title">
+                {isFunction(label) ? label(details.value, uuId) : label}
+              </label>
+            ) : null}
             <div class="y-form-item__content">{ctx.slots.default?.()}</div>
             {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
           </div>

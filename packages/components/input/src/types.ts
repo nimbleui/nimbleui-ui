@@ -6,6 +6,10 @@ type FunType = (value: string | number) => string;
 
 export const inputUniqueProp = {
   /**
+   * @description 原生属性id
+   */
+  id: String,
+  /**
    * @description 输入框是否为禁用状态
    */
   disabled: mergeFunctionProp<boolean>(Boolean),
@@ -87,6 +91,7 @@ const inputProp = mergeCommonProp(inputUniqueProp);
 export default inputProp;
 
 export type InputExpose = {
+  inputId: ComputedRef<string>;
   formValue: ComputedRef<unknown>;
 };
 

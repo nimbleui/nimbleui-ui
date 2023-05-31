@@ -39,9 +39,16 @@ const formItemProp = mergeCommonProp({
   validateTrigger: {
     type: [String, Array] as PropType<TriggerEventType | Array<TriggerEventType>>,
   },
+  /**
+   * label标签与输入框的排列方式
+   */
   labelAlign: {
     type: String as PropType<LabelAlignType>,
   },
+  /**
+   * @description 和label原生标签相同能力
+   */
+  for: String,
 });
 
 export default formItemProp;

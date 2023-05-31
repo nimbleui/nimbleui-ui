@@ -3,43 +3,22 @@ import type { ComponentInternalInstance } from "vue";
 import type { ProvideContext, ChildrenType } from "@yy/tokens";
 
 type Key<T> = InjectionKey<ProvideContext<T>>;
-type LinkChildren<T> = (value: T) => void;
 
-function useChildren<T>(key: Key<T>): {
-  linkChildren: LinkChildren<T>;
-  children: ChildrenType[];
-};
-function useChildren<T>(
-  key: Key<T>,
-  isObject: boolean
-): {
-  linkChildren: (value: T) => void;
-  children: ChildrenType;
-};
-function useChildren<T>(key: InjectionKey<ProvideContext<T>>, isObject?: boolean) {
+function useChildren<T>(key: Key<ProvideContext<T>>) {
   const childrenList: ChildrenType[] = reactive([]);
-  const childrenObj = reactive<ChildrenType>({} as ChildrenType);
 
   const linkChildren = (value?: T) => {
     const link = (child: ComponentInternalInstance | null) => {
       if (!child?.proxy) return;
 
       const item = { internal: child, public: child.proxy };
-      if (isObject) {
-        Object.assign(childrenObj, item);
-      } else {
-        childrenList.push(item);
-      }
+      childrenList.push(item);
     };
 
     const unlink = (child: ComponentInternalInstance | null) => {
-      if (isObject) {
-        Object.assign(childrenObj, { internal: null, public: null });
-      } else {
-        const index = childrenList.findIndex((item) => item.internal.uid == child?.uid);
-        if (index > -1) {
-          childrenList.splice(index, 1);
-        }
+      const index = childrenList.findIndex((item) => item.internal.uid == child?.uid);
+      if (index > -1) {
+        childrenList.splice(index, 1);
       }
     };
 
@@ -49,7 +28,7 @@ function useChildren<T>(key: InjectionKey<ProvideContext<T>>, isObject?: boolean
         {
           link,
           unlink,
-          children: isObject ? childrenObj : childrenList,
+          children: childrenList,
         },
         value
       )
@@ -57,7 +36,7 @@ function useChildren<T>(key: InjectionKey<ProvideContext<T>>, isObject?: boolean
   };
 
   return {
-    children: isObject ? childrenObj : childrenList,
+    children: childrenList,
     linkChildren,
   };
 }

@@ -1,7 +1,7 @@
 import { defineComponent, computed, watch, ref, onMounted } from "vue";
 import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@yy/utils";
 import { TriggerEventType, formItemContextKey } from "@yy/tokens";
-import { useExpose, useParent } from "@yy/hooks";
+import { useExpose, useParent, useCreateId } from "@yy/hooks";
 
 import inputProp from "./types";
 import type { InputExpose } from "./types";
@@ -67,15 +67,17 @@ export default defineComponent({
       updateValue(getModelValue());
     });
 
+    const { id: inputId } = useCreateId();
+
     useExpose<InputExpose>({
+      inputId,
       formValue,
     });
 
     const onClear = () => {
       ctx.emit("update:modelValue", "");
-      ctx.emit("change", "");
-      ctx.emit("focus", "");
       ctx.emit("clear", "");
+      inputRef.value?.focus();
     };
 
     return () => {
@@ -87,6 +89,7 @@ export default defineComponent({
           <input
             type={type}
             ref={inputRef}
+            id={inputId.value}
             readonly={readonly}
             maxlength={maxLength}
             minlength={minLength}

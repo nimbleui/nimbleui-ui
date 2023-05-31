@@ -51,6 +51,9 @@
       <YFormItem v-if="show" uu-id="4" name="test" label="测试">
         <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
+      <YFormItem>
+        <YCheckbox v-model="checked" :value="1" name="checkbox"></YCheckbox>
+      </YFormItem>
     </YForm>
   </div>
 </template>
@@ -90,6 +93,7 @@ const formSpan = (details: any, uuId: string) => {
   }
   return 6;
 };
+const checked = ref(1);
 </script>
 <style>
 .item {

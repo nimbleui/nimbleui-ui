@@ -11,7 +11,7 @@ export interface FormItemState {
 type FormItemContext = ProvideContext<{
   state: FormItemState;
   props: FormItemProps;
-  events: (type: TriggerEventType, value: string | number) => void;
+  events: (type: TriggerEventType, value: string | number | boolean) => void;
 }>;
 
 export const formItemContextKey: InjectionKey<FormItemContext> = Symbol("formItemContext");

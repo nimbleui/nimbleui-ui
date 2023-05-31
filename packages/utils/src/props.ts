@@ -46,7 +46,7 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
   props: T,
   context: D | undefined,
   keys: Array<K>,
-  callback?: (value: any, contextValue: any, key: K) => any
+  callback?: (value: T[K], contextValue: D[K] | undefined, key: K) => Exclude<T[K], Fun<any>>
 ) => {
   let index = -1;
   const length = keys.length;
