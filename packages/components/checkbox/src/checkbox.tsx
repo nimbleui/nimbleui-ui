@@ -34,12 +34,14 @@ export default defineComponent({
     };
 
     return () => {
+      const { shape = "square" } = props;
       return (
         <label class={[bem.b()]}>
-          <span class={[bem.e("input"), bem.is("checked", model.value)]}>
+          <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
             <input checked={model.value} onChange={handleChange} type="checkbox" />
             <span class={[bem.e("inner")]}></span>
           </span>
+          <span class={[bem.e("label")]}></span>
         </label>
       );
     };

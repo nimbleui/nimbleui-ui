@@ -9,6 +9,7 @@
   --y-checkbox-border-color: var(--y-color-border-1);
   --y-checkbox-checked-border-color: var(--y-color-primary);
   --y-checkbox-checked-bg-color: var(--y-color-primary);
+  --y-checkbox-disabled-opacity: var(--y-color-disabled-opacity);
 }
 
 @include b(checkbox) {
@@ -68,6 +69,18 @@
         animation-fill-mode: forwards;
       }
     }
+
+    @include when(round) {
+      border-radius: 50%;
+  
+      &::after {
+        border-radius: 50%;
+      }
+  
+      #{'.' + $b + $element-separator + 'inner'} {
+        border-radius: 50%;
+      }
+    }
   }
   
   @include e(inner) {
@@ -108,5 +121,15 @@
       transform: rotate(45deg) scale(1) translate(-50%, -50%);
       transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
     }
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+    opacity: get-css-var('checkbox', 'disabled', 'opacity');
+  }
+
+  @include e(label) {
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
   }
 }

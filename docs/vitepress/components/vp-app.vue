@@ -53,6 +53,7 @@
       </YFormItem>
       <YFormItem>
         <YCheckbox v-model="checked" :value="1" name="checkbox" />
+        <YCheckbox v-model="checked" shape="round" :value="1" name="checkbox" />
       </YFormItem>
     </YForm>
   </div>
