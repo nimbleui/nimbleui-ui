@@ -52,7 +52,7 @@
         <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
       <YFormItem>
-        <YCheckbox v-model="checked" :value="1" name="checkbox"></YCheckbox>
+        <YCheckbox v-model="checked" :value="1" name="checkbox" />
       </YFormItem>
     </YForm>
   </div>

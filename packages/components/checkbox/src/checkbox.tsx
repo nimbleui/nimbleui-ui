@@ -17,7 +17,6 @@ export default defineComponent({
         return modelValue === true || value === modelValue;
       },
       set: (val) => {
-        console.log(val);
         ctx.emit("change", val);
       },
     });
@@ -36,9 +35,12 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={[bem.b()]}>
-          <input checked={model.value} onChange={handleChange} type="checkbox" />
-        </div>
+        <label class={[bem.b()]}>
+          <span class={[bem.e("input"), bem.is("checked", model.value)]}>
+            <input checked={model.value} onChange={handleChange} type="checkbox" />
+            <span class={[bem.e("inner")]}></span>
+          </span>
+        </label>
       );
     };
   },
