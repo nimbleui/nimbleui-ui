@@ -147,7 +147,7 @@ export default defineComponent({
         <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
             {
-              <label for={labelFor.value} class="y-form-item__title">
+              <label for={labelFor.value} class="y-form-item__label">
                 {isFunction(label)
                   ? label(details.value, uuId)
                   : label || ctx.slots.label?.({ details: details.value })}

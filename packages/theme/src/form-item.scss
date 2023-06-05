@@ -6,7 +6,8 @@
   --y-form-item-font-size: var(--y-font-size);
   --y-form-item-error-font-size: var(--y-font-size-ms);
   --y-form-item-error-color: var(--y-color-error);
-  --y-form-item-disabled-opacity: var(--y-disabled-opacity)
+  --y-form-item-disabled-opacity: var(--y-disabled-opacity);
+  --y-form-item-height: var(--y-height-m);
 }
 
 @include b(form-item) {
@@ -25,17 +26,21 @@
     opacity: var(--y-form-item-disabled-opacity);
   }
 
-  @include e(title) {
+  @include e(label) {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-right: 8px;
     white-space: nowrap;
     vertical-align: middle;
+    height: var(--y-form-item-height);
+    line-height: var(--y-form-item-height);
   }
 
   @include e(content) {
     flex: 1;
+    min-height: var(--y-form-item-height);
+    line-height: var(--y-form-item-height);
   }
 
   @include e(error) {

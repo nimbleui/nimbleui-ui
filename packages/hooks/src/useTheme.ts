@@ -78,4 +78,8 @@ export function useTheme(opt: Opts = {}) {
   setProperty("font-size-ms", `${fontSizeSM}px`, false);
   setProperty("font-size-xl", `${fontSizeXL}px`, false);
   setProperty("font-size-lg", `${fontSizeLG}px`, false);
+
+  setProperty("height-l", "40px", false);
+  setProperty("height-m", "32px", false);
+  setProperty("height-s", "24px", false);
 }

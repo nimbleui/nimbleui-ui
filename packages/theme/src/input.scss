@@ -8,11 +8,11 @@
   --y-input-focus-border-color: var(--y-color-primary-8);
   --y-input-focus-shadow-color: var(--y-color-primary-1);
   --y-input-disabled-opacity: var(--y-disabled-opacity);
-  --y-input-font-size: var(--y-font-size)
+  --y-input-font-size: var(--y-font-size);
+  --y-input-height: var(--y-height-m, 32px);
 }
 
 @include b(input) {
-  padding: 4px 11px;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -21,6 +21,7 @@
   vertical-align: middle;
   border: 1px solid;
   border-color: transparent;
+  height: var(--y-input-height);
   border-radius: 4px;
   font-size: var(--y-input-font-size);
   color: var(--y-input-text-color);
@@ -47,6 +48,7 @@
   }
 
   @include when(bordered) {
+    height: var(--y-input-height);
     border: 1px solid;
     border-color: var(--y-input-border-color);
       
