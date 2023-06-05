@@ -1,4 +1,4 @@
-import type { InjectionKey } from "vue";
+import type { InjectionKey, ComputedRef } from "vue";
 import type { ProvideContext, TriggerEventType } from "./types";
 import type { FormItemProps } from "@yy/components";
 
@@ -11,6 +11,7 @@ export interface FormItemState {
 type FormItemContext = ProvideContext<{
   state: FormItemState;
   props: FormItemProps;
+  details: ComputedRef<any>;
   events: (type: TriggerEventType, value: string | number | boolean) => void;
 }>;
 

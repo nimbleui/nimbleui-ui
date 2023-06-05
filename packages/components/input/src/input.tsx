@@ -86,22 +86,23 @@ export default defineComponent({
 
       return (
         <div class={[bem.b(), bem.is("bordered", bordered), bem.is("focus", isFocus.value)]}>
-          <input
-            type={type}
-            ref={inputRef}
-            id={inputId.value}
-            readonly={readonly}
-            maxlength={maxLength}
-            minlength={minLength}
-            autofocus={autofocus}
-            class={inputCls.value}
-            placeholder={placeholder}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            onInput={onInput}
-            onCompositionend={endComposing}
-            onCompositionstart={startComposing}
-          />
+          <span class={inputCls.value}>
+            <input
+              type={type}
+              ref={inputRef}
+              id={inputId.value}
+              readonly={readonly}
+              maxlength={maxLength}
+              minlength={minLength}
+              autofocus={autofocus}
+              placeholder={placeholder}
+              onBlur={onBlur}
+              onFocus={onFocus}
+              onInput={onInput}
+              onCompositionend={endComposing}
+              onCompositionstart={startComposing}
+            />
+          </span>
           <span class={bem.e("suffix")}>
             {allowClear &&
               formValue.value &&

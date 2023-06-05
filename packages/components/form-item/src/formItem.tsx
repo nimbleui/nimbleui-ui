@@ -19,10 +19,13 @@ export default defineComponent({
     });
     // 处理form组件传过的数据
     const formContext = useParent(formContextKey);
+    const details = computed(() => props.details || formContext?.parent.props.details);
+
     const { linkChildren, children } = useChildren(formItemContextKey);
     linkChildren({
       state,
       props,
+      details,
       // input事件
       events(type) {
         if (type === "onChange") {
@@ -45,9 +48,8 @@ export default defineComponent({
       const { labelAlign } = props;
       const result = handlePropOrContext(props, formContext?.parent.props, ["disabled"]);
 
-      return [bem.b(), bem.b(labelAlign, labelAlign != "row"), bem.is("disabled", result.disabled)];
+      return [bem.b(), bem.b(labelAlign || "row", labelAlign != "row"), bem.is("disabled", result.disabled)];
     });
-    const details = computed(() => props.details || formContext?.parent.props.details);
 
     // 执行校验规则
     const runRules = (rules: Rule[]) => {
@@ -116,13 +118,27 @@ export default defineComponent({
       return props.for || children.length === 1 ? children[0]?.public.inputId.value : undefined;
     });
 
+    const inputPublic = computed(() => {
+      const name = children[0]?.public.name;
+      let value: any;
+      if (children.length > 1) {
+        value = children.reduce<any[]>((acc, child) => {
+          const modelValue = child?.public.modelValue;
+          if (modelValue) {
+            acc.push(modelValue);
+          }
+          return acc;
+        }, []);
+      } else {
+        value = children[0]?.public.modelValue;
+      }
+      return { name, value };
+    });
+
     useExpose<FormItemExpose>({
       state,
       validate,
-      inputPublic: computed(() => ({
-        name: children[0]?.public.name,
-        value: children[0]?.public.modelValue,
-      })),
+      inputPublic,
     });
 
     return () => {
@@ -130,12 +146,14 @@ export default defineComponent({
       return (
         <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
-            {label ? (
+            {
               <label for={labelFor.value} class="y-form-item__title">
-                {isFunction(label) ? label(details.value, uuId) : label}
+                {isFunction(label)
+                  ? label(details.value, uuId)
+                  : label || ctx.slots.label?.({ details: details.value })}
               </label>
-            ) : null}
-            <div class="y-form-item__content">{ctx.slots.default?.()}</div>
+            }
+            <div class="y-form-item__content">{ctx.slots.default?.({ details: details.value })}</div>
             {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
           </div>
         </YCol>

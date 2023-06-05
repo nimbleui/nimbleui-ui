@@ -1,6 +1,6 @@
 import { computed, defineComponent } from "vue";
 
-import { createNamespace } from "@yy/utils";
+import { createNamespace, isFunction } from "@yy/utils";
 import { useParent } from "@yy/hooks";
 import { formItemContextKey } from "@yy/tokens";
 
@@ -33,15 +33,38 @@ export default defineComponent({
       formItemContext?.parent.events("onChange", modelValue);
     };
 
-    return () => {
+    const details = computed(() => props.details || formItemContext?.parent.details.value);
+
+    // 渲染侧边文案
+    const labelRender = () => {
+      const { label } = props;
+      return (
+        (label || ctx.slots.default) && (
+          <span class={[bem.e("label")]}>
+            {isFunction(label) ? label(details.value) : label ?? ctx.slots.default?.(details.value)}
+          </span>
+        )
+      );
+    };
+
+    // 渲染input标签
+    const inputRender = () => {
       const { shape = "square" } = props;
       return (
+        <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
+          <input checked={model.value} onChange={handleChange} type="checkbox" />
+          <span class={[bem.e("inner")]}></span>
+        </span>
+      );
+    };
+
+    return () => {
+      const { labelPosition } = props;
+      return (
         <label class={[bem.b()]}>
-          <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
-            <input checked={model.value} onChange={handleChange} type="checkbox" />
-            <span class={[bem.e("inner")]}></span>
-          </span>
-          <span class={[bem.e("label")]}></span>
+          {labelPosition === "left" && labelRender()}
+          {inputRender()}
+          {labelPosition === "right" && labelRender()}
         </label>
       );
     };

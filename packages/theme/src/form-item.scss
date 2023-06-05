@@ -12,6 +12,7 @@
 @include b(form-item) {
   position: relative;
   display: flex;
+  width: 100%;
   font-size: var(--y-form-item-font-size);
   color: var(--y-form-item-text-color);
 
@@ -29,6 +30,8 @@
     align-items: center;
     justify-content: space-between;
     padding-right: 8px;
+    white-space: nowrap;
+    vertical-align: middle;
   }
 
   @include e(content) {

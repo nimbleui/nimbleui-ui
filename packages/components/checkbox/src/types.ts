@@ -25,6 +25,7 @@ const checkboxProps = mergeCommonProp({
    */
   labelPosition: {
     type: String as PropType<CheckerLabelPosition>,
+    default: "right",
   },
   /**
    * @description 形状

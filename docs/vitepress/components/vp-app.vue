@@ -1,6 +1,6 @@
 <template>
   <div>
-    <YRow :details="a" justify="space-around" :gutter="8" :span="span">
+    <!-- <YRow :details="a" justify="space-around" :gutter="8" :span="span">
       <YCol uu-id="1">
         <div class="item"></div>
       </YCol>
@@ -35,11 +35,12 @@
       <YButton>2222</YButton>
       <YButton>3333</YButton>
     </YButtonGroup>
-    {{ a.num }}
+    {{ a.num }} -->
     <YButton form="form" native-type="submit">提交</YButton>
     <!-- <div style="height: 1000px"></div> -->
     <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="10" @submit="onSubmit">
-      <YFormItem disabled uu-id="1" name="name" label="名称">
+      <YFormItem disabled uu-id="1" name="name">
+        <template #label>名称1</template>
         <YInput v-model="values.name" placeholder="请输入" disabled name="name" />
       </YFormItem>
       <YFormItem uu-id="2" name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
@@ -52,8 +53,9 @@
         <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
       <YFormItem>
-        <YCheckbox v-model="checked" :value="1" name="checkbox" />
-        <YCheckbox v-model="checked" shape="round" :value="1" name="checkbox" />
+        <template #label>多选框：</template>
+        <YCheckbox v-model="checked" label="测试" :value="1" name="checkbox" />
+        <YCheckbox v-model="checked" label="测试" shape="round" :value="2" name="checkbox" />
       </YFormItem>
     </YForm>
   </div>

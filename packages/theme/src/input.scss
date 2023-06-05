@@ -27,18 +27,22 @@
   overflow: hidden;
 
   @include e(wrapper) {
-    display: inline-flex;
-    align-items: center;
     flex: 1;
-    line-height: 1.5;
-    outline: none;
-    border: none;
-    font-size: var(--y-input-font-size);
-    color: var(--y-input-text-color);
 
-    &:focus {
+    & > input {
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.5;
       outline: none;
-      outline: 0;
+      border: none;
+      width: 100%;
+      font-size: var(--y-input-font-size);
+      color: var(--y-input-text-color);
+  
+      &:focus {
+        outline: none;
+        outline: 0;
+      }
     }
   }
 
