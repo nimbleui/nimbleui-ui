@@ -11,9 +11,10 @@
 
 @mixin e($element) {
   $e: $element !global;
+  $be: $b + $element-separator + $element !global;
 
   @at-root {
-    #{'.' + $b + $element-separator + $element} {
+    #{'.' + $be} {
       @content;
     }
   }

@@ -41,21 +41,28 @@
     <YForm id="form" :span="formSpan" :details="values" scroll-to-error :gutter="10" @submit="onSubmit">
       <YFormItem disabled uu-id="1" name="name">
         <template #label>名称1</template>
-        <YInput v-model="values.name" placeholder="请输入" disabled name="name" />
+        <YInput v-model="values.name" placeholder="请输入：" disabled name="name" />
       </YFormItem>
-      <YFormItem uu-id="2" name="value" label="内容" :rules="{ required: true, message: '不能为空' }">
+      <YFormItem uu-id="2" name="value" label="内容：" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.value" clear-trigger="always" placeholder="请输入" name="value" />
       </YFormItem>
-      <YFormItem uu-id="3" name="age" label="年龄" :rules="{ required: true, message: '不能为空' }">
+      <YFormItem uu-id="3" name="age" label="年龄：" :rules="{ required: true, message: '不能为空' }">
         <YInput v-model="values.age" placeholder="请输入" name="age" />
       </YFormItem>
-      <YFormItem v-if="show" uu-id="4" name="test" label="测试">
+      <YFormItem v-if="show" uu-id="4" name="test" label="测试：">
         <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
       <YFormItem>
         <template #label>多选框：</template>
-        <YCheckbox v-model="checked" label="测试" :value="1" name="checkbox" />
-        <YCheckbox v-model="checked" label="测试" shape="round" :value="2" name="checkbox" />
+        <div>
+          <YCheckbox v-model="checked" label="测试" :value="1" name="checkbox" />
+          <YCheckbox label="测试" shape="round" :value="2" name="checkbox" />
+          <YCheckbox label="测试" shape="round" :value="2" name="checkbox" />
+        </div>
+        <div>
+          <YCheckbox label="测试" :value="3" name="checkbox" />
+          <YCheckbox label="测试" shape="round" :value="4" name="checkbox" />
+        </div>
       </YFormItem>
     </YForm>
   </div>

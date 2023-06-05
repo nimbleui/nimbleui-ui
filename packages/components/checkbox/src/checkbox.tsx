@@ -1,4 +1,4 @@
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 import { createNamespace, isFunction } from "@yy/utils";
 import { useParent } from "@yy/hooks";
@@ -11,12 +11,15 @@ export default defineComponent({
   props: checkboxProps(),
   emits: ["update:modelValue", "change"],
   setup(props, ctx) {
+    const selfModel = ref(false);
     const model = computed({
       get: () => {
         const { modelValue, value } = props;
-        return modelValue === true || value === modelValue;
+        const _value = modelValue ?? selfModel.value;
+        return _value === true || value === _value;
       },
       set: (val) => {
+        selfModel.value = val;
         ctx.emit("change", val);
       },
     });

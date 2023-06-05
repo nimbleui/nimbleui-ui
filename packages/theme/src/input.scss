@@ -14,7 +14,7 @@
 
 @include b(input) {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
@@ -29,6 +29,7 @@
 
   @include e(wrapper) {
     flex: 1;
+    padding: 0 8px;
 
     & > input {
       display: inline-flex;
