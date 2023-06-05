@@ -7,8 +7,8 @@
   --y-input-hover-border-color: var(--y-color-primary-8);
   --y-input-focus-border-color: var(--y-color-primary-8);
   --y-input-focus-shadow-color: var(--y-color-primary-1);
-  --y-input-disabled-opacity: var(--y-color-disabled-opacity);
-  --y-input-font-size: var(--y-color-font-size)
+  --y-input-disabled-opacity: var(--y-disabled-opacity);
+  --y-input-font-size: var(--y-font-size)
 }
 
 @include b(input) {

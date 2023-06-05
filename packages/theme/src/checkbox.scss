@@ -5,11 +5,11 @@
 @include b(checkbox) {
   --y-checkbox-size: 16px;
   --y-checkbox-text-color: var(--y-color-text-1);
-  --y-checkbox-font-size: var(--y-color-font-size);
+  --y-checkbox-font-size: var(--y-font-size);
   --y-checkbox-border-color: var(--y-color-border-1);
   --y-checkbox-checked-border-color: var(--y-color-primary);
   --y-checkbox-checked-bg-color: var(--y-color-primary);
-  --y-checkbox-disabled-opacity: var(--y-color-disabled-opacity);
+  --y-checkbox-disabled-opacity: var(--y-disabled-opacity);
 }
 
 @include b(checkbox) {
@@ -102,8 +102,8 @@
       top: 50%;
       inset-inline-start: 21.5%;
       content: "";
-      width: calc(var(--y-color-font-size) / 14 * 5);
-      height: calc(var(--y-color-font-size) / 14 * 8);
+      width: calc(var(--y-font-size) / 14 * 5);
+      height: calc(var(--y-font-size) / 14 * 8);
       border: 2px solid #fff;
       border-top: 0;
       border-inline-start: 0;

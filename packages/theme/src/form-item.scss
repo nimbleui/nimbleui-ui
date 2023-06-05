@@ -3,10 +3,10 @@
 
 @include b(form-item) {
   --y-form-item-text-color: var(--y-color-text-1);
-  --y-form-item-font-size: var(--y-color-font-size);
-  --y-form-item-error-font-size: var(--y-color-font-size-ms);
+  --y-form-item-font-size: var(--y-font-size);
+  --y-form-item-error-font-size: var(--y-font-size-ms);
   --y-form-item-error-color: var(--y-color-error);
-  --y-form-item-disabled-opacity: var(--y-color-disabled-opacity)
+  --y-form-item-disabled-opacity: var(--y-disabled-opacity)
 }
 
 @include b(form-item) {

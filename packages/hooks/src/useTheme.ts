@@ -35,8 +35,8 @@ const textGradient = [0.88, 0.65, 0.45, 0.25];
 // 填充色
 const fillGradient = [0.15, 0.06, 0.04, 0.02];
 
-function setProperty(key: string, value: string) {
-  document.documentElement.style.setProperty(`--y-color-${key}`, value);
+function setProperty(key: string, value: string, isColor = true) {
+  document.documentElement.style.setProperty(`--y-${isColor ? "color-" : ""}${key}`, value);
 }
 
 export function useTheme(opt: Opts = {}) {
@@ -71,11 +71,11 @@ export function useTheme(opt: Opts = {}) {
   setProperty("base-color", baseColor);
 
   // 禁用状态的样式
-  setProperty("disabled-opacity", String(disabledOpacity));
+  setProperty("disabled-opacity", String(disabledOpacity), false);
 
   // 字体大小的设置
-  setProperty("font-size", `${fontSize}px`);
-  setProperty("font-size-ms", `${fontSizeSM}px`);
-  setProperty("font-size-xl", `${fontSizeXL}px`);
-  setProperty("font-size-lg", `${fontSizeLG}px`);
+  setProperty("font-size", `${fontSize}px`, false);
+  setProperty("font-size-ms", `${fontSizeSM}px`, false);
+  setProperty("font-size-xl", `${fontSizeXL}px`, false);
+  setProperty("font-size-lg", `${fontSizeLG}px`, false);
 }
