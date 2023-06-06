@@ -1,7 +1,7 @@
 import { computed, defineComponent, reactive } from "vue";
 import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@yy/tokens";
 import { useParent, useChildren, useExpose } from "@yy/hooks";
-import { createNamespace, isFunction, handlePropOrContext } from "@yy/utils";
+import { createNamespace, isFunction } from "@yy/utils";
 import { YCol } from "@yy/components/col";
 
 import formItemProp from "./types";
@@ -46,9 +46,8 @@ export default defineComponent({
     const bem = createNamespace("form-item");
     const formItemCls = computed(() => {
       const { labelAlign } = props;
-      const result = handlePropOrContext(props, formContext?.parent.props, ["disabled"]);
 
-      return [bem.b(), bem.b(labelAlign || "row", labelAlign != "row"), bem.is("disabled", result.disabled)];
+      return [bem.b(), bem.b(labelAlign || "row", labelAlign != "row")];
     });
 
     // 执行校验规则
@@ -96,7 +95,7 @@ export default defineComponent({
         runRules(rules).then(() => {
           if (state.status === "failed") {
             resolve({
-              name: props.name || children[0]?.public.name,
+              name: children[0]?.public.name,
               message: state.message,
             });
           } else {
@@ -143,11 +142,13 @@ export default defineComponent({
 
     return () => {
       const { span, label, uuId } = props;
+      const disabled = children.length === 1 ? children[0].public.formItemDisabled?.value : false;
+
       return (
         <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
             {
-              <label for={labelFor.value} class="y-form-item__label">
+              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled)]}>
                 {isFunction(label)
                   ? label(details.value, uuId)
                   : label || ctx.slots.label?.({ details: details.value })}

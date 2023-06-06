@@ -12,7 +12,7 @@ type LabelAlignType = "row" | "column";
 
 const formItemProp = mergeCommonProp({
   // input组件参数
-  ...inputUniqueProp,
+  // ...inputUniqueProp,
   /**
    * @description — 栅格占据的列数
    */

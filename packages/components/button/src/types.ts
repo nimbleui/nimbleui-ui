@@ -36,4 +36,4 @@ const buttonProps = mergeCommonProp({
 });
 
 export default buttonProps;
-export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
+export type ButtonProps = ExtractPropTypes<ReturnType<typeof buttonProps>>;

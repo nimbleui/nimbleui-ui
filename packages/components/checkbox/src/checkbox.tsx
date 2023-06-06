@@ -2,7 +2,7 @@ import { computed, defineComponent, ref } from "vue";
 
 import { createNamespace, isFunction } from "@yy/utils";
 import { useParent } from "@yy/hooks";
-import { formItemContextKey } from "@yy/tokens";
+import { formItemContextKey, checkboxGroupContextKey } from "@yy/tokens";
 
 import checkboxProps from "./types";
 
@@ -26,6 +26,8 @@ export default defineComponent({
     const bem = createNamespace("checkbox");
 
     const formItemContext = useParent(formItemContextKey);
+
+    const checkboxGroupContext = useParent(checkboxGroupContextKey);
 
     const handleChange = (event: Event) => {
       const { target } = event;
@@ -52,7 +54,7 @@ export default defineComponent({
 
     // 渲染input标签
     const inputRender = () => {
-      const { shape = "square" } = props;
+      const { shape = "square", disabled } = props;
       return (
         <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
           <input checked={model.value} onChange={handleChange} type="checkbox" />

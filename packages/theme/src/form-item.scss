@@ -23,11 +23,6 @@
     flex-direction: column;
   }
 
-  @include when(disabled) {
-    cursor: not-allowed;
-    opacity: var(--y-form-item-disabled-opacity);
-  }
-
   @include e(label) {
     display: flex;
     align-items: center;
@@ -37,6 +32,11 @@
     vertical-align: middle;
     height: var(--y-form-item-height);
     line-height: var(--y-form-item-height);
+
+    @include when(disabled) {
+      cursor: not-allowed;
+      opacity: var(--y-form-item-disabled-opacity);
+    }
   }
 
   @include e(content) {

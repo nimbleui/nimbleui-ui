@@ -93,6 +93,7 @@ export default inputProp;
 export type InputExpose = {
   inputId: ComputedRef<string>;
   formValue: ComputedRef<unknown>;
+  formItemDisabled: ComputedRef<boolean>;
 };
 
 export type InputProps = ExtractPropTypes<ReturnType<typeof inputProp>>;

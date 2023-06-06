@@ -26,4 +26,4 @@ const buttonGroupProps = mergeCommonProp({
 });
 
 export default buttonGroupProps;
-export type ButtonGroupProps = ExtractPropTypes<typeof buttonGroupProps>;
+export type ButtonGroupProps = ExtractPropTypes<ReturnType<typeof buttonGroupProps>>;

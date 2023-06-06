@@ -48,4 +48,4 @@ const checkboxProps = mergeCommonProp({
 });
 
 export default checkboxProps;
-export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
+export type CheckboxProps = ExtractPropTypes<ReturnType<typeof checkboxProps>>;

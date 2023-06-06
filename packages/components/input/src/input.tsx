@@ -21,9 +21,18 @@ export default defineComponent({
 
     // 根据props生成className
     const bem = createNamespace("input");
-    const inputCls = computed(() => {
-      const res = handlePropOrContext(props, undefined, ["disabled"]);
-      return [bem.e("wrapper"), bem.is("disabled", res.disabled)];
+    const inputData = computed(() => {
+      const res = handlePropOrContext(props, undefined, ["disabled", "bordered"]);
+
+      return {
+        ...res,
+        cls: [
+          bem.b(),
+          bem.is("disabled", res.disabled),
+          bem.is("bordered", res.bordered),
+          bem.is("focus", isFocus.value && !res.disabled),
+        ],
+      };
     });
 
     // 更新输入框内容
@@ -72,6 +81,7 @@ export default defineComponent({
     useExpose<InputExpose>({
       inputId,
       formValue,
+      formItemDisabled: computed(() => inputData.value.disabled || false),
     });
 
     const onClear = () => {
@@ -81,12 +91,11 @@ export default defineComponent({
     };
 
     return () => {
-      const { bordered, type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } =
-        props;
+      const { type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } = props;
 
       return (
-        <div class={[bem.b(), bem.is("bordered", bordered), bem.is("focus", isFocus.value)]}>
-          <span class={inputCls.value}>
+        <div class={inputData.value.cls}>
+          <span class={bem.e("wrapper")}>
             <input
               type={type}
               ref={inputRef}
@@ -96,6 +105,7 @@ export default defineComponent({
               minlength={minLength}
               autofocus={autofocus}
               placeholder={placeholder}
+              disabled={inputData.value.disabled}
               onBlur={onBlur}
               onFocus={onFocus}
               onInput={onInput}
