@@ -1,12 +1,19 @@
 import type { PropType, ExtractPropTypes } from "vue";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { mergeCommonProp } from "@yy/utils";
 
 type Direction = "horizontal" | "vertical";
 
 type Obj = { [key: string | number]: Array<string | number> };
-type Fun = (current: any) => boolean;
+export type CheckboxFunParam = { value: number | string; uuId: string | number; label: any };
+type Fun = (clickCurrent: CheckboxFunParam, current: CheckboxFunParam) => boolean;
 
 const checkboxGroupProps = mergeCommonProp({
+  /**
+   * @description 绑定值
+   */
+  modelValue: {
+    type: Array as PropType<Array<string | number>>,
+  },
   /**
    * @description 排列方向
    */
@@ -15,16 +22,10 @@ const checkboxGroupProps = mergeCommonProp({
     default: "vertical",
   },
   /**
-   * @description 指定禁用哪一些复选框
-   */
-  specifyDisabled: {
-    type: [Object, Function] as PropType<Obj | Fun>,
-  },
-  /**
-   * @description 是否禁用所有复选框
+   * @description 是否禁用复选框，如果是boolean：禁用所有，如果是对象：根据key禁用指定的，如果是方法：根据执行的结果禁用
    */
   disabled: {
-    type: Boolean,
+    type: [Boolean, Object, Function] as PropType<Obj | Fun | boolean>,
   },
   /**
    * @description 最大可选数

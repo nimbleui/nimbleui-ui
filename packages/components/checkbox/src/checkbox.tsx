@@ -1,10 +1,10 @@
 import { computed, defineComponent, ref } from "vue";
 
-import { createNamespace, isFunction } from "@yy/utils";
-import { useParent } from "@yy/hooks";
+import { createNamespace, handlePropOrContext, isFunction } from "@yy/utils";
+import { useParent, useExpose } from "@yy/hooks";
 import { formItemContextKey, checkboxGroupContextKey } from "@yy/tokens";
 
-import checkboxProps from "./types";
+import checkboxProps, { CheckboxExpose } from "./types";
 
 export default defineComponent({
   name: "YCheckbox",
@@ -36,9 +36,19 @@ export default defineComponent({
       const modelValue = checked ? props.value ?? true : false;
       ctx.emit("update:modelValue", modelValue);
       formItemContext?.parent.events("onChange", modelValue);
+      checkboxGroupContext?.parent.change(checked, checkboxGroupContext?.uid);
     };
 
     const details = computed(() => props.details || formItemContext?.parent.details.value);
+
+    const groupDisabled = ref<boolean>(false);
+    const handleDisabled = (bool: boolean) => {
+      groupDisabled.value = bool;
+    };
+    const disabled = computed(() => {
+      const res = handlePropOrContext(props, undefined, ["disabled"]);
+      return groupDisabled.value || res.disabled;
+    });
 
     // 渲染侧边文案
     const labelRender = () => {
@@ -54,19 +64,24 @@ export default defineComponent({
 
     // 渲染input标签
     const inputRender = () => {
-      const { shape = "square", disabled } = props;
+      const { shape = "square" } = props;
       return (
         <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
-          <input checked={model.value} onChange={handleChange} type="checkbox" />
+          <input disabled={disabled.value} checked={model.value} onChange={handleChange} type="checkbox" />
           <span class={[bem.e("inner")]}></span>
         </span>
       );
     };
 
+    useExpose<CheckboxExpose>({
+      formItemDisabled: disabled,
+      handleDisabled,
+    });
+
     return () => {
       const { labelPosition } = props;
       return (
-        <label class={[bem.b()]}>
+        <label class={[bem.b(), bem.is("disabled", disabled.value)]}>
           {labelPosition === "left" && labelRender()}
           {inputRender()}
           {labelPosition === "right" && labelRender()}

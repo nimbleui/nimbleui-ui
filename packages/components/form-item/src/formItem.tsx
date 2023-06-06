@@ -134,6 +134,8 @@ export default defineComponent({
       return { name, value };
     });
 
+    const disabled = computed(() => (children.length === 1 ? children[0].public.formItemDisabled?.value : false));
+
     useExpose<FormItemExpose>({
       state,
       validate,
@@ -142,13 +144,12 @@ export default defineComponent({
 
     return () => {
       const { span, label, uuId } = props;
-      const disabled = children.length === 1 ? children[0].public.formItemDisabled?.value : false;
 
       return (
         <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
             {
-              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled)]}>
+              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled.value)]}>
                 {isFunction(label)
                   ? label(details.value, uuId)
                   : label || ctx.slots.label?.({ details: details.value })}

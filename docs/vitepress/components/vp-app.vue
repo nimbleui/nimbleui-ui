@@ -64,6 +64,14 @@
           <YCheckbox label="测试" shape="round" :value="4" name="checkbox" />
         </div>
       </YFormItem>
+      <YFormItem :span="16">
+        <template #label>多选框组：</template>
+        <YCheckboxGroup :disabled="{ 1: [3, 2] }">
+          <YCheckbox label="多选框组1" :value="1" :uu-id="1" name="checkbox" />
+          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" name="checkbox" />
+          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" name="checkbox" />
+        </YCheckboxGroup>
+      </YFormItem>
     </YForm>
   </div>
 </template>

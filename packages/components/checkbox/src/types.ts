@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from "vue";
+import type { PropType, ExtractPropTypes, ComputedRef } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 type CheckerShape = "square" | "round";
@@ -49,3 +49,8 @@ const checkboxProps = mergeCommonProp({
 
 export default checkboxProps;
 export type CheckboxProps = ExtractPropTypes<ReturnType<typeof checkboxProps>>;
+
+export type CheckboxExpose = {
+  formItemDisabled: ComputedRef<boolean | undefined>;
+  handleDisabled: (bool: boolean) => void;
+};

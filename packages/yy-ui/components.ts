@@ -1,3 +1,3 @@
-import { YRow, YCol, YButton, YButtonGroup, YForm, YFormItem, YInput, YCheckbox } from "@yy/components";
+import { YRow, YCol, YButton, YButtonGroup, YForm, YFormItem, YInput, YCheckbox, YCheckboxGroup } from "@yy/components";
 
-export default [YRow, YCol, YButton, YButtonGroup, YForm, YFormItem, YInput, YCheckbox];
+export default [YRow, YCol, YButton, YButtonGroup, YForm, YFormItem, YInput, YCheckbox, YCheckboxGroup];

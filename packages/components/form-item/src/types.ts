@@ -1,6 +1,5 @@
-import type { ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
+import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
-import { inputUniqueProp } from "@yy/components/input";
 import type { Rules, TriggerEventType, FormItemState } from "@yy/tokens";
 
 export interface FormItemValidateError {
@@ -11,8 +10,6 @@ export interface FormItemValidateError {
 type LabelAlignType = "row" | "column";
 
 const formItemProp = mergeCommonProp({
-  // input组件参数
-  // ...inputUniqueProp,
   /**
    * @description — 栅格占据的列数
    */
@@ -60,3 +57,4 @@ export type FormItemExpose = {
 };
 
 export type FormItemProps = ExtractPropTypes<ReturnType<typeof formItemProp>>;
+export type FormItemInstance = ComponentPublicInstance<FormItemProps, FormItemExpose>;

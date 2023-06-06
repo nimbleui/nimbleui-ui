@@ -1,5 +1,5 @@
-import { InjectionKey, inject, onUnmounted, provide, reactive, getCurrentInstance } from "vue";
-import type { ComponentInternalInstance } from "vue";
+import { inject, onUnmounted, provide, reactive, getCurrentInstance } from "vue";
+import type { ComponentInternalInstance, InjectionKey } from "vue";
 import type { ProvideContext, ChildrenType } from "@yy/tokens";
 
 type Key<T> = InjectionKey<ProvideContext<T>>;
@@ -52,6 +52,8 @@ function useParent<T>(key: InjectionKey<ProvideContext<T>>) {
 
     return {
       parent,
+      instance,
+      uid: instance?.uid,
     };
   }
 
