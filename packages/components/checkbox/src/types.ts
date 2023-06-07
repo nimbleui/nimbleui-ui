@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, ComputedRef, WritableComputedRef } from "vue";
+import type { PropType, ExtractPropTypes, WritableComputedRef } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 type CheckerShape = "square" | "round";

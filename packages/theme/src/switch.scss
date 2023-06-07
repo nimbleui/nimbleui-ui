@@ -1,0 +1,60 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+
+@include b(switch) {
+  --y-switch-active-color: var(--y-color-primary);
+  --y-switch-inactive-color: var(--y-color-info-7);
+  --y-switch-height: 22px;
+  --y-switch-handle: calc(var(--y-switch-height) - 4px);
+  --y-switch-offset: 2px;
+  --y-switch-border-radius: 4px;
+  --y-switch-font-size: var(--y-font-size);
+  --y-switch-text-color: var(--y-text-color-1);
+}
+
+@include b(switch) {
+  position: relative;
+  height: var(--y-switch-height);
+  min-width: calc(var(--y-switch-height) * 2);
+  box-sizing: border-box;
+  border-radius: var(--y-switch-height);
+  background-color: var(--y-switch-inactive-color);
+  transition: all 0.2s;
+  cursor: pointer;
+  font-size: var(--y-font-size);
+  color: var(--y-text-color-1);
+
+  @include e(handle) {
+    position: absolute;
+    top: var(--y-switch-offset);
+    left: var(--y-switch-offset);
+    height: var(--y-switch-handle);
+    width: var(--y-switch-handle);
+    background-color: #fff;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+  }
+
+  @include e(placeholder) {
+    height: var(--y-switch-height);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
+    
+  }
+
+  @include e(inner) {
+    position: absolute;
+  }
+
+  @include when(checked) {
+    background-color: var(--y-switch-active-color);
+
+    #{'.' + $b + $element-separator + 'handle'} {
+      left: calc(100% - var(--y-switch-handle) - var(--y-switch-offset));
+    }
+  }
+}

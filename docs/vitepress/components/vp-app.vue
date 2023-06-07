@@ -76,6 +76,10 @@
           <YCheckbox label="多选框组3" :details="{ a: 3 }" shape="round" :value="3" :uu-id="3" />
         </YCheckboxGroup>
       </YFormItem>
+      <YSwitch>
+        <template #checked>开启</template>
+        <template #unchecked>关闭</template>
+      </YSwitch>
     </YForm>
   </div>
 </template>
