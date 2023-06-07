@@ -1,7 +1,7 @@
 import { defineComponent, toRef, onMounted, watch } from "vue";
-import { useChildren } from "@yy/hooks";
+import { useChildren, useParent } from "@yy/hooks";
 import { createNamespace, isBoolean, isFunction, pick } from "@yy/utils";
-import { checkboxGroupContextKey } from "@yy/tokens";
+import { checkboxGroupContextKey, formItemContextKey } from "@yy/tokens";
 
 import checkboxGroupProps from "./types";
 import type { CheckboxFunParam } from "./types";
@@ -11,6 +11,7 @@ export default defineComponent({
   props: checkboxGroupProps(),
   emits: ["change", "update:modelValue"],
   setup(props, ctx) {
+    const formItemContext = useParent(formItemContextKey);
     const { linkChildren, children } = useChildren(checkboxGroupContextKey);
     const pickValue = (val: any) => pick(val, ["value", "uuId", "label", "details"]);
 
@@ -79,6 +80,7 @@ export default defineComponent({
         handleModel(checked, current.value);
         handleDisabled(Object.assign(current, { checked }), checked, uid);
         ctx.emit("change", checked, current);
+        formItemContext?.parent.events("onChange", checked);
       },
     });
 

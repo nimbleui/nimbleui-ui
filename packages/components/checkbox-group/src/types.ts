@@ -38,6 +38,10 @@ const checkboxGroupProps = mergeCommonProp({
   disabled: {
     type: [Boolean, Object, Function] as PropType<Obj | CheckboxDisabledFun | boolean>,
   },
+  /**
+   * @description 名称，作为提交表单时的标识符
+   */
+  name: String,
 });
 
 export default checkboxGroupProps;

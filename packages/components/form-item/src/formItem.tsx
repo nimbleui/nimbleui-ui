@@ -114,7 +114,7 @@ export default defineComponent({
     };
 
     const labelFor = computed(() => {
-      return props.for || children.length === 1 ? children[0]?.public.inputId.value : undefined;
+      return props.for || children.length === 1 ? children[0]?.public.inputId?.value : undefined;
     });
 
     const inputPublic = computed(() => {
@@ -149,7 +149,7 @@ export default defineComponent({
         <YCol uuId={uuId} span={span}>
           <div class={formItemCls.value}>
             {
-              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled.value)]}>
+              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled.value ?? false)]}>
                 {isFunction(label)
                   ? label(details.value, uuId)
                   : label || ctx.slots.label?.({ details: details.value })}

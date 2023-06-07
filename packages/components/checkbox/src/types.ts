@@ -52,6 +52,5 @@ export type CheckboxProps = ExtractPropTypes<ReturnType<typeof checkboxProps>>;
 
 export type CheckboxExpose = {
   model: WritableComputedRef<boolean>;
-  formItemDisabled: ComputedRef<boolean | undefined>;
   handleDisabled: (bool: boolean) => void;
 };

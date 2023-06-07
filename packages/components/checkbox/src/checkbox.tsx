@@ -2,7 +2,7 @@ import { computed, defineComponent, ref } from "vue";
 
 import { createNamespace, handlePropOrContext, isFunction } from "@yy/utils";
 import { useParent, useExpose } from "@yy/hooks";
-import { formItemContextKey, checkboxGroupContextKey } from "@yy/tokens";
+import { checkboxGroupContextKey } from "@yy/tokens";
 
 import checkboxProps, { CheckboxExpose } from "./types";
 
@@ -14,9 +14,8 @@ export default defineComponent({
     const selfModel = ref(false);
     const inputRef = ref<HTMLInputElement>();
     const bem = createNamespace("checkbox");
-    const formItemContext = useParent(formItemContextKey);
     const checkboxGroupContext = useParent(checkboxGroupContextKey);
-    const details = computed(() => props.details || formItemContext?.parent.details.value);
+    const details = computed(() => props.details || checkboxGroupContext?.parent.props.details);
 
     const model = computed({
       get: () => {
@@ -37,7 +36,6 @@ export default defineComponent({
       model.value = checked;
       const modelValue = checked ? props.value ?? true : false;
       ctx.emit("update:modelValue", modelValue);
-      formItemContext?.parent.events("onChange", modelValue);
       checkboxGroupContext?.parent.change(checked, checkboxGroupContext?.uid);
     };
 
@@ -84,7 +82,6 @@ export default defineComponent({
 
     useExpose<CheckboxExpose>({
       model,
-      formItemDisabled: disabled,
       handleDisabled,
     });
 

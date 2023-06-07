@@ -52,40 +52,28 @@
       <YFormItem v-if="show" uu-id="4" label="测试：">
         <YInput v-model="values.test" placeholder="请输入" name="test" />
       </YFormItem>
-      <YFormItem>
-        <template #label>多选框：</template>
-        <div>
-          <YCheckbox v-model="checked" label="测试" :value="1" name="checkbox" />
-          <YCheckbox label="测试" shape="round" :value="2" name="checkbox" />
-          <YCheckbox label="测试" shape="round" :value="2" name="checkbox" />
-        </div>
-        <div>
-          <YCheckbox label="测试" :value="3" name="checkbox" />
-          <YCheckbox label="测试" shape="round" :value="4" name="checkbox" />
-        </div>
-      </YFormItem>
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为对象：</template>
-        <YCheckboxGroup :disabled="{ 1: [3] }">
-          <YCheckbox label="多选框组1" :value="1" :uu-id="1" name="checkbox" />
-          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" name="checkbox" />
-          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" name="checkbox" />
+        <YCheckboxGroup name="checkbox3" :disabled="{ 1: [3] }">
+          <YCheckbox label="多选框组1" :value="1" :uu-id="1" />
+          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" />
+          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" />
         </YCheckboxGroup>
       </YFormItem>
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为布尔值：</template>
-        <YCheckboxGroup :disabled="disabled">
-          <YCheckbox label="多选框组1" :value="1" :uu-id="1" name="checkbox" />
-          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" name="checkbox" />
-          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" name="checkbox" />
+        <YCheckboxGroup name="checkbox2" :disabled="disabled">
+          <YCheckbox label="多选框组1" :value="1" :uu-id="1" />
+          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" />
+          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" />
         </YCheckboxGroup>
       </YFormItem>
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为函数：</template>
-        <YCheckboxGroup v-model="checkeds" :disabled="disabledFn">
-          <YCheckbox label="多选框组1" :details="{ a: 1 }" :value="1" :uu-id="1" name="checkbox" />
-          <YCheckbox label="多选框组2" :details="{ a: 2 }" shape="round" :value="2" :uu-id="2" name="checkbox" />
-          <YCheckbox label="多选框组3" :details="{ a: 3 }" shape="round" :value="3" :uu-id="3" name="checkbox" />
+        <YCheckboxGroup v-model="checkeds" name="checkbox1" :disabled="disabledFn">
+          <YCheckbox label="多选框组1" :details="{ a: 1 }" :value="1" :uu-id="1" />
+          <YCheckbox label="多选框组2" :details="{ a: 2 }" shape="round" :value="2" :uu-id="2" />
+          <YCheckbox label="多选框组3" :details="{ a: 3 }" shape="round" :value="3" :uu-id="3" />
         </YCheckboxGroup>
       </YFormItem>
     </YForm>
