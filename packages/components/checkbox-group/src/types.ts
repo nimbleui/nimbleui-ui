@@ -38,12 +38,6 @@ const checkboxGroupProps = mergeCommonProp({
   disabled: {
     type: [Boolean, Object, Function] as PropType<Obj | CheckboxDisabledFun | boolean>,
   },
-  /**
-   * @description 最大可选数
-   */
-  max: {
-    type: Number,
-  },
 });
 
 export default checkboxGroupProps;
