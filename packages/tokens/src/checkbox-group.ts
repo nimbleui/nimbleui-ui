@@ -1,9 +1,10 @@
-import type { InjectionKey } from "vue";
+import type { InjectionKey, Ref } from "vue";
 import type { ProvideContext } from "./types";
 import type { CheckboxGroupProps } from "@yy/components/checkbox-group";
 
 type CheckboxGroupContext = ProvideContext<{
   props: CheckboxGroupProps;
+  model: Ref<Array<string | number> | undefined>;
   change: (checked: boolean, uid?: number) => void;
 }>;
 

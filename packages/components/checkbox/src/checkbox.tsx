@@ -12,6 +12,12 @@ export default defineComponent({
   emits: ["update:modelValue", "change"],
   setup(props, ctx) {
     const selfModel = ref(false);
+    const inputRef = ref<HTMLInputElement>();
+    const bem = createNamespace("checkbox");
+    const formItemContext = useParent(formItemContextKey);
+    const checkboxGroupContext = useParent(checkboxGroupContextKey);
+    const details = computed(() => props.details || formItemContext?.parent.details.value);
+
     const model = computed({
       get: () => {
         const { modelValue, value } = props;
@@ -23,12 +29,8 @@ export default defineComponent({
         ctx.emit("change", val);
       },
     });
-    const bem = createNamespace("checkbox");
 
-    const formItemContext = useParent(formItemContextKey);
-
-    const checkboxGroupContext = useParent(checkboxGroupContextKey);
-
+    /*****************复选框切换*********************/
     const handleChange = (event: Event) => {
       const { target } = event;
       const { checked } = target as HTMLInputElement;
@@ -39,12 +41,9 @@ export default defineComponent({
       checkboxGroupContext?.parent.change(checked, checkboxGroupContext?.uid);
     };
 
-    const details = computed(() => props.details || formItemContext?.parent.details.value);
-
+    /*****************处理禁用复选框*********************/
     const groupDisabled = ref<boolean>(false);
-    const handleDisabled = (bool: boolean) => {
-      groupDisabled.value = bool;
-    };
+    const handleDisabled = (bool: boolean) => (groupDisabled.value = bool);
     const disabled = computed(() => {
       const res = handlePropOrContext(props, undefined, ["disabled"]);
       const disabled = checkboxGroupContext?.parent.props.disabled;
@@ -54,7 +53,7 @@ export default defineComponent({
       return groupDisabled.value || res.disabled;
     });
 
-    // 渲染侧边文案
+    /*****************渲染侧边文案*********************/
     const labelRender = () => {
       const { label } = props;
       return (
@@ -66,18 +65,25 @@ export default defineComponent({
       );
     };
 
-    // 渲染input标签
+    /*****************渲染input标签*********************/
     const inputRender = () => {
       const { shape = "square" } = props;
       return (
         <span class={[bem.e("input"), bem.is("checked", model.value), bem.is("round", shape !== "square")]}>
-          <input disabled={disabled.value} checked={model.value} onChange={handleChange} type="checkbox" />
+          <input
+            ref={inputRef}
+            type="checkbox"
+            checked={model.value}
+            disabled={disabled.value}
+            onChange={handleChange}
+          />
           <span class={[bem.e("inner")]}></span>
         </span>
       );
     };
 
     useExpose<CheckboxExpose>({
+      model,
       formItemDisabled: disabled,
       handleDisabled,
     });

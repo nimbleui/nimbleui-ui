@@ -82,7 +82,7 @@
       </YFormItem>
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为函数：</template>
-        <YCheckboxGroup :disabled="disabledFn">
+        <YCheckboxGroup v-model="checkeds" :disabled="disabledFn">
           <YCheckbox label="多选框组1" :details="{ a: 1 }" :value="1" :uu-id="1" name="checkbox" />
           <YCheckbox label="多选框组2" :details="{ a: 2 }" shape="round" :value="2" :uu-id="2" name="checkbox" />
           <YCheckbox label="多选框组3" :details="{ a: 3 }" shape="round" :value="3" :uu-id="3" name="checkbox" />
@@ -93,6 +93,7 @@
 </template>
 
 <script setup lang="tsx">
+import { watch } from "vue";
 import { reactive, h, ref } from "vue";
 import { CheckboxDisabledFun } from "yy-ui";
 
@@ -136,11 +137,18 @@ setTimeout(() => {
 }, 5000);
 const disabledFn: CheckboxDisabledFun = (current, data, toggle) => {
   const { checked, uuId, details } = current;
-  console.log(details);
   if (data.uuId === 3 && uuId == 1) {
     toggle(checked);
   }
 };
+const checkeds = reactive<number[]>([1]);
+setTimeout(() => {
+  // checkeds.push(1);
+  console.log(2222);
+}, 3000);
+watch(checkeds, (val) => {
+  console.log(val);
+});
 </script>
 <style>
 .item {

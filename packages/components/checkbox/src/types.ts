@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, ComputedRef } from "vue";
+import type { PropType, ExtractPropTypes, ComputedRef, WritableComputedRef } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 type CheckerShape = "square" | "round";
@@ -51,6 +51,7 @@ export default checkboxProps;
 export type CheckboxProps = ExtractPropTypes<ReturnType<typeof checkboxProps>>;
 
 export type CheckboxExpose = {
+  model: WritableComputedRef<boolean>;
   formItemDisabled: ComputedRef<boolean | undefined>;
   handleDisabled: (bool: boolean) => void;
 };
