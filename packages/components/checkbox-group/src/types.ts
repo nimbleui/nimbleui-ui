@@ -4,8 +4,19 @@ import { mergeCommonProp } from "@yy/utils";
 type Direction = "horizontal" | "vertical";
 
 type Obj = { [key: string | number]: Array<string | number> };
-export type CheckboxFunParam = { value: number | string; uuId: string | number; label: any; checked: boolean };
-type Fun = (clickCurrent: CheckboxFunParam, current: Omit<CheckboxFunParam, "checked">) => boolean;
+export type CheckboxFunParam = {
+  value: number | string;
+  uuId: string | number;
+  label: any;
+  checked: boolean;
+  details: any;
+};
+
+export type CheckboxDisabledFun = (
+  clickCurrent: CheckboxFunParam,
+  current: Omit<CheckboxFunParam, "checked">,
+  toggle: (bool: boolean) => void
+) => void;
 
 const checkboxGroupProps = mergeCommonProp({
   /**
@@ -25,7 +36,7 @@ const checkboxGroupProps = mergeCommonProp({
    * @description 是否禁用复选框，如果是boolean：禁用所有，如果是对象：根据key禁用指定的，如果是方法：根据执行的结果禁用
    */
   disabled: {
-    type: [Boolean, Object, Function] as PropType<Obj | Fun | boolean>,
+    type: [Boolean, Object, Function] as PropType<Obj | CheckboxDisabledFun | boolean>,
   },
   /**
    * @description 最大可选数

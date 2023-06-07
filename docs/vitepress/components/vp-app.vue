@@ -66,7 +66,7 @@
       </YFormItem>
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为对象：</template>
-        <YCheckboxGroup :disabled="{ 1: [3, 2] }">
+        <YCheckboxGroup :disabled="{ 1: [3] }">
           <YCheckbox label="多选框组1" :value="1" :uu-id="1" name="checkbox" />
           <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" name="checkbox" />
           <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" name="checkbox" />
@@ -83,9 +83,9 @@
       <YFormItem :span="24">
         <template #label>CheckboxGroup的disabled为函数：</template>
         <YCheckboxGroup :disabled="disabledFn">
-          <YCheckbox label="多选框组1" :value="1" :uu-id="1" name="checkbox" />
-          <YCheckbox label="多选框组2" shape="round" :value="2" :uu-id="2" name="checkbox" />
-          <YCheckbox label="多选框组3" shape="round" :value="3" :uu-id="3" name="checkbox" />
+          <YCheckbox label="多选框组1" :details="{ a: 1 }" :value="1" :uu-id="1" name="checkbox" />
+          <YCheckbox label="多选框组2" :details="{ a: 2 }" shape="round" :value="2" :uu-id="2" name="checkbox" />
+          <YCheckbox label="多选框组3" :details="{ a: 3 }" shape="round" :value="3" :uu-id="3" name="checkbox" />
         </YCheckboxGroup>
       </YFormItem>
     </YForm>
@@ -94,7 +94,7 @@
 
 <script setup lang="tsx">
 import { reactive, h, ref } from "vue";
-import { CheckboxFunParam } from "yy-ui";
+import { CheckboxDisabledFun } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -134,10 +134,11 @@ const disabled = ref(false);
 setTimeout(() => {
   disabled.value = true;
 }, 5000);
-const disabledFn = (current: CheckboxFunParam, data: CheckboxFunParam) => {
-  const { checked, uuId } = current;
+const disabledFn: CheckboxDisabledFun = (current, data, toggle) => {
+  const { checked, uuId, details } = current;
+  console.log(details);
   if (data.uuId === 3 && uuId == 1) {
-    return checked;
+    toggle(checked);
   }
 };
 </script>

@@ -11,7 +11,7 @@ export default defineComponent({
   props: checkboxGroupProps(),
   setup(props, ctx) {
     const { linkChildren, children } = useChildren(checkboxGroupContextKey);
-    const pickValue = (val: any) => pick(val, ["value", "uuId", "label"]);
+    const pickValue = (val: any) => pick(val, ["value", "uuId", "label", "details"]);
 
     // 处理禁用复选框
     function handleDisabled(current: CheckboxFunParam, checked: boolean, uid?: number) {
@@ -20,14 +20,15 @@ export default defineComponent({
 
       children.forEach((child) => {
         if (child.internal.uid === uid) return;
-        const data = pickValue(child?.public);
+        const data = pickValue(child.public);
+        const { handleDisabled } = child.public;
 
         if (isFunction(disabled)) {
-          child.public.handleDisabled(disabled(current, data));
+          disabled(current, data, handleDisabled);
         } else if (!isBoolean(disabled)) {
           const ids = disabled[current.uuId];
           if (ids?.includes(data.uuId)) {
-            child.public.handleDisabled(checked);
+            handleDisabled(checked);
           }
         }
       });
