@@ -47,6 +47,10 @@ export default defineComponent({
     };
     const disabled = computed(() => {
       const res = handlePropOrContext(props, undefined, ["disabled"]);
+      const disabled = checkboxGroupContext?.parent.props.disabled;
+      if (typeof disabled === "boolean" && disabled) {
+        return true;
+      }
       return groupDisabled.value || res.disabled;
     });
 

@@ -49,6 +49,10 @@
       margin: 0;
       width: var(--y-checkbox-size);
       height: var(--y-checkbox-size);
+
+      &[disabled] {
+        cursor: not-allowed;
+      }
     }
 
     @include when(checked) {

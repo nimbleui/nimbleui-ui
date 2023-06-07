@@ -4,8 +4,8 @@ import { mergeCommonProp } from "@yy/utils";
 type Direction = "horizontal" | "vertical";
 
 type Obj = { [key: string | number]: Array<string | number> };
-export type CheckboxFunParam = { value: number | string; uuId: string | number; label: any };
-type Fun = (clickCurrent: CheckboxFunParam, current: CheckboxFunParam) => boolean;
+export type CheckboxFunParam = { value: number | string; uuId: string | number; label: any; checked: boolean };
+type Fun = (clickCurrent: CheckboxFunParam, current: Omit<CheckboxFunParam, "checked">) => boolean;
 
 const checkboxGroupProps = mergeCommonProp({
   /**

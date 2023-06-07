@@ -38,7 +38,7 @@ export default defineComponent({
       change(checked, uid) {
         const child = children.find((child) => child.internal.uid === uid);
         const current = pickValue(child?.public);
-        handleDisabled(current, checked, uid);
+        handleDisabled(Object.assign(current, { checked }), checked, uid);
       },
     });
 
