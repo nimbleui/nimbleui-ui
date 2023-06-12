@@ -1,0 +1,16 @@
+@use "../mixins/config.scss" as *;
+
+$transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
+
+.#{$namespace}-zoom-in-top-enter-active,
+.#{$namespace}-zoom-in-top-leave-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transition: $transition-md-fade;
+  transform-origin: center top;
+}
+.#{$namespace}-zoom-in-top-enter-from,
+.#{$namespace}-zoom-in-top-leave-active {
+  opacity: 0;
+  transform: scaleY(0);
+}

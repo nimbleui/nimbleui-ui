@@ -77,8 +77,8 @@
         </YCheckboxGroup>
       </YFormItem>
       <YSwitch>
-        <template #checked>开启</template>
-        <template #unchecked>关闭</template>
+        <template #checked>开启111</template>
+        <template #unchecked>关闭111</template>
       </YSwitch>
     </YForm>
   </div>
