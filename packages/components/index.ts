@@ -8,3 +8,4 @@ export * from "./form-item";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./switch";
+export * from "./tooltip";

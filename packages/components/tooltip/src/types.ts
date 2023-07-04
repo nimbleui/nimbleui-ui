@@ -1,5 +1,7 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@yy/utils";
+
+export type TriggerType = "hover" | "click" | "focus" | "contextmenu";
 
 const tooltipProps = mergeCommonProp({
   /**
@@ -15,7 +17,10 @@ const tooltipProps = mergeCommonProp({
     type: Boolean,
     default: true,
   },
+  trigger: {
+    type: String as PropType<TriggerType>,
+  },
 });
 
 export default tooltipProps;
-export type SwitchProps = ExtractPropTypes<ReturnType<typeof tooltipProps>>;
+export type TooltipProps = ExtractPropTypes<ReturnType<typeof tooltipProps>>;
