@@ -1,29 +1,43 @@
-import { defineComponent, Teleport } from "vue";
-import { createNamespace } from "@yy/utils";
+import { defineComponent, provide, ref } from "vue";
 import YTrigger from "./trigger";
+import YContent from "./content";
 
 import tooltipProps from "./types";
+import { tooltipTriggerContextKey, tooltipContextKey } from "@yy/tokens";
 
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
   setup(props, ctx) {
-    const bem = createNamespace("tooltip");
+    const triggerRef = ref<HTMLElement>();
+    provide(tooltipTriggerContextKey, {
+      setRef(el: HTMLElement) {
+        triggerRef.value = el;
+      },
+    });
 
+    provide(tooltipContextKey, {
+      triggerRef,
+    });
+
+    const show = ref(false);
     const onToggle = (e: Event, toggle: boolean) => {
       console.log("执行");
       console.log(toggle);
+      show.value = toggle;
     };
 
     return () => {
-      const { appendTo, trigger } = props;
+      const { appendTo, trigger, teleported, transition } = props;
       return (
-        <div class={[bem.b()]}>
+        <>
           <YTrigger trigger={trigger} onToggle={onToggle}>
             {ctx.slots.default?.()}
           </YTrigger>
-          <Teleport to={appendTo}></Teleport>
-        </div>
+          <YContent transition={transition} show={show.value} appendTo={appendTo} teleported={teleported}>
+            {ctx.slots.content?.()}
+          </YContent>
+        </>
       );
     };
   },

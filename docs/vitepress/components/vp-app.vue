@@ -80,21 +80,35 @@
         <template #checked>开启111</template>
         <template #unchecked>关闭111</template>
       </YSwitch>
-
-      <YTooltip trigger="click" append-to="body">
-        <div>222</div>
-      </YTooltip>
-
-      <YTooltip trigger="focus" append-to="body">
-        <input placeholder="请输入" />
-      </YTooltip>
-
-      <YTooltip trigger="hover" append-to="body">
-        <div>
-          <span>3333333</span>
-        </div>
-      </YTooltip>
     </YForm>
+
+    <YTooltip trigger="click" append-to="body">
+      <div>222</div>
+    </YTooltip>
+
+    <YTooltip trigger="focus" append-to="body" transition="y-zoom-in-top">
+      <input placeholder="请输入" />
+      <template #content>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+      </template>
+    </YTooltip>
+    <div style="height: 1000px"></div>
+    <YTooltip trigger="hover" append-to="body" transition="y-zoom-in-top">
+      <div>
+        <span>3333333</span>
+      </div>
+      <template #content>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+        <div>dfdfd</div>
+      </template>
+    </YTooltip>
   </div>
 </template>
 

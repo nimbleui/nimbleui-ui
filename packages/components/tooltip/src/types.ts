@@ -1,22 +1,12 @@
 import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@yy/utils";
 
+import { contentProps } from "./props";
+
 export type TriggerType = "hover" | "click" | "focus" | "contextmenu";
 
 const tooltipProps = mergeCommonProp({
-  /**
-   * @description 插入哪里
-   */
-  appendTo: {
-    type: String,
-  },
-  /**
-   * @description 是否使用teleport插入body元素
-   */
-  teleported: {
-    type: Boolean,
-    default: true,
-  },
+  ...contentProps(),
   trigger: {
     type: String as PropType<TriggerType>,
   },
