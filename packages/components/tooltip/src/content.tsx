@@ -16,10 +16,13 @@ export default defineComponent({
       const el = tooltipContext?.triggerRef.value;
       if (!el) return {};
       const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = el;
+      const { selectWidth } = props;
+      const left = (offsetWidth - selectWidth) / 2;
       return {
         position: "absolute",
-        left: `${offsetLeft}px`,
+        left: `${offsetLeft + left}px`,
         top: `${offsetTop + offsetHeight}px`,
+        width: selectWidth ? `${selectWidth}px` : undefined,
       };
     };
 

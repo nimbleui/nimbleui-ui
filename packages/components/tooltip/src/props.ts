@@ -24,4 +24,11 @@ export const contentProps = () => ({
   show: {
     type: Boolean,
   },
+  /**
+   * @description 下拉框的宽度
+   */
+  selectWidth: {
+    type: Number,
+    default: 350,
+  },
 });
