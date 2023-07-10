@@ -6,23 +6,27 @@ export interface Opts {
   warning?: string;
   error?: string;
   info?: string;
-  theme?: string;
-  baseColor?: string;
   disabledOpacity?: number;
   fontSize?: number;
   fontSizeSM?: number;
   fontSizeLG?: number;
   fontSizeXL?: number;
+  bgBaseColor?: string;
+  colorTextBase?: string;
 }
 
-const defaultOpt: Required<Opts> = {
+interface GradientTypes {
+  [key: string]: [number, number];
+}
+
+type ThemeType = "dark" | "light";
+
+const defaultOpt: Required<Omit<Opts, "bgBaseColor" | "colorTextBase">> = {
   primary: "#1677ff",
   success: "#52c41a",
   warning: "#faad14",
   error: "#f56c6c",
   info: "#909399",
-  theme: "#ffffff",
-  baseColor: "#000000",
   disabledOpacity: 0.5,
   fontSize: 14,
   fontSizeSM: 12,
@@ -30,45 +34,84 @@ const defaultOpt: Required<Opts> = {
   fontSizeXL: 20,
 };
 
-// 文字的梯度
-const textGradient = [0.88, 0.65, 0.45, 0.25];
-// 填充色
-const fillGradient = [0.15, 0.06, 0.04, 0.02];
+// 文字
+const textGradient: GradientTypes = {
+  text: [0.88, 0.85],
+  secondary: [0.65, 0.65],
+  tertiary: [0.45, 0.45],
+  quaternary: [0.25, 0.25],
+};
+// 填充
+const fillGradient: GradientTypes = {
+  fill: [0.15, 0.18],
+  secondary: [0.06, 0.12],
+  tertiary: [0.04, 0.08],
+  quaternary: [0.02, 0.04],
+};
+// 边框
+const borderGradient: GradientTypes = {
+  border: [15, 26],
+  secondary: [6, 19],
+};
+// 背景
+const bgGradient: GradientTypes = {
+  elevated: [0, 12],
+  container: [0, 8],
+  layout: [0, 0],
+  spotlight: [0.85, 26],
+};
 
 function setProperty(key: string, value: string, isColor = true) {
   document.documentElement.style.setProperty(`--y-${isColor ? "color-" : ""}${key}`, value);
 }
 
-export function useTheme(opt: Opts = {}) {
-  const { theme, baseColor, disabledOpacity, fontSize, fontSizeLG, fontSizeSM, fontSizeXL, ...options } = Object.assign(
-    defaultOpt,
-    opt
-  );
+function setGradient(gradient: GradientTypes, theme: ThemeType, callback: (name: string, value: number) => void) {
+  const index = theme === "light" ? 0 : 1;
+  for (const key of Object.keys(gradient)) {
+    callback(key, gradient[key][index]);
+  }
+}
+
+export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
+  const { bgBaseColor, colorTextBase, disabledOpacity, fontSize, fontSizeLG, fontSizeSM, fontSizeXL, ...options } =
+    Object.assign(defaultOpt, opt);
+
+  const textColor = colorTextBase || (theme === "light" ? "#000" : "#fff");
+  const bgColor = bgBaseColor || (theme === "light" ? "#fff" : "#000");
   Object.keys(options).forEach((key) => {
     // 计算颜色梯度
     generate(options[key as keyof typeof options], {
       name: key,
-      theme,
+      theme: bgColor,
       callback: setProperty,
     });
   });
 
   // 文字颜色的设置
-  for (let i = 0; i < textGradient.length; i++) {
-    setProperty(`text-${i + 1}`, setAlphaColor(baseColor, textGradient[i]));
-  }
+  setGradient(textGradient, theme, (name: string, val: number) => {
+    const n = name == "text" ? "text" : `text-${name}`;
+    setProperty(n, setAlphaColor(textColor, val));
+  });
 
   // 填充颜色的设置
-  for (let i = 0; i < fillGradient.length; i++) {
-    setProperty(`fill-${i + 1}`, setAlphaColor(baseColor, fillGradient[i]));
-  }
+  setGradient(fillGradient, theme, (name: string, val: number) => {
+    const n = name == "fill" ? "fill" : `fill-${name}`;
+    setProperty(n, setAlphaColor(textColor, val));
+  });
 
   // 边框颜色的设置
-  setProperty(`border-1`, setSolidColor(theme, 15));
-  setProperty(`border-2`, setSolidColor(theme, 6));
+  setGradient(borderGradient, theme, (name: string, val: number) => {
+    const n = name == "border" ? "border" : `border-${name}`;
+    setProperty(n, setSolidColor(bgColor, val, theme));
+  });
 
-  setProperty("theme", theme);
-  setProperty("base-color", baseColor);
+  // 设置背景色
+  setGradient(bgGradient, theme, (name: string, val: number) => {
+    setProperty(`bg-${name}`, setSolidColor(bgColor, val, theme));
+  });
+
+  setProperty("theme", bgColor);
+  setProperty("base-color", textColor);
 
   // 禁用状态的样式
   setProperty("disabled-opacity", String(disabledOpacity), false);

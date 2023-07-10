@@ -1,0 +1,13 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+
+@include b(dropdown) {
+  @include e(title) {
+    display: inline-flex;
+  }
+
+  @include e(content) {
+    background-color: var();
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg">
     <!-- <YRow :details="a" justify="space-around" :gutter="8" :span="span">
       <YCol uu-id="1">
         <div class="item"></div>
@@ -77,45 +77,27 @@
         </YCheckboxGroup>
       </YFormItem>
       <YSwitch>
-        <template #checked>开启111</template>
-        <template #unchecked>关闭111</template>
+        <!-- <template #checked>开启111</template>
+        <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
-
-    <YTooltip trigger="click" append-to="body">
-      <div>222</div>
-    </YTooltip>
-
-    <YTooltip trigger="focus" append-to="body" transition="y-zoom-in-top">
-      <input placeholder="请输入" />
-      <template #content>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
+    <YDropdown trigger="hover">
+      <div>YDropdown</div>
+      <template #dropdown>
+        <div>11111</div>
+        <div>22222</div>
+        <div>22222</div>
+        <div>22222</div>
+        <div>22222</div>
       </template>
-    </YTooltip>
-    <div style="height: 1000px"></div>
-    <YTooltip trigger="hover" append-to="body" transition="y-zoom-in-top">
-      <div>
-        <span>3333333</span>
-      </div>
-      <template #content>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-        <div>dfdfd</div>
-      </template>
-    </YTooltip>
+    </YDropdown>
   </div>
 </template>
 
 <script setup lang="tsx">
 import { watch } from "vue";
 import { reactive, h, ref } from "vue";
-import { CheckboxDisabledFun, YTooltip } from "yy-ui";
+import { CheckboxDisabledFun } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -184,7 +166,6 @@ watch(checkeds, (val) => {
   height: 16px;
 }
 .bg {
-  height: 20px;
-  background-color: var(--y-color-primary);
+  background-color: var(--y-color-theme);
 }
 </style>

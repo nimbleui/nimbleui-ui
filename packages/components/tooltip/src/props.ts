@@ -4,13 +4,14 @@ export const contentProps = () => ({
    */
   appendTo: {
     type: String,
+    default: "body",
   },
   /**
    * @description 是否禁止穿梭功能
    */
   teleported: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   /**
    * @description 动画名称
@@ -29,6 +30,6 @@ export const contentProps = () => ({
    */
   selectWidth: {
     type: Number,
-    default: 350,
+    default: 150,
   },
 });

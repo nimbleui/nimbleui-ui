@@ -74,10 +74,14 @@ const hslToRgb = (h: number, s: number, l: number): ReturnType => {
   return [255 * f(0), 255 * f(8), 255 * f(4)];
 };
 
-export function setSolidColor(color: string, amount: number) {
+export function setSolidColor(color: string, amount: number, theme: "dark" | "light" = "light") {
   const rgb = hexToRgb(color);
   const hsl = rgbToHsl(...rgb);
-  hsl[2] -= amount / 100;
+  if (theme === "light") {
+    hsl[2] -= amount / 100;
+  } else {
+    hsl[2] += amount / 100;
+  }
   hsl[2] = Math.min(1, Math.max(0, hsl[2]));
   return rgbToHex(...hslToRgb(...hsl));
 }

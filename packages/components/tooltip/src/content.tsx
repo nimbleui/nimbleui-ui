@@ -9,7 +9,7 @@ export default defineComponent({
   name: "YContent",
   props: contentProps(),
   setup(props, ctx) {
-    const bem = createNamespace("content");
+    const bem = createNamespace("tooltip-content");
     const tooltipContext = inject(tooltipContextKey);
 
     const getStyle = (): CSSProperties => {
@@ -17,10 +17,10 @@ export default defineComponent({
       if (!el) return {};
       const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = el;
       const { selectWidth } = props;
-      const left = (offsetWidth - selectWidth) / 2;
+      // const left = (selectWidth - offsetWidth) / 2;
       return {
         position: "absolute",
-        left: `${offsetLeft + left}px`,
+        left: `${offsetLeft}px`,
         top: `${offsetTop + offsetHeight}px`,
         width: selectWidth ? `${selectWidth}px` : undefined,
       };

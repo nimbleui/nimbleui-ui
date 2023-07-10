@@ -2,8 +2,8 @@
 @use "./mixins/function.scss" as *;
 
 @include b(input) {
-  --y-input-text-color: var(--y-color-text-1);
-  --y-input-border-color: var(--y-color-border-1);
+  --y-input-text-color: var(--y-color-text);
+  --y-input-border-color: var(--y-color-border);
   --y-input-hover-border-color: var(--y-color-primary-8);
   --y-input-focus-border-color: var(--y-color-primary-8);
   --y-input-focus-shadow-color: var(--y-color-primary-1);

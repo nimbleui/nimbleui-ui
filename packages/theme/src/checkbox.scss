@@ -4,9 +4,9 @@
 
 @include b(checkbox) {
   --y-checkbox-size: 16px;
-  --y-checkbox-text-color: var(--y-color-text-1);
+  --y-checkbox-text-color: var(--y-color-text);
   --y-checkbox-font-size: var(--y-font-size);
-  --y-checkbox-border-color: var(--y-color-border-1);
+  --y-checkbox-border-color: var(--y-color-border);
   --y-checkbox-checked-border-color: var(--y-color-primary);
   --y-checkbox-checked-bg-color: var(--y-color-primary);
   --y-checkbox-disabled-opacity: var(--y-disabled-opacity);

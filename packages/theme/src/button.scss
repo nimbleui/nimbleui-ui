@@ -3,8 +3,8 @@
 
 // 设置变量
 @include b(button) {
-  --y-button-text-color: var(--y-color-text-1);
-  --y-button-border-color: var(--y-color-border-1);
+  --y-button-text-color: var(--y-color-text);
+  --y-button-border-color: var(--y-color-border);
   --y-button-before-bg-color: var(--y-color-theme);
   --y-button-before-border-color: var(--y-color-theme);
   --y-button-hover-text-color: var(--y-base-color);
