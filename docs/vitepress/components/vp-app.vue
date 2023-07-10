@@ -81,14 +81,10 @@
         <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
-    <YDropdown trigger="hover">
+    <YDropdown trigger="hover" :menu="menus">
       <div>YDropdown</div>
-      <template #dropdown>
-        <div>11111</div>
-        <div>22222</div>
-        <div>22222</div>
-        <div>22222</div>
-        <div>22222</div>
+      <template #dropdown="{ item }">
+        {{ item.label }}
       </template>
     </YDropdown>
   </div>
@@ -151,6 +147,21 @@ setTimeout(() => {
 watch(checkeds, (val) => {
   console.log(val);
 });
+
+const menus = reactive([
+  {
+    label: "测试1",
+    id: 1,
+  },
+  {
+    label: "测试2",
+    id: 2,
+  },
+  {
+    label: "测试3",
+    id: 3,
+  },
+]);
 </script>
 <style>
 * {

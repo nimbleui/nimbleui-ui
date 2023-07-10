@@ -28,14 +28,16 @@ export default defineComponent({
     };
 
     return () => {
-      const { appendTo, trigger, teleported, transition } = props;
+      const { appendTo, trigger, teleported, transition, menu } = props;
       return (
         <>
           <YTrigger trigger={trigger} onToggle={onToggle}>
             {ctx.slots.default?.()}
           </YTrigger>
-          <YContent transition={transition} show={show.value} appendTo={appendTo} teleported={teleported}>
-            {ctx.slots.content?.()}
+          <YContent transition={transition} show={show.value} appendTo={appendTo} teleported={teleported} menu={menu}>
+            {{
+              content: (item: any, index: number) => ctx.slots.content?.(item, index),
+            }}
           </YContent>
         </>
       );

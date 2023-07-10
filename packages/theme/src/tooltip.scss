@@ -1,3 +1,23 @@
 @use "./common/transition.scss";
 @use "./mixins/config.scss" as *;
 @use "./mixins/mixins.scss" as *;
+
+@include b(tooltip-content) {
+  --y-bg-color-overlay: var(--y-color-bg-elevated);
+  --y-box-shadow: 0 0 6px var(--y-color-fill-quaternary);
+  
+  padding: 5px 0;
+  border-radius: 3px;
+  color: var(--y-color-text);
+  box-shadow: var(--y-box-shadow);
+  background-color: var(--y-bg-color-overlay);
+
+  @include e(menus) {
+    padding: 0;
+    margin: 0;
+  }
+
+  @include e(menu) {
+    list-style: none;
+  }
+}

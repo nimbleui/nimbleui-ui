@@ -11,16 +11,14 @@ export default defineComponent({
     const bem = createNamespace("dropdown");
 
     return () => {
-      const { trigger } = props;
+      const { trigger, menu } = props;
       return (
-        <YTooltip trigger={trigger} transition="y-zoom-in-top">
+        <YTooltip trigger={trigger} transition="y-zoom-in-top" menu={menu}>
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;
             },
-            content: () => {
-              return <div class={bem.e("content")}>{ctx.slots.dropdown?.()}</div>;
-            },
+            content: (item: any, index: number) => ctx.slots.dropdown?.(item, index),
           }}
         </YTooltip>
       );

@@ -13,9 +13,11 @@
     --y-box-shadow: 0 0 6px var(--y-color-fill-quaternary);
   
     padding: 5px 0;
-    background-color: var(--y-bg-color-overlay);
-    box-shadow: var(--y-box-shadow);
     border-radius: 3px;
     color: var(--y-color-text);
+    box-shadow: var(--y-box-shadow);
+    background-color: var(--y-bg-color-overlay);
+
+    
   }
 }

@@ -9,6 +9,12 @@ const dropdownProps = mergeCommonProp({
   teleported: {
     type: String,
   },
+  /**
+   * @description 菜单配置项
+   */
+  menu: {
+    type: Array as PropType<Array<{ [key: string]: any } | string>>,
+  },
 });
 
 export default dropdownProps;

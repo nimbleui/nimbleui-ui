@@ -3,7 +3,7 @@ import { Teleport, Transition, defineComponent, inject, CSSProperties } from "vu
 import { tooltipContextKey } from "@yy/tokens";
 
 import { contentProps } from "./props";
-import { createNamespace } from "@yy/utils";
+import { createNamespace, isFunction, isString } from "@yy/utils";
 
 export default defineComponent({
   name: "YContent",
@@ -17,7 +17,6 @@ export default defineComponent({
       if (!el) return {};
       const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = el;
       const { selectWidth } = props;
-      // const left = (selectWidth - offsetWidth) / 2;
       return {
         position: "absolute",
         left: `${offsetLeft}px`,
@@ -26,13 +25,35 @@ export default defineComponent({
       };
     };
 
+    function renderItem() {
+      const { menu, labelField } = props;
+
+      return (
+        <ul class={bem.e("menus")}>
+          {menu?.map((item, index) => (
+            <li class={bem.e("menu")} key={index}>
+              {ctx.slots.default?.({ item, index }) || (
+                <span>
+                  {isString(item)
+                    ? item
+                    : isFunction(item[labelField])
+                    ? item[labelField](item, index)
+                    : item[labelField]}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
     return () => {
       const { appendTo, teleported, transition, show } = props;
       return (
         <Teleport to={appendTo} disabled={teleported}>
           <Transition name={transition}>
             <div style={getStyle()} class={bem.b()} v-show={show}>
-              {ctx.slots.default?.()}
+              {renderItem()}
             </div>
           </Transition>
         </Teleport>
