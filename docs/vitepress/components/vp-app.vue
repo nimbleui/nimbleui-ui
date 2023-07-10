@@ -153,6 +153,10 @@ watch(checkeds, (val) => {
 });
 </script>
 <style>
+* {
+  padding: 0;
+  margin: 0;
+}
 .item {
   height: 20px;
   background-color: var(--y-color-primary-1);
@@ -166,6 +170,9 @@ watch(checkeds, (val) => {
   height: 16px;
 }
 .bg {
+  box-sizing: border-box;
+  padding: 1rem;
   background-color: var(--y-color-theme);
+  min-height: 100vh;
 }
 </style>

@@ -22,7 +22,7 @@ export default defineComponent({
         position: "absolute",
         left: `${offsetLeft}px`,
         top: `${offsetTop + offsetHeight}px`,
-        width: selectWidth ? `${selectWidth}px` : undefined,
+        width: `${selectWidth || offsetWidth}px`,
       };
     };
 

@@ -30,6 +30,5 @@ export const contentProps = () => ({
    */
   selectWidth: {
     type: Number,
-    default: 150,
   },
 });

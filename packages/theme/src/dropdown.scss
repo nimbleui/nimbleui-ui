@@ -3,22 +3,19 @@
 @use "./mixins/config.scss" as *;
 
 @include b(dropdown) {
-  --y-bg-color-overlay: var(--y-color-bg-elevated);
-  --y-box-shadow: 0 0 6px var(--y-color-fill-quaternary);
-}
-
-@include b(dropdown) {
   @include e(title) {
     display: inline-flex;
+    color: var(--y-color-text);
   }
 
   @include e(content) {
     --y-bg-color-overlay: var(--y-color-bg-elevated);
-    --y-box-shadow: 0 0 6px var(--y-color-text-quaternary);
-
+    --y-box-shadow: 0 0 6px var(--y-color-fill-quaternary);
+  
     padding: 5px 0;
     background-color: var(--y-bg-color-overlay);
     box-shadow: var(--y-box-shadow);
     border-radius: 3px;
+    color: var(--y-color-text);
   }
 }

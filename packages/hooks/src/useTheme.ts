@@ -111,7 +111,7 @@ export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
   });
 
   setProperty("theme", bgColor);
-  setProperty("base-color", textColor);
+  setProperty("base-color", textColor, false);
 
   // 禁用状态的样式
   setProperty("disabled-opacity", String(disabledOpacity), false);

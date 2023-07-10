@@ -40,6 +40,7 @@
       width: 100%;
       font-size: var(--y-input-font-size);
       color: var(--y-input-text-color);
+      background-color: transparent;
   
       &:focus {
         outline: none;

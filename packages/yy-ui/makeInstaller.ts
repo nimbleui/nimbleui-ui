@@ -13,7 +13,7 @@ export const makeInstaller = (components: Plugin[] = []) => {
     components.forEach((c) => app.use(c));
     const { theme, ...other } = options;
     // 设置主题颜色
-    useTheme(theme);
+    useTheme(theme, "dark");
     // 公共参数
     app.provide(configContextKey, other);
   };
