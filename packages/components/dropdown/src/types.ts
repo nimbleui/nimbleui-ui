@@ -1,19 +1,32 @@
 import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@yy/utils";
 import { TriggerType } from "@yy/components/tooltip";
+import { contentProps } from "@yy/components/tooltip/src/props";
 
 const dropdownProps = mergeCommonProp({
+  ...contentProps(),
   trigger: {
     type: String as PropType<TriggerType>,
-  },
-  teleported: {
-    type: String,
   },
   /**
    * @description 菜单配置项
    */
-  menu: {
-    type: Array as PropType<Array<{ [key: string]: any } | string>>,
+  options: {
+    type: Array as PropType<Array<{ [key: string]: any }>>,
+  },
+  /**
+   * @description label 的字段名
+   */
+  labelField: {
+    type: String,
+    default: "label",
+  },
+  /**
+   * @description key 的字段名
+   */
+  keyField: {
+    type: String,
+    default: "id",
   },
 });
 

@@ -81,7 +81,7 @@
         <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
-    <YDropdown trigger="hover" :menu="menus">
+    <YDropdown :options="menus" :trigger="'hover'">
       <div>YDropdown</div>
       <template #dropdown="{ item }">
         {{ item.label }}

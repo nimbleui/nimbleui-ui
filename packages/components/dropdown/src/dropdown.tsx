@@ -1,24 +1,50 @@
+import { defineComponent, ref } from "vue";
 import { YTooltip } from "@yy/components/tooltip";
-import { createNamespace } from "@yy/utils";
-import { defineComponent } from "vue";
+import { createNamespace, isFunction } from "@yy/utils";
 
 import dropdownProps from "./types";
 
 export default defineComponent({
   name: "YDropdown",
   props: dropdownProps(),
+  emits: ["select"],
   setup(props, ctx) {
+    const tooltipRef = ref();
     const bem = createNamespace("dropdown");
 
-    return () => {
-      const { trigger, menu } = props;
+    const onClick = (item: any, index: number) => {
+      return () => {
+        tooltipRef.value?.onClose();
+        ctx.emit("select", item, index);
+      };
+    };
+
+    function renderItem() {
+      const { options, labelField, keyField } = props;
       return (
-        <YTooltip trigger={trigger} transition="y-zoom-in-top" menu={menu}>
+        <ul class={bem.e("menus")}>
+          {options?.map((item, index) => {
+            const key = item[keyField];
+            const value = item[labelField];
+            return (
+              <li onClick={onClick(item, index)} class={bem.e("menu")} key={key}>
+                {ctx.slots.dropdown?.({ item, index }) || <span>{isFunction(value) ? value(item, index) : value}</span>}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
+
+    return () => {
+      const { trigger } = props;
+      return (
+        <YTooltip ref={tooltipRef} trigger={trigger} transition="y-zoom-in-top">
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;
             },
-            content: (item: any, index: number) => ctx.slots.dropdown?.(item, index),
+            content: renderItem(),
           }}
         </YTooltip>
       );

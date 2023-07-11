@@ -1,5 +1,3 @@
-import { PropType } from "vue";
-
 export const contentProps = () => ({
   /**
    * @description 渲染在哪里
@@ -32,18 +30,5 @@ export const contentProps = () => ({
    */
   selectWidth: {
     type: Number,
-  },
-  /**
-   * @description 菜单配置项
-   */
-  menu: {
-    type: Array as PropType<Array<{ [key: string]: any } | string>>,
-  },
-  /**
-   * @description menu数组中label字段名
-   */
-  labelField: {
-    type: String,
-    default: "label",
   },
 });

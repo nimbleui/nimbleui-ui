@@ -8,6 +8,7 @@ import { tooltipTriggerContextKey, tooltipContextKey } from "@yy/tokens";
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
+  emits: ["select"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
     provide(tooltipTriggerContextKey, {
@@ -20,24 +21,35 @@ export default defineComponent({
       triggerRef,
     });
 
+    let time = 0;
     const show = ref(false);
     const onToggle = (e: Event, toggle: boolean) => {
-      console.log("执行");
-      console.log(toggle);
-      show.value = toggle;
+      clearTimeout(time);
+      time = window.setTimeout(() => {
+        show.value = toggle;
+      }, 80);
     };
 
+    const onClose = () => (show.value = false);
+    ctx.expose({
+      onClose,
+    });
+
     return () => {
-      const { appendTo, trigger, teleported, transition, menu } = props;
+      const { appendTo, trigger, teleported, transition } = props;
       return (
         <>
           <YTrigger trigger={trigger} onToggle={onToggle}>
             {ctx.slots.default?.()}
           </YTrigger>
-          <YContent transition={transition} show={show.value} appendTo={appendTo} teleported={teleported} menu={menu}>
-            {{
-              content: (item: any, index: number) => ctx.slots.content?.(item, index),
-            }}
+          <YContent
+            show={show.value}
+            appendTo={appendTo}
+            transition={transition}
+            teleported={teleported}
+            onToggle={onToggle}
+          >
+            {ctx.slots.content?.()}
           </YContent>
         </>
       );
