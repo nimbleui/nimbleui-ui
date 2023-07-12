@@ -1,3 +1,6 @@
+import { PropType } from "vue";
+import { TriggerType } from "./types";
+
 export const contentProps = () => ({
   /**
    * @description 渲染在哪里
@@ -30,5 +33,14 @@ export const contentProps = () => ({
    */
   selectWidth: {
     type: Number,
+  },
+  trigger: {
+    type: String as PropType<TriggerType>,
+  },
+  /**
+   * @description 菜单最大高度
+   */
+  maxHeight: {
+    type: [String, Number],
   },
 });

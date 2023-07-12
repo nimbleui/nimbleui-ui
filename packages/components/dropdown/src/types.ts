@@ -28,6 +28,13 @@ const dropdownProps = mergeCommonProp({
     type: String,
     default: "id",
   },
+  /**
+   * @description 菜单最大高度
+   */
+  maxHeight: {
+    type: [String, Number],
+    default: 200,
+  },
 });
 
 export default dropdownProps;

@@ -15,7 +15,7 @@ export default defineComponent({
     const onClick = (item: any, index: number) => {
       return () => {
         tooltipRef.value?.onClose();
-        ctx.emit("select", item, index);
+        ctx.emit("select", item, { index, options: props.options });
       };
     };
 
@@ -28,7 +28,7 @@ export default defineComponent({
             const value = item[labelField];
             return (
               <li onClick={onClick(item, index)} class={bem.e("menu")} key={key}>
-                {ctx.slots.dropdown?.({ item, index }) || <span>{isFunction(value) ? value(item, index) : value}</span>}
+                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(item, options) : value}</>}
               </li>
             );
           })}
@@ -44,7 +44,7 @@ export default defineComponent({
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;
             },
-            content: renderItem(),
+            content: renderItem,
           }}
         </YTooltip>
       );

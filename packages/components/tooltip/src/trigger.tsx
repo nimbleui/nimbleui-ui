@@ -3,7 +3,7 @@ import type { PropType, VNode, ObjectDirective } from "vue";
 import { isObject } from "@yy/utils";
 import type { TriggerType } from "./types";
 
-import { tooltipTriggerContextKey } from "@yy/tokens";
+import { tooltipContextKey } from "@yy/tokens";
 
 export default defineComponent({
   name: "YTrigger",
@@ -15,7 +15,7 @@ export default defineComponent({
   },
   emits: ["toggle"],
   setup(props, ctx) {
-    const tooltipTriggerContext = inject(tooltipTriggerContextKey);
+    const tooltipContext = inject(tooltipContextKey);
     function findFirstLegitChild(node: VNode[] | undefined): VNode | null {
       if (!node) return null;
       const children = node as VNode[];
@@ -40,18 +40,19 @@ export default defineComponent({
     const directive = (): ObjectDirective => {
       return {
         mounted(el) {
-          tooltipTriggerContext?.setRef(el);
+          tooltipContext?.setRef(el);
         },
         updated(el) {
-          tooltipTriggerContext?.setRef(el);
+          tooltipContext?.setRef(el);
         },
         unmounted() {
-          tooltipTriggerContext?.setRef(null);
+          tooltipContext?.setRef(null);
         },
       };
     };
 
     const handleEvent = (e: Event) => {
+      e.stopPropagation();
       const { type: eventType } = e;
       const { trigger } = props;
 

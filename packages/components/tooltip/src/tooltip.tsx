@@ -3,7 +3,8 @@ import YTrigger from "./trigger";
 import YContent from "./content";
 
 import tooltipProps from "./types";
-import { tooltipTriggerContextKey, tooltipContextKey } from "@yy/tokens";
+import { tooltipContextKey } from "@yy/tokens";
+import { useEventListener } from "@yy/hooks";
 
 export default defineComponent({
   name: "YTooltip",
@@ -11,14 +12,13 @@ export default defineComponent({
   emits: ["select"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
-    provide(tooltipTriggerContextKey, {
+    const contentRef = ref<HTMLElement>();
+    provide(tooltipContextKey, {
+      triggerRef,
+      contentRef,
       setRef(el: HTMLElement) {
         triggerRef.value = el;
       },
-    });
-
-    provide(tooltipContextKey, {
-      triggerRef,
     });
 
     let time = 0;
@@ -31,6 +31,15 @@ export default defineComponent({
     };
 
     const onClose = () => (show.value = false);
+
+    useEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      const contentCheck = contentRef.value?.contains(target);
+      const triggerCheck = triggerRef.value?.contains(target);
+
+      if (!contentCheck && !triggerCheck) onClose();
+    });
+
     ctx.expose({
       onClose,
     });
@@ -44,6 +53,7 @@ export default defineComponent({
           </YTrigger>
           <YContent
             show={show.value}
+            trigger={trigger}
             appendTo={appendTo}
             transition={transition}
             teleported={teleported}

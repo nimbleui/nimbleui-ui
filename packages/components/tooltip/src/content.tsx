@@ -1,7 +1,7 @@
 import { Teleport, Transition, defineComponent, inject, CSSProperties } from "vue";
 
 import { tooltipContextKey } from "@yy/tokens";
-import { createNamespace } from "@yy/utils";
+import { createNamespace, isNumber } from "@yy/utils";
 
 import { contentProps } from "./props";
 
@@ -17,30 +17,43 @@ export default defineComponent({
       const el = tooltipContext?.triggerRef.value;
       if (!el) return {};
       const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = el;
-      const { selectWidth } = props;
+      const { selectWidth, maxHeight } = props;
       return {
         position: "absolute",
         left: `${offsetLeft}px`,
         top: `${offsetTop + offsetHeight + 5}px`,
-        width: `${selectWidth || offsetWidth}px`,
+        minWidth: `${selectWidth || offsetWidth}px`,
+        maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight,
       };
     };
 
     const handleEvent = (e: Event) => {
+      e.stopPropagation();
       const { type: eventType } = e;
-      if (eventType === "mouseenter") {
+      const { trigger } = props;
+      if (eventType === "mouseenter" && trigger === "hover") {
         ctx.emit("toggle", e, true);
-      } else if (eventType === "mouseleave") {
+      } else if (eventType === "mouseleave" && trigger === "hover") {
         ctx.emit("toggle", e, false);
       }
     };
 
     return () => {
       const { appendTo, teleported, transition, show } = props;
+
       return (
         <Teleport to={appendTo} disabled={teleported}>
           <Transition name={transition}>
-            <div style={getStyle()} onMouseleave={handleEvent} onMouseenter={handleEvent} class={bem.b()} v-show={show}>
+            <div
+              v-show={show}
+              class={bem.b()}
+              style={getStyle()}
+              ref={tooltipContext?.contentRef}
+              onClick={handleEvent}
+              onMouseleave={handleEvent}
+              onMouseenter={handleEvent}
+            >
+              <span></span>
               {ctx.slots.default?.()}
             </div>
           </Transition>

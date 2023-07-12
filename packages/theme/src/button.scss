@@ -13,19 +13,19 @@
   --y-button-disabled-opacity: var(--y-disabled-opacity);
   --y-button-primary-bg-color: var(--y-color-primary);
   --y-button-primary-border-color: var(--y-color-primary);
-  --y-button-primary-text-color: var(--y-color-theme);
+  --y-button-primary-text-color: #fff;
   --y-button-success-bg-color: var(--y-color-success);
   --y-button-success-border-color: var(--y-color-success);
-  --y-button-success-text-color: var(--y-color-theme);
+  --y-button-success-text-color: #fff;
   --y-button-warning-bg-color: var(--y-color-warning);
   --y-button-warning-border-color: var(--y-color-warning);
-  --y-button-warning-text-color: var(--y-color-theme);
+  --y-button-warning-text-color: #fff;
   --y-button-error-bg-color: var(--y-color-error);
   --y-button-error-border-color: var(--y-color-error);
-  --y-button-error-text-color: var(--y-color-theme);
+  --y-button-error-text-color: #fff;
   --y-button-info-bg-color: var(--y-color-info);
   --y-button-info-border-color: var(--y-color-info);
-  --y-button-info-text-color: var(--y-color-theme);
+  --y-button-info-text-color: #fff;
 }
 
 @include b(button) {
