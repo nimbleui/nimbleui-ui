@@ -20,7 +20,7 @@ export default defineComponent({
     };
 
     function renderItem() {
-      const { options, labelField, keyField } = props;
+      const { options, labelField, keyField, details } = props;
       return (
         <ul class={bem.e("menus")}>
           {options?.map((item, index) => {
@@ -28,7 +28,7 @@ export default defineComponent({
             const value = item[labelField];
             return (
               <li onClick={onClick(item, index)} class={bem.e("menu")} key={key}>
-                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(item, options) : value}</>}
+                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(options, details) : value}</>}
               </li>
             );
           })}

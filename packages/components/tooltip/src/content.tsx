@@ -1,4 +1,4 @@
-import { Teleport, Transition, defineComponent, inject, CSSProperties } from "vue";
+import { Teleport, Transition, defineComponent, inject, CSSProperties, onMounted, computed, watch } from "vue";
 
 import { tooltipContextKey } from "@yy/tokens";
 import { createNamespace, isNumber } from "@yy/utils";
@@ -37,6 +37,18 @@ export default defineComponent({
         ctx.emit("toggle", e, false);
       }
     };
+
+    const el = computed(() => tooltipContext?.contentRef.value);
+
+    onMounted(() => {
+      watch(el, (el) => {
+        if (el) {
+          watch(el.getBoundingClientRect(), () => {
+            console.log(11);
+          });
+        }
+      });
+    });
 
     return () => {
       const { appendTo, teleported, transition, show } = props;
