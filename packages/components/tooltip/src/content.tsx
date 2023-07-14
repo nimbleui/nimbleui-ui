@@ -1,9 +1,10 @@
-import { Teleport, Transition, defineComponent, inject, CSSProperties, onMounted, computed, watch } from "vue";
+import { Teleport, Transition, defineComponent, inject, CSSProperties, computed, ref, reactive } from "vue";
 
 import { tooltipContextKey } from "@yy/tokens";
 import { createNamespace, isNumber } from "@yy/utils";
 
 import { contentProps } from "./props";
+import { useGetHideElementRect, useGetScreenDistance } from "@yy/hooks";
 
 export default defineComponent({
   name: "YContent",
@@ -11,18 +12,35 @@ export default defineComponent({
   emits: ["toggle", "clickItem"],
   setup(props, ctx) {
     const bem = createNamespace("tooltip-content");
-    const tooltipContext = inject(tooltipContextKey);
+    const tooltipContext = inject(tooltipContextKey, {
+      triggerRef: ref<HTMLElement>(),
+      contentRef: ref<HTMLElement>(),
+      setRef: (el) => el,
+    });
+
+    // const styles = reactive<CSSProperties>({});
+    const showRef = computed(() => props.show);
+    const { screenRect } = useGetScreenDistance(tooltipContext.triggerRef);
+    const { show, visible, rect } = useGetHideElementRect(showRef, tooltipContext.contentRef);
+
+    // const sunLocation = () => {
+    //   const { placement } = props;
+    //   const { disBottom, disLeft, disRight, disTop } = screenRect;
+    //   const { width, height } = rect;
+    // };
 
     const getStyle = (): CSSProperties => {
       const el = tooltipContext?.triggerRef.value;
       if (!el) return {};
-      const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = el;
+      const { width, height } = el.getBoundingClientRect();
+      const { offsetLeft, offsetTop } = el;
       const { selectWidth, maxHeight } = props;
+
       return {
         position: "absolute",
         left: `${offsetLeft}px`,
-        top: `${offsetTop + offsetHeight + 5}px`,
-        minWidth: `${selectWidth || offsetWidth}px`,
+        top: `${offsetTop + height + 5}px`,
+        minWidth: `${selectWidth || width}px`,
         maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight,
       };
     };
@@ -38,29 +56,17 @@ export default defineComponent({
       }
     };
 
-    const el = computed(() => tooltipContext?.contentRef.value);
-
-    onMounted(() => {
-      watch(el, (el) => {
-        if (el) {
-          watch(el.getBoundingClientRect(), () => {
-            console.log(11);
-          });
-        }
-      });
-    });
-
     return () => {
-      const { appendTo, teleported, transition, show } = props;
+      const { appendTo, teleported, transition } = props;
 
       return (
         <Teleport to={appendTo} disabled={teleported}>
-          <Transition name={transition}>
+          <Transition name={visible.value ? undefined : transition}>
             <div
-              v-show={show}
               class={bem.b()}
-              style={getStyle()}
+              v-show={show.value}
               ref={tooltipContext?.contentRef}
+              style={[getStyle(), { visibility: visible.value ? "hidden" : "visible" }]}
               onClick={handleEvent}
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}

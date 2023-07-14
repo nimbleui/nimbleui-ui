@@ -4,6 +4,7 @@
 
 @include b(dropdown) {
   @include e(title) {
+    position: relative;
     display: inline-flex;
     color: var(--y-color-text);
     font-size: var(--y-font-size);

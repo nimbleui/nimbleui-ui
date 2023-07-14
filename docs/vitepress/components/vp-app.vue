@@ -206,9 +206,14 @@ setTimeout(() => {
   height: 16px;
 }
 .bg {
+  height: 100vh;
+  overflow-y: auto;
   box-sizing: border-box;
   padding: 1rem;
   background-color: var(--y-color-theme);
   min-height: 100vh;
+}
+.dropdown {
+  position: absolute;
 }
 </style>
