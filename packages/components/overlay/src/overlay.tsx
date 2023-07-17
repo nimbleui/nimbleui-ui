@@ -1,15 +1,22 @@
 import { CSSProperties, Transition, defineComponent, Teleport } from "vue";
 import { createNamespace, isEmpty } from "@yy/utils";
+import { useLazyRender } from "@yy/hooks";
 
 import overlayProps from "./types";
 
 export default defineComponent({
   name: "YOverlay",
   props: overlayProps(),
+  emits: ["click"],
   setup(props, ctx) {
     const bem = createNamespace("overlay");
 
-    const renderOverlay = () => {
+    const onClick = (e: Event) => {
+      ctx.emit("click", e);
+    };
+
+    const { lazyRender } = useLazyRender(() => props.show);
+    const renderOverlay = lazyRender(() => {
       const style: CSSProperties = Object.assign({ zIndex: props.zIndex });
 
       if (isEmpty(props.duration)) {
@@ -17,11 +24,11 @@ export default defineComponent({
       }
 
       return (
-        <div v-show={props.show} class={bem.b()} style={style}>
+        <div onClick={onClick} v-show={props.show} class={bem.b()} style={style}>
           {ctx.slots.default?.()}
         </div>
       );
-    };
+    });
 
     return () => {
       return (

@@ -87,7 +87,8 @@
         {{ item.label }}
       </template> -->
     </YDropdown>
-    <YOverlay :show="showOverlay" />
+    <YButton @click="onOpen">open</YButton>
+    <YDrawer v-model="showOverlay" @open="onOpened" @close="onClose"></YDrawer>
   </div>
 </template>
 
@@ -177,10 +178,20 @@ const menus = reactive([
 ]);
 
 const showOverlay = ref(false);
-
-setTimeout(() => {
+const onOpen = () => {
   showOverlay.value = true;
-}, 8000);
+};
+const onOpened = () => {
+  console.log("打开");
+};
+const onClose = () => {
+  console.log("关闭");
+};
+// const beforeClose = (done: (cancel?: boolean) => void) => {
+//   setTimeout(() => {
+//     done();
+//   }, 1000);
+// };
 </script>
 <style>
 * {

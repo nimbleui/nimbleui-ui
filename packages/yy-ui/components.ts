@@ -11,6 +11,7 @@ import {
   YSwitch,
   YDropdown,
   YOverlay,
+  YDrawer,
 } from "@yy/components";
 
 export default [
@@ -26,4 +27,5 @@ export default [
   YSwitch,
   YDropdown,
   YOverlay,
+  YDrawer,
 ];

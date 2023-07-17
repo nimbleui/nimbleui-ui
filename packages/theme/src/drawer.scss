@@ -1,0 +1,83 @@
+@use "./mixins/config.scss" as *;
+@use "./mixins/mixins.scss" as *;
+
+@include b(drawer) {
+  --y-drawer-bg-color: var(--y-color-bg-elevated);
+
+  position: fixed;
+  z-index: 999;
+  background-color: var(--y-drawer-bg-color);
+  box-shadow: -6px 0 16px 0 rgb(0 0 0 / 8%), -3px 0 6px -4px rgb(0 0 0 / 12%), -9px 0 28px 8px rgb(0 0 0 / 5%);
+
+  &.ltr,
+  &.rtl {
+    height: 100%;
+    top: 0;
+    bottom: 0;
+  }
+
+  &.ttb,
+  &.btt {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  &.ltr {
+    left: 0;
+  }
+
+  &.rtl {
+    right: 0;
+  }
+
+  &.ttb {
+    top: 0;
+  }
+
+  &.btt {
+    bottom: 0;
+  }
+}
+
+.#{$namespace}-drawer-fade {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.3s;
+  }
+
+  &-enter-from,
+  &-enter-active,
+  &-enter-to,
+  &-leave-from,
+  &-leave-active,
+  &-leave-to {
+    overflow: hidden !important;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+
+    &.ltr {
+      transform: translateX(-100%);
+    }
+
+    &.rtl {
+      transform: translateX(100%);
+    }
+
+    &.ttb {
+      transform: translateY(-100%);
+    }
+
+    &.btt {
+      transform: translateY(100%);
+    }
+  }
+
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+  }
+}
