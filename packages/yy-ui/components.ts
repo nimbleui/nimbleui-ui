@@ -10,6 +10,7 @@ import {
   YCheckboxGroup,
   YSwitch,
   YDropdown,
+  YOverlay,
 } from "@yy/components";
 
 export default [
@@ -24,4 +25,5 @@ export default [
   YCheckboxGroup,
   YSwitch,
   YDropdown,
+  YOverlay,
 ];

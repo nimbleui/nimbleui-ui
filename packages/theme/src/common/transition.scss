@@ -2,6 +2,16 @@
 
 $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
 
+.#{$namespace}-fade-in-enter-active,
+.#{$namespace}-fade-in-leave-active {
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.#{$namespace}-fade-in-enter-from,
+.#{$namespace}-fade-in-leave-active {
+  opacity: 0;
+}
+
 .#{$namespace}-zoom-in-top-enter-active,
 .#{$namespace}-zoom-in-top-leave-active {
   opacity: 1;

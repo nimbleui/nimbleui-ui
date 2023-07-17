@@ -87,6 +87,7 @@
         {{ item.label }}
       </template> -->
     </YDropdown>
+    <YOverlay :show="showOverlay" />
   </div>
 </template>
 
@@ -175,18 +176,11 @@ const menus = reactive([
   },
 ]);
 
+const showOverlay = ref(false);
+
 setTimeout(() => {
-  menus.push(
-    {
-      label: "测试7",
-      id: 7,
-    },
-    {
-      label: "测试8",
-      id: 8,
-    }
-  );
-}, 10000);
+  showOverlay.value = true;
+}, 8000);
 </script>
 <style>
 * {
