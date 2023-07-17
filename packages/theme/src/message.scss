@@ -1,0 +1,22 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+
+@include b(message) {
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+
+  @include when(center) {
+    justify-content: center;
+  }
+}
+
+.#{$namespace}-message-fade-enter-from,
+.#{$namespace}-message-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}

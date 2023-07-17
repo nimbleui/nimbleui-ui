@@ -88,7 +88,7 @@
       </template> -->
     </YDropdown>
     <YButton @click="onOpen">open</YButton>
-    <YDrawer v-model="showOverlay" @open="onOpened" @close="onClose"></YDrawer>
+    <YDrawer v-model="showOverlay" @opened="onOpened" @closed="onClose"></YDrawer>
   </div>
 </template>
 

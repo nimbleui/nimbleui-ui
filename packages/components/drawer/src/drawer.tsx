@@ -1,4 +1,4 @@
-import { CSSProperties, Transition, computed, defineComponent, Teleport } from "vue";
+import { CSSProperties, Transition, computed, defineComponent, Teleport, getCurrentInstance } from "vue";
 import { createNamespace, isString } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
 import { useLazyRender } from "@yy/hooks";
@@ -8,10 +8,9 @@ import drawerProps from "./types";
 export default defineComponent({
   name: "YDrawer",
   props: drawerProps(),
-  emits: ["update:modelValue", "close", "open"],
+  emits: ["update:modelValue", "close", "open", "opened", "closed"],
   setup(props, ctx) {
     const bem = createNamespace("drawer");
-
     const hide = (cancel?: boolean) => {
       const value = !!cancel;
       value === false && ctx.emit("close");
@@ -50,6 +49,14 @@ export default defineComponent({
       );
     });
 
+    const afterLeave = () => {
+      destroy();
+      ctx.emit("closed");
+    };
+    const afterEnter = () => {
+      ctx.emit("opened");
+    };
+
     return () => {
       const { modelValue, modal } = props;
 
@@ -57,7 +64,13 @@ export default defineComponent({
         <>
           {modal ? <YOverlay onClick={onClose} show={modelValue} /> : null}
           <Teleport to="body">
-            <Transition appear name="y-drawer-fade" v-slots={{ default: renderContent }} onAfterLeave={destroy} />
+            <Transition
+              appear
+              name="y-drawer-fade"
+              onAfterEnter={afterEnter}
+              onAfterLeave={afterLeave}
+              v-slots={{ default: renderContent }}
+            />
           </Teleport>
         </>
       );
