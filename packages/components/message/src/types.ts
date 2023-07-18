@@ -1,7 +1,9 @@
-import { ExtractPropTypes, PropType, VNode } from "vue";
+import { AppContext, ComponentInternalInstance, ExtractPropTypes, PropType, VNode } from "vue";
 import { mergeCommonProp } from "@yy/utils";
 
-export type MessageType = "success" | "info" | "warning" | "error";
+export const messageTypes = ["success", "info", "warning", "error"] as const;
+
+export type MessageType = (typeof messageTypes)[number];
 
 const messageProps = mergeCommonProp({
   /**
@@ -9,6 +11,7 @@ const messageProps = mergeCommonProp({
    */
   id: {
     type: String,
+    default: "",
   },
   /**
    * @description 消息文字
@@ -28,6 +31,7 @@ const messageProps = mergeCommonProp({
    */
   offset: {
     type: Number,
+    default: 16,
   },
   /**
    * @description 文字是否居中
@@ -47,8 +51,50 @@ const messageProps = mergeCommonProp({
   onClose: {
     type: Function,
   },
+  /**
+   * @description 显示时间，单位为毫秒。 设为 0 则不会自动关闭
+   */
+  duration: {
+    type: Number,
+    default: 3000,
+  },
 });
 
 export default messageProps;
 
 export type MessageProps = ExtractPropTypes<ReturnType<typeof messageProps>>;
+
+export type MessageOptions = Partial<
+  Omit<MessageProps, "id"> & {
+    appendTo?: HTMLElement | string;
+  }
+>;
+export type MessageParamsNormalized = Omit<MessageProps, "id"> & {
+  appendTo: HTMLElement;
+};
+
+export type MessageParams = MessageOptions | MessageOptions["message"];
+export type MessageOptionsWithType = Omit<MessageOptions, "type">;
+export type MessageParamsWithType = MessageOptionsWithType | MessageOptions["message"];
+export interface MessageHandler {
+  close: () => void;
+}
+export type MessageFn = {
+  (options?: MessageParams, appContext?: AppContext | null): MessageHandler;
+  closeAll(type?: MessageType): void;
+};
+export type MessageTypedFn = (options?: MessageParamsWithType, appContext?: AppContext | null) => MessageHandler;
+
+export interface Message extends MessageFn {
+  success: MessageTypedFn;
+  warning: MessageTypedFn;
+  info: MessageTypedFn;
+  error: MessageTypedFn;
+}
+
+export interface MessageInstance {
+  id: string;
+  vm: ComponentInternalInstance;
+  props: MessageParamsNormalized;
+  handler: MessageHandler;
+}

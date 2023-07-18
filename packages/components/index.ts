@@ -12,3 +12,4 @@ export * from "./tooltip";
 export * from "./dropdown";
 export * from "./overlay";
 export * from "./drawer";
+export * from "./message";

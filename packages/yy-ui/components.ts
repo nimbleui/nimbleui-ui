@@ -12,6 +12,7 @@ import {
   YDropdown,
   YOverlay,
   YDrawer,
+  YMessage,
 } from "@yy/components";
 
 export default [
@@ -28,4 +29,5 @@ export default [
   YDropdown,
   YOverlay,
   YDrawer,
+  YMessage,
 ];

@@ -89,13 +89,14 @@
     </YDropdown>
     <YButton @click="onOpen">open</YButton>
     <YDrawer v-model="showOverlay" @opened="onOpened" @closed="onClose"></YDrawer>
+    <YButton :type="'primary'" @click="showMessage">show message</YButton>
   </div>
 </template>
 
 <script setup lang="tsx">
 import { watch } from "vue";
 import { reactive, h, ref } from "vue";
-import { CheckboxDisabledFun } from "yy-ui";
+import { CheckboxDisabledFun, YMessage } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -192,6 +193,11 @@ const onClose = () => {
 //     done();
 //   }, 1000);
 // };
+const showMessage = () => {
+  YMessage({
+    message: h("div", "test div"),
+  });
+};
 </script>
 <style>
 * {

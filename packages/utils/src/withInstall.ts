@@ -12,3 +12,11 @@ export function withInstall<T>(component: T) {
 
   return component as WithInstall<T>;
 }
+
+export function withInstallFunction<T>(component: T, name: string) {
+  (component as Record<string, unknown>).install = (app: App) => {
+    app.config.globalProperties[name] = component;
+  };
+
+  return component as WithInstall<T>;
+}

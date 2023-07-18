@@ -1,4 +1,4 @@
-import { CSSProperties, Transition, computed, defineComponent, Teleport, getCurrentInstance } from "vue";
+import { CSSProperties, Transition, computed, defineComponent, Teleport } from "vue";
 import { createNamespace, isString } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
 import { useLazyRender } from "@yy/hooks";
