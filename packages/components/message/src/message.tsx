@@ -1,5 +1,5 @@
 import { createNamespace } from "@yy/utils";
-import { CSSProperties, Transition, computed, defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
+import { CSSProperties, Transition, computed, defineComponent, onMounted, ref } from "vue";
 import messageProps from "./types";
 import { getLastOffset, getOffsetOrSpace } from "./instance";
 
@@ -46,7 +46,6 @@ export default defineComponent({
     });
 
     ctx.expose({
-      visible,
       close,
       bottom,
     });
