@@ -13,3 +13,4 @@ export * from "./dropdown";
 export * from "./overlay";
 export * from "./drawer";
 export * from "./message";
+export * from "./modal";

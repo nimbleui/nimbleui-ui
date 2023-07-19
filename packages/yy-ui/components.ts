@@ -13,6 +13,7 @@ import {
   YOverlay,
   YDrawer,
   YMessage,
+  YModal,
 } from "@yy/components";
 
 export default [
@@ -30,4 +31,5 @@ export default [
   YOverlay,
   YDrawer,
   YMessage,
+  YModal,
 ];

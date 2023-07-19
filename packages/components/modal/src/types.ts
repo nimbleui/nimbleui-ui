@@ -30,6 +30,12 @@ const modalProps = mergeCommonProp({
   destroyOnClose: {
     type: Boolean,
   },
+  /**
+   * @description 是否自动聚焦 Modal 第一个可聚焦的元素
+   */
+  autoFocus: {
+    type: Boolean,
+  },
 });
 
 export default modalProps;

@@ -15,6 +15,11 @@ export default defineComponent({
       ctx.emit("click", e);
     };
 
+    const onScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
     const { lazyRender } = useLazyRender(() => props.show);
     const renderOverlay = lazyRender(() => {
       const style: CSSProperties = Object.assign({ zIndex: props.zIndex });
@@ -24,7 +29,7 @@ export default defineComponent({
       }
 
       return (
-        <div onClick={onClick} v-show={props.show} class={bem.b()} style={style}>
+        <div onClick={onClick} onScroll={onScroll} v-show={props.show} class={bem.b()} style={style}>
           {ctx.slots.default?.()}
         </div>
       );
@@ -32,7 +37,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <Teleport to="body">
+        <Teleport to="body" disabled={props.disabled}>
           <Transition name="y-fade-in" v-slots={{ default: renderOverlay }} appear />
         </Teleport>
       );

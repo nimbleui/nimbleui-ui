@@ -10,6 +10,12 @@ const overlayProps = mergeCommonProp({
     default: true,
     customStyle: Object as PropType<CSSProperties>,
   },
+  /**
+   * @description 禁止穿梭
+   */
+  disabled: {
+    type: Boolean,
+  },
 });
 
 export default overlayProps;

@@ -1,0 +1,45 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+
+@include b(modal) {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: visible;
+
+  @include e(body) {
+    min-height: 100vh;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 100vw;
+    z-index: 99999; 
+  }
+
+  @include e(body-content) {
+    margin: auto;
+  }
+}
+
+.#{$namespace}-modal-fade-enter-from,
+.#{$namespace}-modal-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.#{$namespace}-modal-fade-leave-from,
+.#{$namespace}-modal-fade-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.#{$namespace}-modal-fade-leave-active {
+  transform-origin: inherit;
+  transition: opacity 0.25s cubic-bezier(.4, 0, 1, 1), transform 0.25s cubic-bezier(.4, 0, 1, 1);
+}
+
+.#{$namespace}-modal-fade-enter-active {
+  transform-origin: inherit;
+  transition: opacity 0.25s cubic-bezier(0, 0, .2, 1), transform 0.25s cubic-bezier(0, 0, .2, 1);
+}

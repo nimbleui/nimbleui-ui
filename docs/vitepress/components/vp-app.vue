@@ -88,8 +88,12 @@
       </template> -->
     </YDropdown>
     <YButton @click="onOpen">open</YButton>
-    <YDrawer v-model="showOverlay" @opened="onOpened" @closed="onClose"></YDrawer>
+    <YDrawer @opened="onOpened" @closed="onClose"></YDrawer>
     <YButton :type="'primary'" @click="showMessage">show message</YButton>
+    <YModal v-model="showOverlay">
+      <div class="scale"></div>
+    </YModal>
+    <!-- <div style="height: 900px"></div> -->
   </div>
 </template>
 
@@ -226,5 +230,10 @@ const showMessage = () => {
 }
 .dropdown {
   position: absolute;
+}
+.scale {
+  width: 400px;
+  height: 200px;
+  background-color: red;
 }
 </style>
