@@ -5,8 +5,9 @@ import VueMacros from "unplugin-vue-macros";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import esbuild, { minify as minifyPlugin } from "rollup-plugin-esbuild";
-import path from "path";
-import { buildOutput, writeBundles } from "./utils";
+import json from "@rollup/plugin-json";
+import * as path from "path";
+import { buildOutput, writeBundles, pkgRoot } from "./utils.js";
 
 const banner = `/*! YyUi v1.0.0 */\n`;
 
@@ -22,6 +23,7 @@ export const buildFullBundle = async (minify: boolean) => {
         vueJsx: vueJsx(),
       },
     }),
+    json(),
     nodeResolve({
       extensions: [".mjs", ".js", ".json", ".ts"],
     }),
@@ -50,7 +52,7 @@ export const buildFullBundle = async (minify: boolean) => {
   }
 
   const bundle = await rollup({
-    input: path.resolve(__dirname, "index.ts"),
+    input: path.resolve(pkgRoot, "yy-ui", "index.ts"),
     plugins,
     external: ["vue"],
     treeshake: true,

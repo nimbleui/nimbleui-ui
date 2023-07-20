@@ -1,12 +1,12 @@
-import fs from "fs";
-import path from "path";
+import { existsSync } from "fs";
+import { resolve } from "path";
 import { execa } from "execa";
 
-import { pkgRoot } from "./utils";
+import { pkgRoot } from "./utils.js";
 
 export async function buildDeclarations() {
-  const tsConfig = path.resolve(pkgRoot, "tsconfig.type.json");
-  if (fs.existsSync(tsConfig)) {
+  const tsConfig = resolve(pkgRoot, "tsconfig.type.json");
+  if (existsSync(tsConfig)) {
     execa("tsc", ["-p", tsConfig]);
   }
 }

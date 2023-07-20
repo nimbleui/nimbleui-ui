@@ -1,9 +1,10 @@
-import path from "node:path";
+import { resolve } from "node:path";
 import type { OutputOptions, RollupBuild } from "rollup";
+import { fileURLToPath } from "url";
 
-export const projRoot = path.resolve(__dirname, "..", "..");
-export const buildOutput = path.resolve(projRoot, "dist");
-export const pkgRoot = path.resolve(projRoot, "packages");
+export const projRoot = resolve(fileURLToPath(import.meta.url), "..", "..", "..", "..");
+export const buildOutput = resolve(projRoot, "dist");
+export const pkgRoot = resolve(projRoot, "packages");
 
 export function writeBundles(bundle: RollupBuild, options: OutputOptions[]) {
   return Promise.all(options.map((option) => bundle.write(option)));

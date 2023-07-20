@@ -1,3 +1,3 @@
-export * from "./buildDeclaration";
-export * from "./buildFullBundle";
-export * from "./buildModules";
+export * from "./buildDeclaration.js";
+export * from "./buildFullBundle.js";
+export * from "./buildModules.js";
