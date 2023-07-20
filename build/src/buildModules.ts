@@ -26,7 +26,7 @@ export const buildModules = async () => {
       onlyFiles: true,
     })
   );
-  console.log(filterFilePath(input));
+
   const bundle = await rollup({
     input: filterFilePath(input),
     plugins: [
