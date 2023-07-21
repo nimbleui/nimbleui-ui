@@ -120,6 +120,6 @@ export function isEmpty(el: unknown): el is null {
   return el === null || el === undefined;
 }
 
-function isObjectLike(el: unknown): el is object {
+export function isObjectLike(el: unknown): el is object {
   return typeof el === "object" && el !== null;
 }

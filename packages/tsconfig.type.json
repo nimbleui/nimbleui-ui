@@ -5,7 +5,12 @@
     "baseUrl": ".",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "../dist/types"
+    "declarationDir": "../dist/types",
+    "jsx": "preserve",
+    "paths": {
+      "@yy/*": ["../packages/*"],
+    }
   },
-  "exclude": ["node_module"]
+  "exclude": ["node_module"],
+  "include": ["components/**/*", "hooks/**/*", "tokens/**/*", "utils/**/*", "yy-ui/**/*"]
 }

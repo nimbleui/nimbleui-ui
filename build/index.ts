@@ -1,5 +1,12 @@
 import chalk from "chalk";
-import { buildDeclarations, buildModules, buildFullBundle, buildStyle, copyFullStyle } from "./src/index.js";
+import {
+  buildDeclarations,
+  buildModules,
+  buildFullBundle,
+  buildStyle,
+  copyFullStyle,
+  createPackage,
+} from "./src/index.js";
 import { removeBuildFile } from "./src/utils.js";
 
 const build = async () => {
@@ -18,13 +25,15 @@ const build = async () => {
   await buildModules();
   console.log(chalk.yellow("结束打包es、commonjs模块..."));
 
-  console.log(chalk.yellow("开始样式..."));
+  console.log(chalk.yellow("开始打包样式..."));
   await buildStyle();
   console.log(chalk.yellow("结束打包样式..."));
 
   console.log(chalk.yellow("开始克隆样式..."));
   await copyFullStyle();
   console.log(chalk.yellow("结束克隆样式..."));
+
+  await createPackage();
 };
 
 build();
