@@ -36,6 +36,12 @@ const modalProps = mergeCommonProp({
   autoFocus: {
     type: Boolean,
   },
+  /**
+   * @description 层级
+   */
+  zIndex: {
+    type: Number,
+  },
 });
 
 export default modalProps;

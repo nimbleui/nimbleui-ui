@@ -91,7 +91,7 @@
     <YDrawer @opened="onOpened" @closed="onClose"></YDrawer>
     <YButton :type="'primary'" @click="showMessage">show message</YButton>
     <YModal v-model="showOverlay">
-      <div class="scale"></div>
+      <div class="scale">66666</div>
     </YModal>
     <!-- <div style="height: 900px"></div> -->
   </div>
@@ -232,8 +232,7 @@ const showMessage = () => {
   position: absolute;
 }
 .scale {
-  width: 400px;
+  width: 600px;
   height: 200px;
-  background-color: red;
 }
 </style>

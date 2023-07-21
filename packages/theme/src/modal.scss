@@ -3,6 +3,10 @@
 @use "./mixins/config.scss" as *;
 
 @include b(modal) {
+  --y-modal-bg-color: var(--y-color-bg-elevated);
+  --y-modal-text-color: var(--y-color-text);
+  --y-modal-font-size: var(--y-font-size);
+
   position: fixed;
   left: 0;
   top: 0;
@@ -19,6 +23,10 @@
 
   @include e(body-content) {
     margin: auto;
+    border-radius: 5px;
+    font-size: var(--y-modal-font-size);
+    color: var(--y-modal-text-color);
+    background-color: var(--y-modal-bg-color);
   }
 }
 

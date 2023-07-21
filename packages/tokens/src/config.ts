@@ -1,3 +1,8 @@
 import { InjectionKey } from "vue";
 
-export const configContextKey: InjectionKey<any> = Symbol("CONFIG_CONTEXT_KEY");
+export interface GlobalConfigContext {
+  // 初始zIndex
+  zIndex?: number;
+}
+
+export const globalConfigContextKey: InjectionKey<GlobalConfigContext> = Symbol("CONFIG_CONTEXT_KEY");

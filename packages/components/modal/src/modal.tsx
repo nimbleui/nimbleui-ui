@@ -1,5 +1,5 @@
-import { defineComponent, nextTick, reactive, Teleport, Transition } from "vue";
-import { useEventListener, useLazyRender } from "@yy/hooks";
+import { defineComponent, nextTick, reactive, ref, Teleport, Transition } from "vue";
+import { useEventListener, useLazyRender, useCreateIndex } from "@yy/hooks";
 import { createNamespace } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
 
@@ -11,6 +11,10 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, ctx) {
     const bem = createNamespace("modal");
+
+    const { nextZIndex } = useCreateIndex();
+    const zIndex = ref(props.zIndex || nextZIndex());
+
     const { lazyRender, destroy } = useLazyRender(() => props.modelValue, {
       isTransition: true,
       destroyOnClose: props.destroyOnClose,
@@ -23,15 +27,16 @@ export default defineComponent({
     });
 
     const renderContent = lazyRender(() => {
-      const { modelValue } = props;
+      const { modelValue, modal } = props;
       return (
-        <div class={bem.e("body")}>
-          <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={destroy}>
-            <div v-show={modelValue} class={bem.e("body-content")}>
+        <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={destroy}>
+          <div v-show={modelValue} class={bem.e("body")}>
+            {modal && <YOverlay zIndex={zIndex.value} disabled onClick={onClose} show={modelValue} />}
+            <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
               {ctx.slots.default?.()}
             </div>
-          </Transition>
-        </div>
+          </div>
+        </Transition>
       );
     });
 
@@ -48,14 +53,9 @@ export default defineComponent({
     };
 
     return () => {
-      const { modelValue, modal } = props;
-
       return (
         <Teleport to="body">
-          <div class={bem.b()}>
-            {modal && <YOverlay disabled onClick={onClose} show={modelValue} />}
-            {renderContent()}
-          </div>
+          <div class={bem.b()}>{renderContent()}</div>
         </Teleport>
       );
     };

@@ -7,3 +7,5 @@ export * from "./src/useGetHideElementRect";
 export * from "./src/useGetScreenDistance";
 export * from "./src/useLazyRender";
 export * from "./src/useResizeObserver";
+export * from "./src/useGlobalConfig";
+export * from "./src/useCreateIndex";
