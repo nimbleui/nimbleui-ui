@@ -7,6 +7,7 @@ const theme: Theme = {
   Layout: VPApp,
   enhanceApp ({ app }) {
     app.use(YUI, {
+      isDark: true,
       theme: {
         primary: '#18a058'
       }

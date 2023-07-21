@@ -6,6 +6,7 @@ import {
   buildStyle,
   copyFullStyle,
   createPackage,
+  copyFiles,
 } from "./src/index.js";
 import { removeBuildFile } from "./src/utils.js";
 
@@ -34,6 +35,7 @@ const build = async () => {
   console.log(chalk.yellow("结束克隆样式..."));
 
   await createPackage();
+  await copyFiles();
 };
 
 build();
