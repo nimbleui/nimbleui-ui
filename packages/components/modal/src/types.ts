@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, PropType, VNode } from "vue";
 import { mergeCommonProp } from "@yy/utils";
 
 type DoneFn = (cancel?: boolean) => void;
@@ -41,6 +41,19 @@ const modalProps = mergeCommonProp({
    */
   zIndex: {
     type: Number,
+  },
+  /**
+   * @description 显示内容
+   */
+  content: {
+    type: [String, Object, Function] as PropType<string | VNode | ((details: any) => VNode)>,
+  },
+  /**
+   * @description 插入在哪
+   */
+  appendTo: {
+    type: String as PropType<keyof HTMLElementTagNameMap>,
+    default: "body",
   },
 });
 

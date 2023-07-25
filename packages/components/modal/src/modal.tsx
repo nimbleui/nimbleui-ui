@@ -1,6 +1,6 @@
 import { defineComponent, nextTick, reactive, ref, Teleport, Transition } from "vue";
 import { useEventListener, useLazyRender, useCreateIndex } from "@yy/hooks";
-import { createNamespace } from "@yy/utils";
+import { createNamespace, isFunction } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
 
 import modalProps from "./types";
@@ -27,13 +27,12 @@ export default defineComponent({
     });
 
     const renderContent = lazyRender(() => {
-      const { modelValue, modal } = props;
+      const { modelValue, content, details } = props;
       return (
         <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={destroy}>
           <div v-show={modelValue} class={bem.e("body")}>
-            {modal && <YOverlay zIndex={zIndex.value} disabled onClick={onClose} show={modelValue} />}
             <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
-              {ctx.slots.default?.()}
+              {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
             </div>
           </div>
         </Transition>
@@ -53,9 +52,13 @@ export default defineComponent({
     };
 
     return () => {
+      const { modal, modelValue } = props;
       return (
         <Teleport to="body">
-          <div class={bem.b()}>{renderContent()}</div>
+          <div class={bem.b()}>
+            {modal && <YOverlay zIndex={zIndex.value} disabled onClick={onClose} show={modelValue} />}
+            {renderContent()}
+          </div>
         </Teleport>
       );
     };
