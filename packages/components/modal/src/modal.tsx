@@ -27,11 +27,10 @@ export default defineComponent({
     });
 
     const renderContent = lazyRender(() => {
-      const { modelValue, modal } = props;
+      const { modelValue } = props;
       return (
         <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={destroy}>
-          <div v-show={modelValue} class={bem.e("body")}>
-            {modal && <YOverlay zIndex={zIndex.value} disabled onClick={onClose} show={modelValue} />}
+          <div onClick={onClose} v-show={modelValue} class={bem.e("body")}>
             <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
               {ctx.slots.default?.()}
             </div>
@@ -48,14 +47,21 @@ export default defineComponent({
       });
     };
 
-    const onClose = () => {
-      ctx.emit("update:modelValue", false);
+    const onClose = (event: Event) => {
+      const el = event.target as HTMLElement;
+      if (el.className.indexOf(bem.e("body")) > -1) {
+        ctx.emit("update:modelValue", false);
+      }
     };
 
     return () => {
+      const { modal, modelValue } = props;
       return (
         <Teleport to="body">
-          <div class={bem.b()}>{renderContent()}</div>
+          <div class={bem.b()}>
+            {modal && <YOverlay zIndex={zIndex.value} disabled show={modelValue} />}
+            {renderContent()}
+          </div>
         </Teleport>
       );
     };

@@ -185,6 +185,9 @@ const menus = reactive([
 const showOverlay = ref(false);
 const onOpen = () => {
   showOverlay.value = true;
+  // setTimeout(() => {
+  //   showOverlay.value = false;
+  // }, 1000);
 };
 const onOpened = () => {
   console.log("打开");
