@@ -1,4 +1,4 @@
-import { defineComponent, nextTick, reactive, ref, Teleport, Transition, watch } from "vue";
+import { defineComponent, nextTick, reactive, ref, Teleport, Transition } from "vue";
 import { useEventListener, useLazyRender, useCreateIndex } from "@yy/hooks";
 import { createNamespace, isFunction } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
