@@ -1,14 +1,15 @@
-import { defineComponent, nextTick, reactive, ref, Teleport, Transition } from "vue";
+import { defineComponent, nextTick, reactive, ref, Teleport, Transition, watch } from "vue";
 import { useEventListener, useLazyRender, useCreateIndex } from "@yy/hooks";
 import { createNamespace, isFunction } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
+import { YButton } from "@yy/components/button";
 
-import modalProps from "./types";
+import modalProps, { type ModalAction } from "./types";
 
 export default defineComponent({
   name: "YModal",
   props: modalProps(),
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "confirm", "close"],
   setup(props, ctx) {
     const bem = createNamespace("modal");
 
@@ -26,6 +27,16 @@ export default defineComponent({
       mousePosition.y = e.clientY;
     });
 
+    const renderButton = () => {
+      const { confirmText, cancelText } = props;
+      return (
+        <>
+          <YButton onClick={onCancel}>{cancelText}</YButton>
+          <YButton onClick={onConfirm}>{confirmText}</YButton>
+        </>
+      );
+    };
+
     const renderContent = lazyRender(() => {
       const { modelValue, content, details } = props;
       return (
@@ -33,6 +44,7 @@ export default defineComponent({
           <div onClick={onClose} v-show={modelValue} class={bem.e("body")}>
             <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
+              {renderButton()}
             </div>
           </div>
         </Transition>
@@ -47,12 +59,26 @@ export default defineComponent({
       });
     };
 
+    const emitHandle = (type: ModalAction, value = false) => {
+      const { beforeClose } = props;
+      if (beforeClose) {
+        beforeClose((cancel) => ctx.emit("update:modelValue", cancel || false), type);
+      } else {
+        ctx.emit("update:modelValue", value);
+        const emitName = type === "confirm" ? "confirm" : "close";
+        ctx.emit(emitName, type);
+      }
+    };
+
     const onClose = (event: Event) => {
       const el = event.target as HTMLElement;
       if (el.className.indexOf(bem.e("body")) > -1) {
-        ctx.emit("update:modelValue", false);
+        emitHandle("close");
       }
     };
+
+    const onConfirm = () => emitHandle("confirm");
+    const onCancel = () => emitHandle("cancel");
 
     return () => {
       const { modal, modelValue } = props;

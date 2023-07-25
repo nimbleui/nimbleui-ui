@@ -186,6 +186,13 @@ const showOverlay = ref(false);
 const onOpen = () => {
   // showOverlay.value = true;
   showModal({
+    beforeClose(done, type) {
+      if (type !== "confirm") return done();
+
+      setTimeout(() => {
+        done();
+      }, 3000);
+    },
     content: h(
       "div",
       {
@@ -193,6 +200,8 @@ const onOpen = () => {
       },
       "1355665"
     ),
+  }).then((type: string) => {
+    console.log(type);
   });
 };
 const onOpened = () => {

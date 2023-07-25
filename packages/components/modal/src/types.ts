@@ -1,8 +1,9 @@
 import { ExtractPropTypes, PropType, VNode } from "vue";
 import { mergeCommonProp } from "@yy/utils";
 
+export type ModalAction = "confirm" | "close" | "cancel";
 type DoneFn = (cancel?: boolean) => void;
-type BeforeCloseFn = (done: DoneFn) => void;
+type BeforeCloseFn = (done: DoneFn, type: ModalAction) => void;
 
 const modalProps = mergeCommonProp({
   /**
@@ -54,6 +55,20 @@ const modalProps = mergeCommonProp({
   appendTo: {
     type: String as PropType<keyof HTMLElementTagNameMap>,
     default: "body",
+  },
+  /**
+   * @description 确定按钮的文案
+   */
+  confirmText: {
+    type: String,
+    default: "确定",
+  },
+  /**
+   * @description 取消按钮的文案
+   */
+  cancelText: {
+    type: String,
+    default: "取消",
   },
 });
 
