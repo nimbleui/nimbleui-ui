@@ -100,7 +100,7 @@
 <script setup lang="tsx">
 import { watch } from "vue";
 import { reactive, h, ref } from "vue";
-import { CheckboxDisabledFun, YMessage } from "yy-ui";
+import { CheckboxDisabledFun, YMessage, showModal } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -184,10 +184,16 @@ const menus = reactive([
 
 const showOverlay = ref(false);
 const onOpen = () => {
-  showOverlay.value = true;
-  // setTimeout(() => {
-  //   showOverlay.value = false;
-  // }, 1000);
+  // showOverlay.value = true;
+  showModal({
+    content: h(
+      "div",
+      {
+        class: "scale",
+      },
+      "1355665"
+    ),
+  });
 };
 const onOpened = () => {
   console.log("打开");
