@@ -35,14 +35,11 @@ createApp(App).use(YYUi, {
 import { useTheme } from "@nimble-ui/vue"
 
 /**
- * 第一个参数改变主颜色
+ * 第一个参数改颜色、字体大小等等
  * 第二个参数切换主题：dark：暗黑主题  light：正常主题
  */
 useTheme({
   primary: "#1677ff",
-  success: "#52c41a",
-  warning: "#faad14",
-  error: "#f56c6c",
-  info: "#909399",
+  //...
 }, 'dark')
 ```
