@@ -1,9 +1,9 @@
-import { createNamespace } from "@yy/utils";
 import { CSSProperties, Transition, computed, defineComponent, onMounted, ref } from "vue";
+import { useResizeObserver, useCreateIndex } from "@yy/hooks";
+import { createNamespace } from "@yy/utils";
+
 import messageProps from "./types";
 import { getLastOffset, getOffsetOrSpace } from "./instance";
-
-import { useResizeObserver } from "@yy/hooks";
 
 export default defineComponent({
   name: "YMessage",
@@ -14,13 +14,14 @@ export default defineComponent({
     const height = ref(0);
     const bem = createNamespace("message");
     const messageRef = ref<HTMLElement>();
+    const { nextZIndex } = useCreateIndex();
 
     const lastOffset = computed(() => getLastOffset(props.id));
     const offset = computed(() => getOffsetOrSpace(props.id, props.offset) + lastOffset.value);
     const bottom = computed(() => height.value + offset.value);
     const styles = computed<CSSProperties>(() => ({
       top: `${offset.value}px`,
-      zIndex: props.zIndex,
+      zIndex: props.zIndex || nextZIndex(),
     }));
 
     function close() {
