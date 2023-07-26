@@ -16,7 +16,7 @@ export function pick<T extends { [key: string]: any }, U extends keyof T>(
   while (obj != null && ++index < length) {
     const path = paths[index];
     const value = obj[path];
-    if (value) {
+    if (value) { // 要是值本身为false 就取不到这个值了，要改一下
       result[path] = callback ? callback(value) : value;
     }
   }
