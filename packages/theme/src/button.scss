@@ -26,6 +26,7 @@
   --y-button-info-bg-color: var(--y-color-info);
   --y-button-info-border-color: var(--y-color-info);
   --y-button-info-text-color: #fff;
+  --y-button-bg-color: var(--y-color-theme);
 }
 
 @include b(button) {
