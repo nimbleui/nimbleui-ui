@@ -17,13 +17,15 @@ export default defineComponent({
 
     const bem = createNamespace("button");
     const buttonCls = computed(() => {
-      const res = handlePropOrContext(props, buttonGroupContext?.value, ["type", "shape", "disabled"]);
+      const res = handlePropOrContext(props, buttonGroupContext?.value, ["type", "shape", "disabled", "size"]);
 
       return [
         bem.b(),
         bem.is("disabled", res.disabled),
-        bem.is(res.type || "default", res.type !== "default"),
-        bem.is(res.shape || "default", res.shape !== "default"),
+        bem.is("block", props.block),
+        bem.is(res.type, res.type !== "default"),
+        bem.is(res.shape, res.shape !== "default"),
+        bem.is(res.size, res.size !== "default"),
       ];
     });
 

@@ -3,18 +3,25 @@
 @use "./mixins/function.scss" as *;
 
 @include b(button-group) {
+  --y-button-group-border-color: var(--y-border-color);
+
   display: inline-block;
   vertical-align: middle;
 
   & .#{$namespace}-button {
+    border-left-color: var(--y-button-group-border-color);
+    border-right-color: var(--y-button-group-border-color);
+
     &:first-child {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      border-left-color: transparent;
     }
 
     &:last-child {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      border-right-color: transparent;
     }
 
     &:not(:first-child, :last-child) {

@@ -98,4 +98,21 @@
       }
     }
   }
+
+  @each $size in (large, small) {
+    @include when($size) {
+      @if $size == 'large' {
+        padding: 12px 19px;
+      }
+
+      @if $size == 'small' {
+        padding: 5px 11px;
+      }
+    }
+  }
+
+  @include when(block) {
+    display: block;
+    width: 100%;
+  }
 }

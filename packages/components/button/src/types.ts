@@ -1,6 +1,6 @@
 import { PropType, ExtractPropTypes } from "vue";
 import type { VNodeChild } from "vue";
-import type { ButtonTypes, ButtonShape } from "@yy/tokens";
+import type { ButtonTypes, ButtonShape, ButtonSize } from "@yy/tokens";
 import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
 
 const buttonProps = mergeCommonProp({
@@ -33,6 +33,10 @@ const buttonProps = mergeCommonProp({
    * @description 按钮的形状
    */
   shape: mergeFunctionProp<ButtonShape>(String),
+  /**
+   * @description 按钮的尺寸
+   */
+  size: mergeFunctionProp<ButtonSize>(String),
 });
 
 export default buttonProps;

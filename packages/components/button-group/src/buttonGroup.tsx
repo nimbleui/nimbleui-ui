@@ -13,8 +13,8 @@ export default defineComponent({
     });
 
     const buttonGroupContext = computed(() => {
-      const { type, shape, disabled, details } = props;
-      return { type, shape, disabled, details };
+      const { type, shape, disabled, details, size } = props;
+      return { type, shape, disabled, details, size };
     });
     provide(buttonGroupContextKey, buttonGroupContext);
 

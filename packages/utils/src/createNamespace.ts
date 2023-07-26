@@ -16,7 +16,7 @@ class BEM {
     return modifier ? `${this.block}--${modifier}` : undefined;
   }
 
-  is<T extends string>(name: T, state = true) {
+  is<T extends string>(name: T | undefined, state = true) {
     return name && state ? `is-${name}` : undefined;
   }
 }

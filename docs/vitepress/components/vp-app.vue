@@ -81,13 +81,18 @@
         <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
+    <YButtonGroup :type="'primary'">
+      <YButton>按钮1</YButton>
+      <YButton>按钮2</YButton>
+      <YButton>按钮3</YButton>
+    </YButtonGroup>
     <YDropdown :options="menus" max-height="200px">
       <YButton :type="'primary'">YDropdown</YButton>
       <!-- <template #dropdown="{ item }">
         {{ item.label }}
       </template> -->
     </YDropdown>
-    <YButton @click="onOpen">open</YButton>
+    <YButton block :size="'large'" @click="onOpen">open</YButton>
     <YDrawer @opened="onOpened" @closed="onClose"></YDrawer>
     <YButton :type="'primary'" @click="showMessage">show message</YButton>
     <YModal v-model="showOverlay">
