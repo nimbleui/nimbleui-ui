@@ -1,3 +1,5 @@
+import { isEmpty } from "./type";
+
 /**
  * 选择 obj 的属性组成新的对象
  * @param obj 对象
@@ -16,7 +18,7 @@ export function pick<T extends { [key: string]: any }, U extends keyof T>(
   while (obj != null && ++index < length) {
     const path = paths[index];
     const value = obj[path];
-    if (value) { // 要是值本身为false 就取不到这个值了，要改一下
+    if (!isEmpty(value)) {
       result[path] = callback ? callback(value) : value;
     }
   }
