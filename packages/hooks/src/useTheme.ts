@@ -61,10 +61,6 @@ const bgGradient: GradientTypes = {
   spotlight: [0.85, 26],
 };
 
-function setProperty(key: string, value: string, isColor = true) {
-  document.documentElement.style.setProperty(`--y-${isColor ? "color-" : ""}${key}`, value);
-}
-
 function setGradient(gradient: GradientTypes, theme: ThemeType, callback: (name: string, value: number) => void) {
   const index = theme === "light" ? 0 : 1;
   for (const key of Object.keys(gradient)) {

@@ -37,7 +37,6 @@
   line-height: 1;
   white-space: nowrap;
   outline: none;
-  transition: all .2s cubic-bezier(.645,.045,.355,1);
   cursor: pointer;
   text-align: center;
   box-sizing: border-box;
@@ -67,6 +66,7 @@
 
   &:hover,
   &:focus {
+    transition: all .2s cubic-bezier(.645,.045,.355,1);
     color: get-css-var('button', 'hover', 'text-color');
     border-color: get-css-var('button', 'hover', 'border-color');
     background-color: get-css-var('button', 'hover', 'bg-color');

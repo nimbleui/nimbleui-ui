@@ -81,6 +81,7 @@
         <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
+    <YButton @click="onTheme">切换主题</YButton>
     <YButtonGroup :type="'primary'" shape="round">
       <YButton>按钮1</YButton>
       <YButton>按钮2</YButton>
@@ -105,7 +106,7 @@
 <script setup lang="tsx">
 import { watch } from "vue";
 import { reactive, h, ref } from "vue";
-import { CheckboxDisabledFun, YMessage, showModal } from "yy-ui";
+import { CheckboxDisabledFun, YMessage, showModal, useTheme } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -224,6 +225,11 @@ const showMessage = () => {
   YMessage({
     message: h("div", "test div"),
   });
+};
+let theme: "light" | "dark" = "light";
+const onTheme = () => {
+  theme = theme === "dark" ? "light" : "dark";
+  useTheme({}, theme);
 };
 </script>
 <style>
