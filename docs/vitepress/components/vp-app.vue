@@ -81,7 +81,7 @@
         <template #unchecked>关闭111</template> -->
       </YSwitch>
     </YForm>
-    <YButtonGroup :type="'primary'">
+    <YButtonGroup :type="'primary'" shape="round">
       <YButton>按钮1</YButton>
       <YButton>按钮2</YButton>
       <YButton>按钮3</YButton>
