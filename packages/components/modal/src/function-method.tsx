@@ -9,11 +9,22 @@ function createModal(
 ) {
   const container = document.createElement("div");
 
+  const onDestroy = () => {
+    render(null, container);
+  };
+
   const vNode = createVNode({
     setup() {
       const modelValue = ref(true);
       const onShow = (val: boolean) => (modelValue.value = val);
-      return () => <ModalConstructor {...options} modelValue={modelValue.value} onUpdate:modelValue={onShow} />;
+      return () => (
+        <ModalConstructor
+          {...options}
+          modelValue={modelValue.value}
+          onDestroy={onDestroy}
+          onUpdate:modelValue={onShow}
+        />
+      );
     },
   });
   if (context) vNode.appContext = context;

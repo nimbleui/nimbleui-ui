@@ -9,7 +9,7 @@ import modalProps, { type ModalAction } from "./types";
 export default defineComponent({
   name: "YModal",
   props: modalProps(),
-  emits: ["update:modelValue", "confirm", "close"],
+  emits: ["update:modelValue", "confirm", "close", "destroy"],
   setup(props, ctx) {
     const bem = createNamespace("modal");
 
@@ -37,10 +37,15 @@ export default defineComponent({
       );
     };
 
+    const onDestroy = () => {
+      destroy();
+      ctx.emit("destroy");
+    };
+
     const renderContent = lazyRender(() => {
       const { modelValue, content, details } = props;
       return (
-        <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={destroy}>
+        <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
           <div onClick={onClose} v-show={modelValue} class={bem.e("body")}>
             <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
