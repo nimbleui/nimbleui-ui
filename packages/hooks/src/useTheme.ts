@@ -72,57 +72,77 @@ function setGradient(gradient: GradientTypes, theme: ThemeType, callback: (name:
   }
 }
 
+function createStyleElement() {
+  let style = document.getElementById("y-style-root");
+  if (!style) {
+    style = document.createElement("style");
+    style.id = "y-style-root";
+    style.setAttribute("type", "text/css");
+    document.head.appendChild(style);
+  }
+  return {
+    style,
+    styleKeyValue: [] as string[],
+  };
+}
+
 export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
   const { bgBaseColor, colorTextBase, disabledOpacity, fontSize, fontSizeLG, fontSizeSM, fontSizeXL, ...options } =
     Object.assign(defaultOpt, opt);
 
   const textColor = colorTextBase || (theme === "light" ? "#000" : "#fff");
   const bgColor = bgBaseColor || (theme === "light" ? "#fff" : "#000");
+
+  const { style, styleKeyValue } = createStyleElement();
   Object.keys(options).forEach((key) => {
     // 计算颜色梯度
     generate(options[key as keyof typeof options], {
       name: key,
       theme: bgColor,
-      callback: setProperty,
+      callback: (key: string, value: string) => {
+        styleKeyValue.push(`--y-color-${key}: ${value}`);
+      },
     });
   });
 
   // 文字颜色的设置
   setGradient(textGradient, theme, (name: string, val: number) => {
     const n = name == "text" ? "text" : `text-${name}`;
-    setProperty(n, setAlphaColor(textColor, val));
+    styleKeyValue.push(`--y-color-${n}: ${setAlphaColor(textColor, val)}`);
   });
 
   // 填充颜色的设置
   setGradient(fillGradient, theme, (name: string, val: number) => {
     const n = name == "fill" ? "fill" : `fill-${name}`;
-    setProperty(n, setAlphaColor(textColor, val));
+    styleKeyValue.push(`--y-color-${n}: ${setAlphaColor(textColor, val)}`);
   });
 
   // 边框颜色的设置
   setGradient(borderGradient, theme, (name: string, val: number) => {
     const n = name == "border" ? "border" : `border-${name}`;
-    setProperty(n, setSolidColor(bgColor, val, theme));
+    styleKeyValue.push(`--y-color-${n}: ${setSolidColor(bgColor, val, theme)}`);
   });
 
   // 设置背景色
   setGradient(bgGradient, theme, (name: string, val: number) => {
-    setProperty(`bg-${name}`, setSolidColor(bgColor, val, theme));
+    styleKeyValue.push(`--y-color-${name}: ${setSolidColor(bgColor, val, theme)}`);
   });
 
-  setProperty("theme", bgColor);
-  setProperty("base-color", textColor, false);
+  styleKeyValue.push(`--y-color-theme: ${bgColor}`);
+  styleKeyValue.push(`--y-base-color: ${textColor}`);
 
   // 禁用状态的样式
-  setProperty("disabled-opacity", String(disabledOpacity), false);
+  styleKeyValue.push(`--y-disabled-opacity: ${disabledOpacity}`);
 
   // 字体大小的设置
-  setProperty("font-size", `${fontSize}px`, false);
-  setProperty("font-size-ms", `${fontSizeSM}px`, false);
-  setProperty("font-size-xl", `${fontSizeXL}px`, false);
-  setProperty("font-size-lg", `${fontSizeLG}px`, false);
+  styleKeyValue.push(`--y-font-size: ${fontSize}px`);
+  styleKeyValue.push(`--y-font-size-ms: ${fontSizeSM}px`);
+  styleKeyValue.push(`--y-font-size-xl: ${fontSizeXL}px`);
+  styleKeyValue.push(`--y-font-size-lg: ${fontSizeLG}px`);
 
-  setProperty("height-l", "40px", false);
-  setProperty("height-m", "32px", false);
-  setProperty("height-s", "24px", false);
+  styleKeyValue.push(`--y-height-l: 40px`);
+  styleKeyValue.push(`--y-height-m: 32px`);
+  styleKeyValue.push(`--y-height-s: 24px`);
+
+  style.innerHTML = `:root{${styleKeyValue.join(";")}}`;
 }
