@@ -42,6 +42,7 @@ export const contentProps = () => ({
    */
   maxHeight: {
     type: [String, Number],
+    default: "400px",
   },
   placement: {
     type: String as PropType<"bottom" | "top" | "right" | "left">,
