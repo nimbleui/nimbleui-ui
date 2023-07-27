@@ -16,12 +16,13 @@ export default defineComponent({
     const messageRef = ref<HTMLElement>();
     const { nextZIndex } = useCreateIndex();
 
+    const zIndex = nextZIndex();
     const lastOffset = computed(() => getLastOffset(props.id));
     const offset = computed(() => getOffsetOrSpace(props.id, props.offset) + lastOffset.value);
     const bottom = computed(() => height.value + offset.value);
     const styles = computed<CSSProperties>(() => ({
       top: `${offset.value}px`,
-      zIndex: props.zIndex || nextZIndex(),
+      zIndex: props.zIndex || zIndex,
     }));
 
     function close() {

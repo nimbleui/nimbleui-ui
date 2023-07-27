@@ -26,7 +26,6 @@ function createMessage({ appendTo, ...options }: MessageParamsNormalized, contex
   const props = {
     ...options,
     id,
-    zIndex: 9999,
     onClose: () => {
       userOnClose?.();
       closeMessage(id);
