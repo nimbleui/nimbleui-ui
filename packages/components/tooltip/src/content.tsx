@@ -67,10 +67,10 @@ export default defineComponent({
         transform = `translateX(${disL}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
         transformOrigin = disT >= offsetHeight ? "bottom center" : "top center";
       } else if (placement === "left") {
-        transform = `translateX(${disL >= offsetWidth ? lLeft : lRight}px) translateY(${disT}px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${disT}px)`;
         transformOrigin = disL >= offsetWidth ? "left center" : "right center";
       } else {
-        transform = `translateX(${disL >= disR ? lRight : lLeft}px) translateY(${disT}px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${disT}px)`;
         transformOrigin = disL >= disR ? "right center" : "left center";
       }
 
