@@ -52,4 +52,10 @@ export const contentProps = () => ({
     type: String as PropType<"bottom" | "top" | "right" | "left">,
     default: "bottom",
   },
+  /**
+   * @description 层级
+   */
+  zIndex: {
+    type: Number,
+  },
 });

@@ -1,10 +1,12 @@
 import { Teleport, Transition, defineComponent, inject, reactive, ref, CSSProperties } from "vue";
 import { tooltipContextKey, type RectInfo } from "@yy/tokens";
 import { createNamespace, isNumber } from "@yy/utils";
-import { useLazyRender, useScrollParent } from "@yy/hooks";
+import { useCreateIndex, useLazyRender, useScrollParent } from "@yy/hooks";
 
 import { contentProps } from "./props";
 
+const DIS = 5;
+const DIS_BOTTOM = 30;
 export default defineComponent({
   name: "YContent",
   props: contentProps(),
@@ -18,12 +20,13 @@ export default defineComponent({
       rectInfo: {} as RectInfo,
     });
 
+    const { lazyRender } = useLazyRender(() => props.show);
     useScrollParent(tooltipContext.triggerRef, () => {
       if (tooltipContext.contentRef.value) {
         handleEnter(tooltipContext.contentRef.value);
       }
     });
-    const { lazyRender } = useLazyRender(() => props.show);
+    const { nextZIndex } = useCreateIndex();
 
     const handleEvent = (e: Event) => {
       e.stopPropagation();
@@ -38,10 +41,11 @@ export default defineComponent({
 
     const styles = reactive<CSSProperties>({});
 
+    const zIndex = props.zIndex || nextZIndex();
     const handleEnter = (element: Element) => {
       const el = element as HTMLElement;
       const { height, width } = tooltipContext.rectInfo;
-      const { maxWidth, maxHeight, placement } = props;
+      const { placement } = props;
       const { offsetHeight, offsetWidth } = el;
       const rect = tooltipContext.triggerRef.value?.getBoundingClientRect() as DOMRect;
       const disB = window.innerHeight - rect?.bottom;
@@ -49,24 +53,34 @@ export default defineComponent({
       const disL = rect?.left;
       const disT = rect?.top;
 
-      const tTop = disT + height + 5;
-      const bTop = disT - offsetHeight - 5;
+      const tTop = disT + height + DIS;
+      const bTop = disT - offsetHeight - DIS;
+      const lRight = disR + width + DIS;
+      const lLeft = disR - offsetWidth - DIS;
+
+      let transform = "";
+      let transformOrigin = "";
       if (placement === "bottom") {
-        styles.transform = `translateX(${disL}px) translateY(${disB >= offsetHeight ? tTop : bTop}px)`;
-        el.style.transformOrigin = disB >= offsetHeight ? "top center" : "bottom center";
+        transform = `translateX(${disL}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
+        transformOrigin = disB >= offsetHeight ? "top center" : "bottom center";
       } else if (placement === "top") {
-        styles.transform = `translateX(${disL}px) translateY(${disT >= offsetHeight ? bTop : tTop}px)`;
-        el.style.transformOrigin = disT >= offsetHeight ? "bottom center" : "top center";
+        transform = `translateX(${disL}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
+        transformOrigin = disT >= offsetHeight ? "bottom center" : "top center";
       } else if (placement === "left") {
-        console.log(222);
+        transform = `translateX(${disL >= offsetWidth ? lLeft : lRight}px) translateY(${disT}px)`;
+        transformOrigin = disL >= offsetWidth ? "left center" : "right center";
+      } else {
+        transform = `translateX(${disL >= disR ? lRight : lLeft}px) translateY(${disT}px)`;
+        transformOrigin = disL >= disR ? "right center" : "left center";
       }
 
-      styles.maxWidth = isNumber(maxWidth) ? `${maxWidth}px` : maxWidth;
-      styles.maxHeight = isNumber(maxHeight) ? `${maxHeight}px` : maxHeight;
+      styles.zIndex = zIndex;
+      styles.transform = transform;
+      el.style.transformOrigin = transformOrigin;
     };
 
-    const render = lazyRender(() => {
-      const { transition, show } = props;
+    const renderContent = lazyRender(() => {
+      const { transition, show, maxHeight, maxWidth } = props;
       return (
         <div style={styles} class={bem.b()}>
           <Transition appear name={transition} onEnter={handleEnter}>
@@ -74,6 +88,10 @@ export default defineComponent({
               v-show={show}
               class={bem.e("content")}
               ref={tooltipContext?.contentRef}
+              style={{
+                maxWidth: isNumber(maxWidth) ? `${maxWidth}px` : maxWidth,
+                maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight,
+              }}
               onClick={handleEvent}
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
@@ -91,7 +109,7 @@ export default defineComponent({
 
       return (
         <Teleport to={appendTo} disabled={teleported}>
-          {render()}
+          {renderContent()}
         </Teleport>
       );
     };

@@ -8,7 +8,7 @@
   --y-bg-color-overlay: var(--y-color-bg-elevated);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
   
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 0;
@@ -18,6 +18,9 @@
   font-size: var(--y-font-size);
   
   @include e(content) {
+    position: relative;
+    z-index: auto;
+    pointer-events: all;
     box-shadow: var(--y-box-shadow);
     background-color: var(--y-bg-color-overlay);
   }

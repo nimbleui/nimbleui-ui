@@ -88,7 +88,7 @@
       <YButton>按钮3</YButton>
     </YButtonGroup>
     <div style="height: 900px"></div>
-    <YDropdown placement="bottom" :options="menus" max-height="200px">
+    <YDropdown :options="menus" max-height="200px">
       <YButton :type="'primary'">YDropdown</YButton>
       <!-- <div class="dropdown">YDropdown</div> -->
       <!-- <template #dropdown="{ item }">
