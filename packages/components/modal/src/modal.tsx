@@ -18,7 +18,7 @@ export default defineComponent({
 
     const { lazyRender, destroy } = useLazyRender(() => props.modelValue, {
       isTransition: true,
-      destroyOnClose: props.destroyOnClose,
+      destroyOnClose: true,
     });
 
     const mousePosition = reactive({ x: 0, y: 0 });
@@ -45,14 +45,14 @@ export default defineComponent({
     const renderContent = lazyRender(() => {
       const { modelValue, content, details } = props;
       return (
-        <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
-          <div onClick={onClose} v-show={modelValue} class={bem.e("body")}>
-            <div style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
+        <div onClick={onClose} class={bem.e("body")}>
+          <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
+            <div v-show={modelValue} style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
             </div>
-          </div>
-        </Transition>
+          </Transition>
+        </div>
       );
     });
 
@@ -60,6 +60,7 @@ export default defineComponent({
       nextTick(() => {
         const el = element as HTMLElement;
         const { offsetLeft, offsetTop } = el;
+        console.log(offsetLeft, mousePosition.x);
         el.style.transformOrigin = `-${offsetLeft - mousePosition.x}px -${offsetTop - mousePosition.y}px`;
       });
     };

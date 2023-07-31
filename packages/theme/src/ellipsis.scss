@@ -1,0 +1,27 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+@use "./mixins//utils.scss" as*;
+
+@include b(ellipsis) {
+  color: var(--y-color-text);
+  font-size: var(--y-font-size);
+
+  @include e(title) {
+    overflow: hidden;
+
+    &:not(.is-line-clamp) {
+      @include utils-ellipsis
+    }
+
+    @include when(line-clamp) {
+      display: -webkit-inline-box;
+      -moz-box-orient: vertical;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  @include e(content) {
+    padding: 10px;
+  }
+}

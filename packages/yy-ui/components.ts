@@ -14,6 +14,7 @@ import {
   YDrawer,
   YMessage,
   YModal,
+  YEllipsis,
 } from "@yy/components";
 
 export default [
@@ -32,4 +33,5 @@ export default [
   YDrawer,
   YMessage,
   YModal,
+  YEllipsis,
 ];

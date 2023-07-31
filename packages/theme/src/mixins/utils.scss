@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-@include utils-close-icon {
+@mixin utils-close-icon {
   position: relative;
 
   &::after, &::before {

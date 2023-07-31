@@ -95,6 +95,9 @@
         {{ item.label }}
       </template> -->
     </YDropdown>
+    <YEllipsis max-width="200px">
+      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+    </YEllipsis>
     <YButton block :size="'large'" @click="onOpen">open</YButton>
     <YDrawer @opened="onOpened" @closed="onClose"></YDrawer>
     <YButton :type="'primary'" @click="showMessage">show message</YButton>
@@ -265,5 +268,9 @@ const onTheme = () => {
 .scale {
   width: 600px;
   height: 200px;
+}
+.ellipsis {
+  width: 100px;
+  margin: 1rem;
 }
 </style>
