@@ -22,7 +22,7 @@ export default defineComponent({
 
     const { lazyRender } = useLazyRender(() => props.show);
     useScrollParent(tooltipContext.triggerRef, () => {
-      if (tooltipContext.contentRef.value) {
+      if (tooltipContext.contentRef.value && props.show) {
         handleEnter(tooltipContext.contentRef.value);
       }
     });
