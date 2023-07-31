@@ -1,7 +1,6 @@
 type ScrollElement = HTMLElement | Window;
 
 const overflowScrollReg = /scroll|auto|overlay/i;
-const defaultRoot = window;
 
 const overflowKeys = {
   undefined: "overflow",
@@ -9,12 +8,12 @@ const overflowKeys = {
   false: "overflowX",
 } as const;
 
+const ELEMENT_NODE_TYPE = 1;
 function isElement(node: Element) {
-  const ELEMENT_NODE_TYPE = 1;
   return node.tagName !== "HTML" && node.tagName !== "BODY" && node.nodeType === ELEMENT_NODE_TYPE;
 }
 
-export function getScrollParent(el: Element, isVertical?: boolean, root: ScrollElement | undefined = defaultRoot) {
+export function getScrollParent(el: Element, isVertical?: boolean, root: ScrollElement | undefined = window) {
   let node = el;
 
   const key = overflowKeys[String(isVertical) as keyof typeof overflowKeys];

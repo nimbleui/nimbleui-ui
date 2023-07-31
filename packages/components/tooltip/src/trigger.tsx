@@ -1,4 +1,4 @@
-import { Fragment, cloneVNode, defineComponent, inject, withDirectives } from "vue";
+import { Fragment, cloneVNode, defineComponent, inject, ref, withDirectives } from "vue";
 import type { PropType, VNode, ObjectDirective } from "vue";
 import { isObject } from "@yy/utils";
 import type { TriggerType } from "./types";
@@ -15,6 +15,7 @@ export default defineComponent({
   },
   emits: ["toggle"],
   setup(props, ctx) {
+    const elementRef = ref<HTMLElement>();
     const tooltipContext = inject(tooltipContextKey);
     function findFirstLegitChild(node: VNode[] | undefined): VNode | null {
       if (!node) return null;
@@ -41,14 +42,43 @@ export default defineComponent({
       return {
         mounted(el) {
           tooltipContext?.setRef(el);
+          elementRef.value = el;
         },
         updated(el) {
           tooltipContext?.setRef(el);
+          elementRef.value = el;
         },
         unmounted() {
           tooltipContext?.setRef(null);
+          elementRef.value = undefined;
         },
       };
+    };
+    const getLocationInfo = (e: Event) => {
+      const el = e.target as HTMLElement;
+
+      let width = el.offsetWidth;
+      let height = el.offsetHeight;
+      let parent: HTMLElement = el;
+      while (parent !== elementRef.value) {
+        if (width < parent.offsetWidth) {
+          width = parent.offsetWidth;
+        }
+        if (height < parent.offsetHeight) {
+          height = parent.offsetHeight;
+        }
+
+        parent = el.parentElement as HTMLElement;
+      }
+
+      const rect = parent.getBoundingClientRect();
+
+      if (tooltipContext) {
+        tooltipContext.rectInfo = {
+          width: rect.width,
+          height: rect.height,
+        };
+      }
     };
 
     const handleEvent = (e: Event) => {
@@ -58,15 +88,18 @@ export default defineComponent({
 
       if (trigger === "click" && eventType === "click") {
         ctx.emit("toggle", e, true);
+        getLocationInfo(e);
       } else if (trigger === "hover") {
         if (eventType === "mouseenter") {
           ctx.emit("toggle", e, true);
+          getLocationInfo(e);
         } else if (eventType === "mouseleave") {
           ctx.emit("toggle", e, false);
         }
       } else if (trigger === "focus") {
         if (eventType === "focus") {
           ctx.emit("toggle", e, true);
+          getLocationInfo(e);
         } else if (eventType === "blur") {
           ctx.emit("toggle", e, false);
         }

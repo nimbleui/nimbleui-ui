@@ -31,8 +31,9 @@ export const contentProps = () => ({
   /**
    * @description 下拉框的宽度
    */
-  selectWidth: {
-    type: Number,
+  maxWidth: {
+    type: [String, Number],
+    default: "400px",
   },
   trigger: {
     type: String as PropType<TriggerType>,
@@ -44,6 +45,9 @@ export const contentProps = () => ({
     type: [String, Number],
     default: "400px",
   },
+  /**
+   * @description 弹框的方向
+   */
   placement: {
     type: String as PropType<"bottom" | "top" | "right" | "left">,
     default: "bottom",

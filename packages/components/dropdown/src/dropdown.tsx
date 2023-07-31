@@ -1,8 +1,8 @@
 import { defineComponent, ref } from "vue";
 import { YTooltip } from "@yy/components/tooltip";
-import { createNamespace, isFunction } from "@yy/utils";
+import { createNamespace, isFunction, pick } from "@yy/utils";
 
-import dropdownProps from "./types";
+import dropdownProps, { contentPropsKey } from "./types";
 
 export default defineComponent({
   name: "YDropdown",
@@ -37,9 +37,8 @@ export default defineComponent({
     }
 
     return () => {
-      const { trigger } = props;
       return (
-        <YTooltip ref={tooltipRef} trigger={trigger} transition="y-zoom-in-top">
+        <YTooltip ref={tooltipRef} {...pick(props, contentPropsKey as any)} transition="y-zoom-in-top">
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;

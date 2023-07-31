@@ -3,8 +3,11 @@ import { mergeCommonProp } from "@yy/utils";
 import { TriggerType } from "@yy/components/tooltip";
 import { contentProps } from "@yy/components/tooltip/src/props";
 
+const contentProp = contentProps();
+export const contentPropsKey = Object.keys(contentProp);
+
 const dropdownProps = mergeCommonProp({
-  ...contentProps(),
+  ...contentProp,
   trigger: {
     type: String as PropType<TriggerType>,
   },

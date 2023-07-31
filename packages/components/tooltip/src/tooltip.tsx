@@ -3,7 +3,7 @@ import YTrigger from "./trigger";
 import YContent from "./content";
 
 import tooltipProps from "./types";
-import { tooltipContextKey } from "@yy/tokens";
+import { tooltipContextKey, type RectInfo } from "@yy/tokens";
 import { useEventListener } from "@yy/hooks";
 
 export default defineComponent({
@@ -16,6 +16,7 @@ export default defineComponent({
     provide(tooltipContextKey, {
       triggerRef,
       contentRef,
+      rectInfo: {} as RectInfo,
       setRef(el: HTMLElement) {
         triggerRef.value = el;
       },
@@ -45,7 +46,7 @@ export default defineComponent({
     });
 
     return () => {
-      const { appendTo, trigger, teleported, transition } = props;
+      const { appendTo, trigger, teleported, transition, placement } = props;
       return (
         <>
           <YTrigger trigger={trigger} onToggle={onToggle}>
@@ -55,6 +56,7 @@ export default defineComponent({
             show={show.value}
             trigger={trigger}
             appendTo={appendTo}
+            placement={placement}
             transition={transition}
             teleported={teleported}
             onToggle={onToggle}

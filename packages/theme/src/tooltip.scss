@@ -2,15 +2,23 @@
 @use "./mixins/config.scss" as *;
 @use "./mixins/mixins.scss" as *;
 
-@include b(tooltip-content) {
+@include b(tooltip-container) {
   --y-hover-text-color: var(--y-color-primary);
   --y-hover-bg-color: var(--y-color-primary-1);
   --y-bg-color-overlay: var(--y-color-bg-elevated);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
   
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0;
+  pointer-events: none;
   border-radius: 3px;
   color: var(--y-color-text);
   font-size: var(--y-font-size);
-  box-shadow: var(--y-box-shadow);
-  background-color: var(--y-bg-color-overlay);
+  
+  @include e(content) {
+    box-shadow: var(--y-box-shadow);
+    background-color: var(--y-bg-color-overlay);
+  }
 }

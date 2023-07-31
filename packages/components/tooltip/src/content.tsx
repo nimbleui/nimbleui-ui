@@ -1,7 +1,7 @@
-import { Teleport, Transition, defineComponent, inject, ref } from "vue";
-
-import { tooltipContextKey } from "@yy/tokens";
+import { Teleport, Transition, defineComponent, inject, reactive, ref, CSSProperties } from "vue";
+import { tooltipContextKey, type RectInfo } from "@yy/tokens";
 import { createNamespace, isNumber } from "@yy/utils";
+import { useLazyRender, useScrollParent } from "@yy/hooks";
 
 import { contentProps } from "./props";
 
@@ -10,12 +10,20 @@ export default defineComponent({
   props: contentProps(),
   emits: ["toggle", "clickItem"],
   setup(props, ctx) {
-    const bem = createNamespace("tooltip-content");
+    const bem = createNamespace("tooltip-container");
     const tooltipContext = inject(tooltipContextKey, {
       triggerRef: ref<HTMLElement>(),
       contentRef: ref<HTMLElement>(),
       setRef: (el) => el,
+      rectInfo: {} as RectInfo,
     });
+
+    useScrollParent(tooltipContext.triggerRef, () => {
+      if (tooltipContext.contentRef.value) {
+        handleEnter(tooltipContext.contentRef.value);
+      }
+    });
+    const { lazyRender } = useLazyRender(() => props.show);
 
     const handleEvent = (e: Event) => {
       e.stopPropagation();
@@ -28,31 +36,43 @@ export default defineComponent({
       }
     };
 
+    const styles = reactive<CSSProperties>({});
+
     const handleEnter = (element: Element) => {
       const el = element as HTMLElement;
-      const triggerEl = tooltipContext?.triggerRef.value as HTMLElement;
-      const offsetTop = triggerEl.offsetTop || 0;
-      const offsetLeft = triggerEl.offsetLeft || 0;
-      const rect = triggerEl?.getBoundingClientRect();
-      const { selectWidth, maxHeight } = props;
-      console.log(el.offsetHeight);
-      console.log(el.offsetWidth);
-      el.style.position = "absolute";
-      el.style.top = `${offsetTop + rect.height + 5}px`;
-      el.style.left = `${offsetLeft}px`;
-      el.style.minWidth = `${selectWidth || triggerEl?.offsetWidth}px`;
-      el.style.maxHeight = isNumber(maxHeight) ? `${maxHeight}px` : maxHeight;
+      const { height, width } = tooltipContext.rectInfo;
+      const { maxWidth, maxHeight, placement } = props;
+      const { offsetHeight, offsetWidth } = el;
+      const rect = tooltipContext.triggerRef.value?.getBoundingClientRect() as DOMRect;
+      const disB = window.innerHeight - rect?.bottom;
+      const disR = window.innerWidth - rect?.right;
+      const disL = rect?.left;
+      const disT = rect?.top;
+
+      const tTop = disT + height + 5;
+      const bTop = disT - offsetHeight - 5;
+      if (placement === "bottom") {
+        styles.transform = `translateX(${disL}px) translateY(${disB >= offsetHeight ? tTop : bTop}px)`;
+        el.style.transformOrigin = disB >= offsetHeight ? "top center" : "bottom center";
+      } else if (placement === "top") {
+        styles.transform = `translateX(${disL}px) translateY(${disT >= offsetHeight ? bTop : tTop}px)`;
+        el.style.transformOrigin = disT >= offsetHeight ? "bottom center" : "top center";
+      } else if (placement === "left") {
+        console.log(222);
+      }
+
+      styles.maxWidth = isNumber(maxWidth) ? `${maxWidth}px` : maxWidth;
+      styles.maxHeight = isNumber(maxHeight) ? `${maxHeight}px` : maxHeight;
     };
 
-    return () => {
-      const { appendTo, teleported, transition, show } = props;
-
+    const render = lazyRender(() => {
+      const { transition, show } = props;
       return (
-        <Teleport to={appendTo} disabled={teleported}>
-          <Transition name={transition} onEnter={handleEnter}>
+        <div style={styles} class={bem.b()}>
+          <Transition appear name={transition} onEnter={handleEnter}>
             <div
-              class={bem.b()}
               v-show={show}
+              class={bem.e("content")}
               ref={tooltipContext?.contentRef}
               onClick={handleEvent}
               onMouseleave={handleEvent}
@@ -62,6 +82,16 @@ export default defineComponent({
               {ctx.slots.default?.()}
             </div>
           </Transition>
+        </div>
+      );
+    });
+
+    return () => {
+      const { appendTo, teleported } = props;
+
+      return (
+        <Teleport to={appendTo} disabled={teleported}>
+          {render()}
         </Teleport>
       );
     };

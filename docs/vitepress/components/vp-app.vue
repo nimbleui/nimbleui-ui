@@ -87,7 +87,8 @@
       <YButton>按钮2</YButton>
       <YButton>按钮3</YButton>
     </YButtonGroup>
-    <YDropdown :options="menus" max-height="200px">
+    <div style="height: 900px"></div>
+    <YDropdown placement="bottom" :options="menus" max-height="200px">
       <YButton :type="'primary'">YDropdown</YButton>
       <!-- <div class="dropdown">YDropdown</div> -->
       <!-- <template #dropdown="{ item }">
@@ -100,7 +101,7 @@
     <YModal v-model="showOverlay">
       <div class="scale">66666</div>
     </YModal>
-    <!-- <div style="height: 900px"></div> -->
+    <div style="height: 900px"></div>
   </div>
 </template>
 
@@ -164,27 +165,27 @@ watch(checkeds, (val) => {
 
 const menus = reactive([
   {
-    label: h("div", "测试1"),
+    label: h("div", "测试测试1"),
     id: 1,
   },
   {
-    label: "测试2",
+    label: "测试测试2",
     id: 2,
   },
   {
-    label: "测试3",
+    label: "测试测试3",
     id: 3,
   },
   {
-    label: "测试4",
+    label: "测试测试4",
     id: 4,
   },
   {
-    label: "测试5",
+    label: "测试测试5",
     id: 5,
   },
   {
-    label: "测试6",
+    label: "测试测试6",
     id: 6,
   },
 ]);
@@ -227,7 +228,7 @@ const showMessage = () => {
     message: h("div", "test div"),
   });
 };
-let theme: "light" | "dark" = "light";
+let theme: "light" | "dark" = "dark";
 const onTheme = () => {
   theme = theme === "dark" ? "light" : "dark";
   useTheme({}, theme);
