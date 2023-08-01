@@ -12,7 +12,10 @@ class BEM {
     return e;
   }
 
-  m(modifier: string) {
+  m(modifier: string, element?: string) {
+    if (element) {
+      return `${this.block}__${element}--${modifier}`;
+    }
     return modifier ? `${this.block}--${modifier}` : undefined;
   }
 

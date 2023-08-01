@@ -7,6 +7,7 @@ const ellipsisProps = mergeCommonProp({
    */
   lineClamp: {
     type: Number,
+    default: 0,
   },
   /**
    * @description Tooltip的属性

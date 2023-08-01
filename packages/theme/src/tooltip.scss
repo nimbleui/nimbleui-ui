@@ -1,12 +1,14 @@
 @use "./common/transition.scss";
 @use "./mixins/config.scss" as *;
 @use "./mixins/mixins.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(tooltip-container) {
   --y-hover-text-color: var(--y-color-primary);
   --y-hover-bg-color: var(--y-color-primary-1);
   --y-bg-color-overlay: var(--y-color-bg-elevated);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
+  --y-arrow-bg: var(--y-color-bg-elevated);
   
   position: fixed;
   left: 0;
@@ -23,5 +25,35 @@
     pointer-events: all;
     box-shadow: var(--y-box-shadow);
     background-color: var(--y-bg-color-overlay);
+
+    @include m('arrow') {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+
+      @include when(top) {
+        bottom: -10px;
+
+        @include utils-arrow(10px, 'top')
+      }
+
+      @include when(bottom) {
+        top: -10px;
+
+        @include utils-arrow(10px, 'bottom')
+      }
+
+      @include when(left) {
+        right: -10px;
+
+        @include utils-arrow(10px, 'left')
+      }
+
+      @include when(right) {
+        left: -10px;
+
+        @include utils-arrow(10px, 'right')
+      }
+    }
   }
 }

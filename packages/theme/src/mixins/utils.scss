@@ -31,3 +31,23 @@
     transform: rotate(-45deg);
   }
 }
+
+@mixin utils-arrow($size, $direction) {
+  @if  $direction == 'top' {
+    border-right: $size solid transparent;
+    border-left: $size solid transparent;
+    border-top: $size solid var(--y-arrow-bg);
+  } @else if $direction == 'bottom' {
+    border-right: $size solid transparent;
+    border-left: $size solid transparent;
+    border-bottom: $size solid var(--y-arrow-bg);
+  } @else if $direction == 'left' {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid var(--y-arrow-bg);
+  } @else  {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid var(--y-arrow-bg);
+  }
+}

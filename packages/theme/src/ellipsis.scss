@@ -2,6 +2,7 @@
 @use "./mixins/function.scss" as *;
 @use "./mixins/config.scss" as *;
 @use "./mixins//utils.scss" as*;
+@use "./common/transition.scss";
 
 @include b(ellipsis) {
   color: var(--y-color-text);

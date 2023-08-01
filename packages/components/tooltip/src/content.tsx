@@ -5,7 +5,7 @@ import { useCreateIndex, useLazyRender, useScrollParent } from "@yy/hooks";
 
 import { contentProps } from "./props";
 
-const DIS = 5;
+const DIS = 12;
 const DIS_BOTTOM = 30;
 export default defineComponent({
   name: "YContent",
@@ -96,7 +96,7 @@ export default defineComponent({
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
             >
-              <span></span>
+              <span class={[bem.m("arrow", "content"), bem.is(props.placement)]}></span>
               {ctx.slots.default?.()}
             </div>
           </Transition>

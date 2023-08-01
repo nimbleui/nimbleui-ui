@@ -9,18 +9,24 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("ellipsis");
 
-    const ellipsisCls = computed(() => [bem.e("title"), bem.is("line-clamp", !!props.lineClamp)]);
+    const ellipsisCls = computed(() => [bem.e("title"), bem.is("line-clamp", props.lineClamp > 1)]);
 
     const renderTitle = () => ctx.slots.default?.();
 
     return () => {
-      const { maxWidth } = props;
+      const { maxWidth, lineClamp } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip trigger="hover" placement="top">
+          <YTooltip trigger="hover" placement="top" transition="y-ellipsis">
             {{
               default: () => (
-                <div class={ellipsisCls.value} style={{ maxWidth: isNumber(maxWidth) ? `${maxWidth}px` : maxWidth }}>
+                <div
+                  class={ellipsisCls.value}
+                  style={{
+                    maxWidth: isNumber(maxWidth) ? `${maxWidth}px` : maxWidth,
+                    "-webkit-line-clamp": lineClamp > 1 ? lineClamp : undefined,
+                  }}
+                >
                   {renderTitle()}
                 </div>
               ),
