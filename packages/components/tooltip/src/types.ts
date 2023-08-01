@@ -10,6 +10,12 @@ const tooltipProps = mergeCommonProp({
   trigger: {
     type: String as PropType<TriggerType>,
   },
+  /***
+   * @description Tooltip 组件是否禁用
+   */
+  disabled: {
+    type: [Boolean, Function] as PropType<boolean | ((details: any) => boolean)>,
+  },
 });
 
 export default tooltipProps;

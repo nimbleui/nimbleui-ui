@@ -1,10 +1,11 @@
-import { defineComponent, provide, ref } from "vue";
+import { computed, defineComponent, provide, ref } from "vue";
 import YTrigger from "./trigger";
 import YContent from "./content";
 
 import tooltipProps from "./types";
 import { tooltipContextKey, type RectInfo } from "@yy/tokens";
 import { useEventListener } from "@yy/hooks";
+import { isFunction } from "@yy/utils";
 
 export default defineComponent({
   name: "YTooltip",
@@ -25,6 +26,10 @@ export default defineComponent({
     let time = 0;
     const show = ref(false);
     const onToggle = (e: Event, toggle: boolean) => {
+      const { details, disabled } = props;
+      const res = isFunction(disabled) ? disabled(details) : disabled;
+      if (res) return;
+
       clearTimeout(time);
       time = window.setTimeout(() => {
         show.value = toggle;
