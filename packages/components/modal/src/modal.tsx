@@ -57,12 +57,11 @@ export default defineComponent({
     });
 
     const handleEnter = (element: Element) => {
-      nextTick(() => {
+      setTimeout(() => {
         const el = element as HTMLElement;
         const { offsetLeft, offsetTop } = el;
-        console.log(offsetLeft, mousePosition.x);
-        el.style.transformOrigin = `-${offsetLeft - mousePosition.x}px -${offsetTop - mousePosition.y}px`;
-      });
+        el.style.transformOrigin = `${mousePosition.x - offsetLeft}px ${mousePosition.y - offsetTop}px`;
+      }, 0);
     };
 
     const emitHandle = (type: ModalAction, value = false) => {
