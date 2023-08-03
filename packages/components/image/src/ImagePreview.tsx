@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, Teleport } from "vue";
 import YOverlay from "@yy/components/overlay";
 import { createNamespace } from "@yy/utils";
 
@@ -17,13 +17,18 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={bem.b()}>
-          <YOverlay />
-          <div class={bem.e("toolbar")}></div>
-          <div class={bem.e("wrapper")}>
-            <image onLoad={handleLoad} onError={handleError} />
-          </div>
-        </div>
+        <>
+          {ctx.slots.default?.()}
+          <Teleport to="body">
+            <div class={bem.b()}>
+              <YOverlay disabled />
+              <div class={bem.e("toolbar")}></div>
+              <div class={bem.e("wrapper")}>
+                <image onLoad={handleLoad} onError={handleError} />
+              </div>
+            </div>
+          </Teleport>
+        </>
       );
     };
   },

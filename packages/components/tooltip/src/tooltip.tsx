@@ -1,4 +1,4 @@
-import { computed, defineComponent, provide, ref } from "vue";
+import { defineComponent, provide, ref } from "vue";
 import YTrigger from "./trigger";
 import YContent from "./content";
 

@@ -23,7 +23,7 @@ export default defineComponent({
     const { lazyRender } = useLazyRender(() => props.show);
     useScrollParent(tooltipContext.triggerRef, () => {
       if (tooltipContext.contentRef.value && props.show) {
-        handleEnter(tooltipContext.contentRef.value);
+        handleLocation(tooltipContext.contentRef.value);
       }
     });
     const { nextZIndex } = useCreateIndex();
@@ -40,10 +40,9 @@ export default defineComponent({
     };
 
     const styles = reactive<CSSProperties>({});
-
     const zIndex = props.zIndex || nextZIndex();
-    const handleEnter = (element: Element) => {
-      const el = element as HTMLElement;
+
+    const handleLocation = (el: HTMLElement) => {
       const { height, width } = tooltipContext.rectInfo;
       const { placement } = props;
       const { offsetHeight, offsetWidth } = el;
@@ -73,9 +72,16 @@ export default defineComponent({
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${disT}px)`;
         transformOrigin = disL >= disR ? "right center" : "left center";
       }
+      styles.transform = transform;
+      styles.transition = "none";
+      return transformOrigin;
+    };
+
+    const handleEnter = (element: Element) => {
+      const el = element as HTMLElement;
+      const transformOrigin = handleLocation(el);
 
       styles.zIndex = zIndex;
-      styles.transform = transform;
       el.style.transformOrigin = transformOrigin;
     };
 
