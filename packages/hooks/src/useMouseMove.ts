@@ -1,4 +1,4 @@
-import { Ref, reactive, ref } from "vue";
+import { Ref, reactive, ref, unref } from "vue";
 import { useEventListener } from "./useEventListener";
 
 interface DataType {
@@ -10,6 +10,8 @@ interface DataType {
   disY: number;
   endX: number;
   endY: number;
+  elDisX: number;
+  elDisY: number;
 }
 
 interface Options {
@@ -18,7 +20,7 @@ interface Options {
   down?: (data: DataType, e: Event) => void;
 }
 
-export function useMouseMove(el: Ref<HTMLElement | undefined> | EventTarget, options?: Options) {
+export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, options?: Options) {
   const isMove = ref(false);
   const data = reactive<DataType>({
     startX: 0,
@@ -29,13 +31,28 @@ export function useMouseMove(el: Ref<HTMLElement | undefined> | EventTarget, opt
     disY: 0,
     endX: 0,
     endY: 0,
+    elDisX: 0,
+    elDisY: 0,
   });
+
+  const getDisElement = (x: number, y: number) => {
+    const element = unref(el);
+    const rect = element?.getBoundingClientRect();
+    if (rect) {
+      Object.assign(data, {
+        elDisY: y - rect.top,
+        elDisX: x - rect.left,
+      });
+    }
+  };
 
   const mouseup = (e: MouseEvent) => {
     const { clientX, clientY } = e;
     isMove.value = true;
     data.startX = clientX;
     data.startY = clientY;
+    getDisElement(clientX, clientY);
+
     options?.up?.(data, e);
   };
 
