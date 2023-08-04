@@ -26,7 +26,7 @@ export default defineComponent({
               <YOverlay disabled />
               <div class={bem.e("toolbar")}></div>
               <div class={bem.e("wrapper")}>
-                <image ref={imgRef} />
+                <img ref={imgRef} />
               </div>
             </div>
           </Teleport>

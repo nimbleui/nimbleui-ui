@@ -19,10 +19,11 @@ export default defineComponent({
     };
 
     return () => {
+      const { src } = props;
       return (
         <ImagePreview>
           <div class={bem.b()}>
-            <image onLoad={handleLoad} onError={handleError} />
+            <img src={src} onLoad={handleLoad} onError={handleError} />
           </div>
         </ImagePreview>
       );
