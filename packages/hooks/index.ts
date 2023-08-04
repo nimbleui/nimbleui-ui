@@ -10,3 +10,4 @@ export * from "./src/useResizeObserver";
 export * from "./src/useGlobalConfig";
 export * from "./src/useCreateIndex";
 export * from "./src/useScrollParent";
+export * from "./src/useMouseMove";
