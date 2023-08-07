@@ -65,9 +65,9 @@ export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, opt
     Object.assign(data, defaultData);
   };
 
-  useEventListener("mouseup", mouseup, { target: el });
-  useEventListener("mousemove", mousemove, { target: el });
   useEventListener("mousedown", mousedown, { target: el });
+  useEventListener("mouseup", mouseup, { target: document });
+  useEventListener("mousemove", mousemove, { target: document });
 
   return {
     data,
