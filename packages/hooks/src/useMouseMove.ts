@@ -1,18 +1,20 @@
 import { Ref, reactive, ref, unref } from "vue";
 import { useEventListener } from "./useEventListener";
 
-interface DataType {
-  startX: number;
-  startY: number;
-  moveX: number;
-  moveY: number;
-  disX: number;
-  disY: number;
-  endX: number;
-  endY: number;
-  elDisX: number;
-  elDisY: number;
-}
+const defaultData = {
+  startX: 0,
+  startY: 0,
+  moveX: 0,
+  moveY: 0,
+  disX: 0,
+  disY: 0,
+  endX: 0,
+  endY: 0,
+  elDisX: 0,
+  elDisY: 0,
+};
+
+type DataType = typeof defaultData;
 
 interface Options {
   up?: (data: DataType, e: Event) => void;
@@ -22,18 +24,7 @@ interface Options {
 
 export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, options?: Options) {
   const isMove = ref(false);
-  const data = reactive<DataType>({
-    startX: 0,
-    startY: 0,
-    moveX: 0,
-    moveY: 0,
-    disX: 0,
-    disY: 0,
-    endX: 0,
-    endY: 0,
-    elDisX: 0,
-    elDisY: 0,
-  });
+  const data = reactive<DataType>({ ...defaultData });
 
   const getDisElement = (x: number, y: number) => {
     const element = unref(el);
@@ -46,14 +37,14 @@ export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, opt
     }
   };
 
-  const mouseup = (e: MouseEvent) => {
+  const mousedown = (e: MouseEvent) => {
     const { clientX, clientY } = e;
     isMove.value = true;
     data.startX = clientX;
     data.startY = clientY;
     getDisElement(clientX, clientY);
 
-    options?.up?.(data, e);
+    options?.down?.(data, e);
   };
 
   const mousemove = (e: MouseEvent) => {
@@ -68,9 +59,10 @@ export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, opt
     });
     options?.move?.(data, e);
   };
-  const mousedown = (e: MouseEvent) => {
+  const mouseup = (e: MouseEvent) => {
     isMove.value = false;
-    options?.down?.(data, e);
+    options?.up?.(data, e);
+    Object.assign(data, defaultData);
   };
 
   useEventListener("mouseup", mouseup, { target: el });

@@ -1,0 +1,8 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+
+@include b(image) {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+}

@@ -1,0 +1,43 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+
+@include b(image-preview) {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+
+  @include e('wrapper') {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    pointer-events: none;
+    z-index: 2;
+
+    .img {
+      user-select: none;
+      pointer-events: all;
+      margin: auto;
+      max-height: calc(100vh - 32px);
+      max-width: calc(100vw - 32px);
+    }
+  }
+
+  @include e('toolbar') {
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    height: 48px;
+    bottom: 40px;
+    padding: 0 12px;
+    background: rgb(0 0 0 / 80%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
+}

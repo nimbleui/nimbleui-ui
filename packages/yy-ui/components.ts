@@ -15,6 +15,8 @@ import {
   YMessage,
   YModal,
   YEllipsis,
+  YImage,
+  YImagePreview,
 } from "@yy/components";
 
 export default [
@@ -34,4 +36,6 @@ export default [
   YMessage,
   YModal,
   YEllipsis,
+  YImage,
+  YImagePreview,
 ];

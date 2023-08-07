@@ -101,6 +101,7 @@
     <YButton block :size="'large'" @click="onOpen">open</YButton>
     <YDrawer @opened="onOpened" @closed="onClose"></YDrawer>
     <YButton :type="'primary'" @click="showMessage">show message</YButton>
+    <YImage height="100" src="https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF" />
     <YModal v-model="showOverlay">
       <div class="scale">66666</div>
     </YModal>

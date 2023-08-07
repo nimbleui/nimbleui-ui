@@ -4,7 +4,7 @@
 
 @include b(overlay) {
   --y-overlay-z-index: 999;
-  --y-overlay-background: rgb(0 0 0 / 45%);
+  --y-overlay-background: rgb(0 0 0 / 30%);
 
   position: fixed;
   top: 0;

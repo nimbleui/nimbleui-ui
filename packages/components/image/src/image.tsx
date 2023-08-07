@@ -1,6 +1,7 @@
-import { defineComponent } from "vue";
+import { defineComponent, inject, ref } from "vue";
 import { createNamespace } from "@yy/utils";
-import ImagePreview from "./ImagePreview";
+import { imagePreviewContextKey } from "@yy/tokens";
+import { YImagePreview, type imagePreviewExpose } from "@yy/components/image-preview";
 
 import imageProps from "./types";
 
@@ -10,6 +11,9 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("image");
 
+    const imagePreviewRef = ref<imagePreviewExpose>();
+    const imagePreviewContext = inject(imagePreviewContextKey);
+
     const handleLoad = () => {
       console.log(111);
     };
@@ -18,14 +22,28 @@ export default defineComponent({
       console.log("error");
     };
 
-    return () => {
-      const { src } = props;
+    const onClick = () => {
+      const instance = imagePreviewContext?.isGroup ? imagePreviewContext : imagePreviewRef.value;
+      instance?.toggle(true);
+      instance?.setPreviewSrc(props.src || "");
+    };
+
+    const renderImage = () => {
+      const { src, width, height } = props;
       return (
-        <ImagePreview>
-          <div class={bem.b()}>
-            <img src={src} onLoad={handleLoad} onError={handleError} />
-          </div>
-        </ImagePreview>
+        <img onClick={onClick} width={width} height={height} src={src} onLoad={handleLoad} onError={handleError} />
+      );
+    };
+
+    return () => {
+      return (
+        <div class={bem.b()}>
+          {imagePreviewContext?.isGroup ? (
+            renderImage()
+          ) : (
+            <YImagePreview ref={imagePreviewRef}>{renderImage()}</YImagePreview>
+          )}
+        </div>
       );
     };
   },

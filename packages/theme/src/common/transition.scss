@@ -42,3 +42,21 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
 .#{$namespace}-tooltip-leave-active {
   transition: opacity .15s cubic-bezier(.4, 0, 1, 1), transform .15s cubic-bezier(.4, 0, 1, 1);
 }
+
+.#{$namespace}-fade-in-scale-leave-active {
+  transition: opacity .2s cubic-bezier(.4, 0, 1, 1), transform .2s cubic-bezier(.4, 0, 1, 1);
+}
+
+.#{$namespace}-fade-in-scale-enter-active {
+  transition: opacity .2s cubic-bezier(0, 0, .2, 1), transform .2s cubic-bezier(0, 0, .2, 1);
+}
+
+.#{$namespace}-fade-in-scale-enter-from, .#{$namespace}-fade-in-scale-leave-to {
+  opacity: 0;
+  transform: scale(.9);
+}
+
+.#{$namespace}-fade-in-scale-leave-from, .#{$namespace}-fade-in-scale-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
