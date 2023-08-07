@@ -25,7 +25,7 @@ export default defineComponent({
       setPreviewSrc,
     });
 
-    const { data } = useMouseMove(imgRef, {
+    const { data, isMove } = useMouseMove(imgRef, {
       move(data, e) {
         e.preventDefault();
       },
@@ -54,6 +54,7 @@ export default defineComponent({
                 transform: `translateX(${nextData.offsetX + data.disX}px) translateY(${
                   nextData.offsetY + data.disY
                 }px) rotate(${nextData.rotate}deg) scale(${nextData.scale})`,
+                cursor: isMove.value ? "grabbing" : "grab",
               }}
               src={previewSrc.value}
               class="img"
