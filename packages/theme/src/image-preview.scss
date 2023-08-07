@@ -5,6 +5,8 @@
   position: fixed;
   left: 0;
   top: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
 
   @include e('wrapper') {
@@ -23,11 +25,11 @@
       margin: auto;
       max-height: calc(100vh - 32px);
       max-width: calc(100vw - 32px);
+      transition: transform .3s cubic-bezier(.4, 0, .2, 1)
     }
   }
 
   @include e('toolbar') {
-    z-index: 3;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -39,5 +41,13 @@
     color: #fff;
     display: flex;
     align-items: center;
+    z-index: 3;
+
+    @include m(icon) {
+      margin: 0 6px;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
   }
 }

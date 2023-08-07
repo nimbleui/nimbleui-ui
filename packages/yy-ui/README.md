@@ -11,7 +11,8 @@
 使用 npm 安装。
 
 ```bash
-npm i -D @nimble-ui/vue
+npm i @nimble-ui/vue --save
+yarn i @nimble-ui/vue --save
 ```
 
 ### 使用

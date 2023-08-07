@@ -4,6 +4,10 @@ import { createNamespace } from "@yy/utils";
 import { useLazyRender, useMouseMove } from "@yy/hooks";
 import { imagePreviewContextKey } from "@yy/tokens";
 
+import { prevIcon, nextIcon, closeIcon, lessenIcon, amplifyIcon } from "./icons";
+
+const maxScale = 3;
+
 export default defineComponent({
   name: "YImagePreview",
   setup(props, ctx) {
@@ -37,28 +41,60 @@ export default defineComponent({
       },
     });
 
-    const onClickOverlay = () => (show.value = false);
+    const onClose = () => (show.value = false);
     const { lazyRender, destroy } = useLazyRender(show, {
       destroyOnClose: true,
       isTransition: true,
     });
 
+    const zoom = (type: "in" | "out") => {
+      return () => {
+        const { scale } = nextData;
+        if (type === "in" && scale < maxScale) {
+          nextData.scale = scale + 0.5;
+        }
+
+        if (type === "out" && scale > 0.5) {
+          nextData.scale = scale - 0.5;
+        }
+      };
+    };
+
+    const renderToolbar = () => {
+      return (
+        <div class={bem.e("toolbar")}>
+          <i class={bem.m("icon", "toolbar")}>{prevIcon}</i>
+          <i class={bem.m("icon", "toolbar")}>{nextIcon}</i>
+          <i onClick={zoom("out")} class={bem.m("icon", "toolbar")}>
+            {lessenIcon}
+          </i>
+          <i onClick={zoom("in")} class={bem.m("icon", "toolbar")}>
+            {amplifyIcon}
+          </i>
+          <i onClick={onClose} class={bem.m("icon", "toolbar")}>
+            {closeIcon}
+          </i>
+        </div>
+      );
+    };
+
     const renderContent = lazyRender(() => (
       <div class={bem.b()}>
-        <YOverlay zIndex={1} onClick={onClickOverlay} show={show.value} disabled />
-        <div class={bem.e("toolbar")}>333</div>
+        <YOverlay zIndex={1} onClick={onClose} show={show.value} disabled />
+        {renderToolbar()}
         <Transition appear name="y-fade-in-scale" onAfterLeave={destroy}>
           <div v-show={show.value} class={bem.e("wrapper")}>
             <img
+              class="img"
+              ref={imgRef}
+              src={previewSrc.value}
               style={{
                 transform: `translateX(${nextData.offsetX + data.disX}px) translateY(${
                   nextData.offsetY + data.disY
                 }px) rotate(${nextData.rotate}deg) scale(${nextData.scale})`,
                 cursor: isMove.value ? "grabbing" : "grab",
+                transitionDuration: isMove.value ? "0s" : "0.3s",
               }}
-              src={previewSrc.value}
-              class="img"
-              ref={imgRef}
             />
           </div>
         </Transition>
