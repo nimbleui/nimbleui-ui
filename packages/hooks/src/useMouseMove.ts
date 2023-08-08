@@ -60,6 +60,7 @@ export function useMouseMove(el: Ref<HTMLElement | undefined> | HTMLElement, opt
     options?.move?.(data, e);
   };
   const mouseup = (e: MouseEvent) => {
+    if (!isMove.value) return;
     isMove.value = false;
     options?.up?.(data, e);
     Object.assign(data, defaultData);

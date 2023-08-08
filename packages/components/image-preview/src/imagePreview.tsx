@@ -4,31 +4,44 @@ import { createNamespace } from "@yy/utils";
 import { useLazyRender, useMouseMove } from "@yy/hooks";
 import { imagePreviewContextKey } from "@yy/tokens";
 
-import { prevIcon, nextIcon, closeIcon, lessenIcon, amplifyIcon } from "./icons";
+import {
+  prevIcon,
+  nextIcon,
+  closeIcon,
+  lessenIcon,
+  amplifyIcon,
+  rotateCounterclockwiseIcon,
+  RotateClockwiseIcon,
+} from "./icons";
 
 const maxScale = 3;
+
+const defaultNextData = {
+  offsetX: 0,
+  offsetY: 0,
+  scale: 1,
+  rotate: 0,
+};
 
 export default defineComponent({
   name: "YImagePreview",
   setup(props, ctx) {
     const show = ref(false);
     const previewSrc = ref("");
-    const nextData = reactive({
-      offsetX: 0,
-      offsetY: 0,
-      scale: 1,
-      rotate: 0,
-    });
     const imgRef = ref<HTMLImageElement>();
     const bem = createNamespace("image-preview");
 
+    // 切换显示隐藏
     const toggle = (bool: boolean) => (show.value = bool);
+    // 设置当前的图片路径
     const setPreviewSrc = (src: string) => (previewSrc.value = src);
     provide(imagePreviewContextKey, {
       toggle,
       setPreviewSrc,
     });
 
+    const nextData = reactive({ ...defaultNextData });
+    // 拖拽功能
     const { data, isMove } = useMouseMove(imgRef, {
       move(data, e) {
         e.preventDefault();
@@ -41,13 +54,29 @@ export default defineComponent({
       },
     });
 
-    const onClose = () => (show.value = false);
+    const onClose = () => {
+      show.value = false;
+      // 重置成默认值
+      Object.assign(nextData, defaultNextData);
+    };
     const { lazyRender, destroy } = useLazyRender(show, {
       destroyOnClose: true,
       isTransition: true,
     });
 
-    const zoom = (type: "in" | "out") => {
+    // 旋转
+    const handleRotate = (type: "clockwise" | "counterclockwise") => {
+      return () => {
+        if (type === "clockwise") {
+          nextData.rotate += 90;
+        } else {
+          nextData.rotate -= 90;
+        }
+      };
+    };
+
+    // 放大缩小
+    const handleZoom = (type: "in" | "out") => {
       return () => {
         const { scale } = nextData;
         if (type === "in" && scale < maxScale) {
@@ -65,10 +94,16 @@ export default defineComponent({
         <div class={bem.e("toolbar")}>
           <i class={bem.m("icon", "toolbar")}>{prevIcon}</i>
           <i class={bem.m("icon", "toolbar")}>{nextIcon}</i>
-          <i onClick={zoom("out")} class={bem.m("icon", "toolbar")}>
+          <i onClick={handleRotate("counterclockwise")} class={bem.m("icon", "toolbar")}>
+            {rotateCounterclockwiseIcon}
+          </i>
+          <i onClick={handleRotate("clockwise")} class={bem.m("icon", "toolbar")}>
+            {RotateClockwiseIcon}
+          </i>
+          <i onClick={handleZoom("out")} class={bem.m("icon", "toolbar")}>
             {lessenIcon}
           </i>
-          <i onClick={zoom("in")} class={bem.m("icon", "toolbar")}>
+          <i onClick={handleZoom("in")} class={bem.m("icon", "toolbar")}>
             {amplifyIcon}
           </i>
           <i onClick={onClose} class={bem.m("icon", "toolbar")}>
@@ -92,7 +127,7 @@ export default defineComponent({
                 transform: `translateX(${nextData.offsetX + data.disX}px) translateY(${
                   nextData.offsetY + data.disY
                 }px) rotate(${nextData.rotate}deg) scale(${nextData.scale})`,
-                cursor: isMove.value ? "grabbing" : "grab",
+                cursor: isMove.value ? "move" : "grab",
                 transitionDuration: isMove.value ? "0s" : "0.3s",
               }}
             />
