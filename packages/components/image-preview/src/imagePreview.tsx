@@ -43,22 +43,19 @@ export default defineComponent({
     const nextData = reactive({ ...defaultNextData });
     // 拖拽功能
     const { data, isMove } = useMouseMove(imgRef, {
+      boundary: window,
       move(data, e) {
         e.preventDefault();
       },
       up(data) {
-        const { disX, disY } = data;
+        const { disX, disY, maxDisX, maxDisY } = data;
         const { offsetX, offsetY } = nextData;
         nextData.offsetX = disX + offsetX;
         nextData.offsetY = disY + offsetY;
       },
     });
 
-    const onClose = () => {
-      show.value = false;
-      // 重置成默认值
-      Object.assign(nextData, defaultNextData);
-    };
+    const onClose = () => (show.value = false);
     const { lazyRender, destroy } = useLazyRender(show, {
       destroyOnClose: true,
       isTransition: true,
@@ -113,11 +110,17 @@ export default defineComponent({
       );
     };
 
+    const onDestroy = () => {
+      destroy();
+      // 重置成默认值
+      Object.assign(nextData, defaultNextData);
+    };
+
     const renderContent = lazyRender(() => (
       <div class={bem.b()}>
         <YOverlay zIndex={1} onClick={onClose} show={show.value} disabled />
         {renderToolbar()}
-        <Transition appear name="y-fade-in-scale" onAfterLeave={destroy}>
+        <Transition appear name="y-fade-in-scale" onAfterLeave={onDestroy}>
           <div v-show={show.value} class={bem.e("wrapper")}>
             <img
               class="img"
