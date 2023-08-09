@@ -4,6 +4,8 @@ import { createNamespace } from "@yy/utils";
 import { useLazyRender, useMouseMove } from "@yy/hooks";
 import { imagePreviewContextKey } from "@yy/tokens";
 
+import imagePreviewProps from "./types";
+
 import {
   prevIcon,
   nextIcon,
@@ -25,6 +27,8 @@ const defaultNextData = {
 
 export default defineComponent({
   name: "YImagePreview",
+  props: imagePreviewProps(),
+  emits: ["prev", "next"],
   setup(props, ctx) {
     const show = ref(false);
     const previewSrc = ref("");
@@ -41,6 +45,10 @@ export default defineComponent({
     });
 
     const nextData = reactive({ ...defaultNextData });
+    // 重置成默认值
+    const resetNextData = () => {
+      Object.assign(nextData, defaultNextData);
+    };
     // 拖拽功能
     const { data, isMove } = useMouseMove(imgRef, {
       boundary: window,
@@ -108,11 +116,27 @@ export default defineComponent({
       };
     };
 
+    const onCut = (type: "prev" | "next") => {
+      return () => {
+        resetNextData();
+        ctx.emit(type);
+      };
+    };
+
     const renderToolbar = () => {
+      const { isGroup } = props;
       return (
         <div class={bem.e("toolbar")}>
-          <i class={bem.m("icon", "toolbar")}>{prevIcon}</i>
-          <i class={bem.m("icon", "toolbar")}>{nextIcon}</i>
+          {isGroup ? (
+            <>
+              <i onClick={onCut("prev")} class={bem.m("icon", "toolbar")}>
+                {prevIcon}
+              </i>
+              <i onClick={onCut("next")} class={bem.m("icon", "toolbar")}>
+                {nextIcon}
+              </i>
+            </>
+          ) : null}
           <i onClick={handleRotate("counterclockwise")} class={bem.m("icon", "toolbar")}>
             {rotateCounterclockwiseIcon}
           </i>
@@ -134,8 +158,7 @@ export default defineComponent({
 
     const onDestroy = () => {
       destroy();
-      // 重置成默认值
-      Object.assign(nextData, defaultNextData);
+      resetNextData();
     };
 
     const renderContent = lazyRender(() => (

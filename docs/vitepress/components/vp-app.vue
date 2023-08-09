@@ -105,6 +105,7 @@
     <YModal v-model="showOverlay">
       <div class="scale">66666</div>
     </YModal>
+    <YButton @click="onPreviewImage">一览图片</YButton>
     <div style="height: 900px"></div>
   </div>
 </template>
@@ -112,7 +113,7 @@
 <script setup lang="tsx">
 import { watch } from "vue";
 import { reactive, h, ref } from "vue";
-import { CheckboxDisabledFun, YMessage, showModal, useTheme } from "yy-ui";
+import { CheckboxDisabledFun, YMessage, showModal, useTheme, showImagePreview } from "yy-ui";
 
 const renderContent = () => h("div", {}, "23432432dfasdf");
 const a = reactive({
@@ -236,6 +237,16 @@ let theme: "light" | "dark" = "dark";
 const onTheme = () => {
   theme = theme === "dark" ? "light" : "dark";
   useTheme({}, theme);
+};
+
+const onPreviewImage = () => {
+  showImagePreview({
+    src: [
+      "https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF",
+      "https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF",
+    ],
+    currentIndex: 1,
+  });
 };
 </script>
 <style>
