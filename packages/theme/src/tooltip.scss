@@ -31,25 +31,25 @@
       left: 50%;
       transform: translateX(-50%);
 
-      @include when(top) {
+      @include when(bottom) {
         bottom: -10px;
 
         @include utils-arrow(10px, 'top')
       }
 
-      @include when(bottom) {
+      @include when(top) {
         top: -10px;
 
         @include utils-arrow(10px, 'bottom')
       }
 
-      @include when(left) {
+      @include when(right) {
         right: -10px;
 
         @include utils-arrow(10px, 'left')
       }
 
-      @include when(right) {
+      @include when(left) {
         left: -10px;
 
         @include utils-arrow(10px, 'right')

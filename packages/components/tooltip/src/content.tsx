@@ -12,6 +12,7 @@ export default defineComponent({
   props: contentProps(),
   emits: ["toggle", "clickItem"],
   setup(props, ctx) {
+    const placementRef = ref(props.placement);
     const bem = createNamespace("tooltip-container");
     const tooltipContext = inject(tooltipContextKey, {
       triggerRef: ref<HTMLElement>(),
@@ -61,19 +62,20 @@ export default defineComponent({
       let transformOrigin = "";
       if (placement === "bottom") {
         transform = `translateX(${disL}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
-        transformOrigin = disB >= offsetHeight ? "top center" : "bottom center";
+        transformOrigin = disB >= offsetHeight + DIS_BOTTOM ? "top center" : "bottom center";
       } else if (placement === "top") {
         transform = `translateX(${disL}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
-        transformOrigin = disT >= offsetHeight ? "bottom center" : "top center";
+        transformOrigin = disT >= offsetHeight + DIS_BOTTOM ? "bottom center" : "top center";
       } else if (placement === "left") {
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${disT}px)`;
-        transformOrigin = disL >= offsetWidth ? "left center" : "right center";
+        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
       } else {
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${disT}px)`;
-        transformOrigin = disL >= disR ? "right center" : "left center";
+        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       }
       styles.transform = transform;
       styles.transition = "none";
+      placementRef.value = transformOrigin.split(" ")[0] as "bottom" | "top" | "right" | "left";
       return transformOrigin;
     };
 
@@ -102,7 +104,7 @@ export default defineComponent({
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
             >
-              <span class={[bem.m("arrow", "content"), bem.is(props.placement)]}></span>
+              <span class={[bem.m("arrow", "content"), bem.is(placementRef.value)]}></span>
               {ctx.slots.default?.()}
             </div>
           </Transition>
