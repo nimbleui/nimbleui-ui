@@ -48,8 +48,28 @@ export default defineComponent({
         e.preventDefault();
       },
       up(data) {
-        const { disX, disY, maxDisX, maxDisY } = data;
+        let { disX, disY } = data;
+        const { maxMoveDisB, maxMoveDisL, maxMoveDisR, maxMoveDisT } = data;
         const { offsetX, offsetY } = nextData;
+        const rect = imgRef.value?.getBoundingClientRect();
+        if (!rect) return;
+
+        if (rect.width <= window.innerWidth) {
+          disX = 0;
+        } else if (disX > 0) {
+          disX = maxMoveDisL < 0 ? Math.max(maxMoveDisL, disX) : Math.min(maxMoveDisL, disX);
+        } else {
+          disX = Math.max(maxMoveDisR, disX);
+        }
+
+        if (rect.height <= window.innerHeight) {
+          disY = 0;
+        } else if (disY > 0) {
+          disY = maxMoveDisT < 0 ? Math.max(maxMoveDisT, disY) : Math.min(maxMoveDisT, disY);
+        } else {
+          disY = Math.max(maxMoveDisB, disY);
+        }
+
         nextData.offsetX = disX + offsetX;
         nextData.offsetY = disY + offsetY;
       },
@@ -75,13 +95,15 @@ export default defineComponent({
     // 放大缩小
     const handleZoom = (type: "in" | "out") => {
       return () => {
-        const { scale } = nextData;
+        const { scale, offsetX, offsetY } = nextData;
         if (type === "in" && scale < maxScale) {
           nextData.scale = scale + 0.5;
         }
 
         if (type === "out" && scale > 0.5) {
           nextData.scale = scale - 0.5;
+          nextData.offsetX = offsetX ? Math.max(offsetX - (offsetX / (scale - 1)) * 0.5, 0) : 0;
+          nextData.offsetY = offsetY ? Math.max(offsetY - (offsetY / (scale - 1)) * 0.5, 0) : 0;
         }
       };
     };

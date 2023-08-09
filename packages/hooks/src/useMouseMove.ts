@@ -12,8 +12,10 @@ const defaultData = {
   endY: 0,
   elDisX: 0,
   elDisY: 0,
-  maxDisX: 0,
-  maxDisY: 0,
+  maxMoveDisR: 0,
+  maxMoveDisL: 0,
+  maxMoveDisT: 0,
+  maxMoveDisB: 0,
 };
 
 type DataType = typeof defaultData;
@@ -39,7 +41,7 @@ const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) 
 };
 
 const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
-  const boundaryData = { l: 0, r: 0, t: 0, b: 0 };
+  const moveDis = { l: 0, r: 0, t: 0, b: 0 };
 
   const sunBoundary = () => {
     const element = unref(el);
@@ -47,8 +49,8 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
 
     let boundaryT = 0;
     let boundaryL = 0;
-    let boundaryR = window.innerWidth;
-    let boundaryB = window.innerWidth;
+    let boundaryR = document.documentElement.clientWidth;
+    let boundaryB = document.documentElement.clientHeight;
     if (boundary !== window) {
       const { left, top, right, bottom } = (boundary as Element).getBoundingClientRect();
       boundaryT = top;
@@ -57,17 +59,17 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
       boundaryB = bottom;
     }
 
-    const { left, top, bottom, right } = element.getBoundingClientRect();
-    Object.assign(boundaryData, {
-      l: boundaryL - left,
-      r: boundaryR - right,
-      t: boundaryT - top,
-      b: boundaryB - bottom,
+    const rect = element.getBoundingClientRect();
+    Object.assign(moveDis, {
+      l: boundaryL - rect.left,
+      r: boundaryR - rect.right,
+      t: boundaryT - rect.top,
+      b: boundaryB - rect.bottom,
     });
   };
 
   return {
-    boundaryData,
+    moveDis,
     sunBoundary,
   };
 };
@@ -75,8 +77,8 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
 export function useMouseMove(el: TargetElement, options?: Options) {
   const isMove = ref(false);
   const data = reactive<DataType>({ ...defaultData });
+  const { moveDis, sunBoundary } = handleBoundary(el, options?.boundary);
 
-  const { boundaryData, sunBoundary } = handleBoundary(el, options?.boundary);
   const mousedown = (e: MouseEvent) => {
     const { clientX, clientY } = e;
     isMove.value = true;
@@ -98,8 +100,10 @@ export function useMouseMove(el: TargetElement, options?: Options) {
       disY,
       moveX: clientX,
       moveY: clientY,
-      maxDisX: disX > 0 ? Math.min(disX, boundaryData.r) : Math.max(disX, boundaryData.l),
-      maxDisY: disY > 0 ? Math.min(disY, boundaryData.b) : Math.max(disY, boundaryData.t),
+      maxMoveDisR: moveDis.r,
+      maxMoveDisL: moveDis.l,
+      maxMoveDisB: moveDis.b,
+      maxMoveDisT: moveDis.t,
     });
 
     options?.move?.(data, e);
