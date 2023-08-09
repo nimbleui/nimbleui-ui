@@ -22,6 +22,10 @@ class BEM {
   is<T extends string>(name: T | undefined, state = true) {
     return name && state ? `is-${name}` : undefined;
   }
+
+  name(name: string) {
+    return name ? `y-${name}` : undefined;
+  }
 }
 
 export function createNamespace(name: string) {

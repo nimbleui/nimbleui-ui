@@ -165,7 +165,7 @@ export default defineComponent({
       <div class={bem.b()}>
         <YOverlay zIndex={1} onClick={onClose} show={show.value} disabled />
         {renderToolbar()}
-        <Transition appear name="y-fade-in-scale" onAfterLeave={onDestroy}>
+        <Transition appear name={bem.name("fade-in-scale")} onAfterLeave={onDestroy}>
           <div v-show={show.value} class={bem.e("wrapper")}>
             <img
               class="img"

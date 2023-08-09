@@ -1,6 +1,8 @@
 import { PropType } from "vue";
 import { TriggerType } from "./types";
 
+export type PlacementType = "bottom" | "top" | "right" | "left";
+
 export const contentProps = () => ({
   /**
    * @description 渲染在哪里
@@ -49,7 +51,7 @@ export const contentProps = () => ({
    * @description 弹框的方向
    */
   placement: {
-    type: String as PropType<"bottom" | "top" | "right" | "left">,
+    type: String as PropType<PlacementType>,
     default: "bottom",
   },
   /**

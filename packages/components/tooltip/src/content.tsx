@@ -3,7 +3,7 @@ import { tooltipContextKey, type RectInfo } from "@yy/tokens";
 import { createNamespace, isNumber } from "@yy/utils";
 import { useCreateIndex, useLazyRender, useScrollParent } from "@yy/hooks";
 
-import { contentProps } from "./props";
+import { contentProps, type PlacementType } from "./props";
 
 const DIS = 12;
 const DIS_BOTTOM = 30;
@@ -71,11 +71,11 @@ export default defineComponent({
         transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
       } else {
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${disT}px)`;
-        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
+        transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       }
       styles.transform = transform;
       styles.transition = "none";
-      placementRef.value = transformOrigin.split(" ")[0] as "bottom" | "top" | "right" | "left";
+      placementRef.value = transformOrigin.split(" ")[0] as PlacementType;
       return transformOrigin;
     };
 
