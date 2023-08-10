@@ -4,13 +4,15 @@
   "workspaces": [
     "packages/*",
     "docs",
-    "build"
+    "build",
+    "scripts"
   ],
   "scripts": {
     "theme:prod": "lerna run --scope @yy/theme build",
     "theme:dev": "lerna run --scope @yy/theme dev",
     "docs:dev": "lerna run --scope @yy/docs docs:dev",
-    "build": "lerna run --scope @yy/build build"
+    "build": "lerna run --scope @yy/build build",
+    "cli": "yy-cli"
   },
   "devDependencies": {
     "eslint": "^8.33.0",

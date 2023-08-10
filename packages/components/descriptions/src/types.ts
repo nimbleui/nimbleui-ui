@@ -10,7 +10,7 @@ const descriptionsProps = mergeCommonProp({
     default: 0,
   },
   /**
-   * 分隔符
+   * @description 分隔符
    */
   separator: {
     type: String,
