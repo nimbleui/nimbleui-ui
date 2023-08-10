@@ -17,6 +17,9 @@ import {
   YEllipsis,
   YImage,
   YImagePreview,
+  YLayout,
+  YHeader,
+  YSidebar,
 } from "@yy/components";
 
 export default [
@@ -38,4 +41,7 @@ export default [
   YEllipsis,
   YImage,
   YImagePreview,
+  YLayout,
+  YHeader,
+  YSidebar,
 ];

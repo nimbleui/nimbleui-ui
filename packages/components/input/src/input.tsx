@@ -30,7 +30,7 @@ export default defineComponent({
           bem.b(),
           bem.is("disabled", res.disabled),
           bem.is("bordered", res.bordered),
-          bem.is("focus", isFocus.value && !res.disabled),
+          bem.is("focus", !!isFocus.value && !res.disabled),
         ],
       };
     });

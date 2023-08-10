@@ -57,7 +57,7 @@ const borderGradient: GradientTypes = {
 const bgGradient: GradientTypes = {
   elevated: [0, 12],
   container: [0, 8],
-  layout: [0, 0],
+  layout: [4, 0],
   spotlight: [0.85, 26],
 };
 

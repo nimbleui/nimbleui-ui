@@ -22,10 +22,11 @@
 
 @mixin m($modifier) {
   $m: $modifier !global;
-  $bem: $be + $modifier-separator + $modifier !global;
+  $selector: &;
+  $bem: $selector + $modifier-separator + $modifier !global;
 
   @at-root {
-    #{'.' + $bem} {
+    #{$bem} {
       @content;
     }
   }
