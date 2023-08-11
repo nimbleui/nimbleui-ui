@@ -16,6 +16,8 @@
     "unplugin-vue-macros": "^2.0.0",
     "vite": "^4.2.1",
     "vitepress": "^1.0.0-alpha.65",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "unplugin-vue-components": "^0.25.1",
+    "fast-glob": "^3.3.1"
   }
 }

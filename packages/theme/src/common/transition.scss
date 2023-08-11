@@ -60,3 +60,28 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   opacity: 1;
   transform: scale(1);
 }
+
+.#{$namespace}-popover-transition-enter-from, .#{$namespace}-popover-transition-leave-to {
+  opacity: 0;
+  transform: scale(.85);
+}
+.#{$namespace}-popover-transition-enter-to, .#{$namespace}-popover-transition-leave-from {
+  transform: scale(1);
+  opacity: 1;
+}
+.#{$namespace}-popover-transition-enter-active {
+  transition:
+    box-shadow .3s cubic-bezier(.4, 0, .2, 1),
+    background-color .3s cubic-bezier(.4, 0, .2, 1),
+    color .3s cubic-bezier(.4, 0, .2, 1),
+    opacity .15s var(--n-bezier-ease-out),
+    transform .15s var(--n-bezier-ease-out);
+}
+.#{$namespace}-popover-transition-leave-active {
+  transition:
+    box-shadow .3s cubic-bezier(.4, 0, .2, 1),
+    background-color .3s cubic-bezier(.4, 0, .2, 1),
+    color .3s cubic-bezier(.4, 0, .2, 1),
+    opacity .15s cubic-bezier(.4, 0, 1, 1),
+    transform .15s cubic-bezier(.4, 0, 1, 1);
+}

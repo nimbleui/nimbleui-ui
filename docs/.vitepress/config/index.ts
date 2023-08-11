@@ -9,12 +9,6 @@ export default defineConfig({
   base: '/',
   lastUpdated: true,
   themeConfig: {
-    logo: '/logo.png',
-    siteTitle: 'YY-UI',
-    outline: 3,
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ],
     nav,
     sidebar,
   },
@@ -22,5 +16,5 @@ export default defineConfig({
     lineNumbers: true,
     config(md) {
     },
-  }
+  },
 })

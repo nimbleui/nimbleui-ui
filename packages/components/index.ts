@@ -18,3 +18,4 @@ export * from "./ellipsis";
 export * from "./image";
 export * from "./image-preview";
 export * from "./layout";
+export * from "./menu";
