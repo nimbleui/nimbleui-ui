@@ -53,15 +53,13 @@
 }
 
 @mixin utils-arrow() {
-  transition: transform .3s cubic-bezier(.645,.045,.355,1),opacity .3s;
-
   &::after, &::before {
     position: absolute;
     width: 8px;
     height: 1.5px;
     background-color: currentcolor;
     border-radius: 6px;
-    transition: transform .3s cubic-bezier(.645,.045,.355,1), top .3s cubic-bezier(.645,.045,.355,1);
+    transition: transform .3s cubic-bezier(.645,.045,.355,1);
     content: "";
   }
 
@@ -76,8 +74,6 @@
   }
 
   &.is-opposite {
-    top: -3.5px;
-
     &::before {
       transform: rotate(45deg) translateX(3.5px);
     }

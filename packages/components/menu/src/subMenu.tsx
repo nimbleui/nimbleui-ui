@@ -12,6 +12,11 @@ export default defineComponent({
     const bem = createNamespace("sub-menu");
     const menuContext = inject(menuContextKey, undefined);
 
+    const active = computed(() => {
+      const len = props.site.length;
+      const value = menuContext?.activeSite.slice(0, len);
+      return value?.join("") === props.site.join("");
+    });
     const show = computed(() => {
       return menuContext?.selectSite.includes(props.site.join("-"));
     });
@@ -26,10 +31,14 @@ export default defineComponent({
       const labelNode = isFunction(label) ? label(details) : label;
 
       return (
-        <div onClick={onClick} style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }} class={bem.e("title")}>
+        <div
+          onClick={onClick}
+          style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
+          class={[bem.e("title"), bem.is("active", active.value)]}
+        >
           {item?.icon?.(details)}
           {labelNode}
-          <i class={[bem.m("arrow", "title"), "is-opposite"]}></i>
+          <i class={[bem.m("arrow", "title"), bem.is("opposite", show.value), bem.is("positive", !show.value)]}></i>
         </div>
       );
     };

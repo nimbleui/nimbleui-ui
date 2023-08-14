@@ -12,10 +12,8 @@ export default defineComponent({
 
     const menuContext = inject(menuContextKey, undefined);
 
-    const show = computed(() => {
-      const len = props.site.length;
-      const value = menuContext?.activeSite.slice(0, len);
-      return value?.join("") === props.site.join("");
+    const active = computed(() => {
+      return menuContext?.activeSite?.join("") === props.site.join("");
     });
 
     const onClick = () => {
@@ -29,7 +27,7 @@ export default defineComponent({
           onClick={onClick}
           style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
           key={item?.key}
-          class={[bem.b(), bem.is("active", show.value)]}
+          class={[bem.b(), bem.is("active", active.value)]}
         >
           {isFunction(item?.label) ? item?.label(details) : item?.label}
         </li>
