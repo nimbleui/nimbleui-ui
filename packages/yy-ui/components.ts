@@ -20,6 +20,7 @@ import {
   YLayout,
   YHeader,
   YSidebar,
+  YMenu,
 } from "@yy/components";
 
 export default [
@@ -44,4 +45,5 @@ export default [
   YLayout,
   YHeader,
   YSidebar,
+  YMenu,
 ];

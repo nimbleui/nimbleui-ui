@@ -14,14 +14,17 @@
         </div>
       </div>
     </YHeader>
-    <YSidebar></YSidebar>
+    <YSidebar>
+      <YMenu :items="items"></YMenu>
+    </YSidebar>
   </YLayout>
 </template>
 
 <script setup lang="tsx">
 import { ref } from "vue";
-import { useTheme } from "yy-ui";
+import { useTheme, type MenuItems } from "yy-ui";
 import { useData } from "vitepress";
+import { reactive } from "vue";
 
 const { site } = useData();
 console.log(site);
@@ -30,6 +33,37 @@ const toggleTheme = () => {
   isDark.value = !isDark.value;
   useTheme({}, isDark.value ? "dark" : "light");
 };
+const items = reactive<MenuItems[]>([
+  {
+    label: "测试-1",
+    children: [
+      {
+        label: "测试-1-1",
+      },
+      {
+        label: "测试-1-2",
+      },
+      {
+        label: "测试-1-3",
+        children: [{ label: "测试-1-3-1" }],
+      },
+    ],
+  },
+  {
+    label: "测试-2",
+    children: [
+      {
+        label: "测试-2-1",
+      },
+      {
+        label: "测试-2-2",
+      },
+      {
+        label: "测试-2-3",
+      },
+    ],
+  },
+]);
 </script>
 <style lang="scss">
 * {

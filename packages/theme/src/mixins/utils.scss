@@ -32,7 +32,7 @@
   }
 }
 
-@mixin utils-arrow($size, $direction) {
+@mixin utils-arrow-fill($size, $direction) {
   @if  $direction == 'top' {
     border-right: $size solid transparent;
     border-left: $size solid transparent;
@@ -49,5 +49,41 @@
     border-top: $size solid transparent;
     border-bottom: $size solid transparent;
     border-right: $size solid var(--y-arrow-bg);
+  }
+}
+
+@mixin utils-arrow() {
+  transition: transform .3s cubic-bezier(.645,.045,.355,1),opacity .3s;
+
+  &::after, &::before {
+    position: absolute;
+    width: 8px;
+    height: 1.5px;
+    background-color: currentcolor;
+    border-radius: 6px;
+    transition: transform .3s cubic-bezier(.645,.045,.355,1), top .3s cubic-bezier(.645,.045,.355,1);
+    content: "";
+  }
+
+  &.is-positive {
+    &::before {
+      transform: rotate(-45deg) translateX(3.5px);
+    }
+  
+    &::after {
+      transform: rotate(45deg) translateX(-3.5px);
+    }
+  }
+
+  &.is-opposite {
+    top: -3.5px;
+
+    &::before {
+      transform: rotate(45deg) translateX(3.5px);
+    }
+  
+    &::after {
+      transform: rotate(-45deg) translateX(-3.5px);
+    }
   }
 }

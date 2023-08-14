@@ -38,7 +38,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <YTooltip ref={tooltipRef} {...pick(props, contentPropsKey as any)} transition="y-zoom-in-top">
+        <YTooltip ref={tooltipRef} {...pick(props, contentPropsKey as any)} transition={bem.name("zoom-in-top")}>
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;

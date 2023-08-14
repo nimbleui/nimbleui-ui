@@ -1,0 +1,66 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/utils.scss" as *;
+
+@include b(menu) {
+  --y-menu-text-color: var(--y-color-text);
+  --y-menu-font-size: var(--y-font-size);
+  --y-menu-bg-color: var(--y-color-bg-container);
+  --y-menu-item-height: 42px;
+  --y-menu-hover-bg-color: var(--y-color-primary-1);
+  --y-menu-active-bg-color: var(--y-color-primary);
+}
+
+@include b(menu) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
+  box-sizing: border-box;
+  font-size: var(--y-menu-font-size);
+  color: var(--y-menu-text-color);
+  background-color: var(--y-menu-bg-color);
+  transition: width .3s cubic-bezier(.2,0,0,1) 0s;
+}
+
+@include b(sub-menu) {
+  list-style: none;
+
+  @include e(title) {
+    padding-right: 15px;
+    height: var(--y-menu-item-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--y-menu-hover-bg-color);
+    }
+
+    @include m(arrow) {
+      position: relative;
+      width: 10px;
+
+      @include utils-arrow;
+    }
+  }
+}
+
+@include b(menu-item) {
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  height: var(--y-menu-item-height);
+  list-style: none;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: var(--y-menu-hover-bg-color);
+  }
+
+  @include when(active) {
+    background-color: var(--y-menu-active-bg-color);
+  }
+}

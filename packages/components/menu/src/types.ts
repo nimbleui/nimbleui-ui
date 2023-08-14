@@ -1,18 +1,11 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes, HTMLAttributes, PropType, VNode } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
+import { subMenu, commonProps, type MenuItems } from "./props";
 
-export interface MenuItems {
-  key?: string | number;
-  children?: Array<MenuItems>;
-  show?: boolean;
-  props?: HTMLAttributes;
-  icon?: () => VNode;
-  label?: () => VNode | string;
-  disabled?: () => boolean | boolean;
-  [key: string]: unknown;
-}
-
+export { MenuItems };
 const menuProps = mergeCommonProp({
+  ...subMenu,
+  ...commonProps,
   /**
    * @description 菜单的数据
    */
@@ -20,25 +13,10 @@ const menuProps = mergeCommonProp({
     type: Array as PropType<MenuItems[]>,
   },
   /**
-   * @description key 的字段名
+   * @description 是否使用手风琴模式
    */
-  keyField: {
-    type: String,
-    default: "id",
-  },
-  /**
-   * @description label 的字段名
-   */
-  labelField: {
-    type: String,
-    default: "label",
-  },
-  /**
-   * @description 菜单的布局方式
-   */
-  mode: {
-    type: String as PropType<"vertical" | "horizontal">,
-    default: "vertical",
+  accordion: {
+    type: Boolean as PropType<boolean>,
   },
 });
 

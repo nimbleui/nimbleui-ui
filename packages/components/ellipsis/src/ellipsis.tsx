@@ -33,7 +33,7 @@ export default defineComponent({
       const { maxWidth, lineClamp } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip disabled={tooltipDisabled} trigger="hover" placement="top" transition="y-tooltip">
+          <YTooltip disabled={tooltipDisabled} trigger="hover" placement="top" transition={bem.name("ellipsis")}>
             {{
               default: () => (
                 <div

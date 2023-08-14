@@ -24,3 +24,12 @@ export function pick<T extends { [key: string]: any }, U extends keyof T>(
   }
   return result;
 }
+
+/**
+ * 获取obj 所有属性
+ * @param obj 目标对象
+ * @returns
+ */
+export function keysOf<T extends Record<string, unknown>>(obj: T): Array<keyof T> {
+  return Object.keys(obj);
+}

@@ -6,5 +6,6 @@ export * from "./src/button-group";
 export * from "./src/checkbox-group";
 export * from "./src/tooltip";
 export * from "./src/image-preview";
+export * from "./src/menu";
 
 export * from "./src/types";

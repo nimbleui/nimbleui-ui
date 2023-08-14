@@ -34,25 +34,25 @@
       @include when(bottom) {
         bottom: -10px;
 
-        @include utils-arrow(10px, 'top')
+        @include utils-arrow-fill(10px, 'top')
       }
 
       @include when(top) {
         top: -10px;
 
-        @include utils-arrow(10px, 'bottom')
+        @include utils-arrow-fill(10px, 'bottom')
       }
 
       @include when(right) {
         right: -10px;
 
-        @include utils-arrow(10px, 'left')
+        @include utils-arrow-fill(10px, 'left')
       }
 
       @include when(left) {
         left: -10px;
 
-        @include utils-arrow(10px, 'right')
+        @include utils-arrow-fill(10px, 'right')
       }
     }
   }

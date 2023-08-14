@@ -25,24 +25,26 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   transform: scaleY(0);
 }
 
-.#{$namespace}-tooltip-enter-from, .#{$namespace}-tooltip-leave-to {
+// ellipsis动画
+.#{$namespace}-ellipsis-enter-from, .#{$namespace}-ellipsis-leave-to {
   opacity: 0;
   transform: scale(.85);
 }
 
-.#{$namespace}-tooltip-enter-to, .#{$namespace}-tooltip-leave-from {
+.#{$namespace}-ellipsis-enter-to, .#{$namespace}-ellipsis-leave-from {
   transform: scale(1);
   opacity: 1;
 }
 
-.#{$namespace}-tooltip-enter-active {
+.#{$namespace}-ellipsis-enter-active {
   transition: opacity .15s cubic-bezier(0, 0, .2, 1), transform .15s cubic-bezier(0, 0, .2, 1);
 }
 
-.#{$namespace}-tooltip-leave-active {
+.#{$namespace}-ellipsis-leave-active {
   transition: opacity .15s cubic-bezier(.4, 0, 1, 1), transform .15s cubic-bezier(.4, 0, 1, 1);
 }
 
+// imagePreview动画
 .#{$namespace}-fade-in-scale-leave-active {
   transition: opacity .2s cubic-bezier(.4, 0, 1, 1), transform .2s cubic-bezier(.4, 0, 1, 1);
 }
@@ -61,6 +63,7 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   transform: scale(1);
 }
 
+// tooltip动画
 .#{$namespace}-popover-transition-enter-from, .#{$namespace}-popover-transition-leave-to {
   opacity: 0;
   transform: scale(.85);
@@ -84,4 +87,33 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
     color .3s cubic-bezier(.4, 0, .2, 1),
     opacity .15s cubic-bezier(.4, 0, 1, 1),
     transform .15s cubic-bezier(.4, 0, 1, 1);
+}
+
+// 改变宽的动画
+.#{$namespace}-fade-in-width-expand-leave-from, .#{$namespace}-fade-in-width-expand-enter-to {
+  opacity: 1;
+}
+
+.#{$namespace}-fade-in-width-expand-leave-to, .#{$namespace}-fade-in-width-expand-enter-from {
+  opacity: 0!important;
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+
+.#{$namespace}-fade-in-width-expand-leave-active {
+  overflow: hidden;
+  transition:
+    opacity .2s cubic-bezier(.4, 0, .2, 1),
+    max-width .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+    margin-left .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+    margin-right .2s cubic-bezier(.4, 0, .2, 1) 0.1s;
+}
+
+.#{$namespace}-fade-in-width-expand-enter-active {
+  overflow: hidden;
+  transition:
+    opacity .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+    max-width .2s cubic-bezier(.4, 0, .2, 1),
+    margin-left .2s cubic-bezier(.4, 0, .2, 1),
+    margin-right .2s cubic-bezier(.4, 0, .2, 1);
 }
