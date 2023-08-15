@@ -29,7 +29,7 @@ export default defineComponent({
           key={item?.key}
           class={[bem.b(), bem.is("active", active.value)]}
         >
-          {isFunction(item?.label) ? item?.label(details) : item?.label}
+          <div class={bem.e("content")}>{isFunction(item?.label) ? item?.label(details) : item?.label}</div>
         </li>
       );
     };

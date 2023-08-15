@@ -117,3 +117,11 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
     margin-left .2s cubic-bezier(.4, 0, .2, 1),
     margin-right .2s cubic-bezier(.4, 0, .2, 1);
 }
+
+// 改变高的动画
+.#{$namespace}-expand-transition-leave-active,
+.#{$namespace}-expand-transition-enter-active {
+  transition: 0.3s max-height cubic-bezier(.4, 0, .2, 1),
+    0.3s padding-top cubic-bezier(.4, 0, .2, 1),
+    0.3s padding-bottom cubic-bezier(.4, 0, .2, 1);
+}

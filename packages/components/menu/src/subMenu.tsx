@@ -1,6 +1,7 @@
 import { createNamespace, isFunction } from "@yy/utils";
 import { Transition, computed, defineComponent, inject } from "vue";
 import { menuContextKey } from "@yy/tokens";
+import { YExpandTransition } from "@yy/components/expand-transition";
 
 import { type MenuItems, MENU_NODE_INDENT, subMenuProps } from "./props";
 import { itemRenderer } from "./utils";
@@ -36,9 +37,11 @@ export default defineComponent({
           style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
           class={[bem.e("title"), bem.is("active", active.value)]}
         >
-          {item?.icon?.(details)}
-          {labelNode}
-          <i class={[bem.m("arrow", "title"), bem.is("opposite", show.value), bem.is("positive", !show.value)]}></i>
+          <div class={bem.m("content", "title")}>
+            {item?.icon?.(details)}
+            {labelNode}
+            <i class={[bem.m("arrow", "title"), bem.is("opposite", show.value), bem.is("positive", !show.value)]}></i>
+          </div>
         </div>
       );
     };
@@ -48,14 +51,18 @@ export default defineComponent({
 
       const list = item?.[childrenField] as MenuItems[];
       return (
-        <Transition appear>
+        <YExpandTransition>
           <ul v-show={show.value} class={[bem.e("children")]}>
             {list.map((el, index) => {
               el.key = (el?.[keyField] ?? `${item?.key}-${index}`) as string;
-              return itemRenderer(el, { ...props, nodeIndent: nodeIndent + MENU_NODE_INDENT, site: [...site, index] });
+              return itemRenderer(el, {
+                ...props,
+                nodeIndent: nodeIndent + MENU_NODE_INDENT,
+                site: [...site, index],
+              });
             })}
           </ul>
-        </Transition>
+        </YExpandTransition>
       );
     };
 
