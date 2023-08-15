@@ -11,9 +11,5 @@ export const sidebar: DefaultTheme.Sidebar = {
       ]
     }
   ],
-  '/components': [{
-    items: [
-      ...components
-    ]
-  }]
+  '/components': components
 }

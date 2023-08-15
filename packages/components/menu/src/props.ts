@@ -22,9 +22,6 @@ export const commonProps = {
     type: String,
     default: "label",
   },
-} as const;
-
-export const subMenu = {
   /**
    * @description key 的字段名
    */
@@ -32,6 +29,9 @@ export const subMenu = {
     type: String,
     default: "id",
   },
+} as const;
+
+export const subMenu = {
   /**
    * @description children 的字段名
    */

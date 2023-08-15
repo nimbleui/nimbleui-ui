@@ -7,9 +7,10 @@
   --y-menu-text-color: var(--y-color-text);
   --y-menu-font-size: var(--y-font-size);
   --y-menu-bg-color: var(--y-color-bg-container);
-  --y-menu-item-height: 42px;
+  --y-menu-item-height: 40px;
   --y-menu-hover-bg-color: var(--y-color-primary-1);
-  --y-menu-active-bg-color: var(--y-color-primary);
+  --y-menu-active-bg-color: var(--y-color-primary-1);
+  --y-menu-active-text-color: var(--y-color-primary);
   --y-menu-active-sub-color: var(--y-color-primary);
 }
 
@@ -30,6 +31,7 @@
   @include e(title) {
     position: relative;
     display: flex;
+    margin-top: 8px;
     padding-right: 15px;
     height: var(--y-menu-item-height);
     cursor: pointer;
@@ -76,6 +78,7 @@
   cursor: pointer;
   box-sizing: border-box;
   list-style: none;
+  margin-top: 8px;
 
   &:hover {
     &::before{
@@ -98,16 +101,15 @@
   }
 
   @include when(active) {
-    color: #fff;
+    color: var(--y-menu-active-text-color);
 
     &::before{
       content: "";
-      background-color: var(--y-menu-active-bg-color);
       position: absolute;
       inset: 0 8px;
       pointer-events: none;
       border-radius: 5px;
-      transition: background-color .3s cubic-bezier(.4, 0, .2, 1);
+      background-color: var(--y-menu-active-bg-color);
     }
   }
 }

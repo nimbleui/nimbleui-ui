@@ -1,5 +1,5 @@
 import { createNamespace, isFunction } from "@yy/utils";
-import { Transition, computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { menuContextKey } from "@yy/tokens";
 import { YExpandTransition } from "@yy/components/expand-transition";
 
@@ -47,14 +47,13 @@ export default defineComponent({
     };
 
     const createSubmenuChildren = () => {
-      const { item, childrenField, keyField, nodeIndent = 0, site = [] } = props;
+      const { item, childrenField, nodeIndent = 0, site = [] } = props;
 
       const list = item?.[childrenField] as MenuItems[];
       return (
         <YExpandTransition>
           <ul v-show={show.value} class={[bem.e("children")]}>
             {list.map((el, index) => {
-              el.key = (el?.[keyField] ?? `${item?.key}-${index}`) as string;
               return itemRenderer(el, {
                 ...props,
                 nodeIndent: nodeIndent + MENU_NODE_INDENT,
@@ -67,9 +66,10 @@ export default defineComponent({
     };
 
     return () => {
-      const { item } = props;
+      const { item, keyField, site } = props;
+      const key = (item?.[keyField] || `m-${site.join("-")}`) as string;
       return (
-        <li class={bem.b()} key={item?.key}>
+        <li class={bem.b()} key={key}>
           {createSubmenuItem()}
           {createSubmenuChildren()}
         </li>

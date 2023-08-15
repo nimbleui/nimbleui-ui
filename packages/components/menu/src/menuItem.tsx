@@ -21,15 +21,17 @@ export default defineComponent({
     };
 
     return () => {
-      const { item, details, nodeIndent = 0 } = props;
+      const { item, details, nodeIndent = 0, keyField, site, labelField } = props;
+      const key = (item?.[keyField] || `m-${site.join("-")}`) as string;
+      const label = item?.[labelField];
       return (
         <li
           onClick={onClick}
           style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
-          key={item?.key}
+          key={key}
           class={[bem.b(), bem.is("active", active.value)]}
         >
-          <div class={bem.e("content")}>{isFunction(item?.label) ? item?.label(details) : item?.label}</div>
+          <div class={bem.e("content")}>{isFunction(label) ? label(details) : label}</div>
         </li>
       );
     };

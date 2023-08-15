@@ -38,11 +38,10 @@ export default defineComponent({
     });
 
     return () => {
-      const { keyField, items } = props;
+      const { items } = props;
       return (
         <ul class={bem.b()}>
           {items?.map((item, index) => {
-            item.key = (item[keyField] ?? `m-${index}`) as string;
             return itemRenderer(item, { ...props, site: [index] });
           })}
         </ul>

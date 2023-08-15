@@ -8,7 +8,7 @@ const theme: Theme = {
   enhanceApp ({ app }) {
     app.use(YUI, {
       theme: {
-        primary: '#18a058'
+        primary: '#1677ff'
       }
     })
   }

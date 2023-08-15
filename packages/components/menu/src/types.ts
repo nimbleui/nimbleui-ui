@@ -18,6 +18,12 @@ const menuProps = mergeCommonProp({
   accordion: {
     type: Boolean as PropType<boolean>,
   },
+  /**
+   * @description 菜单是否折叠
+   */
+  collapsed: {
+    type: Boolean as PropType<boolean>,
+  },
 });
 
 export default menuProps;
