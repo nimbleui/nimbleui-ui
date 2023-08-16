@@ -1,7 +1,5 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes, HTMLAttributes, PropType, VNode } from "vue";
-
-export const MENU_NODE_INDENT = 24;
+import { ExtractPropTypes, HTMLAttributes, PropType, Slot, Slots, VNode } from "vue";
 
 export interface MenuItems {
   key?: string | number;
@@ -28,6 +26,13 @@ export const commonProps = {
   keyField: {
     type: String,
     default: "id",
+  },
+  /**
+   * @description 菜单每级的缩进
+   */
+  indent: {
+    type: Number,
+    default: 24,
   },
 } as const;
 
@@ -74,12 +79,26 @@ export const subMenuProps = mergeCommonProp({
   ...subMenu,
   ...commonProps,
   ...itemProps,
-});
+  /**
+   * @description 插槽
+   */
+  slots: {
+    type: Object as PropType<Slots>,
+    required: true,
+  },
+} as const);
 
 export type SubMenuProps = ExtractPropTypes<ReturnType<typeof subMenuProps>>;
 
 export const menuItemProps = mergeCommonProp({
   ...commonProps,
   ...itemProps,
-});
+  /**
+   * @description 插槽
+   */
+  slots: {
+    type: Object as PropType<Slots>,
+    required: true,
+  },
+} as const);
 export type MenuItemProps = ExtractPropTypes<ReturnType<typeof menuItemProps>>;

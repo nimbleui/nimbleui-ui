@@ -42,7 +42,7 @@ export default defineComponent({
       return (
         <ul class={bem.b()}>
           {items?.map((item, index) => {
-            return itemRenderer(item, { ...props, site: [index] });
+            return itemRenderer(item, { ...props, site: [index], slots: ctx.slots });
           })}
         </ul>
       );

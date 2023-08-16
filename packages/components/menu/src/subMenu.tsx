@@ -3,7 +3,7 @@ import { computed, defineComponent, inject } from "vue";
 import { menuContextKey } from "@yy/tokens";
 import { YExpandTransition } from "@yy/components/expand-transition";
 
-import { type MenuItems, MENU_NODE_INDENT, subMenuProps } from "./props";
+import { type MenuItems, subMenuProps } from "./props";
 import { itemRenderer } from "./utils";
 
 export default defineComponent({
@@ -27,19 +27,25 @@ export default defineComponent({
     };
 
     const createSubmenuItem = () => {
-      const { item, labelField, details, nodeIndent = 0 } = props;
+      const { item, labelField, details, nodeIndent = 0, indent, slots } = props;
       const label = item?.[labelField];
       const labelNode = isFunction(label) ? label(details) : label;
 
       return (
         <div
           onClick={onClick}
-          style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
+          style={{ paddingLeft: `${nodeIndent + indent}px` }}
           class={[bem.e("title"), bem.is("active", active.value)]}
         >
           <div class={bem.m("content", "title")}>
-            {item?.icon?.(details)}
-            {labelNode}
+            {slots.sub ? (
+              slots.sub({ item, open: show.value, active: active.value })
+            ) : (
+              <>
+                {item?.icon?.(details)}
+                {labelNode}
+              </>
+            )}
             <i class={[bem.m("arrow", "title"), bem.is("opposite", show.value), bem.is("positive", !show.value)]}></i>
           </div>
         </div>
@@ -47,7 +53,7 @@ export default defineComponent({
     };
 
     const createSubmenuChildren = () => {
-      const { item, childrenField, nodeIndent = 0, site = [] } = props;
+      const { item, childrenField, nodeIndent = 0, site = [], indent, slots } = props;
 
       const list = item?.[childrenField] as MenuItems[];
       return (
@@ -56,7 +62,8 @@ export default defineComponent({
             {list.map((el, index) => {
               return itemRenderer(el, {
                 ...props,
-                nodeIndent: nodeIndent + MENU_NODE_INDENT,
+                slots,
+                nodeIndent: nodeIndent + indent,
                 site: [...site, index],
               });
             })}

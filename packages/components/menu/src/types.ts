@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { subMenu, commonProps, type MenuItems } from "./props";
 
 export { MenuItems };
@@ -23,6 +23,12 @@ const menuProps = mergeCommonProp({
    */
   collapsed: {
     type: Boolean as PropType<boolean>,
+  },
+  /**
+   * @description 批量处理菜单标签渲染
+   */
+  renderLabel: {
+    type: Function as PropType<(item: MenuItems) => VNodeChild>,
   },
 });
 

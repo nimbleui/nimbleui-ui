@@ -1,7 +1,7 @@
 import { createNamespace, isFunction } from "@yy/utils";
 import { computed, defineComponent, inject } from "vue";
 
-import { MENU_NODE_INDENT, menuItemProps } from "./props";
+import { menuItemProps } from "./props";
 import { menuContextKey } from "@yy/tokens";
 
 export default defineComponent({
@@ -21,17 +21,19 @@ export default defineComponent({
     };
 
     return () => {
-      const { item, details, nodeIndent = 0, keyField, site, labelField } = props;
+      const { item, details, nodeIndent = 0, keyField, site, labelField, indent, slots } = props;
       const key = (item?.[keyField] || `m-${site.join("-")}`) as string;
       const label = item?.[labelField];
       return (
         <li
-          onClick={onClick}
-          style={{ paddingLeft: `${nodeIndent + MENU_NODE_INDENT}px` }}
           key={key}
+          onClick={onClick}
+          style={{ paddingLeft: `${nodeIndent + indent}px` }}
           class={[bem.b(), bem.is("active", active.value)]}
         >
-          <div class={bem.e("content")}>{isFunction(label) ? label(details) : label}</div>
+          <div class={bem.e("content")}>
+            {slots.item ? slots.item({ item, active: active.value }) : isFunction(label) ? label(details) : label}
+          </div>
         </li>
       );
     };
