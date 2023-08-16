@@ -77,8 +77,8 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
     box-shadow .3s cubic-bezier(.4, 0, .2, 1),
     background-color .3s cubic-bezier(.4, 0, .2, 1),
     color .3s cubic-bezier(.4, 0, .2, 1),
-    opacity .15s var(--n-bezier-ease-out),
-    transform .15s var(--n-bezier-ease-out);
+    opacity .15s cubic-bezier(0, 0, .2, 1),
+    transform .15s cubic-bezier(0, 0, .2, 1);
 }
 .#{$namespace}-popover-transition-leave-active {
   transition:
@@ -119,9 +119,23 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
 }
 
 // 改变高的动画
-.#{$namespace}-expand-transition-leave-active,
+.#{$namespace}-expand-transition-leave-from, .#{$namespace}-expand-transition-enter-to {
+  opacity: 1
+}
+.#{$namespace}-expand-transition-enter-from, .#{$namespace}-expand-transition-leave-to {
+  opacity: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.#{$namespace}-expand-transition-leave-active {
+  transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
+    opacity 0.2s cubic-bezier(0, 0, .2, 1),
+    margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
+    margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+}
 .#{$namespace}-expand-transition-enter-active {
-  transition: 0.3s max-height cubic-bezier(.4, 0, .2, 1),
-    0.3s padding-top cubic-bezier(.4, 0, .2, 1),
-    0.3s padding-bottom cubic-bezier(.4, 0, .2, 1);
+  transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
+    opacity 0.2s cubic-bezier(0, 0, .2, 1),
+    margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
+    margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
 }

@@ -8,12 +8,11 @@ export default defineComponent({
   props: expandTransitionProps(),
   setup(props, ctx) {
     const bem = createNamespace("expand-transition");
-
+    const dataset = {} as any;
     const handleBeforeEnter = (element: Element) => {
       const el = element as HTMLElement;
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
-
+      dataset.oldPaddingTop = el.style.paddingTop;
+      dataset.oldPaddingBottom = el.style.paddingBottom;
       el.style.maxHeight = "0px";
       el.style.paddingTop = "0px";
       el.style.paddingBottom = "0px";
@@ -21,16 +20,15 @@ export default defineComponent({
 
     const handleEnter = (element: Element) => {
       const el = element as HTMLElement;
-      el.dataset.oldOverflow = el.style.overflow;
-
+      dataset.oldOverflow = el.style.overflow;
       if (el.scrollHeight !== 0) {
         el.style.maxHeight = `${el.scrollHeight}px`;
-        el.style.paddingTop = el.dataset.oldPaddingTop || "";
-        el.style.paddingBottom = el.dataset.oldPaddingBottom || "";
+        el.style.paddingTop = dataset.oldPaddingTop || "";
+        el.style.paddingBottom = dataset.oldPaddingBottom || "";
       } else {
         el.style.maxHeight = "0px";
-        el.style.paddingTop = el.dataset.oldPaddingTop || "";
-        el.style.paddingBottom = el.dataset.oldPaddingBottom || "";
+        el.style.paddingTop = dataset.oldPaddingTop || "";
+        el.style.paddingBottom = dataset.oldPaddingBottom || "";
       }
 
       el.style.overflow = "hidden";
@@ -39,14 +37,14 @@ export default defineComponent({
     const handleAfterEnter = (element: Element) => {
       const el = element as HTMLElement;
       el.style.maxHeight = "";
-      el.style.overflow = el.dataset.oldOverflow || "";
+      el.style.overflow = dataset.oldOverflow || "";
     };
 
     const handleBeforeLeave = (element: Element) => {
       const el = element as HTMLElement;
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
-      el.dataset.oldOverflow = el.style.overflow;
+      dataset.oldPaddingTop = el.style.paddingTop;
+      dataset.oldPaddingBottom = el.style.paddingBottom;
+      dataset.oldOverflow = el.style.overflow;
 
       el.style.maxHeight = `${el.scrollHeight}px`;
       el.style.overflow = "hidden";
@@ -64,9 +62,9 @@ export default defineComponent({
     const onAfterLeave = (element: Element) => {
       const el = element as HTMLElement;
       el.style.maxHeight = "";
-      el.style.overflow = el.dataset.oldOverflow || "";
-      el.style.paddingTop = el.dataset.oldPaddingTop || "";
-      el.style.paddingBottom = el.dataset.oldPaddingBottom || "";
+      el.style.overflow = dataset.oldOverflow || "";
+      el.style.paddingTop = dataset.oldPaddingTop || "";
+      el.style.paddingBottom = dataset.oldPaddingBottom || "";
     };
 
     return () => {

@@ -8,3 +8,4 @@ export * from "./src/object";
 export * from "./src/event";
 export * from "./src/array";
 export * from "./src/scroll";
+export * from "./src/style";

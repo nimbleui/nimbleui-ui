@@ -15,3 +15,7 @@ export const removeClass = (el: Element, cls: string) => {
   if (!el || !cls.trim()) return;
   el.classList.remove(...classNameToArray(cls));
 };
+
+export const getComputedStyle = (el: HTMLElement, key: keyof CSSStyleDeclaration) => {
+  return document.defaultView?.getComputedStyle(el, null)[key];
+};
