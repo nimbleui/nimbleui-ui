@@ -11,7 +11,7 @@ export interface OptionsProps extends GlobalConfigContext {
 }
 
 export const makeInstaller = (components: Plugin[] = []) => {
-  const install = (app: App, options: OptionsProps = {}) => {
+  const install = (app: App, options: OptionsProps = {}): void => {
     components.forEach((c) => app.use(c));
     const { theme, isDark, ...other } = options;
     // 设置主题颜色

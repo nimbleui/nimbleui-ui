@@ -15,24 +15,52 @@
       </div>
     </YHeader>
     <YSidebar>
-      <YMenu children-field="items" label-field="text" :items="items" />
+      <YMenu all-open :indent="16" children-field="items" label-field="text" :items="items">
+        <template #item="{ item }">{{ item.text }}</template>
+      </YMenu>
     </YSidebar>
+    <RouterView></RouterView>
   </YLayout>
 </template>
 
 <script setup lang="tsx">
-import { ref, computed } from "vue";
-import { useTheme, type MenuItems } from "yy-ui";
-import { useData } from "vitepress";
+import { ref, reactive } from "vue";
+import { MenuItems, useTheme } from "yy-ui";
 
-const { site } = useData();
 const isDark = ref(false);
 const toggleTheme = () => {
   isDark.value = !isDark.value;
   useTheme({}, isDark.value ? "dark" : "light");
 };
-console.log(site.value.themeConfig.sidebar);
-const items = computed(() => site.value.themeConfig.sidebar["/components"]);
+
+const items = reactive<MenuItems[]>([
+  {
+    text: "通用组件",
+    items: [
+      {
+        text: "Button 按钮",
+        link: "/button",
+      },
+      {
+        text: "Button 按钮",
+        link: "",
+      },
+    ],
+  },
+  {
+    text: "数据录入组件",
+    items: [
+      {
+        text: "Form 表单",
+        link: "/form",
+      },
+      {
+        text: "Input 文本输入",
+        link: "/input",
+      },
+    ],
+  },
+]);
 </script>
 <style lang="scss">
 * {

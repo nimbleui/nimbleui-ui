@@ -10,7 +10,7 @@
   "scripts": {
     "theme:prod": "lerna run --scope @yy/theme build",
     "theme:dev": "lerna run --scope @yy/theme dev",
-    "docs:dev": "lerna run --scope @yy/docs docs:dev",
+    "docs:dev": "lerna run --scope @yy/docs dev",
     "build": "lerna run --scope @yy/build build",
     "cli": "yy-cli"
   },

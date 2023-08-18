@@ -1,18 +1,15 @@
-import { defineConfig } from "vite";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import VueMacros from "unplugin-vue-macros";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from "@vitejs/plugin-vue-jsx"
+import { markedTransformDemo } from "./build/vite-plugin-md-transform-demo"
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    VueMacros.vite({
-      setupComponent: false,
-      setupSFC: false,
-      plugins: {
-        vueJsx: vueJsx(),
-      },
-    }),
+    markedTransformDemo(),
+    vue({
+      include: [/\.vue$/, /\.md$/]
+    }), 
+    vueJsx(),
   ],
-  server: {
-    port: 3100,
-  },
-});
+})
