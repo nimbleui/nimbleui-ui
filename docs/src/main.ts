@@ -7,8 +7,8 @@ import App from "./App.vue";
 import ComponentDemos from "./components/componentDemos.vue";
 
 createApp(App)
-  .use(router)
   .use(YYUi)
+  .use(router)
   .use((app) => {
     app.component("ComponentDemos", ComponentDemos);
   })

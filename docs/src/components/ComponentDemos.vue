@@ -5,11 +5,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import { YButton } from '@nimble-ui/vue';
-</script>
+<script lang="ts"></script>
 
-<style  lang="scss" scoped>
-
- 
-</style>
+<style lang="scss" scoped></style>

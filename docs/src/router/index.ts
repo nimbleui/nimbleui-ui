@@ -1,13 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
+import routers from "./routers";
+console.log(routers);
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
-      path: "/button",
-      component: () => import("../pages/index.page.md")
-    }
-  ]
-})
+  routes: routers,
+});
 
-export default router
+export default router;

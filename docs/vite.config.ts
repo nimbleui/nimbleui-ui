@@ -1,15 +1,15 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from "@vitejs/plugin-vue-jsx"
-import { markedTransformDemo } from "./build/vite-plugin-md-transform-demo"
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+import { markedTransformDemo } from "./build/vite-plugin-md-transform-demo";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     markedTransformDemo(),
     vue({
-      include: [/\.vue$/, /\.md$/]
-    }), 
+      include: [/\.vue$/, /\.md$/],
+    }),
     vueJsx(),
   ],
-})
+});
