@@ -15,15 +15,11 @@ const menuProps = mergeCommonProp({
   /**
    * @description 是否使用手风琴模式
    */
-  accordion: {
-    type: Boolean as PropType<boolean>,
-  },
+  accordion: Boolean as PropType<boolean>,
   /**
    * @description 菜单是否折叠
    */
-  collapsed: {
-    type: Boolean as PropType<boolean>,
-  },
+  collapsed: Boolean as PropType<boolean>,
   /**
    * @description 批量处理菜单标签渲染
    */

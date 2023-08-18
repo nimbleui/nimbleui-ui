@@ -1,5 +1,5 @@
 import { createNamespace, isFunction } from "@yy/utils";
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject, ref, watch } from "vue";
 import { menuContextKey } from "@yy/tokens";
 import { YExpandTransition } from "@yy/components/expand-transition";
 
@@ -18,13 +18,19 @@ export default defineComponent({
       const value = menuContext?.activeSite.slice(0, len);
       return value?.join("") === props.site.join("");
     });
-    const show = computed(() => {
-      return menuContext?.selectSite.includes(props.site.join("-"));
-    });
+    const show = ref(props.allOpen ?? false);
+
+    if (menuContext?.selectSite) {
+      watch(menuContext.selectSite, () => {
+        show.value = menuContext?.selectSite.includes(props.site.join("-"));
+      });
+    }
 
     const onClick = () => {
       menuContext?.onClick("sub", props.site);
     };
+    // 如果是默认全部打开，要保存位置
+    if (props.allOpen) onClick();
 
     const createSubmenuItem = () => {
       const { item, labelField, details, nodeIndent = 0, indent, slots } = props;

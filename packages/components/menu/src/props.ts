@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes, HTMLAttributes, PropType, Slot, Slots, VNode } from "vue";
+import { ExtractPropTypes, HTMLAttributes, PropType, Slots, VNode } from "vue";
 
 export interface MenuItems {
   key?: string | number;
@@ -51,6 +51,10 @@ export const subMenu = {
     type: String as PropType<"vertical" | "horizontal">,
     default: "vertical",
   },
+  /**
+   * @description 是否展开全部菜单
+   */
+  allOpen: Boolean as PropType<boolean>,
 } as const;
 
 const itemProps = {
