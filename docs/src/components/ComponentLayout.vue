@@ -14,7 +14,7 @@
         </template>
       </YMenu>
     </YSidebar>
-    <YLayout>
+    <YLayout style="flex: 1; margin-left: 10px">
       <RouterView />
     </YLayout>
   </YLayout>

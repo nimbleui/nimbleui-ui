@@ -15,6 +15,7 @@
   background-color: var(--y-layout-bg-color);
   position: relative;
   box-sizing: border-box;
+  font-size: var(--y-layout-font-size);
 
   @include when(absolute) {
     position: absolute;
