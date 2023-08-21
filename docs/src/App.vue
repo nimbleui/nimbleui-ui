@@ -23,7 +23,7 @@
   </YLayout>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { ref, reactive } from "vue";
 import { MenuItems, useTheme } from "yy-ui";
 

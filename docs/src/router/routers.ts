@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const modules = import.meta.glob("../../../packages/components/**/*page.md");
+const modules = import.meta.glob("../../../packages/components/**/*.page.md");
 
 const keys = Object.keys(modules);
 

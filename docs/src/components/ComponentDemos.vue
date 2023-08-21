@@ -1,10 +1,13 @@
 <template>
   <div class="component-demos">
-    <YButton>222</YButton>
+    <YButton v-show="show">222</YButton>
     <slot />
   </div>
 </template>
 
-<script lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+const show = ref(true);
+</script>
 
 <style lang="scss" scoped></style>
