@@ -1,16 +1,11 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class=""></div>
+  <div class="flex">
+    <YButton>Default</YButton>
+    <YButton :type="'primary'">Primary</YButton>
+    <YButton :type="'info'">Info</YButton>
+    <YButton :type="'success'">Success</YButton>
+    <YButton :type="'warning'">Warning</YButton>
+    <YButton :type="'error'">Error</YButton>
+  </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "BasisDemo",
-  setup() {
-    return {};
-  },
-});
-</script>
-
-<style lang="scss" scoped></style>

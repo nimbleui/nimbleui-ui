@@ -1,14 +1,19 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 
 const layoutProps = mergeCommonProp({
-  // 这是参数模板
   /**
-   * @description 总列数
+   * @description 是否固定头部
    */
-  column: {
-    type: Number,
-    default: 0,
+  position: {
+    type: String as PropType<"static" | "absolute">,
+    default: "static",
+  },
+  /**
+   * @description 组件内部是否有边栏
+   */
+  hasSidebar: {
+    type: Boolean,
   },
 });
 

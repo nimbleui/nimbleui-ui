@@ -1,7 +1,7 @@
 import type { InjectionKey, ComputedRef } from "vue";
 import type { Fun } from "@yy/utils";
 
-export type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "danger" | "dashed";
+export type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "error" | "dashed";
 
 export type ButtonShape = "default" | "circle" | "round";
 export type ButtonSize = "large" | "default" | "small";

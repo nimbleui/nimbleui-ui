@@ -10,7 +10,12 @@ export default defineComponent({
     const bem = createNamespace("layout");
 
     return () => {
-      return <div class={bem.b()}>{ctx.slots.default?.()}</div>;
+      const { position, hasSidebar } = props;
+      return (
+        <div class={[bem.b(), bem.is("absolute", position === "absolute"), bem.is("sidebar", hasSidebar)]}>
+          {ctx.slots.default?.()}
+        </div>
+      );
     };
   },
 });

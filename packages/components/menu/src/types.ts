@@ -26,6 +26,12 @@ const menuProps = mergeCommonProp({
   renderLabel: {
     type: Function as PropType<(item: MenuItems) => VNodeChild>,
   },
+  /**
+   * @description 选中菜单的Key
+   */
+  modelValue: {
+    type: [String, Number, Symbol],
+  },
 });
 
 export default menuProps;

@@ -15,7 +15,7 @@ export default keys.map((key) => {
   const name = camelCase(list[len - 1].split(".")[0]);
   const route = {
     name,
-    path: `/component/${name}`,
+    path: `${name}`,
     component: modules[key],
   };
   return route as unknown as RouteRecordRaw;

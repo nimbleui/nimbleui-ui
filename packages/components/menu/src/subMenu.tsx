@@ -20,9 +20,15 @@ export default defineComponent({
     });
     const show = ref(props.allOpen ?? false);
 
-    if (menuContext?.selectSite) {
-      watch(menuContext.selectSite, () => {
-        show.value = menuContext?.selectSite.includes(props.site.join("-"));
+    if (menuContext) {
+      const str = props.site.join("-");
+      watch(menuContext.selectSite, (val) => {
+        show.value = val.includes(str);
+      });
+      watch(menuContext.activeSite, (val) => {
+        const len = props.site.length;
+        const value = val.slice(0, len);
+        show.value = value.join("-") == str;
       });
     }
 

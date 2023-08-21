@@ -1,5 +1,5 @@
 import { createNamespace } from "@yy/utils";
-import { defineComponent, provide, reactive } from "vue";
+import { computed, defineComponent, provide, reactive, ref } from "vue";
 import { menuContextKey } from "@yy/tokens";
 
 import menuProps from "./types";
@@ -8,10 +8,12 @@ import { itemRenderer } from "./utils";
 export default defineComponent({
   name: "YMenu",
   props: menuProps(),
+  emits: ["update:modelValue"],
   setup(props, ctx) {
     const bem = createNamespace("menu");
     const selectSite = reactive<string[]>([]);
     const activeSite = reactive<number[]>([]);
+    const activeKey = computed(() => props.modelValue);
 
     const clickSub = (site: number[]) => {
       const value = site.join("-");
@@ -27,10 +29,13 @@ export default defineComponent({
     provide(menuContextKey, {
       selectSite,
       activeSite,
-      onClick(type, site) {
+      activeKey,
+      onClick(type, site, key) {
         if (type === "item") {
           activeSite.length = 0;
           activeSite.push(...site);
+          // 更新选择的key
+          if (key) ctx.emit("update:modelValue", key);
         } else {
           clickSub(site);
         }

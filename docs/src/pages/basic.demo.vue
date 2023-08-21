@@ -1,9 +1,13 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="">
+  <div v-show="show" class="">
     <YButton>测试</YButton>
   </div>
 </template>
 
-<script lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+const show = ref(true);
+</script>
 
 <style lang="scss" scoped></style>

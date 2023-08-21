@@ -1,5 +1,5 @@
 import { createNamespace, isFunction } from "@yy/utils";
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject, watch } from "vue";
 
 import { menuItemProps } from "./props";
 import { menuContextKey } from "@yy/tokens";
@@ -17,8 +17,22 @@ export default defineComponent({
     });
 
     const onClick = () => {
-      menuContext?.onClick("item", props.site);
+      const { item, site, keyField } = props;
+      menuContext?.onClick("item", site, item?.[keyField] as number | string | symbol);
     };
+
+    if (menuContext?.activeKey) {
+      watch(
+        menuContext.activeKey,
+        (val) => {
+          const { item, site, keyField } = props;
+          if (item?.[keyField] == val) {
+            menuContext?.onClick("item", site);
+          }
+        },
+        { immediate: true }
+      );
+    }
 
     return () => {
       const { item, details, nodeIndent = 0, keyField, site, labelField, indent, slots } = props;
