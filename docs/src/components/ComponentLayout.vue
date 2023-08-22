@@ -9,8 +9,8 @@
         label-field="text"
         children-field="items"
       >
-        <template #item="{ item }">
-          <RouterLink :to="item.link">{{ item.text }}</RouterLink>
+        <template #item="{ item, active }">
+          <RouterLink :class="{ active }" :to="item.link">{{ item.text }}</RouterLink>
         </template>
       </YMenu>
     </YSidebar>
@@ -54,3 +54,14 @@ const items = reactive<MenuItems[]>([
   },
 ]);
 </script>
+
+<style lang="scss">
+a {
+  outline: none;
+  text-decoration: none;
+  color: var(--y-color-text);
+  &.active {
+    color: var(--y-color-primary);
+  }
+}
+</style>

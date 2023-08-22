@@ -27,8 +27,9 @@ export default defineComponent({
       });
       watch(menuContext.activeSite, (val) => {
         const len = props.site.length;
-        const value = val.slice(0, len);
-        show.value = value.join("-") == str;
+        const value = val.slice(0, len).join("-") == str;
+
+        value && (show.value = value);
       });
     }
 

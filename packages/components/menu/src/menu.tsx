@@ -13,7 +13,8 @@ export default defineComponent({
     const bem = createNamespace("menu");
     const selectSite = reactive<string[]>([]);
     const activeSite = reactive<number[]>([]);
-    const activeKey = computed(() => props.modelValue);
+    const selectKey = ref<string | number | symbol>();
+    const activeKey = computed(() => props.modelValue || selectKey.value);
 
     const clickSub = (site: number[]) => {
       const value = site.join("-");
@@ -35,7 +36,10 @@ export default defineComponent({
           activeSite.length = 0;
           activeSite.push(...site);
           // 更新选择的key
-          if (key) ctx.emit("update:modelValue", key);
+          if (key) {
+            selectKey.value = key;
+            ctx.emit("update:modelValue", key);
+          }
         } else {
           clickSub(site);
         }

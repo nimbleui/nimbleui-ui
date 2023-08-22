@@ -13,7 +13,8 @@ export default defineComponent({
     const menuContext = inject(menuContextKey, undefined);
 
     const active = computed(() => {
-      return menuContext?.activeSite?.join("") === props.site.join("");
+      const { site, keyField, item } = props;
+      return menuContext?.activeSite?.join("") === site.join("") && item?.[keyField] === menuContext.activeKey.value;
     });
 
     const onClick = () => {
