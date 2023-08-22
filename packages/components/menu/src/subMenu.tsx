@@ -34,10 +34,10 @@ export default defineComponent({
     }
 
     const onClick = () => {
-      menuContext?.onClick("sub", props.site);
+      menuContext?.onSubClick(props.site, props.item);
     };
     // 如果是默认全部打开，要保存位置
-    if (props.allOpen) onClick();
+    if (props.allOpen) menuContext?.onSubClick(props.site, props.item, true);
 
     const createSubmenuItem = () => {
       const { item, labelField, details, nodeIndent = 0, indent, slots } = props;

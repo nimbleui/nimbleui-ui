@@ -2,7 +2,8 @@ import type { ComputedRef, InjectionKey } from "vue";
 
 type KeyType = string | number | symbol | undefined;
 interface MenuContext {
-  onClick: (type: "item" | "sub", site: number[], key?: KeyType) => void;
+  onItemClick: (site: number[], item: any, key?: KeyType) => void;
+  onSubClick: (site: number[], item: any, isAllOpen?: boolean) => void;
   selectSite: Array<string>;
   activeSite: Array<number>;
   activeKey: ComputedRef<KeyType>;

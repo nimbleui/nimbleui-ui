@@ -19,7 +19,7 @@ export default defineComponent({
 
     const onClick = () => {
       const { item, site, keyField } = props;
-      menuContext?.onClick("item", site, item?.[keyField] as number | string | symbol);
+      menuContext?.onItemClick(site, item, item?.[keyField] as number | string | symbol);
     };
 
     if (menuContext?.activeKey) {
@@ -28,7 +28,7 @@ export default defineComponent({
         (val) => {
           const { item, site, keyField } = props;
           if (item?.[keyField] == val) {
-            menuContext?.onClick("item", site);
+            menuContext?.onItemClick(site, item);
           }
         },
         { immediate: true }

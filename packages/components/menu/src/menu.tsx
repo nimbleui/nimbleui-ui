@@ -8,7 +8,7 @@ import { itemRenderer } from "./utils";
 export default defineComponent({
   name: "YMenu",
   props: menuProps(),
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "select", "openChange"],
   setup(props, ctx) {
     const bem = createNamespace("menu");
     const selectSite = reactive<string[]>([]);
@@ -16,7 +16,7 @@ export default defineComponent({
     const selectKey = ref<string | number | symbol>();
     const activeKey = computed(() => props.modelValue || selectKey.value);
 
-    const clickSub = (site: number[]) => {
+    const onSubClick = (site: number[], item: any, isAllOpen?: boolean) => {
       const value = site.join("-");
       const index = selectSite.indexOf(value);
       if (index > -1) {
@@ -25,23 +25,22 @@ export default defineComponent({
         props.accordion && (selectSite.length = 0);
         selectSite.push(site.join("-"));
       }
+      !isAllOpen && ctx.emit("openChange", index === -1, item);
     };
 
     provide(menuContextKey, {
       selectSite,
       activeSite,
       activeKey,
-      onClick(type, site, key) {
-        if (type === "item") {
-          activeSite.length = 0;
-          activeSite.push(...site);
-          // 更新选择的key
-          if (key) {
-            selectKey.value = key;
-            ctx.emit("update:modelValue", key);
-          }
-        } else {
-          clickSub(site);
+      onSubClick,
+      onItemClick(site, item, key) {
+        activeSite.length = 0;
+        activeSite.push(...site);
+        ctx.emit("select", item);
+        // 更新选择的key
+        if (key) {
+          selectKey.value = key;
+          ctx.emit("update:modelValue", key);
         }
       },
     });
