@@ -49,7 +49,7 @@ export default defineComponent({
           elementRef.value = el;
         },
         unmounted() {
-          tooltipContext?.setRef(null);
+          tooltipContext?.setRef(null as any);
           elementRef.value = undefined;
         },
       };

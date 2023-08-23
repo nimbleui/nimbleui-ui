@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref } from "vue";
 
-type RefSetter = <T>(el: T) => void;
+type RefSetter = <T extends HTMLElement>(el: T) => void;
 
 export type RectInfo = {
   width: number;

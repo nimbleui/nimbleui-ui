@@ -2,14 +2,21 @@
 
 $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
 
-.#{$namespace}-fade-in-enter-active,
+.#{$namespace}-fade-in-enter-active {
+  transition: all 0.3s cubic-bezier(.4, 0, 1, 1);
+}
 .#{$namespace}-fade-in-leave-active {
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.3s cubic-bezier(0, 0, .2, 1);
 }
 
 .#{$namespace}-fade-in-enter-from,
-.#{$namespace}-fade-in-leave-active {
+.#{$namespace}-fade-in-leave-to {
   opacity: 0;
+}
+
+.#{$namespace}-fade-in-leave-from,
+.#{$namespace}-fade-in-enter-to {
+  opacity: 1;
 }
 
 .#{$namespace}-zoom-in-top-enter-active,

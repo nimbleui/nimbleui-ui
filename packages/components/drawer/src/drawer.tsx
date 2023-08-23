@@ -62,11 +62,11 @@ export default defineComponent({
 
       return (
         <>
-          {modal ? <YOverlay onClick={onClose} show={modelValue} /> : null}
+          {modal ? <YOverlay duration={0.2} onClick={onClose} show={modelValue} /> : null}
           <Teleport to="body">
             <Transition
               appear
-              name="y-drawer-fade"
+              name={bem.name("drawer-fade")}
               onAfterEnter={afterEnter}
               onAfterLeave={afterLeave}
               v-slots={{ default: renderContent }}
