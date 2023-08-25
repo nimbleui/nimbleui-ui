@@ -3,13 +3,12 @@
 @use "./mixins/config.scss" as *;
 
 @include b(overlay) {
-  --y-overlay-z-index: 999;
   --y-overlay-background: rgb(0 0 0 / 30%);
 
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--y-overlay-z-index);
+  z-index: auto;
   width: 100%;
   height: 100%;
   background: var(--y-overlay-background);

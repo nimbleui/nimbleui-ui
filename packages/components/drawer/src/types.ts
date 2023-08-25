@@ -25,7 +25,7 @@ const drawerProps = mergeCommonProp({
    */
   size: {
     type: [String, Number],
-    default: "35%",
+    default: "30%",
   },
   /**
    * @description 关闭前的回调

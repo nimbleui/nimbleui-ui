@@ -7,9 +7,9 @@
           <YInput placeholder="输入关键字搜索..." />
         </div>
         <div class="header-content__menu">
-          <span>首页</span>
-          <span>文档</span>
-          <span>组件</span>
+          <span @click="goPage('/home')">首页</span>
+          <span @click="goPage('/docs')">文档</span>
+          <span @click="goPage('/component/button')">组件</span>
           <span @click="toggleTheme">{{ isDark ? "浅色" : "深色" }}</span>
         </div>
       </div>
@@ -21,6 +21,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useTheme } from "yy-ui";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const goPage = (path: string) => router.push(path);
 
 const isDark = ref(false);
 const toggleTheme = () => {

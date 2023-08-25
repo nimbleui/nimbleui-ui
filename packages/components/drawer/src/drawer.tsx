@@ -1,7 +1,7 @@
 import { CSSProperties, Transition, computed, defineComponent, Teleport } from "vue";
 import { createNamespace, isString } from "@yy/utils";
 import { YOverlay } from "@yy/components/overlay";
-import { useLazyRender } from "@yy/hooks";
+import { useLazyRender, useCreateIndex } from "@yy/hooks";
 
 import drawerProps from "./types";
 
@@ -21,6 +21,7 @@ export default defineComponent({
       beforeClose ? beforeClose(hide) : hide();
     };
 
+    const { nextZIndex } = useCreateIndex();
     const styles = computed(() => {
       const { direction, size } = props;
       const style: CSSProperties = {};
@@ -57,13 +58,14 @@ export default defineComponent({
       ctx.emit("opened");
     };
 
+    const zIndex = nextZIndex();
     return () => {
       const { modelValue, modal } = props;
 
       return (
-        <>
-          {modal ? <YOverlay duration={0.2} onClick={onClose} show={modelValue} /> : null}
-          <Teleport to="body">
+        <Teleport to="body">
+          <div style={{ zIndex: zIndex }}>
+            {modal ? <YOverlay duration={0.2} disabled onClick={onClose} show={modelValue} /> : null}
             <Transition
               appear
               name={bem.name("drawer-fade")}
@@ -71,8 +73,8 @@ export default defineComponent({
               onAfterLeave={afterLeave}
               v-slots={{ default: renderContent }}
             />
-          </Teleport>
-        </>
+          </div>
+        </Teleport>
       );
     };
   },
