@@ -68,7 +68,7 @@ export default defineComponent({
  * 在index.ts页面追加组件导出
  * @param {*} name 组件文件名
  */
-function indexAppendExport(name) {
+function indexAppendExport(name, force) {
   const indexPath = `${comRoot}/index.ts`;
   const data = fs.readFileSync(indexPath, { encoding: "utf-8" });
   const d = `export * from "./${name}";\n`;
@@ -78,6 +78,33 @@ function indexAppendExport(name) {
         throw new Error(e);
       }
     });
+  } else if (force) {
+    const content = data.replace(d, "");
+    fs.writeFileSync(indexPath, content);
+  }
+}
+
+/**
+ * 递归删除文件夹和文件
+ * @param {*} folderPath 路径
+ */
+function deleteFolderRecursive(folderPath) {
+  //判断文件夹是否存在
+  if (fs.existsSync(folderPath)) {
+    //读取文件夹下的文件目录，以数组形式输出
+    fs.readdirSync(folderPath).forEach((file) => {
+      //拼接路径
+      const curPath = path.join(folderPath, file);
+      //判断是不是文件夹，如果是，继续递归
+      if (fs.lstatSync(curPath).isDirectory()) {
+        deleteFolderRecursive(curPath);
+      } else {
+        //删除文件或文件夹
+        fs.unlinkSync(curPath);
+      }
+    });
+    //仅可用于删除空目录
+    fs.rmdirSync(folderPath);
   }
 }
 
@@ -92,6 +119,14 @@ export function createComponent(name, options) {
   const root = path.resolve(comRoot, name);
   const src = path.resolve(root, "src");
   const demos = path.resolve(root, "demos");
+  const { force, CNName } = options;
+
+  // 判断是否覆盖已有的组件
+  if (force) {
+    indexAppendExport(name, true);
+    deleteFolderRecursive(root);
+  }
+
   fs.mkdirSync(root);
   fs.mkdirSync(src);
   fs.mkdirSync(demos);
@@ -112,7 +147,7 @@ export function createComponent(name, options) {
     }
   });
 
-  fs.writeFile(`${demos}/${name}.page.md`, `# ${options.CNName || ""} ${_name}`, (e) => {
+  fs.writeFile(`${demos}/${name}.page.md`, `# ${CNName || ""} ${_name}`, (e) => {
     if (e) {
       throw new Error(`${_name}.page.md文件失败` + e);
     }
