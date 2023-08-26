@@ -6,6 +6,7 @@ program
   .command("component <component-name>")
   .description("创建组件")
   .option("-f, --force, 是否覆盖已有的")
+  .option("-n, --CNName <string>, 中文名")
   .action(async (name, options) => {
     const { createComponent } = await import("./commands/create-component.js");
     return createComponent(name, options);

@@ -86,13 +86,15 @@ function indexAppendExport(name) {
  * @param {*} name 组件名称
  * @param {*} options 其他参数
  */
-export function createComponent(name) {
+export function createComponent(name, options) {
   const _name = varCase(name);
   const upperName = _name.replace(/^.{1}/, (m) => m.toUpperCase());
   const root = path.resolve(comRoot, name);
   const src = path.resolve(root, "src");
+  const demos = path.resolve(root, "demos");
   fs.mkdirSync(root);
   fs.mkdirSync(src);
+  fs.mkdirSync(demos);
 
   fs.writeFile(`${root}/index.ts`, indexTemplate(_name, upperName), (e) => {
     if (e) {
@@ -107,6 +109,12 @@ export function createComponent(name) {
   fs.writeFile(`${src}/${_name}.tsx`, componentTemplate(_name, upperName), (e) => {
     if (e) {
       throw new Error(`${_name}.tsx文件失败` + e);
+    }
+  });
+
+  fs.writeFile(`${demos}/${name}.page.md`, `# ${options.CNName || ""} ${_name}`, (e) => {
+    if (e) {
+      throw new Error(`${_name}.page.md文件失败` + e);
     }
   });
 
