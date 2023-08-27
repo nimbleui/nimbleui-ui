@@ -1,5 +1,7 @@
 <template>
-  <div class="component-demo"></div>
+  <div class="component-demo">
+    <YCard></YCard>
+  </div>
 </template>
 
 <script setup lang="ts"></script>

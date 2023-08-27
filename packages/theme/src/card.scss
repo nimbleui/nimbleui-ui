@@ -1,0 +1,11 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+
+@include b(card) {
+  display: flex;
+  flex-direction: column;
+
+  @include e('header') {
+    display: flex;
+  }
+}

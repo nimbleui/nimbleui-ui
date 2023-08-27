@@ -12,7 +12,7 @@
     "theme:dev": "lerna run --scope @yy/theme dev",
     "docs:dev": "lerna run --scope @yy/docs dev",
     "build": "lerna run --scope @yy/build build",
-    "cli": "yy-cli"
+    "component": "npx yy-cli component"
   },
   "devDependencies": {
     "eslint": "^8.33.0",
