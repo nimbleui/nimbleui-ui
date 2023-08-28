@@ -10,15 +10,17 @@
 }
 
 @include b(card) {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   font-size: var(--y-card-font-size);
   border-radius: 4px;
-  border: 1 solid var(--y-card-border-color);
+  border: 1px solid var(--y-card-border-color);
   background-color: var(--y-card-bg-color);
 
   @include e('header') {
     display: flex;
     font-size: var(--y-card-head-font-size);
+    height: 40px;
   }
 }
