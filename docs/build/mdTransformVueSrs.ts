@@ -1,5 +1,6 @@
 import fs from "fs";
 import { mdToPage } from "./mdToPage";
+import { vueToDemo } from "./vueToDemo";
 
 export function mdTransformVueSrs(path: string) {
   if (path.endsWith(".md")) {
@@ -7,6 +8,6 @@ export function mdTransformVueSrs(path: string) {
     return mdToPage(code, path);
   } else if (path.endsWith(".demo.vue")) {
     const code = fs.readFileSync(path, "utf-8");
-    console.log(code);
+    return vueToDemo(code);
   }
 }

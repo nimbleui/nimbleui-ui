@@ -12,17 +12,15 @@ export default defineComponent({
     return () => {
       return (
         <div class={bem.b()}>
-          <div class={bem.e("header")}>
-            {ctx.slots.header ? (
-              ctx.slots.header()
-            ) : (
-              <>
-                <div class={bem.m("left", "header")}>{ctx.slots.headerLeft?.()}</div>
-                <div class={bem.m("center", "header")}>{ctx.slots.headerCenter?.()}</div>
-                <div class={bem.m("right", "header")}>{ctx.slots.headerRight?.()}</div>
-              </>
-            )}
-          </div>
+          {ctx.slots.header ? (
+            <div class={bem.e("header")}>{ctx.slots.header()}</div>
+          ) : ctx.slots.headerLeft || ctx.slots.headerCenter || ctx.slots.headerRight ? (
+            <div class={bem.e("header")}>
+              <div class={bem.m("left", "header")}>{ctx.slots.headerLeft?.()}</div>
+              <div class={bem.m("center", "header")}>{ctx.slots.headerCenter?.()}</div>
+              <div class={bem.m("right", "header")}>{ctx.slots.headerRight?.()}</div>
+            </div>
+          ) : null}
           <div class={bem.e("content")}>{ctx.slots.default?.()}</div>
           <div class={bem.e("footer")}>{ctx.slots.footer?.()}</div>
         </div>

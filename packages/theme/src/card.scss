@@ -2,10 +2,23 @@
 @use "./mixins/function.scss" as *;
 
 @include b(card) {
+  --y-card-text-color: var(--y-color-text);
+  --y-card-font-size: var(--y-font-size);
+  --y-card-head-font-size: var(--y-font-size-xl);
+  --y-card-bg-color: var(--y-color-bg-container);
+  --y-card-border-color: var(--y-color-border-secondary);
+}
+
+@include b(card) {
   display: flex;
   flex-direction: column;
+  font-size: var(--y-card-font-size);
+  border-radius: 4px;
+  border: 1 solid var(--y-card-border-color);
+  background-color: var(--y-card-bg-color);
 
   @include e('header') {
     display: flex;
+    font-size: var(--y-card-head-font-size);
   }
 }

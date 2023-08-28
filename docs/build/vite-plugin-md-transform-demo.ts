@@ -1,7 +1,7 @@
 import { Plugin } from "vite";
 import { mdTransformVueSrs } from "./mdTransformVueSrs";
 
-const fileRegex = /\.md$/;
+const fileRegex = /\.(md|vue)$/;
 
 export function markedTransformDemo(): Plugin {
   return {
