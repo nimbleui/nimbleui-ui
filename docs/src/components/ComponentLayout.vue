@@ -12,7 +12,7 @@
         @open-change="onOpenChange"
       ></YMenu>
     </YSidebar>
-    <YLayout style="flex: 1; margin-left: 10px">
+    <YLayout style="flex: 1; padding: 45px 0 0 60px">
       <RouterView />
     </YLayout>
   </YLayout>
@@ -41,6 +41,10 @@ const items = reactive<MenuItems[]>([
       {
         text: "Button 按钮",
         link: "/component/button",
+      },
+      {
+        text: "Card 卡片",
+        link: "/component/card",
       },
     ],
   },

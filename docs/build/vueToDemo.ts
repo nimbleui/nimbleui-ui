@@ -1,5 +1,6 @@
 import { type Token, marked } from "marked";
 import createRenderer from "./mdRenderer";
+import hljs from "highlight.js";
 
 const mdRenderer = createRenderer();
 const template = `<template>
@@ -38,8 +39,10 @@ function genVueComponent(content: Options) {
   const scriptReg = /<!--SCRIPT_SLOT-->/;
   const styleReg = /<!--STYLE_SLOT-->/;
   const demoReg = /<!--DEMO_SLOT-->/;
+  const codeReg = /<!--CODE_SLOT-->/;
 
   let src = template;
+  let code = "";
 
   if (content.content) {
     src = src.replace(contentReg, content.content);
@@ -47,6 +50,12 @@ function genVueComponent(content: Options) {
   if (content.title) {
     src = src.replace(titleReg, content.title);
   }
+
+  if (content.template) {
+    code += `<template>\n${content.template}\n</template>\n`;
+    src = src.replace(demoReg, content.template);
+  }
+
   if (content.script) {
     const attributes = `${content.apiType === "composition" ? " setup" : ""}${
       content.languageType === "ts" ? ' lang="ts"' : ""
@@ -54,6 +63,7 @@ function genVueComponent(content: Options) {
     const script = `<script${attributes}>
 ${content.script}
 </script>`;
+    code += script;
     src = src.replace(scriptReg, script);
   }
 
@@ -61,11 +71,14 @@ ${content.script}
     const style = `<style scoped lang="scss">
 ${content.style}
 </style>`;
+    code += `\n${style}`;
     src = src.replace(styleReg, style);
   }
 
-  if (content.template) {
-    src = src.replace(demoReg, content.template);
+  if (code) {
+    const newCode = hljs.highlightAuto(code, ["html", "js", "css"]).value;
+    console.log(newCode);
+    src = src.replace(codeReg, newCode);
   }
   console.log(src);
   return src.trim();
