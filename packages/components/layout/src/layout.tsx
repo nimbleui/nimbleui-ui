@@ -16,8 +16,8 @@ export default defineComponent({
         <YScrollbar
           contentClass={[
             bem.b(),
-            bem.is("absolute", position === "absolute"),
             bem.is("sidebar", hasSidebar),
+            bem.is("absolute", position === "absolute"),
             contentClass,
           ]}
           contentStyle={contentStyle}

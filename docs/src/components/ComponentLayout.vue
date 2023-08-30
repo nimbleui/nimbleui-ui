@@ -46,6 +46,10 @@ const items = reactive<MenuItems[]>([
         text: "Card 卡片",
         link: "/component/card",
       },
+      {
+        text: "Dropdown 下拉菜单",
+        link: "/component/dropdown",
+      },
     ],
   },
   {

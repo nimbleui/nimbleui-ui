@@ -23,8 +23,6 @@
     position: relative;
     z-index: auto;
     pointer-events: all;
-    box-shadow: var(--y-box-shadow);
-    background-color: var(--y-bg-color-overlay);
 
     @include m('arrow') {
       position: absolute;

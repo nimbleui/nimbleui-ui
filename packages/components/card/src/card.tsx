@@ -10,6 +10,7 @@ export default defineComponent({
     const bem = createNamespace("card");
 
     return () => {
+      const { contentClass, contentStyle } = props;
       return (
         <div class={bem.b()}>
           {ctx.slots.header ? (
@@ -21,7 +22,9 @@ export default defineComponent({
               <div class={bem.m("right", "header")}>{ctx.slots.headerRight?.()}</div>
             </div>
           ) : null}
-          <div class={bem.e("content")}>{ctx.slots.default?.()}</div>
+          <div style={contentStyle} class={[bem.e("content"), contentClass]}>
+            {ctx.slots.default?.()}
+          </div>
           <div class={bem.e("footer")}>{ctx.slots.footer?.()}</div>
         </div>
       );

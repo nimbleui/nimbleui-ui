@@ -17,10 +17,14 @@ export default defineComponent({
     };
 
     return () => {
-      const { tag: Component, contentClass, contentStyle } = props;
+      const { tag: Component, contentClass, contentStyle, native } = props;
       return (
         <div class={bem.b()} ref={scrollbarRef}>
-          <div class={[bem.e("wrap"), bem.m("hidden-bar", "warp")]} ref={wrapRef} onScroll={onScroll}>
+          <div
+            ref={wrapRef}
+            onScroll={onScroll}
+            class={[bem.e("wrap"), !native ? bem.m("hidden-bar", "wrap") : undefined]}
+          >
             <Component style={contentStyle} class={contentClass} ref={resizeRef}>
               {ctx.slots.default?.()}
             </Component>

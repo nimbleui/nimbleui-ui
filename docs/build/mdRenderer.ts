@@ -14,5 +14,13 @@ export default function createRenderer() {
     return highlighted;
   };
 
+  renderer.heading = (text, level) => {
+    return `<h${level} class="md-head md-head-${level}">${text}</h${level}>`;
+  };
+
+  renderer.paragraph = (text) => {
+    return `<p class="md-p">${text}</p>`;
+  };
+
   return renderer;
 }

@@ -1,20 +1,18 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType, StyleValue } from "vue";
 
 const cardProps = mergeCommonProp({
-  // 这是参数模板
-  /**
-   * @description 总列数
-   */
-  column: {
-    type: Number,
-    default: 0,
+  contentClass: {
+    type: [String, Array, Object],
+  },
+  contentStyle: {
+    type: [String, Array, Object] as PropType<StyleValue>,
   },
 });
 
 export default cardProps;
 
 // 给组件ref智能提示
-export type cardExpose = {};
+// export type cardExpose = {};
 
 export type CardProps = ExtractPropTypes<ReturnType<typeof cardProps>>;

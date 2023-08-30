@@ -1,21 +1,23 @@
 <template>
-  <YLayout style="height: 100vh" :position="'absolute'">
-    <YHeader class="header">
-      <div class="header-log">log</div>
-      <div class="header-content">
-        <div class="header-content__search">
-          <YInput placeholder="输入关键字搜索..." />
+  <div id="app" class="app">
+    <YLayout style="height: 100vh" :position="'absolute'">
+      <YHeader class="header">
+        <div class="header-log">log</div>
+        <div class="header-content">
+          <div class="header-content__search">
+            <YInput placeholder="输入关键字搜索..." />
+          </div>
+          <div class="header-content__menu">
+            <span @click="goPage('/home')">首页</span>
+            <span @click="goPage('/docs')">文档</span>
+            <span @click="goPage('/component/button')">组件</span>
+            <span @click="toggleTheme">{{ isDark ? "浅色" : "深色" }}</span>
+          </div>
         </div>
-        <div class="header-content__menu">
-          <span @click="goPage('/home')">首页</span>
-          <span @click="goPage('/docs')">文档</span>
-          <span @click="goPage('/component/button')">组件</span>
-          <span @click="toggleTheme">{{ isDark ? "浅色" : "深色" }}</span>
-        </div>
-      </div>
-    </YHeader>
-    <RouterView></RouterView>
-  </YLayout>
+      </YHeader>
+      <RouterView></RouterView>
+    </YLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -36,6 +38,10 @@ const toggleTheme = () => {
 * {
   padding: 0;
   margin: 0;
+}
+.app {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
 .header {
   padding: 0 10px;
@@ -72,5 +78,18 @@ const toggleTheme = () => {
       }
     }
   }
+}
+.md-head {
+  font-weight: 500;
+  margin-bottom: 15px;
+  &-1 {
+    font-size: 30px;
+  }
+  &-2 {
+    font-size: 22px;
+  }
+}
+.md-p {
+  margin-bottom: 10px;
 }
 </style>
