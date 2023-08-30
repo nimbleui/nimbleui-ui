@@ -6,6 +6,7 @@
     <slot name="content" />
     <slot name="demo" />
 
+    <div class="operate"></div>
     <template #footer>
       <div v-show="showCode">
         <code ref="codeRef" class="code"></code>
@@ -37,5 +38,9 @@ onMounted(() => {
   pre {
     font-family: inherit;
   }
+}
+.operate {
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -10,7 +10,6 @@
 }
 
 @include b(card) {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   font-size: var(--y-card-font-size);
@@ -19,8 +18,18 @@
   background-color: var(--y-card-bg-color);
 
   @include e('header') {
+    padding: 15px 20px;
     display: flex;
+    align-items: center;
     font-size: var(--y-card-head-font-size);
-    height: 40px;
+    border-bottom: 1px solid var(--y-card-border-color);
+  }
+
+  @include e(content) {
+    padding: 10px 20px;
+  }
+
+  @include e(footer) {
+    padding: 10px 20px;
   }
 }

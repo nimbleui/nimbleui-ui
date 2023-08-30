@@ -1,5 +1,5 @@
 <template>
-  <YLayout has-sidebar style="top: var(--y-header-height)" :position="'absolute'">
+  <YLayout has-sidebar style="height: calc(100vh - var(--y-header-height))" :position="'absolute'">
     <YSidebar>
       <YMenu
         v-model="activeMenuItem"
@@ -12,7 +12,7 @@
         @open-change="onOpenChange"
       ></YMenu>
     </YSidebar>
-    <YLayout style="flex: 1; padding: 45px 0 0 60px">
+    <YLayout style="flex: 1" content-style="padding: 45px 0 0 60px">
       <RouterView />
     </YLayout>
   </YLayout>

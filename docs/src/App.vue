@@ -1,5 +1,5 @@
 <template>
-  <YLayout :position="'absolute'">
+  <YLayout style="height: 100vh" :position="'absolute'">
     <YHeader class="header">
       <div class="header-log">log</div>
       <div class="header-content">

@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@yy/utils";
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, PropType, StyleValue } from "vue";
 
 const layoutProps = mergeCommonProp({
   /**
@@ -14,6 +14,18 @@ const layoutProps = mergeCommonProp({
    */
   hasSidebar: {
     type: Boolean,
+  },
+  /**
+   * @description 可滚动内容节点的类
+   */
+  contentClass: {
+    type: [String, Array, Object] as PropType<any>,
+  },
+  /**
+   * @description 可滚动内容节点的样式
+   */
+  contentStyle: {
+    type: [String, Array, Object] as PropType<StyleValue>,
   },
 });
 

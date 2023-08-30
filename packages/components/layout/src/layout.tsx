@@ -1,5 +1,6 @@
-import { createNamespace } from "@yy/utils";
 import { defineComponent } from "vue";
+import { createNamespace } from "@yy/utils";
+import { YScrollbar } from "@yy/components/scrollbar";
 
 import layoutProps from "./types";
 
@@ -10,11 +11,19 @@ export default defineComponent({
     const bem = createNamespace("layout");
 
     return () => {
-      const { position, hasSidebar } = props;
+      const { position, hasSidebar, contentClass, contentStyle } = props;
       return (
-        <div class={[bem.b(), bem.is("absolute", position === "absolute"), bem.is("sidebar", hasSidebar)]}>
+        <YScrollbar
+          contentClass={[
+            bem.b(),
+            bem.is("absolute", position === "absolute"),
+            bem.is("sidebar", hasSidebar),
+            contentClass,
+          ]}
+          contentStyle={contentStyle}
+        >
           {ctx.slots.default?.()}
-        </div>
+        </YScrollbar>
       );
     };
   },
