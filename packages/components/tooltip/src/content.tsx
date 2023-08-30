@@ -48,6 +48,7 @@ export default defineComponent({
       const { placement } = props;
       const { offsetHeight, offsetWidth } = el;
       const rect = tooltipContext.triggerRef.value?.getBoundingClientRect() as DOMRect;
+      // 计算trigger到屏幕的距离
       const disB = window.innerHeight - rect?.bottom;
       const disR = window.innerWidth - rect?.right;
       const disL = rect?.left;
@@ -58,19 +59,26 @@ export default defineComponent({
       const lRight = disR + width + DIS;
       const lLeft = disR - offsetWidth - DIS;
 
+      const disY = offsetHeight - rect?.height;
+      const disX = offsetWidth - rect?.width;
+
       let transform = "";
       let transformOrigin = "";
       if (placement === "bottom") {
-        transform = `translateX(${disL}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
+        transform = `translateX(${disL - disX / 2}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
         transformOrigin = disB >= offsetHeight + DIS_BOTTOM ? "top center" : "bottom center";
       } else if (placement === "top") {
-        transform = `translateX(${disL}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
+        transform = `translateX(${disL - disX / 2}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
         transformOrigin = disT >= offsetHeight + DIS_BOTTOM ? "bottom center" : "top center";
       } else if (placement === "left") {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${disT}px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${
+          disT - disY / 2
+        }px)`;
         transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
       } else {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${disT}px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${
+          disT - disY / 2
+        }px)`;
         transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       }
       styles.transform = transform;

@@ -62,7 +62,7 @@ export default defineComponent({
             trigger={trigger}
             appendTo={appendTo}
             placement={placement}
-            transition={transition}
+            transition={transition || "y-tooltip"}
             teleported={teleported}
             onToggle={onToggle}
           >

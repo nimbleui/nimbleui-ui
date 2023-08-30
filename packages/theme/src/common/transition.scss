@@ -32,22 +32,22 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   transform: scaleY(0);
 }
 
-// ellipsis动画
-.#{$namespace}-ellipsis-enter-from, .#{$namespace}-ellipsis-leave-to {
+// tooltip动画
+.#{$namespace}-tooltip-enter-from, .#{$namespace}-tooltip-leave-to {
   opacity: 0;
   transform: scale(.85);
 }
 
-.#{$namespace}-ellipsis-enter-to, .#{$namespace}-ellipsis-leave-from {
+.#{$namespace}-tooltip-enter-to, .#{$namespace}-tooltip-leave-from {
   transform: scale(1);
   opacity: 1;
 }
 
-.#{$namespace}-ellipsis-enter-active {
+.#{$namespace}-tooltip-enter-active {
   transition: opacity .15s cubic-bezier(0, 0, .2, 1), transform .15s cubic-bezier(0, 0, .2, 1);
 }
 
-.#{$namespace}-ellipsis-leave-active {
+.#{$namespace}-tooltip-leave-active {
   transition: opacity .15s cubic-bezier(.4, 0, 1, 1), transform .15s cubic-bezier(.4, 0, 1, 1);
 }
 
