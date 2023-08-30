@@ -12,7 +12,7 @@
         @open-change="onOpenChange"
       ></YMenu>
     </YSidebar>
-    <YLayout style="flex: 1" content-style="padding: 45px 0 0 60px">
+    <YLayout style="flex: 1" content-style="padding: 30px 20px 0 40px">
       <RouterView />
     </YLayout>
   </YLayout>

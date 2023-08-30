@@ -39,5 +39,3 @@ const handleSelect = (item: Options) => {
   YMessage.info(item.label);
 };
 </script>
-
-<style lang="scss" scoped></style>

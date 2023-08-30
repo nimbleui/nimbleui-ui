@@ -10,7 +10,7 @@
 
     <div class="operate">
       <YTooltip placement="top" trigger="hover">
-        <i class="icon">
+        <i class="icon" @click="handleCloneCode">
           <svg fill="none" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M753.784471 870.520471c0 34.334118-26.985412 62.162824-60.235295 62.223058h-542.117647c-33.310118 0-60.235294-27.888941-60.235294-62.223058v-559.585883c0-34.334118 26.925176-62.162824 60.235294-62.162823h542.117647c33.249882 0 60.235294 27.828706 60.235295 62.162823v559.585883z m-60.235295-683.91153h-542.117647c-66.56 0-120.470588 55.657412-120.470588 124.325647v559.585883c0 68.668235 53.910588 124.385882 120.470588 124.385882h542.117647c66.499765 0 120.470588-55.657412 120.470589-124.385882v-559.585883c0-68.668235-53.970824-124.325647-120.470589-124.325647"
@@ -29,7 +29,7 @@
         <template #content> <div class="tooltip">复制代码</div> </template>
       </YTooltip>
       <YTooltip placement="top" trigger="hover">
-        <i class="icon">
+        <i class="icon" @click="handleShowCode">
           <svg fill="none" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M300.224 224L32 525.76l268.224 301.76 71.776-63.776-211.552-237.984 211.552-237.984zM711.744 224L640 287.776l211.552 237.984L640 763.744l71.744 63.776 268.256-301.76z"
@@ -55,17 +55,26 @@ import hljs from "highlight.js";
 const props = defineProps<{ code: string }>();
 const codeRef = ref<HTMLElement>();
 
-const showCode = ref(true);
+const showCode = ref(false);
+const handleShowCode = () => {
+  showCode.value = !showCode.value;
+};
 const newCode = hljs.highlightAuto(decodeURIComponent(props.code), ["html", "js", "css"]).value;
 onMounted(() => {
   if (codeRef.value) {
     codeRef.value.innerHTML = `<pre>${newCode}</pre>`;
   }
 });
+
+const handleCloneCode = () => {
+  const code = decodeURIComponent(props.code);
+  console.log(code);
+};
 </script>
 
 <style lang="scss" scoped>
 .code {
+  padding: 20px;
   word-break: break-word;
   font-family: inherit;
   border-top: 1px solid var(--y-color-border-secondary);
@@ -80,9 +89,10 @@ onMounted(() => {
 }
 .operate {
   display: flex;
+  align-items: center;
   justify-content: center;
   padding-top: 15px;
-  margin-top: 20px;
+  margin: 20px 0 15px;
   border-top: 1px dashed var(--y-color-border-secondary);
   .icon {
     width: 20px;
