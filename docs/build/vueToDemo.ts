@@ -1,10 +1,11 @@
 import { type Token, marked } from "marked";
 import createRenderer from "./mdRenderer";
-import hljs from "highlight.js";
 
 const mdRenderer = createRenderer();
 const template = `<template>
-  <component-demo>
+  <component-demo
+    code="<!--CODE_SLOT-->"
+  >
     <template #head>
       <!--HEAD_SLOT-->
     </template>
@@ -52,7 +53,7 @@ function genVueComponent(content: Options) {
   }
 
   if (content.template) {
-    code += `<template>\n${content.template}\n</template>\n`;
+    code += `<template>${content.template}</template>\n\n`;
     src = src.replace(demoReg, content.template);
   }
 
@@ -62,7 +63,7 @@ function genVueComponent(content: Options) {
     }`;
     const script = `<script${attributes}>
 ${content.script}
-</script>`;
+</script>\n`;
     code += script;
     src = src.replace(scriptReg, script);
   }
@@ -76,11 +77,9 @@ ${content.style}
   }
 
   if (code) {
-    const newCode = hljs.highlightAuto(code, ["html", "js", "css"]).value;
-    console.log(newCode);
-    src = src.replace(codeReg, newCode);
+    src = src.replace(codeReg, encodeURIComponent(code));
   }
-  console.log(src);
+
   return src.trim();
 }
 
