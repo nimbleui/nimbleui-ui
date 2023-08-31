@@ -65,6 +65,23 @@ const items = reactive<MenuItems[]>([
       },
     ],
   },
+  {
+    text: "反馈组件",
+    items: [
+      {
+        text: "Drawer 抽屉",
+        link: "/component/drawer",
+      },
+      {
+        text: "Message 信息",
+        link: "/component/message",
+      },
+      {
+        text: "Modal 模态框",
+        link: "/component/modal",
+      },
+    ],
+  },
 ]);
 </script>
 

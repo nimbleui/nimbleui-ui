@@ -6,8 +6,8 @@
 @include b(button) {
   --y-button-text-color: var(--y-color-text);
   --y-button-border-color: var(--y-color-border);
-  --y-button-before-bg-color: var(--y-color-theme);
-  --y-button-before-border-color: var(--y-color-theme);
+  --y-button-after-bg-color: var(--y-color-theme);
+  --y-button-after-border-color: var(--y-color-theme);
   --y-button-hover-text-color: var(--y-base-color);
   --y-button-hover-bg-color: var(--y-color-primary-1);
   --y-button-hover-border-color: var(--y-color-primary-3);
@@ -50,15 +50,15 @@
   padding: 8px 15px;
   border-radius: 4px;
 
-  &::before {
+  &::after {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 100%;
     height: 100%;
-    background: var(--y-button-before-bg-color);
+    background: var(--y-button-after-bg-color);
     border: inherit;
-    border-color: var(--y-button-before-border-color);
+    border-color: var(--y-button-after-border-color);
     border-radius: inherit;
     transform: translate(-50%, -50%);
     opacity: 0;
@@ -93,8 +93,9 @@
 
   @include when(loading) {
     pointer-events: none;
+    position: relative;
 
-    &::after {
+    &::before {
       content: "";
 
       @include loading(12px, 12px);
@@ -109,7 +110,7 @@
         background-color: get-css-var('button', $type, 'bg-color');
         color: get-css-var('button', $type, 'text-color');
   
-        &:active::before, &:hover::before {
+        &:active::after, &:hover::after {
           &:not(.is-disabled) {
             opacity: 0.2;
           }
@@ -129,8 +130,6 @@
       }
     }
   }
-
-  
 
   @each $size in (large, small) {
     @include when($size) {

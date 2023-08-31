@@ -94,9 +94,9 @@ const toggleTheme = () => {
 }
 .demo-margin {
   display: flex;
-  margin-top: 15px;
+  flex-wrap: wrap;
   & > * {
-    margin-right: 10px;
+    margin: 10px 10px 0 0;
   }
 }
 </style>
