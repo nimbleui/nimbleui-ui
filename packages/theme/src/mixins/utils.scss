@@ -83,3 +83,23 @@
     }
   }
 }
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@mixin loading($width: 15px, $height: 15px) {
+  border: 2px solid var(--y-color-primary);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  width: $width;
+  height: $height;
+  animation: loading 1s linear infinite;
+  margin: 0 auto;
+}

@@ -1,5 +1,5 @@
 <template>
-  <YCard content-style="padding: 0">
+  <YCard class="card" content-style="padding: 0">
     <template #header>
       <slot name="head" />
     </template>
@@ -51,6 +51,7 @@
 <script setup lang="tsx">
 import { onMounted, ref } from "vue";
 import hljs from "highlight.js";
+import { YMessage } from "yy-ui";
 
 const props = defineProps<{ code: string }>();
 const codeRef = ref<HTMLElement>();
@@ -68,36 +69,41 @@ onMounted(() => {
 
 const handleCloneCode = () => {
   const code = decodeURIComponent(props.code);
-  console.log(code);
+  navigator.clipboard.writeText(code).then(() => {
+    YMessage("复制成功");
+  });
 };
 </script>
 
 <style lang="scss" scoped>
-.code {
-  padding: 20px;
-  word-break: break-word;
-  font-family: inherit;
-  border-top: 1px solid var(--y-color-border-secondary);
-  &-wrap {
-    pre {
-      font-family: inherit;
+.card {
+  margin-bottom: 20px;
+  .code {
+    padding: 20px;
+    word-break: break-word;
+    font-family: inherit;
+    border-top: 1px solid var(--y-color-border-secondary);
+    &-wrap {
+      pre {
+        font-family: inherit;
+      }
     }
   }
-}
-.content {
-  padding: 10px 20px;
-}
-.operate {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 15px;
-  margin: 20px 0 15px;
-  border-top: 1px dashed var(--y-color-border-secondary);
-  .icon {
-    width: 20px;
-    padding: 0 10px;
-    cursor: pointer;
+  .content {
+    padding: 10px 20px;
+  }
+  .operate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    margin: 20px 0 15px;
+    border-top: 1px dashed var(--y-color-border-secondary);
+    .icon {
+      width: 15px;
+      padding: 0 10px;
+      cursor: pointer;
+    }
   }
 }
 .tooltip {

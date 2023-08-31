@@ -26,6 +26,9 @@ export default defineComponent({
         bem.is(res.type, res.type !== "default"),
         bem.is(res.shape, res.shape !== "default"),
         bem.is(res.size, res.size !== "default"),
+        bem.is("plain", props.plain),
+        bem.is("round", props.round),
+        bem.is("loading", props.loading),
       ];
     });
 

@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-# 基础
+# 基础用法
 
-按钮的 `type` 分别为 `default`、`tertiary`、`primary`、`info`、`success`、`warning` 和 `error`。
+使用 type、plain、round 和 circle 来定义按钮的样式。
 </markdown>
 
 <template>
-  <div class="flex">
+  <div class="demo-margin">
     <YButton>Default</YButton>
     <YButton :type="'primary'">Primary</YButton>
     <YButton :type="'info'">Info</YButton>
@@ -14,16 +14,20 @@
     <YButton :type="'warning'">Warning</YButton>
     <YButton :type="'error'">Error</YButton>
   </div>
+  <div class="demo-margin">
+    <YButton plain>Default</YButton>
+    <YButton plain :type="'primary'">Primary</YButton>
+    <YButton plain :type="'info'">Info</YButton>
+    <YButton plain :type="'success'">Success</YButton>
+    <YButton plain :type="'warning'">Warning</YButton>
+    <YButton plain :type="'error'">Error</YButton>
+  </div>
+  <div class="demo-margin">
+    <YButton round>Default</YButton>
+    <YButton round :type="'primary'">Primary</YButton>
+    <YButton round :type="'info'">Info</YButton>
+    <YButton round :type="'success'">Success</YButton>
+    <YButton round :type="'warning'">Warning</YButton>
+    <YButton round :type="'error'">Error</YButton>
+  </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from "vue";
-const show = ref(true);
-console.log(show.value);
-</script>
-
-<style scoped lang="scss">
-.flex {
-  display: flex;
-}
-</style>

@@ -37,6 +37,22 @@ const buttonProps = mergeCommonProp({
    * @description 按钮的尺寸
    */
   size: mergeFunctionProp<ButtonSize>(String),
+  /**
+   * @description 是否为朴素按钮
+   */
+  plain: Boolean,
+  /**
+   * @description 是否为圆角按钮
+   */
+  round: Boolean,
+  /**
+   * @description 是否为圆形按钮
+   */
+  circle: Boolean,
+  /**
+   * @description 是否为加载中状态
+   */
+  loading: Boolean,
 });
 
 export default buttonProps;

@@ -1,5 +1,6 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 // 设置变量
 @include b(button) {
@@ -66,11 +67,14 @@
 
   &:hover,
   &:focus {
-    transition: all .2s cubic-bezier(.645,.045,.355,1);
-    color: get-css-var('button', 'hover', 'text-color');
-    border-color: get-css-var('button', 'hover', 'border-color');
-    background-color: get-css-var('button', 'hover', 'bg-color');
-    outline: none;
+    &:not(.is-disabled) {
+      transition: all .2s cubic-bezier(.645,.045,.355,1);
+      color: get-css-var('button', 'hover', 'text-color');
+      border-color: get-css-var('button', 'hover', 'border-color');
+      background-color: get-css-var('button', 'hover', 'bg-color');
+      outline: none;
+
+    }
   }
 
   @include when(round) {
@@ -87,17 +91,46 @@
     opacity: get-css-var('button', 'disabled', 'opacity');
   }
 
+  @include when(loading) {
+    pointer-events: none;
+
+    &::after {
+      content: "";
+
+      @include loading(12px, 12px);
+
+    }
+  }
+
   @each $type in (primary, success, warning, error, info) {
     @include when($type) {
-      border-color: get-css-var('button', $type, 'border-color');
-      background-color: get-css-var('button', $type, 'bg-color');
-      color: get-css-var('button', $type, 'text-color');
+      &:not(.is-plain) {
+        border-color: get-css-var('button', $type, 'border-color');
+        background-color: get-css-var('button', $type, 'bg-color');
+        color: get-css-var('button', $type, 'text-color');
   
-      &:active::before, &:hover::before {
-        opacity: 0.2;
+        &:active::before, &:hover::before {
+          &:not(.is-disabled) {
+            opacity: 0.2;
+          }
+        }
+      }
+
+      &.is-plain {
+        border-color: get-css-var('button', $type, 'border-color');
+        color: get-css-var('button', $type, 'bg-color');
+
+        &:active, &:hover {
+          &:not(.is-disabled) {
+            color: get-css-var('button', $type, 'text-color');
+            background-color: get-css-var('button', $type, 'bg-color');
+          }
+        }
       }
     }
   }
+
+  
 
   @each $size in (large, small) {
     @include when($size) {

@@ -92,4 +92,11 @@ const toggleTheme = () => {
 .md-p {
   margin-bottom: 10px;
 }
+.demo-margin {
+  display: flex;
+  margin-top: 15px;
+  & > * {
+    margin-right: 10px;
+  }
+}
 </style>
