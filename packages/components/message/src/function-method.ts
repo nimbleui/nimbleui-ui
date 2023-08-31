@@ -1,5 +1,5 @@
 import { AppContext, createVNode, isVNode, render } from "vue";
-import { isFunction, isString } from "@yy/utils";
+import { isFunction, isString } from "@nimble-ui/utils";
 
 import MessageConstructor from "./message";
 import { messageTypes } from "./types";

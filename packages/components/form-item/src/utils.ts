@@ -1,6 +1,6 @@
-import { isArray, isFunction, isPromise, toArray } from "@yy/utils";
+import { isArray, isFunction, isPromise, toArray } from "@nimble-ui/utils";
 
-import type { Rule, Rules, TriggerEventType } from "@yy/tokens";
+import type { Rule, Rules, TriggerEventType } from "@nimble-ui/tokens";
 
 /**
  * 校验内容是否为空

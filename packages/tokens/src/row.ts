@@ -1,5 +1,5 @@
 import type { Ref, InjectionKey } from "vue";
-import type { Fun } from "@yy/utils";
+import type { Fun } from "@nimble-ui/utils";
 
 interface RowContext {
   gutter: number;

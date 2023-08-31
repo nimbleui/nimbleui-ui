@@ -1,7 +1,7 @@
 import { CSSProperties, Transition, computed, defineComponent, Teleport } from "vue";
-import { createNamespace, isString } from "@yy/utils";
-import { YOverlay } from "@yy/components/overlay";
-import { useLazyRender, useCreateIndex } from "@yy/hooks";
+import { createNamespace, isString } from "@nimble-ui/utils";
+import { YOverlay } from "@nimble-ui/components/overlay";
+import { useLazyRender, useCreateIndex } from "@nimble-ui/hooks";
 
 import drawerProps from "./types";
 

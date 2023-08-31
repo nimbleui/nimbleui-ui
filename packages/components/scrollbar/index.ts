@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import _scrollbar from "./src/scrollbar";
 
 export * from "./src/types";

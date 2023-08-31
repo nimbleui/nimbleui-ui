@@ -5,7 +5,7 @@ import { comRoot } from "../utils/path.js";
 const varCase = (str) => str.replace(/-[a-z]/g, (m) => m[1].toUpperCase());
 
 const indexTemplate = (name, _name) => {
-  return `import { withInstall } from "@yy/utils";
+  return `import { withInstall } from "@nimble-ui/utils";
 import _${name} from "./src/${name}";
 
 export * from "./src/types";
@@ -21,7 +21,7 @@ declare module "vue" {
 };
 
 const typesTemplate = (name, _name) => {
-  return `import { mergeCommonProp } from "@yy/utils";
+  return `import { mergeCommonProp } from "@nimble-ui/utils";
 import { ExtractPropTypes } from "vue";
 
 const ${name}Props = mergeCommonProp({
@@ -45,7 +45,7 @@ export type ${_name}Props = ExtractPropTypes<ReturnType<typeof ${name}Props>>;
 };
 
 const componentTemplate = (name, _name) => {
-  return `import { createNamespace } from "@yy/utils";
+  return `import { createNamespace } from "@nimble-ui/utils";
 import { defineComponent } from "vue";
 
 import ${name}Props from "./types";

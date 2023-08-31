@@ -1,5 +1,5 @@
 import { ExtractPropTypes } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 const ellipsisProps = mergeCommonProp({
   /**

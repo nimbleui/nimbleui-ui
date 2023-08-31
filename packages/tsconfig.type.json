@@ -8,7 +8,7 @@
     "declarationDir": "../dist/types",
     "jsx": "preserve",
     "paths": {
-      "@yy/*": ["../packages/*"],
+      "@nimble-ui/*": ["../packages/*"],
     }
   },
   "exclude": ["node_module"],

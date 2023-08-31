@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import formItem from "./src/formItem";
 
 export * from "./src/types";

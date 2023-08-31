@@ -1,7 +1,7 @@
 import { defineComponent, computed, watch, ref, onMounted } from "vue";
-import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@yy/utils";
-import { TriggerEventType, formItemContextKey } from "@yy/tokens";
-import { useExpose, useParent, useCreateId } from "@yy/hooks";
+import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@nimble-ui/utils";
+import { TriggerEventType, formItemContextKey } from "@nimble-ui/tokens";
+import { useExpose, useParent, useCreateId } from "@nimble-ui/hooks";
 
 import inputProp from "./types";
 import type { InputExpose } from "./types";

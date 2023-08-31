@@ -1,6 +1,6 @@
 import type { InjectionKey } from "vue";
 import type { ProvideContext, TriggerEventType } from "./types";
-import { FormProps } from "@yy/components";
+import { FormProps } from "@nimble-ui/components";
 
 export interface Rule {
   required?: boolean;

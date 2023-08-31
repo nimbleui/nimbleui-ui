@@ -1,5 +1,5 @@
 import { ComputedRef, computed, inject, reactive } from "vue";
-import { GlobalConfigContext, globalConfigContextKey } from "@yy/tokens";
+import { GlobalConfigContext, globalConfigContextKey } from "@nimble-ui/tokens";
 
 const globalConfig = reactive<GlobalConfigContext>({});
 

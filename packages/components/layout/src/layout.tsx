@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import { createNamespace } from "@yy/utils";
-import { YScrollbar } from "@yy/components/scrollbar";
+import { createNamespace } from "@nimble-ui/utils";
+import { YScrollbar } from "@nimble-ui/components/scrollbar";
 
 import layoutProps from "./types";
 

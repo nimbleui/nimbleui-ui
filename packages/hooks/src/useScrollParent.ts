@@ -1,5 +1,5 @@
 import { Ref, onMounted, ref } from "vue";
-import { getScrollParent } from "@yy/utils";
+import { getScrollParent } from "@nimble-ui/utils";
 import { useEventListener } from "./useEventListener";
 
 type ScrollElement = HTMLElement | Window;

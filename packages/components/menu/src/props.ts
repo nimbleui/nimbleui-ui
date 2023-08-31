@@ -1,4 +1,4 @@
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 import { ExtractPropTypes, HTMLAttributes, PropType, Slots, VNode } from "vue";
 
 export interface MenuItems {

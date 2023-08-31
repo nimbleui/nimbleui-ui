@@ -1,8 +1,8 @@
 import { defineComponent } from "vue";
-import { formContextKey } from "@yy/tokens";
-import { YRow } from "@yy/components/row";
-import { pick } from "@yy/utils";
-import { useChildren } from "@yy/hooks";
+import { formContextKey } from "@nimble-ui/tokens";
+import { YRow } from "@nimble-ui/components/row";
+import { pick } from "@nimble-ui/utils";
+import { useChildren } from "@nimble-ui/hooks";
 
 import formProps from "./types";
 

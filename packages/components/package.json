@@ -1,5 +1,5 @@
 {
-  "name": "@yy/components",
+  "name": "@nimble-ui/components",
   "version": "0.1.0",
   "description": "基于 Vue3 + ts 开发组件",
   "author": "陈羽云 <897908015@qq.com>",

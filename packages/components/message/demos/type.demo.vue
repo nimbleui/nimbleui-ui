@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { YMessage } from "yy-ui";
+import { YMessage } from "@nimble-ui/vue";
 
 const success = () => {
   YMessage.success("这是一个成功的提示");

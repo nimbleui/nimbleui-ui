@@ -1,8 +1,8 @@
 import { computed, defineComponent, reactive } from "vue";
-import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@yy/tokens";
-import { useParent, useChildren, useExpose } from "@yy/hooks";
-import { createNamespace, isFunction } from "@yy/utils";
-import { YCol } from "@yy/components/col";
+import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
+import { useParent, useChildren, useExpose } from "@nimble-ui/hooks";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { YCol } from "@nimble-ui/components/col";
 
 import formItemProp from "./types";
 import type { FormItemExpose, FormItemValidateError } from "./types";

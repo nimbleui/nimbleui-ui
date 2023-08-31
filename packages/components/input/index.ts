@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import input from "./src/input";
 
 export * from "./src/types";

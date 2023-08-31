@@ -8,10 +8,10 @@
     "scripts"
   ],
   "scripts": {
-    "theme:prod": "lerna run --scope @yy/theme build",
-    "theme:dev": "lerna run --scope @yy/theme dev",
-    "docs:dev": "lerna run --scope @yy/docs dev",
-    "build": "lerna run --scope @yy/build build",
+    "theme:prod": "lerna run --scope @nimble-ui/theme build",
+    "theme:dev": "lerna run --scope @nimble-ui/theme dev",
+    "docs:dev": "lerna run --scope @nimble-ui/docs dev",
+    "build": "lerna run --scope @nimble-ui/build build",
     "component": "npx yy-cli component"
   },
   "devDependencies": {

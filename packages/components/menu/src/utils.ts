@@ -1,5 +1,5 @@
 import { h, type Slots } from "vue";
-import { pick, keysOf } from "@yy/utils";
+import { pick, keysOf } from "@nimble-ui/utils";
 import YSubMenu from "./subMenu";
 import YMenuItem from "./menuItem";
 

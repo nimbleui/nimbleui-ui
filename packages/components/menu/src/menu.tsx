@@ -1,6 +1,6 @@
-import { createNamespace } from "@yy/utils";
+import { createNamespace } from "@nimble-ui/utils";
 import { computed, defineComponent, provide, reactive, ref } from "vue";
-import { menuContextKey } from "@yy/tokens";
+import { menuContextKey } from "@nimble-ui/tokens";
 
 import menuProps from "./types";
 import { itemRenderer } from "./utils";

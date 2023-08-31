@@ -1,8 +1,8 @@
 import { defineComponent, nextTick, reactive, ref, Teleport, Transition } from "vue";
-import { useEventListener, useLazyRender, useCreateIndex } from "@yy/hooks";
-import { createNamespace, isFunction } from "@yy/utils";
-import { YOverlay } from "@yy/components/overlay";
-import { YButton } from "@yy/components/button";
+import { useEventListener, useLazyRender, useCreateIndex } from "@nimble-ui/hooks";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { YOverlay } from "@nimble-ui/components/overlay";
+import { YButton } from "@nimble-ui/components/button";
 
 import modalProps, { type ModalAction } from "./types";
 

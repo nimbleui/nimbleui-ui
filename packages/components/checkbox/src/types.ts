@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes, WritableComputedRef } from "vue";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 type CheckerShape = "square" | "round";
 type CheckerLabelPosition = "left" | "right";

@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 import { contentProps } from "./props";
 

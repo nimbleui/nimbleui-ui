@@ -1,5 +1,5 @@
 import { type AppContext, createVNode, render } from "vue";
-import { isArray, isString } from "@yy/utils";
+import { isArray, isString } from "@nimble-ui/utils";
 import ImagePreviewConstructor from "./imagePreview";
 
 interface ImagePreviewOptions {

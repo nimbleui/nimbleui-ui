@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import _ellipsis from "./src/ellipsis";
 
 export * from "./src/types";

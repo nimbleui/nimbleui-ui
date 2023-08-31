@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, ImgHTMLAttributes, PropType } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 const imageProps = mergeCommonProp({
   /**

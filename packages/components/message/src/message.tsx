@@ -1,6 +1,6 @@
 import { CSSProperties, Transition, computed, defineComponent, onMounted, ref } from "vue";
-import { useResizeObserver, useCreateIndex } from "@yy/hooks";
-import { createNamespace } from "@yy/utils";
+import { useResizeObserver, useCreateIndex } from "@nimble-ui/hooks";
+import { createNamespace } from "@nimble-ui/utils";
 
 import messageProps from "./types";
 import { getLastOffset, getOffsetOrSpace } from "./instance";

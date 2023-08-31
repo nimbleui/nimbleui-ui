@@ -1,5 +1,5 @@
 {
-  "name": "@yy/hooks",
+  "name": "@nimble-ui/hooks",
   "version": "0.1.0",
   "description": "> TODO: description",
   "author": "陈羽云 <897908015@qq.com>",
@@ -14,7 +14,7 @@
     "url": "git@toscode.gitee.com:fast_dev/yy-ui.git"
   },
   "dependencies": {
-    "@yy/tokens": "^0.1.0",
+    "@nimble-ui/tokens": "^0.1.0",
     "stylelint-order": "^6.0.3"
   }
 }

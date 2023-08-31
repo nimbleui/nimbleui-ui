@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
-import type { Rules, TriggerEventType, FormItemState } from "@yy/tokens";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
+import type { Rules, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
 
 export interface FormItemValidateError {
   name?: string;

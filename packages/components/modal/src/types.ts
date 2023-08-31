@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType, VNode } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 export type ModalAction = "confirm" | "close" | "cancel";
 type DoneFn = (cancel?: boolean) => void;

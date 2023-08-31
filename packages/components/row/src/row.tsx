@@ -1,8 +1,8 @@
 import { CSSProperties, computed, defineComponent, provide } from "vue";
 import rowProps from "./types";
 
-import { rowContextKey } from "@yy/tokens";
-import { createNamespace } from "@yy/utils";
+import { rowContextKey } from "@nimble-ui/tokens";
+import { createNamespace } from "@nimble-ui/utils";
 
 export default defineComponent({
   name: "YRow",

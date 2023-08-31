@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref } from "vue";
 import type { ProvideContext } from "./types";
-import type { CheckboxGroupProps } from "@yy/components/checkbox-group";
+import type { CheckboxGroupProps } from "@nimble-ui/components/checkbox-group";
 
 type CheckboxGroupContext = ProvideContext<{
   props: CheckboxGroupProps;

@@ -3,9 +3,9 @@ import YTrigger from "./trigger";
 import YContent from "./content";
 
 import tooltipProps from "./types";
-import { tooltipContextKey, type RectInfo } from "@yy/tokens";
-import { useEventListener } from "@yy/hooks";
-import { isFunction } from "@yy/utils";
+import { tooltipContextKey, type RectInfo } from "@nimble-ui/tokens";
+import { useEventListener } from "@nimble-ui/hooks";
+import { isFunction } from "@nimble-ui/utils";
 
 export default defineComponent({
   name: "YTooltip",

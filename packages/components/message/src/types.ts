@@ -1,5 +1,5 @@
 import { AppContext, ComponentInternalInstance, ExtractPropTypes, PropType, VNode } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 export const messageTypes = ["success", "info", "warning", "error"] as const;
 

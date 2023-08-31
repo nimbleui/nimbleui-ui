@@ -1,7 +1,7 @@
 import { computed, defineComponent, provide } from "vue";
 import buttonGroupProps from "./types";
-import { createNamespace, isFunction } from "@yy/utils";
-import { buttonGroupContextKey } from "@yy/tokens";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { buttonGroupContextKey } from "@nimble-ui/tokens";
 
 export default defineComponent({
   name: "YButtonGroup",

@@ -1,9 +1,9 @@
 import { Fragment, cloneVNode, defineComponent, inject, ref, withDirectives } from "vue";
 import type { PropType, VNode, ObjectDirective } from "vue";
-import { isObject } from "@yy/utils";
+import { isObject } from "@nimble-ui/utils";
 import type { TriggerType } from "./types";
 
-import { tooltipContextKey } from "@yy/tokens";
+import { tooltipContextKey } from "@nimble-ui/tokens";
 
 export default defineComponent({
   name: "YTrigger",

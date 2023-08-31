@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import _expandTransition from "./src/expandTransition";
 
 export * from "./src/types";

@@ -1,7 +1,7 @@
-import { createNamespace, isFunction } from "@yy/utils";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { computed, defineComponent, inject, ref, watch } from "vue";
-import { menuContextKey } from "@yy/tokens";
-import { YExpandTransition } from "@yy/components/expand-transition";
+import { menuContextKey } from "@nimble-ui/tokens";
+import { YExpandTransition } from "@nimble-ui/components/expand-transition";
 
 import { type MenuItems, subMenuProps } from "./props";
 import { itemRenderer } from "./utils";

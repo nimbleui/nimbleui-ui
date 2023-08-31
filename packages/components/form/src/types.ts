@@ -1,7 +1,7 @@
 import { ExtractPropTypes, ComponentPublicInstance, PropType } from "vue";
-import { rowUniqueProp } from "@yy/components/row";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
-import { TriggerEventType, Rules } from "@yy/tokens";
+import { rowUniqueProp } from "@nimble-ui/components/row";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
+import { TriggerEventType, Rules } from "@nimble-ui/tokens";
 
 const formProps = mergeCommonProp({
   // row组件的参数

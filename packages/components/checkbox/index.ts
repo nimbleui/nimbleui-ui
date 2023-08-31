@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import checkbox from "./src/checkbox";
 
 export * from "./src/types";

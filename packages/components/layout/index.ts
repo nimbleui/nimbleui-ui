@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import _layout from "./src/layout";
 import _header from "./src/header";
 import _sidebar from "./src/sidebar";

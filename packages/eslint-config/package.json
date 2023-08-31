@@ -1,5 +1,5 @@
 {
-  "name": "@yy/eslint-config",
+  "name": "@nimble-ui/eslint-config",
   "version": "0.1.0",
   "description": "eslint配置文件",
   "author": "陈羽云 <897908015@qq.com>",

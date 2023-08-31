@@ -1,7 +1,7 @@
 import { computed, defineComponent, inject } from "vue";
-import { isFunction, createNamespace, handlePropOrContext } from "@yy/utils";
+import { isFunction, createNamespace, handlePropOrContext } from "@nimble-ui/utils";
 import buttonProps from "./types";
-import { buttonGroupContextKey } from "@yy/tokens";
+import { buttonGroupContextKey } from "@nimble-ui/tokens";
 
 export default defineComponent({
   name: "YButton",

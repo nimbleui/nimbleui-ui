@@ -1,6 +1,6 @@
 import { CSSProperties, Transition, defineComponent, Teleport } from "vue";
-import { createNamespace, isEmpty } from "@yy/utils";
-import { useLazyRender } from "@yy/hooks";
+import { createNamespace, isEmpty } from "@nimble-ui/utils";
+import { useLazyRender } from "@nimble-ui/hooks";
 
 import overlayProps from "./types";
 

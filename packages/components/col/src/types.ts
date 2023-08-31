@@ -1,6 +1,6 @@
 import { PropType, ExtractPropTypes } from "vue";
 
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 const colProps = mergeCommonProp({
   /**

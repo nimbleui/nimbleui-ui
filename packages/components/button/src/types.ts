@@ -1,7 +1,7 @@
 import { PropType, ExtractPropTypes } from "vue";
 import type { VNodeChild } from "vue";
-import type { ButtonTypes, ButtonShape, ButtonSize } from "@yy/tokens";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import type { ButtonTypes, ButtonShape, ButtonSize } from "@nimble-ui/tokens";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 const buttonProps = mergeCommonProp({
   /**

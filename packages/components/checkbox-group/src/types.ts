@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 type Direction = "horizontal" | "vertical";
 

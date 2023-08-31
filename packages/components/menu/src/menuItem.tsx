@@ -1,8 +1,8 @@
-import { createNamespace, isFunction } from "@yy/utils";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { computed, defineComponent, inject, watch } from "vue";
 
 import { menuItemProps } from "./props";
-import { menuContextKey } from "@yy/tokens";
+import { menuContextKey } from "@nimble-ui/tokens";
 
 export default defineComponent({
   name: "YMenuItem",

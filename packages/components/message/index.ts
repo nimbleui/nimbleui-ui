@@ -1,4 +1,4 @@
-import { withInstallFunction } from "@yy/utils";
+import { withInstallFunction } from "@nimble-ui/utils";
 import _message from "./src/function-method";
 
 export * from "./src/types";

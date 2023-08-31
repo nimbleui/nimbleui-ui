@@ -1,4 +1,4 @@
-import { generate, setAlphaColor, setSolidColor } from "@yy/utils";
+import { generate, setAlphaColor, setSolidColor } from "@nimble-ui/utils";
 
 export interface Opts {
   primary?: string;

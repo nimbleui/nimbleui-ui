@@ -1,5 +1,5 @@
 import { ExtractPropTypes, HTMLAttributes, PropType, StyleValue } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 const scrollbarProps = mergeCommonProp({
   tag: {

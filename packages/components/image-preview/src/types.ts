@@ -1,4 +1,4 @@
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 import { ExtractPropTypes } from "vue";
 
 const imagePreviewProps = mergeCommonProp({

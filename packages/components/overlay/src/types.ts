@@ -1,5 +1,5 @@
 import { CSSProperties, ExtractPropTypes, PropType } from "vue";
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 
 const overlayProps = mergeCommonProp({
   show: Boolean,

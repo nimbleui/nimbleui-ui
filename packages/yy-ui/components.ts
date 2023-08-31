@@ -23,7 +23,7 @@ import {
   YMenu,
   YCard,
   YTooltip,
-} from "@yy/components";
+} from "@nimble-ui/components";
 
 export default [
   YRow,

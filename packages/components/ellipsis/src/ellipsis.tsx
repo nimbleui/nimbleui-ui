@@ -1,6 +1,6 @@
 import { computed, defineComponent, ref } from "vue";
-import { YTooltip } from "@yy/components/tooltip";
-import { createNamespace, isNumber } from "@yy/utils";
+import { YTooltip } from "@nimble-ui/components/tooltip";
+import { createNamespace, isNumber } from "@nimble-ui/utils";
 import ellipsisProps from "./types";
 
 export default defineComponent({

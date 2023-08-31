@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
-import { mergeCommonProp } from "@yy/utils";
-import { TriggerType } from "@yy/components/tooltip";
-import { contentProps } from "@yy/components/tooltip/src/props";
+import { mergeCommonProp } from "@nimble-ui/utils";
+import { TriggerType } from "@nimble-ui/components/tooltip";
+import { contentProps } from "@nimble-ui/components/tooltip/src/props";
 
 const contentProp = contentProps();
 export const contentPropsKey = Object.keys(contentProp);

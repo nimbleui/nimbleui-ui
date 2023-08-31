@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { MenuItems } from "yy-ui";
+import { MenuItems } from "@nimble-ui/vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();

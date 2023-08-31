@@ -1,6 +1,6 @@
 import { CSSProperties, computed, defineComponent, inject } from "vue";
-import { rowContextKey } from "@yy/tokens";
-import { createNamespace, handlePropOrContext } from "@yy/utils";
+import { rowContextKey } from "@nimble-ui/tokens";
+import { createNamespace, handlePropOrContext } from "@nimble-ui/utils";
 
 import colProps from "./types";
 

@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import buttonGroup from "./src/buttonGroup";
 
 export * from "./src/types";

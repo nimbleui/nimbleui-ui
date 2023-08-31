@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useTheme } from "yy-ui";
+import { useTheme } from "@nimble-ui/vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 

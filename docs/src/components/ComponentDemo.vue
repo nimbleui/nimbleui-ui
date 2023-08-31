@@ -51,7 +51,7 @@
 <script setup lang="tsx">
 import { onMounted, ref } from "vue";
 import hljs from "highlight.js";
-import { YMessage } from "yy-ui";
+import { YMessage } from "@nimble-ui/vue";
 
 const props = defineProps<{ code: string }>();
 const codeRef = ref<HTMLElement>();

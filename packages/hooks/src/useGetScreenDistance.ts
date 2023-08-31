@@ -1,5 +1,5 @@
 import { onMounted, reactive, ref } from "vue";
-import { getScrollParent } from "@yy/utils";
+import { getScrollParent } from "@nimble-ui/utils";
 
 import type { Ref } from "vue";
 import { useEventListener } from "./useEventListener";

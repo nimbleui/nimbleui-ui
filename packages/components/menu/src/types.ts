@@ -1,4 +1,4 @@
-import { mergeCommonProp } from "@yy/utils";
+import { mergeCommonProp } from "@nimble-ui/utils";
 import { ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { subMenu, commonProps, type MenuItems } from "./props";
 

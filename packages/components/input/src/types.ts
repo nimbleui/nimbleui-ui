@@ -1,5 +1,5 @@
 import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from "vue";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 type InputType = "text" | "number" | "password";
 type FunType = (value: string | number) => string;

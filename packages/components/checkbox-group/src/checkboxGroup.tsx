@@ -1,7 +1,7 @@
 import { defineComponent, toRef, onMounted, watch } from "vue";
-import { useChildren, useParent } from "@yy/hooks";
-import { createNamespace, isBoolean, isFunction, pick } from "@yy/utils";
-import { checkboxGroupContextKey, formItemContextKey } from "@yy/tokens";
+import { useChildren, useParent } from "@nimble-ui/hooks";
+import { createNamespace, isBoolean, isFunction, pick } from "@nimble-ui/utils";
+import { checkboxGroupContextKey, formItemContextKey } from "@nimble-ui/tokens";
 
 import checkboxGroupProps from "./types";
 import type { CheckboxFunParam } from "./types";

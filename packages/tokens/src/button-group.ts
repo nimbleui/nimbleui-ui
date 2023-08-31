@@ -1,5 +1,5 @@
 import type { InjectionKey, ComputedRef } from "vue";
-import type { Fun } from "@yy/utils";
+import type { Fun } from "@nimble-ui/utils";
 
 export type ButtonTypes = "default" | "primary" | "success" | "warning" | "info" | "error" | "dashed";
 

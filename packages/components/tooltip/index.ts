@@ -1,4 +1,4 @@
-import { withInstall } from "@yy/utils";
+import { withInstall } from "@nimble-ui/utils";
 import _tooltip from "./src/tooltip";
 
 export * from "./src/types";

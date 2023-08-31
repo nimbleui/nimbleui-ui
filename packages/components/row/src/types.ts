@@ -1,5 +1,5 @@
 import { PropType, ExtractPropTypes } from "vue";
-import { mergeCommonProp, mergeFunctionProp } from "@yy/utils";
+import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 export type RowAlign = "top" | "middle" | "bottom";
 export type RowJustify = "start" | "center" | "end" | "space-around" | "space-between" | "space-evenly";

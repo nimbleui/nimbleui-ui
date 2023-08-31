@@ -1,4 +1,4 @@
-import { createNamespace } from "@yy/utils";
+import { createNamespace } from "@nimble-ui/utils";
 import { defineComponent } from "vue";
 
 import cardProps from "./types";

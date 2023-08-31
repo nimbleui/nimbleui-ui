@@ -1,8 +1,8 @@
 import { computed, defineComponent, ref } from "vue";
 
-import { createNamespace, handlePropOrContext, isFunction } from "@yy/utils";
-import { useParent, useExpose } from "@yy/hooks";
-import { checkboxGroupContextKey } from "@yy/tokens";
+import { createNamespace, handlePropOrContext, isFunction } from "@nimble-ui/utils";
+import { useParent, useExpose } from "@nimble-ui/hooks";
+import { checkboxGroupContextKey } from "@nimble-ui/tokens";
 
 import checkboxProps, { CheckboxExpose } from "./types";
 

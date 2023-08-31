@@ -1,4 +1,4 @@
-import { createNamespace } from "@yy/utils";
+import { createNamespace } from "@nimble-ui/utils";
 import { defineComponent, Transition } from "vue";
 
 import expandTransitionProps from "./types";

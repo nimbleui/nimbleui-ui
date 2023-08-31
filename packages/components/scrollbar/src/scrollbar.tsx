@@ -1,7 +1,7 @@
 import { defineComponent, ref } from "vue";
 
 import scrollbarProps from "./types";
-import { createNamespace } from "@yy/utils";
+import { createNamespace } from "@nimble-ui/utils";
 
 export default defineComponent({
   name: "YScrollbar",

@@ -1,7 +1,7 @@
 import { defineComponent, inject, ref } from "vue";
-import { createNamespace } from "@yy/utils";
-import { imagePreviewContextKey } from "@yy/tokens";
-import { YImagePreview, type imagePreviewExpose } from "@yy/components/image-preview";
+import { createNamespace } from "@nimble-ui/utils";
+import { imagePreviewContextKey } from "@nimble-ui/tokens";
+import { YImagePreview, type imagePreviewExpose } from "@nimble-ui/components/image-preview";
 
 import imageProps from "./types";
 

@@ -1,5 +1,5 @@
 {
-  "name": "yy-ui",
+  "name": "@nimble-ui/vue",
   "version": "0.1.0",
   "description": "基于vue3开发的组件库",
   "author": "陈羽云 <897908015@qq.com>",
@@ -12,6 +12,6 @@
     "test": "node ./__tests__/yy.test.js"
   },
   "dependencies": {
-    "@yy/components": "^0.1.0"
+    "@nimble-ui/components": "^0.1.0"
   }
 }

@@ -1,7 +1,7 @@
 import { Teleport, Transition, defineComponent, inject, reactive, ref, CSSProperties } from "vue";
-import { tooltipContextKey, type RectInfo } from "@yy/tokens";
-import { createNamespace, isNumber } from "@yy/utils";
-import { useCreateIndex, useLazyRender, useScrollParent } from "@yy/hooks";
+import { tooltipContextKey, type RectInfo } from "@nimble-ui/tokens";
+import { createNamespace, isNumber } from "@nimble-ui/utils";
+import { useCreateIndex, useLazyRender, useScrollParent } from "@nimble-ui/hooks";
 
 import { contentProps, type PlacementType } from "./props";
 

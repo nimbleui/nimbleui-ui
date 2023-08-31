@@ -11,10 +11,13 @@ import json from "@rollup/plugin-json";
 
 import { pkgRoot, excludeFiles, writeBundles, buildOutput } from "./utils.js";
 
+const domeReg = /.demo.vue$/;
+
 const includeFilePath = ["components", "hooks", "tokens", "utils", "yy-ui"];
 function filterFilePath(paths: string[]) {
   return paths.filter((path) => {
-    return !!includeFilePath.find((p) => path.indexOf(`packages/${p}`) > -1);
+    const check = domeReg.test(path);
+    return !check && !!includeFilePath.find((p) => path.indexOf(`packages/${p}`) > -1);
   });
 }
 

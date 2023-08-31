@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { h } from "vue";
-import { YMessage } from "yy-ui";
+import { YMessage } from "@nimble-ui/vue";
 
 const open = () => {
   YMessage("这是个Message");

@@ -1,8 +1,8 @@
 import { defineComponent, provide, reactive, ref, Teleport, Transition } from "vue";
-import YOverlay from "@yy/components/overlay";
-import { createNamespace } from "@yy/utils";
-import { useLazyRender, useMouseMove } from "@yy/hooks";
-import { imagePreviewContextKey } from "@yy/tokens";
+import YOverlay from "@nimble-ui/components/overlay";
+import { createNamespace } from "@nimble-ui/utils";
+import { useLazyRender, useMouseMove } from "@nimble-ui/hooks";
+import { imagePreviewContextKey } from "@nimble-ui/tokens";
 
 import imagePreviewProps from "./types";
 

@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { YMessage } from "yy-ui";
+import { YMessage } from "@nimble-ui/vue";
 
 interface Options {
   label: string;

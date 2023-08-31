@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import router from "./router";
-import YYUi from "yy-ui";
-import "@yy/theme/dist/index.css";
+import YYUi from "@nimble-ui/vue";
+import "@nimble-ui/theme/dist/index.css";
 import "highlight.js/styles/atom-one-dark.css";
 
 import App from "./App.vue";

@@ -1,6 +1,6 @@
 import { defineComponent, ref } from "vue";
-import { YTooltip } from "@yy/components/tooltip";
-import { createNamespace, isFunction, pick } from "@yy/utils";
+import { YTooltip } from "@nimble-ui/components/tooltip";
+import { createNamespace, isFunction, pick } from "@nimble-ui/utils";
 
 import dropdownProps, { contentPropsKey } from "./types";
 
