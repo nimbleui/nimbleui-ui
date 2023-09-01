@@ -49,7 +49,7 @@ const messageProps = mergeCommonProp({
    * @description 关闭时的回调函数, 参数为被关闭的 message 实例
    */
   onClose: {
-    type: Function,
+    type: Function as PropType<() => void>,
   },
   /**
    * @description 显示时间，单位为毫秒。 设为 0 则不会自动关闭

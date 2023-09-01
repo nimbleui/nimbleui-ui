@@ -10,7 +10,7 @@ export default defineComponent({
   props: messageProps(),
   emits: ["destroy"],
   setup(props, ctx) {
-    const visible = ref(true);
+    const visible = ref(false);
     const height = ref(0);
     const bem = createNamespace("message");
     const messageRef = ref<HTMLElement>();
@@ -27,7 +27,6 @@ export default defineComponent({
 
     function close() {
       visible.value = false;
-      props.onClose?.();
     }
 
     function startTimer() {
@@ -39,6 +38,7 @@ export default defineComponent({
 
     onMounted(() => {
       startTimer();
+      visible.value = true;
     });
 
     useResizeObserver(messageRef, () => {
@@ -53,8 +53,9 @@ export default defineComponent({
     });
 
     return () => {
+      const { onClose } = props;
       return (
-        <Transition name="y-message-fade" onAfterLeave={() => ctx.emit("destroy")} appear>
+        <Transition name="y-message-fade" onBeforeLeave={onClose} onAfterLeave={() => ctx.emit("destroy")} appear>
           <div v-show={visible.value} class={bem.b()} style={styles.value} ref={messageRef}>
             {ctx.slots.default ? ctx.slots.default() : props.message}
           </div>

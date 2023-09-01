@@ -12,9 +12,7 @@ const closeMessage = (id: string) => {
   const index = instances.findIndex((instance) => instance.id === id);
   if (index === -1) return;
 
-  const { handler } = instances[index];
   instances.splice(index, 1);
-  handler.close();
 };
 
 function createMessage({ appendTo, ...options }: MessageParamsNormalized, context?: AppContext | null) {

@@ -6,6 +6,7 @@
 basic.vue
 timing.vue
 type.vue
+close.vue
 ```
 
 ## API
