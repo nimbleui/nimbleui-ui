@@ -26,7 +26,7 @@ export default defineComponent({
       const { direction, size } = props;
       const style: CSSProperties = {};
       const value = isString(size) ? size : `${size}px`;
-      if (direction === "ltr" || direction == "rtl") {
+      if (direction === "left" || direction == "right") {
         style.width = value;
       } else {
         style.height = value;

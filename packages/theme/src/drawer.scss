@@ -9,33 +9,33 @@
   background-color: var(--y-drawer-bg-color);
   box-shadow: -6px 0 16px 0 rgb(0 0 0 / 8%), -3px 0 6px -4px rgb(0 0 0 / 12%), -9px 0 28px 8px rgb(0 0 0 / 5%);
 
-  &.ltr,
-  &.rtl {
+  &.left,
+  &.right {
     height: 100%;
     top: 0;
     bottom: 0;
   }
 
-  &.ttb,
-  &.btt {
+  &.bottom,
+  &.top {
     width: 100%;
     left: 0;
     right: 0;
   }
 
-  &.ltr {
+  &.left {
     left: 0;
   }
 
-  &.rtl {
+  &.right {
     right: 0;
   }
 
-  &.ttb {
+  &.top {
     top: 0;
   }
 
-  &.btt {
+  &.bottom {
     bottom: 0;
   }
 }
@@ -62,19 +62,19 @@
   &-leave-to {
     opacity: 0;
 
-    &.ltr {
+    &.left {
       transform: translateX(-100%);
     }
 
-    &.rtl {
+    &.right {
       transform: translateX(100%);
     }
 
-    &.ttb {
+    &.top {
       transform: translateY(-100%);
     }
 
-    &.btt {
+    &.bottom {
       transform: translateY(100%);
     }
   }

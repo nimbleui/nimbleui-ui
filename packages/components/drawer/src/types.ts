@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 
-type Direction = "rtl" | "ltr" | "ttb" | "btt";
+export type DrawerDirection = "right" | "left" | "top" | "bottom";
 
 type DoneFn = (cancel?: boolean) => void;
 type BeforeCloseFn = (done: DoneFn) => void;
@@ -17,8 +17,8 @@ const drawerProps = mergeCommonProp({
    * @description 打开的方向
    */
   direction: {
-    type: String as PropType<Direction>,
-    default: "rtl",
+    type: String as PropType<DrawerDirection>,
+    default: "right",
   },
   /**
    * @description 窗体的大小

@@ -19,9 +19,6 @@ const open = () => {
   YMessage({
     message: "手动关闭",
     duration: 0,
-    onClose() {
-      console.log("关闭回调函数");
-    },
   });
 };
 
