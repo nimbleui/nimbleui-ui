@@ -11,6 +11,7 @@
     "theme:prod": "lerna run --scope @nimble-ui/theme build",
     "theme:dev": "lerna run --scope @nimble-ui/theme dev",
     "docs:dev": "lerna run --scope @nimble-ui/docs dev",
+    "docs:build": "lerna run --scope @nimble-ui/docs build",
     "build": "lerna run --scope @nimble-ui/build build",
     "component": "npx yy-cli component"
   },

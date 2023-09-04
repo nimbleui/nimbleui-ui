@@ -5,6 +5,7 @@ import { markedTransformDemo } from "./build/vite-plugin-md-transform-demo";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   plugins: [
     markedTransformDemo(),
     vue({

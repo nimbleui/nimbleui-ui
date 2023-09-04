@@ -16,7 +16,7 @@ const router = createRouter({
       path: "/component/",
       name: "componentLayout",
       component: () => import("../components/ComponentLayout.vue"),
-      children: [...componentRouters, { path: "*", component: () => import("../pages/notFound.vue") }],
+      children: [...componentRouters],
     },
   ],
 });
