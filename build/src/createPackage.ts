@@ -11,13 +11,13 @@ const pkg = {
   main: "lib/yy-ui/index.js",
   module: "es/yy-ui/index.mjs",
   types: "types/index.d.ts",
-  homepage: "https://yy-ui.org/",
+  homepage: "https://nimbleui.github.io/docs/",
   bugs: {
-    url: "https://github.com/yy-ui/issues",
+    url: "https://github.com/nimbleui/nimbleui-ui/issues",
   },
   repository: {
     type: "git",
-    url: "git+https://github.com/yy-ui/yy-ui.git",
+    url: "git+https://github.com/nimbleui/nimbleui-ui",
   },
   unpkg: "index.full.js",
   jsdelivr: "index.full.js",
