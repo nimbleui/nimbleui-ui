@@ -6,4 +6,8 @@
 
 <script setup lang="ts"></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.component-demos {
+  margin-bottom: 20px;
+}
+</style>

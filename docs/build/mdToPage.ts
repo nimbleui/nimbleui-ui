@@ -14,7 +14,7 @@ interface InfosType {
   variable: string;
   fileName: string;
 }
-function resolveDemoInfos(text: string, url: string) {
+function resolveDemoInfos(text: string) {
   const ids = text
     .split("\n")
     .map((line) => line.trim())
@@ -55,14 +55,14 @@ function genDemosTemplate(demoInfos: InfosType[], colSpan: number) {
   return `<component-demos :span="${colSpan}">${demoInfos.map(({ tag }) => tag).join("\n")}</component-demos>`;
 }
 
-export function mdToPage(text: string, url: string) {
+export function mdToPage(text: string) {
   const tokens = marked.lexer(text);
   // 查找demo
   const demosIndex = tokens.findIndex((token) => token.type === "code" && token.lang === "demo");
   let demoInfos: InfosType[] = [];
   if (~demosIndex) {
     const item: any = tokens[demosIndex];
-    demoInfos = resolveDemoInfos(item.text, url);
+    demoInfos = resolveDemoInfos(item.text);
     tokens.splice(demosIndex, 1, {
       type: "html",
       pre: false,
@@ -77,12 +77,9 @@ export function mdToPage(text: string, url: string) {
 
   const docTemplate = `
 <template>
-  <div class="doc">
-    <div>
-      ${template}
-    </div>
-    <div style="width: 192px;"></div>
-  </div>
+  <ComponentDemos>
+    ${template}
+  </ComponentDemos>
 </template>
 `;
   const docScript = genScript(demoInfos);

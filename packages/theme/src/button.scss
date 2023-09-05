@@ -57,6 +57,7 @@
     border-radius: inherit;
     opacity: 0;
     transition: .3s;
+    box-shadow: 0 0 0 8px get-css-var('button', 'primary', 'border-color');
     content: ' ';
   }
 
@@ -78,6 +79,15 @@
       color: get-css-var('button', 'hover', 'text-color');
       border-color: get-css-var('button', 'hover', 'border-color');
       outline: none;
+    }
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  &:not(.is-disabled) {
+    &:active::after {
+      box-shadow: none;
+      opacity: 0.6;
+      transition: 0s;
     }
   }
 

@@ -88,6 +88,9 @@ const toggleTheme = () => {
   &-2 {
     font-size: 22px;
   }
+  &-3 {
+    margin-top: 20px;
+  }
 }
 .md-p {
   margin-bottom: 10px;
@@ -97,6 +100,38 @@ const toggleTheme = () => {
   flex-wrap: wrap;
   & > * {
     margin: 10px 10px 0 0;
+  }
+}
+.demo-table {
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: var(--y-color-bg-container);
+  font-family: "微软雅黑", v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+  &__head {
+    background-color: var(--y-color-bg-elevated);
+    th {
+      white-space: nowrap;
+      text-align: inherit;
+      padding: 12px;
+      vertical-align: inherit;
+      text-transform: none;
+      font-weight: 500;
+    }
+  }
+  &__body {
+    td {
+      padding: 12px;
+      code {
+        font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+      }
+      &:nth-of-type(4) {
+        width: 35%;
+      }
+    }
   }
 }
 </style>

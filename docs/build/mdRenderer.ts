@@ -22,5 +22,16 @@ export default function createRenderer() {
     return `<p class="md-p">${text}</p>`;
   };
 
+  renderer.table = (header, body) => {
+    if (body) body = `<tbody class="demo-table__body">${body}</tbody>`;
+
+    return `
+      <table class="demo-table">
+        <thead class="demo-table__head">${header}</thead>
+        ${body}
+      </table>
+    `;
+  };
+
   return renderer;
 }

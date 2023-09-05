@@ -42,7 +42,9 @@
     </div>
     <template #footer>
       <div v-show="showCode" class="code">
-        <code ref="codeRef" class="code-wrap"></code>
+        <code class="code-wrap">
+          <pre ref="codeRef"></pre>
+        </code>
       </div>
     </template>
   </YCard>
@@ -63,7 +65,7 @@ const handleShowCode = () => {
 const newCode = hljs.highlightAuto(decodeURIComponent(props.code), ["html", "js", "css"]).value;
 onMounted(() => {
   if (codeRef.value) {
-    codeRef.value.innerHTML = `<pre>${newCode}</pre>`;
+    codeRef.value.innerHTML = `${newCode}`;
   }
 });
 
@@ -84,8 +86,10 @@ const handleCloneCode = () => {
     font-family: inherit;
     border-top: 1px solid var(--y-color-border-secondary);
     &-wrap {
+      font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
       pre {
         font-family: inherit;
+        // font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
       }
     }
   }
