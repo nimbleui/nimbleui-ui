@@ -24,8 +24,8 @@ loading.vue
 | keyboard | `boolean` | `true` | 是否支持键盘操作 |  |
 | loading | `boolean` | `false` | 按钮是否显示加载状态 |  |
 | round | `boolean` | `false` | 按钮是否显示圆角 |  |
-| content | `(details) => VNodeChild` \| `string` | |按钮的显示内容 | |
-| size | `'small'` \| `'medium'` \| `'large'` \| `'medium'` | `'medium'` |按钮的尺寸  |  |
+| content | `(details) => VNodeChild` \| `string` | - |按钮的显示内容 | |
+| size | `'small'` \| `'medium'` \| `'large'` | `'medium'` |按钮的尺寸  |  |
 
 ### Button Events
 | 事件名 | 说明 | 类型 |

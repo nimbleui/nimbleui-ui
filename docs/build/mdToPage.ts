@@ -51,11 +51,12 @@ function genScript(demoInfos: InfosType[], components = []) {
   `;
 }
 
-function genDemosTemplate(demoInfos: InfosType[], colSpan: number) {
-  return `<component-demos :span="${colSpan}">${demoInfos.map(({ tag }) => tag).join("\n")}</component-demos>`;
+function genDemosTemplate(demoInfos: InfosType[], span: number) {
+  return `<component-demos :span="${span}">${demoInfos.map(({ tag }) => tag).join("\n")}</component-demos>`;
 }
 
 export function mdToPage(text: string) {
+  const span = ~text.search("<!--single-column-->") ? 1 : 2;
   const tokens = marked.lexer(text);
   // 查找demo
   const demosIndex = tokens.findIndex((token) => token.type === "code" && token.lang === "demo");
@@ -66,7 +67,7 @@ export function mdToPage(text: string) {
     tokens.splice(demosIndex, 1, {
       type: "html",
       pre: false,
-      text: genDemosTemplate(demoInfos, 1),
+      text: genDemosTemplate(demoInfos, span),
     } as any);
   }
 
@@ -77,9 +78,9 @@ export function mdToPage(text: string) {
 
   const docTemplate = `
 <template>
-  <ComponentDemos>
-    ${template}
-  </ComponentDemos>
+  <div class="docs">
+  ${template}
+  </div>
 </template>
 `;
   const docScript = genScript(demoInfos);

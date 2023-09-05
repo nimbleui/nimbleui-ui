@@ -79,7 +79,6 @@ const handleCloneCode = () => {
 
 <style lang="scss" scoped>
 .card {
-  margin-bottom: 20px;
   .code {
     padding: 20px;
     word-break: break-word;

@@ -6,7 +6,7 @@ import "highlight.js/styles/atom-one-dark.css";
 
 import App from "./App.vue";
 import ComponentDemo from "./components/ComponentDemo.vue";
-import ComponentDemos from "./components/componentDemos.vue";
+import ComponentDemos from "./components/ComponentDemos";
 
 createApp(App)
   .use(YYUi)

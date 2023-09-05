@@ -83,10 +83,10 @@ const toggleTheme = () => {
   font-weight: 500;
   margin-bottom: 15px;
   &-1 {
-    font-size: 30px;
+    font-size: 25px;
   }
   &-2 {
-    font-size: 22px;
+    font-size: 18px;
   }
   &-3 {
     margin-top: 20px;
@@ -110,7 +110,7 @@ const toggleTheme = () => {
   border-radius: 5px;
   overflow: hidden;
   background-color: var(--y-color-bg-container);
-  font-family: "微软雅黑", v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+  font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
   &__head {
     background-color: var(--y-color-bg-elevated);
     th {
@@ -133,5 +133,14 @@ const toggleTheme = () => {
       }
     }
   }
+}
+.component-demos {
+  display: grid;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.docs {
+  margin-bottom: 20px;
 }
 </style>

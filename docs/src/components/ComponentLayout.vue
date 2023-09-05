@@ -56,6 +56,10 @@ const items = reactive<MenuItems[]>([
     text: "数据录入组件",
     items: [
       {
+        text: "Checkbox 复选框",
+        link: "/component/checkbox",
+      },
+      {
         text: "Form 表单",
         link: "/component/form",
       },
