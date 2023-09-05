@@ -1,5 +1,5 @@
 
-<h1 align="center">@nimble-ui/vue</h1>
+<h1 align="center">nimble-ui</h1>
 <p align="center">一个 Vue 3 组件库</p>
 <p align="center"><b>比较完整，主题可调，组件灵活，使用 TypeScript 开发</b></p>
 
