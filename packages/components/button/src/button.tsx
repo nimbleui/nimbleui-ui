@@ -33,9 +33,10 @@ export default defineComponent({
     });
 
     return () => {
-      const { nativeType, content, details } = props;
+      const { nativeType, content, details, loading } = props;
       return (
         <button class={buttonCls.value} type={nativeType} onClick={onClick}>
+          {loading && <i class={bem.is("loading")}></i>}
           {isFunction(content) ? content(details) : content || ctx.slots.default?.()}
         </button>
       );
