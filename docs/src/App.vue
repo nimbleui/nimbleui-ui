@@ -126,6 +126,9 @@ const toggleTheme = () => {
     td {
       padding: 12px;
       code {
+        background-color: var(--y-color-info-3);
+        padding: 2px 6px;
+        border-radius: 3px;
         font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
       }
       &:nth-of-type(4) {

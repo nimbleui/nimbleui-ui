@@ -15,7 +15,7 @@ loading.vue
 
 | 名称 | 类型 | 默认值 | 说明 | 版本 |
 | --- | --- | --- | --- | --- |
-| attr-type | `'button'` \| `'submit'`\| `'reset'` \| `'button'` | `'button'` | 按钮的 DOM 的 `type` 属性 |  |
+| attr-type | `'button'` \| `'submit'`\| `'reset'` | `'button'` | 按钮的 DOM 的 `type` 属性 |  |
 | block | `boolean` | `false` | 按钮是否显示为块级 |  |
 | bordered | `boolean` | `true` | 按钮是否显示 border |  |
 | circle | `boolean` | `false` | 按钮是否为圆形 |  |
