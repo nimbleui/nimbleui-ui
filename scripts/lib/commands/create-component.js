@@ -64,6 +64,21 @@ export default defineComponent({
 `;
 };
 
+const pageMdTemplate = (name, CNName = "", description = "") => {
+  return `# ${CNName || ""} ${name}
+${description || ""}
+
+\`\`\`deme
+
+\`\`\`
+## API
+
+### ${name} Props
+| 名称 | 类型 | 默认值 | 说明 | 版本 |
+| --- | --- | --- | --- | --- |
+`;
+};
+
 /**
  * 在index.ts页面追加组件导出
  * @param {*} name 组件文件名
@@ -147,7 +162,7 @@ export function createComponent(name, options) {
     }
   });
 
-  fs.writeFile(`${demos}/${name}.page.md`, `# ${CNName || ""} ${_name}`, (e) => {
+  fs.writeFile(`${demos}/${name}.page.md`, pageMdTemplate(upperName, CNName), (e) => {
     if (e) {
       throw new Error(`${_name}.page.md文件失败` + e);
     }

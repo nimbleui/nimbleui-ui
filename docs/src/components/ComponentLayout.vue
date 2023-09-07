@@ -53,6 +53,15 @@ const items = reactive<MenuItems[]>([
     ],
   },
   {
+    text: "布局组件",
+    items: [
+      {
+        text: "Space 按钮",
+        link: "/component/space",
+      },
+    ],
+  },
+  {
     text: "数据录入组件",
     items: [
       {

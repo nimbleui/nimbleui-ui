@@ -1,0 +1,18 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(space) {
+  display: flex;
+  justify-content: flex-start;
+
+  @include when(inline) {
+    display: inline-flex;
+  }
+
+  @include when(wrap) {
+    flex-flow: wrap;
+  }
+
+  @include when(vertical) {
+    flex-direction: column;
+  }
+}
