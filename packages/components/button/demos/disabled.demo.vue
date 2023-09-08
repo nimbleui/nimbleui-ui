@@ -6,8 +6,8 @@
   </markdown>
 
 <template>
-  <div class="demo-margin">
+  <YSpace>
     <YButton disabled> Disabled </YButton>
     <YButton disabled type="primary"> Disabled </YButton>
-  </div>
+  </YSpace>
 </template>

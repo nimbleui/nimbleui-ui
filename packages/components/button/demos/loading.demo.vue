@@ -3,7 +3,7 @@
   # 加载中
   
   按钮添加加载状态。
-  </markdown>
+</markdown>
 
 <template>
   <YButton :loading="loading" @click="handleClick">点我</YButton>

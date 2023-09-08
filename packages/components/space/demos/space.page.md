@@ -5,6 +5,8 @@
 ```demo
 basic.vue
 vertical.vue
+justify.vue
+size.vue
 ```
 
 ## API

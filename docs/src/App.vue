@@ -102,6 +102,7 @@ const toggleTheme = () => {
     margin: 10px 10px 0 0;
   }
 }
+
 .demo-table {
   text-align: left;
   border-collapse: separate;

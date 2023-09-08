@@ -10,8 +10,10 @@ export default defineComponent({
     const bem = createNamespace("space");
 
     const styles = computed<CSSProperties>(() => {
-      const { size = 8 } = props;
+      const { size = 8, align, justify } = props;
       return {
+        alignItems: align,
+        justifyContent: justify == "end" || justify == "start" ? `flex-${justify}` : justify,
         gap: isNumber(size) ? `${size}px` : `${size[0]}px ${size[1] || size[0]}px`,
       };
     });

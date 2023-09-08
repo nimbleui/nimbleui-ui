@@ -2,13 +2,15 @@ import { mergeCommonProp } from "@nimble-ui/utils";
 import type { ExtractPropTypes, PropType, VNode } from "vue";
 
 export type SpaceAlign = "start" | "end" | "center" | "baseline";
+export type SpaceJustify = "start" | "end" | "center" | "space-around" | "space-between" | "space-evenly";
 
 const spaceProps = mergeCommonProp({
   /**
-   * @description 对齐方式
+   * @description 垂直排列方式
    */
   align: {
     type: String as PropType<SpaceAlign>,
+    default: "center",
   },
   /**
    * @description 间距大小
@@ -38,6 +40,13 @@ const spaceProps = mergeCommonProp({
    */
   inline: {
     type: Boolean,
+  },
+  /**
+   * @description 水平排列方式
+   */
+  justify: {
+    type: String as PropType<SpaceJustify>,
+    default: "start",
   },
 });
 
