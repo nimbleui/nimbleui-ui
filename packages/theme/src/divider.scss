@@ -1,0 +1,59 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(divider) {
+  --y-divider-text-color: var(--y-color-text);
+  --y-divider-border-color: var(--y-color-border-secondary);
+}
+
+@include b(divider) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 24px 0;
+
+  &::before {
+    content: '';
+    border-top: 1px solid var(--y-divider-border-color);
+  }
+
+  &::after {
+    content: '';
+    border-top: 1px solid var(--y-divider-border-color);
+  }
+
+  @include when(left) {
+    &::before {
+      width: 5%;
+    }
+  
+    &::after {
+      width: 95%;
+    }
+  }
+
+  @include when(center) {
+    &::before {
+      width: 50%;
+    }
+  
+    &::after {
+      width: 50%;
+    }
+  }
+
+  @include when(right) {
+    &::before {
+      width: 95%;
+    }
+  
+    &::after {
+      width: 5%;
+    }
+  }
+
+  @include e(text) {
+    margin: 0 20px;
+    font-weight: 500;
+    color: var(--y-divider-text-color);
+  }
+}

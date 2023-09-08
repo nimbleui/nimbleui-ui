@@ -24,6 +24,7 @@ import {
   YCard,
   YTooltip,
   YSpace,
+  YDivider,
 } from "@nimble-ui/components";
 
 export default [
@@ -52,4 +53,5 @@ export default [
   YCard,
   YTooltip,
   YSpace,
+  YDivider,
 ];

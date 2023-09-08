@@ -56,6 +56,10 @@ const items = reactive<MenuItems[]>([
     text: "布局组件",
     items: [
       {
+        text: "分割线 Divider",
+        link: "/component/divider",
+      },
+      {
         text: "栅格 Grid",
         link: "/component/row",
       },

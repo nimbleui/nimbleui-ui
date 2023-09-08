@@ -24,3 +24,4 @@ export * from "./card";
 export * from "./card";
 export * from "./scrollbar";
 export * from "./space";
+export * from "./divider";

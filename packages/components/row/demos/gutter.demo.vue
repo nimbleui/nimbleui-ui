@@ -2,7 +2,7 @@
 <markdown>
   # 区块间隔
   
-  栅格常常需要和间隔进行配合，你可以使用 Row 的 gutter 属性。
+  栅格常常需要和间隔进行配合，你可以使用 Row 的 gutter 属性，默认值为0。
 </markdown>
 
 <template>
