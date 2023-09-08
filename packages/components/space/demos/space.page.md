@@ -15,6 +15,7 @@ size.vue
 | 名称 | 类型 | 默认值 | 说明 | 版本 |
 | --- | --- | --- | --- | --- |
 | align | `'start'` \| `'end'` \| `'center'` \| `'baseline'` | `'start'` | 对齐方式 | |
+| justify | `'start'` \| `'end'` \| `'center'` \| `'space-around'` \| `'space-between'` \| `'space-evenly'` | `'start'` | 水平排列方式 | |
 | size | `number` \| `[number, number]` | `8` | 间距大小 | |
 | vertical | `boolean` | `false` | 是否垂直布局 | |
 | wrap | `boolean` | `true` | 是否超出换行 | |

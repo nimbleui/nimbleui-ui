@@ -9,7 +9,7 @@ export const rowUniqueProp = {
    * @description 栅格间隔
    */
   gutter: {
-    type: Number,
+    type: [Number, Array] as PropType<number | [number, number]>,
     default: 0,
   },
   /**

@@ -1,8 +1,8 @@
 import { CSSProperties, computed, defineComponent, provide } from "vue";
-import rowProps from "./types";
-
+import { createNamespace, isArray } from "@nimble-ui/utils";
 import { rowContextKey } from "@nimble-ui/tokens";
-import { createNamespace } from "@nimble-ui/utils";
+
+import rowProps from "./types";
 
 export default defineComponent({
   name: "YRow",
@@ -10,7 +10,7 @@ export default defineComponent({
   setup(props, { slots }) {
     const rowContext = computed(() => {
       const { span, gutter, details } = props;
-      return { span, gutter, details };
+      return { span, gutter: isArray(gutter) ? gutter[0] : gutter, details };
     });
     provide(rowContextKey, rowContext);
 
@@ -18,9 +18,13 @@ export default defineComponent({
     const rowCls = computed(() => [bem.b(), bem.is(`justify-${props.justify}`), bem.is(`align-${props.align}`)]);
 
     const style = computed(() => {
+      const { gutter } = props;
       const styles: CSSProperties = {};
-      if (props.gutter) {
-        styles.marginRight = styles.marginLeft = `-${props.gutter / 2}px`;
+      if (isArray(gutter)) {
+        styles.rowGap = `${gutter[1]}px`;
+        styles.marginRight = styles.marginLeft = `-${gutter[0] / 2}px`;
+      } else {
+        styles.marginRight = styles.marginLeft = `-${gutter / 2}px`;
       }
 
       return styles;

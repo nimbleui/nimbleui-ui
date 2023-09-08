@@ -1,4 +1,4 @@
-import { createNamespace, isNumber } from "@nimble-ui/utils";
+import { createNamespace, isArray } from "@nimble-ui/utils";
 import { computed, defineComponent, CSSProperties } from "vue";
 
 import spaceProps from "./types";
@@ -14,7 +14,7 @@ export default defineComponent({
       return {
         alignItems: align,
         justifyContent: justify == "end" || justify == "start" ? `flex-${justify}` : justify,
-        gap: isNumber(size) ? `${size}px` : `${size[0]}px ${size[1] || size[0]}px`,
+        gap: isArray(size) ? `${size[0]}px ${size[1] || size[0]}px` : `${size}px`,
       };
     });
 

@@ -101,6 +101,9 @@ const toggleTheme = () => {
   & > * {
     margin: 10px 10px 0 0;
   }
+  .y-row {
+    flex: 100%;
+  }
 }
 
 .demo-table {
@@ -126,11 +129,16 @@ const toggleTheme = () => {
   &__body {
     td {
       padding: 12px;
-      code {
-        background-color: var(--y-color-info-3);
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+      .cell-div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        code {
+          background-color: var(--y-color-info-3);
+          padding: 2px 6px;
+          border-radius: 3px;
+          font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+        }
       }
       &:nth-of-type(4) {
         width: 35%;
@@ -146,5 +154,16 @@ const toggleTheme = () => {
 }
 .docs {
   margin-bottom: 20px;
+}
+.dome-100 {
+  width: 100%;
+}
+.demo-primary {
+  padding: 10px;
+  background-color: var(--y-color-primary);
+}
+.demo-primary-8 {
+  padding: 10px;
+  background-color: var(--y-color-primary-8);
 }
 </style>

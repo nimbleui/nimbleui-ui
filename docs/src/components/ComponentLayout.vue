@@ -39,15 +39,15 @@ const items = reactive<MenuItems[]>([
     text: "通用组件",
     items: [
       {
-        text: "Button 按钮",
+        text: "按钮 Button",
         link: "/component/button",
       },
       {
-        text: "Card 卡片",
+        text: "卡片 Card",
         link: "/component/card",
       },
       {
-        text: "Dropdown 下拉菜单",
+        text: "下拉菜单 Dropdown",
         link: "/component/dropdown",
       },
     ],
@@ -56,7 +56,11 @@ const items = reactive<MenuItems[]>([
     text: "布局组件",
     items: [
       {
-        text: "Space 按钮",
+        text: "栅格 Grid",
+        link: "/component/row",
+      },
+      {
+        text: "间距 Space",
         link: "/component/space",
       },
     ],
@@ -65,15 +69,15 @@ const items = reactive<MenuItems[]>([
     text: "数据录入组件",
     items: [
       {
-        text: "Checkbox 复选框",
+        text: "复选框 Checkbox",
         link: "/component/checkbox",
       },
       {
-        text: "Form 表单",
+        text: "表单 Form",
         link: "/component/form",
       },
       {
-        text: "Input 文本输入",
+        text: "文本输入 Input",
         link: "/component/input",
       },
     ],
@@ -82,15 +86,15 @@ const items = reactive<MenuItems[]>([
     text: "反馈组件",
     items: [
       {
-        text: "Drawer 抽屉",
+        text: "抽屉 Drawer",
         link: "/component/drawer",
       },
       {
-        text: "Message 信息",
+        text: "信息 Message",
         link: "/component/message",
       },
       {
-        text: "Modal 模态框",
+        text: "模态框 Modal",
         link: "/component/modal",
       },
     ],

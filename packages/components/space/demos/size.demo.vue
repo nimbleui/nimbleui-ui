@@ -6,9 +6,17 @@
 </markdown>
 
 <template>
-  <YSpace :size="12">
+  <YInput v-model="gap" style="margin-bottom: 10px" placeholder="请输入间隙" />
+  <YSpace :size="size">
     <YButton>vertical</YButton>
     <YButton>vertical</YButton>
     <YButton>vertical</YButton>
   </YSpace>
 </template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+const gap = ref(12);
+const size = computed(() => (gap.value ? Number(gap.value) : 0));
+</script>

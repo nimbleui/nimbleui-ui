@@ -33,5 +33,18 @@ export default function createRenderer() {
     `;
   };
 
+  renderer.tablerow = (content) => {
+    return `<tr>
+  <div class="tr-div">${content}</div>
+</tr>`;
+  };
+
+  renderer.tablecell = (content, flags) => {
+    const type = flags.header ? "th" : "td";
+    return `<${type}>
+  <div class="cell-div">${content}</div>
+</${type}>`;
+  };
+
   return renderer;
 }
