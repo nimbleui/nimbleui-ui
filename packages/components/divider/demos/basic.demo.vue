@@ -2,9 +2,11 @@
 <markdown>
   # 基础用法
   
-  基础抽屉，点击触发按钮抽屉从右滑出，点击遮罩区关闭。
+  对不同段落的文本进行分割。
 </markdown>
 
 <template>
-  <YDivider> divider </YDivider>
+  <p>分割线</p>
+  <YDivider />
+  <p>分割线</p>
 </template>

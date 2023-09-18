@@ -10,16 +10,13 @@ export default defineComponent({
     const bem = createNamespace("divider");
 
     const dividerCls = computed(() => {
-      const { direction } = props;
-      return [bem.b(), bem.is(direction)];
+      const { direction, dashed, vertical } = props;
+      return [bem.b(), bem.is(direction), bem.is("dashed", dashed), bem.is("vertical", vertical)];
     });
 
     return () => {
-      return (
-        <div class={dividerCls.value}>
-          <div class={bem.e("text")}>{ctx.slots.default?.()}</div>
-        </div>
-      );
+      const children = props.vertical ? null : ctx.slots.default?.();
+      return <div class={dividerCls.value}>{children && <div class={bem.e("text")}>{children}</div>}</div>;
     };
   },
 });

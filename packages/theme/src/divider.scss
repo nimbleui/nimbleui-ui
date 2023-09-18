@@ -9,16 +9,34 @@
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 24px 0;
+  margin: 16px 0;
+  line-height: 1;
 
-  &::before {
+  &::before, &::after {
     content: '';
     border-top: 1px solid var(--y-divider-border-color);
   }
 
-  &::after {
-    content: '';
-    border-top: 1px solid var(--y-divider-border-color);
+  @include when(vertical) {
+    height: 1em;
+    width: 1px;
+    margin-inline: 8px;
+    display: inline-block;
+    margin-block: 0;
+    vertical-align: middle;
+
+    &::before, &::after {
+      content: '';
+      display: block;
+      height: 50%;
+      border-left: 1px solid var(--y-divider-border-color) !important;
+    }
+  }
+  
+  @include when (dashed) {
+    &::before, &::after {
+      border-style: dashed;
+    }
   }
 
   @include when(left) {
@@ -54,6 +72,7 @@
   @include e(text) {
     margin: 0 20px;
     font-weight: 500;
+    white-space: nowrap;
     color: var(--y-divider-text-color);
   }
 }
