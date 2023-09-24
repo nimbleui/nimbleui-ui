@@ -1,6 +1,6 @@
 <template>
-  <YLayout has-sidebar style="height: calc(100vh - var(--y-header-height))" :position="'absolute'">
-    <YSidebar>
+  <YLayout style="height: calc(100vh - var(--y-header-height))" has-sidebar>
+    <YSidebar style="border-right: 1px solid var(--y-color-border-secondary); overflow-y: scroll">
       <YMenu
         v-model="activeMenuItem"
         all-open
@@ -12,9 +12,9 @@
         @open-change="onOpenChange"
       ></YMenu>
     </YSidebar>
-    <YLayout style="flex: 1" content-style="padding: 30px 20px 0 40px">
+    <YContent style="flex: 1; padding: 30px 20px 0 40px; overflow-y: scroll">
       <RouterView />
-    </YLayout>
+    </YContent>
   </YLayout>
 </template>
 
@@ -66,6 +66,10 @@ const items = reactive<MenuItems[]>([
       {
         text: "间距 Space",
         link: "/component/space",
+      },
+      {
+        text: "布局 Layout",
+        link: "/component/layout",
       },
     ],
   },

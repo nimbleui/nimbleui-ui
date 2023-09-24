@@ -11,11 +11,11 @@
 @include b(layout) {
   display: flex;
   flex-direction: column;
-  color: var(--y-layout-text-color);
-  background-color: var(--y-layout-bg-color);
   position: relative;
+  flex: auto;
   box-sizing: border-box;
   font-size: var(--y-layout-font-size);
+  color: var(--y-layout-text-color);
 
   @include when(absolute) {
     position: absolute;
@@ -27,25 +27,25 @@
   }
 }
 
-@include b(layout-header) {
-  --y-header-bg-color: var(--y-color-bg-container);
-  --y-header-border-color: var(--y-color-border-secondary);
+@include b(layout-content) {
+  flex: auto;
+  min-height: 0;
+}
 
+@include b(layout-header) {
   box-sizing: border-box;
   height: var(--y-header-height);
-  line-height: 64px;
-  border-bottom: 1px solid var(--y-header-border-color);
-  background-color: var(--y-header-bg-color);
+  height: 64px;
+}
+
+@include b(layout-footer) {
+  padding: 24px;
 }
 
 @include b(layout-sidebar) {
   --y-sidebar-width: 250px;
-  --y-sidebar-bg-color: var(--y-color-bg-container);
-  --y-sidebar-border-color: var(--y-color-border-secondary);
 
+  position: relative;
   box-sizing: border-box;
   width: var(--y-sidebar-width);
-  height: 100%;
-  background-color: var(--y-sidebar-bg-color);
-  border-right: 1px solid var(--y-header-sidebar-color);
 }

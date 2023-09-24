@@ -10,7 +10,6 @@ const spaceProps = mergeCommonProp({
    */
   align: {
     type: String as PropType<SpaceAlign>,
-    default: "center",
   },
   /**
    * @description 间距大小

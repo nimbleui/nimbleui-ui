@@ -2,12 +2,11 @@ import { createNamespace } from "@nimble-ui/utils";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "YHeader",
+  name: "YContent",
   setup(props, ctx) {
-    const bem = createNamespace("layout-header");
-
+    const bem = createNamespace("layout-content");
     return () => {
-      return <header class={bem.b()}>{ctx.slots.default?.()}</header>;
+      return <main class={bem.b()}>{ctx.slots.default?.()}</main>;
     };
   },
 });

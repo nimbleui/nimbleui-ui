@@ -1,6 +1,7 @@
 import installer from "./defaults";
 export * from "@nimble-ui/components";
 import { useTheme } from "@nimble-ui/hooks";
+export * from "@nimble-ui/hooks";
 
 export { useTheme };
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
-    <YLayout style="height: 100vh" :position="'absolute'">
-      <YHeader class="header">
+    <YLayout style="height: 100vh">
+      <YHeader class="header" style="border-bottom: 1px solid var(--y-color-border-secondary)">
         <div class="header-log">log</div>
         <div class="header-content">
           <div class="header-content__search">
