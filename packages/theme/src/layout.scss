@@ -44,8 +44,25 @@
 
 @include b(layout-sidebar) {
   --y-sidebar-width: 250px;
+  --y-sidebar-button-border-color: var(--y-color-border-secondary);
 
   position: relative;
   box-sizing: border-box;
   width: var(--y-sidebar-width);
+
+  @include e(button) {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--y-sidebar-button-border-color);
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
+    transform: translateX(50%) translateY(-50%);
+    z-index: 10;
+  }
 }

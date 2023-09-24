@@ -1,6 +1,6 @@
 <template>
   <YLayout style="height: calc(100vh - var(--y-header-height))" has-sidebar>
-    <YSidebar style="border-right: 1px solid var(--y-color-border-secondary); overflow-y: scroll">
+    <YSidebar collapsed style="border-right: 1px solid var(--y-color-border-secondary); overflow-y: scroll">
       <YMenu
         v-model="activeMenuItem"
         all-open
