@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YScrollbar trigger="hover" style="max-height: 120px">
+  <YScrollbar style="max-height: 120px">
     <p v-for="(item, index) in list" :key="index">{{ item }}</p>
   </YScrollbar>
 </template>

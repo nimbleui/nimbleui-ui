@@ -35,8 +35,16 @@
     pointer-events: none;
     z-index: 2;
 
+    @include when(horizontal) {
+      left: 2px;
+      right: 2px;
+      bottom: 4px;
+      height: 5px;
+    }
+
     @include m(bar) {
       cursor: pointer;
+      pointer-events: all;
       border-radius: 3px;
       background-color: var(--y-scrollbar-bar-bg-color);
     }
