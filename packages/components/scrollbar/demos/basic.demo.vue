@@ -14,5 +14,5 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 
-const list = reactive(Array.from({ length: 80 }, (_, i) => i + 1));
+const list = reactive(Array.from({ length: 40 }, (_, i) => i + 1));
 </script>

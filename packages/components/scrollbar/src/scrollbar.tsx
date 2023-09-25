@@ -7,6 +7,7 @@ import { useEventListener, useResizeObserver } from "@nimble-ui/hooks";
 export default defineComponent({
   name: "YScrollbar",
   props: scrollbarProps(),
+  emits: ["scroll"],
   setup(props, ctx) {
     const bem = createNamespace("scrollbar");
     const scrollbarRef = ref<HTMLDivElement>();
@@ -24,6 +25,7 @@ export default defineComponent({
       const wrap = wrapRef.value;
       if (!wrap) return;
       clientRect.scroll = props.xScroll ? wrap.scrollLeft : wrap.scrollTop;
+      ctx.emit("scroll", clientRect.scroll);
     };
 
     const getElementRect = () => {
@@ -67,10 +69,26 @@ export default defineComponent({
       };
     });
 
+    const hoverRef = ref(false);
+    const showBar = computed(() => {
+      const { native, trigger } = props;
+      if (native || trigger == "hide") {
+        return false;
+      } else if (trigger == "none") {
+        return true;
+      }
+      return hoverRef.value;
+    });
+    const handleHover = (isEnter: boolean) => {
+      return () => {
+        hoverRef.value = isEnter;
+      };
+    };
+
     return () => {
       const { tag: Component, contentClass, contentStyle, native } = props;
       return (
-        <div class={bem.b()} ref={scrollbarRef}>
+        <div onMouseenter={handleHover(true)} onMouseleave={handleHover(false)} class={bem.b()} ref={scrollbarRef}>
           <div
             ref={wrapRef}
             onScroll={onScroll}
@@ -80,11 +98,9 @@ export default defineComponent({
               {ctx.slots.default?.()}
             </Component>
           </div>
-          {native ? null : (
-            <div ref={barRef} class={bem.e("rail")}>
-              <div class={bem.m("bar", "rail")} style={barStyle.value}></div>
-            </div>
-          )}
+          <div ref={barRef} class={bem.e("rail")}>
+            <div v-show={showBar.value} class={bem.m("bar", "rail")} style={barStyle.value}></div>
+          </div>
         </div>
       );
     };

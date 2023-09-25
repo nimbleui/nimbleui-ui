@@ -38,6 +38,7 @@ const scrollbarProps = mergeCommonProp({
    */
   trigger: {
     type: String as PropType<"hover" | "hide" | "none">,
+    default: "none",
   },
   /**
    * @description 滚动条大小
