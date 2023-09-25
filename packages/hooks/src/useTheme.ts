@@ -139,6 +139,7 @@ export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
   styleKeyValue.push(`--y-height-l: 40px`);
   styleKeyValue.push(`--y-height-m: 32px`);
   styleKeyValue.push(`--y-height-s: 24px`);
+  styleKeyValue.push(`--y-theme-status: ${theme}`);
 
   style.innerHTML = `:root{${styleKeyValue.join(";")}}`;
 }

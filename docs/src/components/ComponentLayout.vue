@@ -50,6 +50,10 @@ const items = reactive<MenuItems[]>([
         text: "下拉菜单 Dropdown",
         link: "/component/dropdown",
       },
+      {
+        text: "滚动条 Scrollbar",
+        link: "/component/scrollbar",
+      },
     ],
   },
   {

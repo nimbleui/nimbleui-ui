@@ -27,6 +27,7 @@ import {
   YTooltip,
   YSpace,
   YDivider,
+  YScrollbar,
 } from "@nimble-ui/components";
 
 export default [
@@ -58,4 +59,5 @@ export default [
   YTooltip,
   YSpace,
   YDivider,
+  YScrollbar,
 ];

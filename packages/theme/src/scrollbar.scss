@@ -1,13 +1,21 @@
 @use "./mixins/mixins.scss" as *;
 
 @include b(scrollbar) {
+  --y-scrollbar-bar-bg-color: var(--y-color-text-quaternary);
+}
+
+@include b(scrollbar) {
   overflow: hidden;
   position: relative;
+  z-index: auto;
   height: 100%;
+  width: 100%;
 
   @include e(wrap) {
     overflow: auto;
     height: 100%;
+    width: 100%;
+    max-height: inherit;
 
     @include m('hidden-bar') {
       scrollbar-width: none;
@@ -15,6 +23,22 @@
       &::-webkit-scrollbar {
         display: none;
       }
+    }
+  }
+
+  @include e(rail) {
+    position: absolute;
+    width: 5px;
+    right: 4px;
+    top: 2px;
+    bottom: 2px;
+    pointer-events: none;
+    z-index: 2;
+
+    @include m(bar) {
+      cursor: pointer;
+      border-radius: 3px;
+      background-color: var(--y-scrollbar-bar-bg-color);
     }
   }
 }

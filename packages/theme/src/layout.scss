@@ -6,6 +6,8 @@
   --y-layout-font-size: var(--y-font-size);
   --y-layout-bg-color: var(--y-color-bg-layout);
   --y-header-height: 64px;
+  --y-layout-header-bg-color: var(--y-color-bg-container);
+  --y-layout-sidebar-bg-color: var(--y-color-bg-container);
 }
 
 @include b(layout) {
@@ -16,6 +18,7 @@
   box-sizing: border-box;
   font-size: var(--y-layout-font-size);
   color: var(--y-layout-text-color);
+  background-color: var(--y-layout-bg-color);
 
   @include when(absolute) {
     position: absolute;
@@ -30,12 +33,14 @@
 @include b(layout-content) {
   flex: auto;
   min-height: 0;
+  background-color: var(--y-layout-bg-color);
 }
 
 @include b(layout-header) {
   box-sizing: border-box;
   height: var(--y-header-height);
   height: 64px;
+  background-color: var(--y-layout-header-bg-color);
 }
 
 @include b(layout-footer) {
@@ -43,12 +48,13 @@
 }
 
 @include b(layout-sidebar) {
-  --y-sidebar-width: 250px;
-  --y-sidebar-button-border-color: var(--y-color-border-secondary);
+  --y-sidebar-width: 250px
+    --y-sidebar-button-border-color: var(--y-color-border-secondary);
 
   position: relative;
   box-sizing: border-box;
   width: var(--y-sidebar-width);
+  background-color: var(--y-layout-sidebar-bg-color);
 
   @include e(button) {
     position: absolute;
