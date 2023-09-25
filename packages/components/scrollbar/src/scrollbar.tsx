@@ -2,7 +2,7 @@ import { computed, defineComponent, reactive, ref } from "vue";
 
 import scrollbarProps from "./types";
 import { createNamespace } from "@nimble-ui/utils";
-import { useEventListener, useResizeObserver } from "@nimble-ui/hooks";
+import { useMouseMove, useResizeObserver } from "@nimble-ui/hooks";
 
 export default defineComponent({
   name: "YScrollbar",
@@ -14,6 +14,7 @@ export default defineComponent({
     const wrapRef = ref<HTMLDivElement>();
     const resizeRef = ref<HTMLElement>();
     const barRef = ref<HTMLDivElement>();
+    const moveRef = ref<HTMLDivElement>();
 
     const clientRect = reactive({
       bar: 0,
@@ -42,8 +43,9 @@ export default defineComponent({
 
     const barSize = computed(() => {
       const { bar, wrap, resize, scroll } = clientRect;
-
       const diff = resize - wrap;
+      if (!diff) return { size: 0, top: 0 };
+
       const barSize = Math.min(wrap, (bar * wrap) / resize + props.size * 1.5);
       return {
         size: barSize,
@@ -52,19 +54,18 @@ export default defineComponent({
     });
 
     useResizeObserver(resizeRef, getElementRect);
-    useEventListener(
-      "mousedown",
-      (e) => {
-        console.log(e);
-      },
-      { target: barRef }
-    );
+    const { data, isMove } = useMouseMove(moveRef, {
+      boundary: barRef,
+    });
 
     const barStyle = computed(() => {
-      const { xScroll } = props;
+      const { xScroll, size: value } = props;
       const { size, top } = barSize.value;
+      const { disY } = data;
+
       return {
-        height: `${size}px`,
+        width: xScroll ? `${size}px` : `${value}px`,
+        height: xScroll ? `${value}px` : `${size}px`,
         transform: `translate(${xScroll ? top : 0}px, ${xScroll ? 0 : top}px)`,
       };
     });
@@ -86,7 +87,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { tag: Component, contentClass, contentStyle, native } = props;
+      const { tag: Component, contentClass, contentStyle, native, xScroll } = props;
       return (
         <div onMouseenter={handleHover(true)} onMouseleave={handleHover(false)} class={bem.b()} ref={scrollbarRef}>
           <div
@@ -94,12 +95,16 @@ export default defineComponent({
             onScroll={onScroll}
             class={[bem.e("wrap"), !native ? bem.m("hidden-bar", "wrap") : undefined]}
           >
-            <Component style={contentStyle} class={contentClass} ref={resizeRef}>
+            <Component
+              style={[contentStyle, { width: xScroll ? "fit-content" : undefined }]}
+              class={contentClass}
+              ref={resizeRef}
+            >
               {ctx.slots.default?.()}
             </Component>
           </div>
-          <div ref={barRef} class={bem.e("rail")}>
-            <div v-show={showBar.value} class={bem.m("bar", "rail")} style={barStyle.value}></div>
+          <div ref={barRef} class={[bem.e("rail"), bem.is("horizontal", xScroll)]}>
+            <div ref={moveRef} v-show={showBar.value} class={bem.m("bar", "rail")} style={barStyle.value}></div>
           </div>
         </div>
       );

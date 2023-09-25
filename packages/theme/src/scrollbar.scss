@@ -36,10 +36,9 @@
     z-index: 2;
 
     @include when(horizontal) {
-      left: 2px;
-      right: 2px;
-      bottom: 4px;
+      position: static; 
       height: 5px;
+      width: 100%; 
     }
 
     @include m(bar) {

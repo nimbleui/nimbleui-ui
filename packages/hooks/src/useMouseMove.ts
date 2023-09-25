@@ -26,7 +26,7 @@ interface Options {
   move?: (data: DataType, e: Event) => void;
   down?: (data: DataType, e: Event) => void;
   // 拖拽的边界
-  boundary?: BoundaryElement;
+  boundary?: BoundaryElement | TargetElement;
 }
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
@@ -40,7 +40,7 @@ const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) 
   }
 };
 
-const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
+const handleBoundary = (el: TargetElement, boundary?: BoundaryElement | TargetElement) => {
   const moveDis = { l: 0, r: 0, t: 0, b: 0 };
 
   const sunBoundary = () => {
@@ -52,7 +52,7 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement) => {
     let boundaryR = document.documentElement.clientWidth;
     let boundaryB = document.documentElement.clientHeight;
     if (boundary !== window) {
-      const { left, top, right, bottom } = (boundary as Element).getBoundingClientRect();
+      const { left, top, right, bottom } = (unref(boundary) as Element).getBoundingClientRect();
       boundaryT = top;
       boundaryL = left;
       boundaryR = right;
@@ -92,12 +92,13 @@ export function useMouseMove(el: TargetElement, options?: Options) {
 
   const mousemove = (e: MouseEvent) => {
     if (!isMove.value) return;
+    e.preventDefault();
     const { clientX, clientY } = e;
     const disX = clientX - data.startX;
     const disY = clientY - data.startY;
     Object.assign(data, {
-      disX,
-      disY,
+      disX: disX > 0 ? Math.min(moveDis.r, disX) : Math.max(moveDis.l, disX),
+      disY: disY > 0 ? Math.min(moveDis.b, disY) : Math.max(moveDis.t, disY),
       moveX: clientX,
       moveY: clientY,
       maxMoveDisR: moveDis.r,
@@ -105,13 +106,14 @@ export function useMouseMove(el: TargetElement, options?: Options) {
       maxMoveDisB: moveDis.b,
       maxMoveDisT: moveDis.t,
     });
-
+    console.log(data);
     options?.move?.(data, e);
   };
 
   const mouseup = (e: MouseEvent) => {
     if (!isMove.value) return;
     isMove.value = false;
+    e.preventDefault();
     options?.up?.(data, e);
     Object.assign(data, defaultData);
   };
