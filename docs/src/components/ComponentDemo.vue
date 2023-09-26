@@ -42,9 +42,11 @@
     </div>
     <template #footer>
       <div v-show="showCode" class="code">
-        <code class="code-wrap">
-          <pre ref="codeRef"></pre>
-        </code>
+        <YScrollbar trigger="hover" x-scroll>
+          <code class="code-wrap">
+            <pre ref="codeRef"></pre>
+          </code>
+        </YScrollbar>
       </div>
     </template>
   </YCard>

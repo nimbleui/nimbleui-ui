@@ -1,4 +1,3 @@
-<!--single-column-->
 # 滚动条 Scrollbar
 用于替换浏览器原生滚动条。
 
