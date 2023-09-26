@@ -2,13 +2,21 @@ import { Ref, reactive, ref, unref } from "vue";
 import { useEventListener } from "./useEventListener";
 
 const defaultData = {
+  // 按下鼠标x轴位置
   startX: 0,
+  // 按下鼠标y轴位置
   startY: 0,
+  // 移动鼠标x轴位置
   moveX: 0,
+  // 移动鼠标y轴位置
   moveY: 0,
+  // 鼠标移动x轴的距离
   disX: 0,
+  // 鼠标移动y轴的距离
   disY: 0,
+  // 抬起鼠标x轴位置
   endX: 0,
+  // 抬起鼠标y轴位置
   endY: 0,
   elDisX: 0,
   elDisY: 0,
@@ -25,8 +33,18 @@ interface Options {
   up?: (data: DataType, e: Event) => void;
   move?: (data: DataType, e: Event) => void;
   down?: (data: DataType, e: Event) => void;
-  // 拖拽的边界
+  /**
+   * @description 拖拽的边界元素
+   */
   boundary?: BoundaryElement | TargetElement;
+  /**
+   * @description 阻止默认事件
+   */
+  prevent?: boolean;
+  /**
+   * @description 阻止事件冒泡
+   */
+  stop?: boolean;
 }
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
@@ -92,7 +110,8 @@ export function useMouseMove(el: TargetElement, options?: Options) {
 
   const mousemove = (e: MouseEvent) => {
     if (!isMove.value) return;
-    e.preventDefault();
+    options?.prevent && e.preventDefault();
+    options?.stop && e.stopPropagation();
     const { clientX, clientY } = e;
     const disX = clientX - data.startX;
     const disY = clientY - data.startY;
@@ -106,14 +125,14 @@ export function useMouseMove(el: TargetElement, options?: Options) {
       maxMoveDisB: moveDis.b,
       maxMoveDisT: moveDis.t,
     });
-    console.log(data);
     options?.move?.(data, e);
   };
 
   const mouseup = (e: MouseEvent) => {
     if (!isMove.value) return;
     isMove.value = false;
-    e.preventDefault();
+    options?.prevent && e.preventDefault();
+    options?.stop && e.stopPropagation();
     options?.up?.(data, e);
     Object.assign(data, defaultData);
   };
