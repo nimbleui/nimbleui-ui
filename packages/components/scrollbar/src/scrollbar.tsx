@@ -1,8 +1,8 @@
 import { computed, defineComponent, reactive, ref } from "vue";
-
-import scrollbarProps from "./types";
 import { createNamespace } from "@nimble-ui/utils";
 import { useMouseMove, useResizeObserver } from "@nimble-ui/hooks";
+
+import scrollbarProps from "./types";
 
 export default defineComponent({
   name: "YScrollbar",
@@ -40,39 +40,74 @@ export default defineComponent({
         resize,
       });
     };
+    useResizeObserver(resizeRef, getElementRect);
 
-    const barSize = computed(() => {
+    let memoYTop = 0;
+    const { isMove } = useMouseMove(moveRef, {
+      stop: true,
+      prevent: true,
+      boundary: barRef,
+      down() {
+        memoYTop = clientRect.scroll;
+      },
+      move(data) {
+        const { xScroll } = props;
+        const { disY, disX } = data;
+        const { wrap, resize, bar } = clientRect;
+        const diff = resize - wrap;
+        const barSize = barSizeRef.value;
+        const dis = xScroll ? disX : disY;
+        const dScrollTop = (dis * diff) / (bar - barSize);
+
+        const scrollTop = dScrollTop + memoYTop;
+        if (wrapRef.value) {
+          if (xScroll) {
+            wrapRef.value.scrollLeft = scrollTop;
+          } else {
+            wrapRef.value.scrollTop = scrollTop;
+          }
+        }
+      },
+      up(data, e) {
+        const checked = scrollbarRef.value?.contains(e.target as HTMLElement);
+        hoverRef.value = checked ?? false;
+      },
+    });
+
+    // 滚动条的大小
+    const barSizeRef = computed(() => {
+      const { bar, wrap, resize } = clientRect;
+      return Math.min(wrap, (bar * wrap) / resize + props.size * 1.5);
+    });
+
+    // 滚动条的距离
+    const barDisRef = computed(() => {
       const { bar, wrap, resize, scroll } = clientRect;
       const diff = resize - wrap;
-      if (!diff) return { size: 0, top: 0 };
 
-      const barSize = Math.min(wrap, (bar * wrap) / resize + props.size * 1.5);
-      return {
-        size: barSize,
-        top: diff ? (scroll / diff) * (bar - barSize) : 0,
-      };
+      return diff ? (scroll / diff) * (bar - barSizeRef.value) : 0;
     });
 
-    useResizeObserver(resizeRef, getElementRect);
-    const { data, isMove } = useMouseMove(moveRef, {
-      boundary: barRef,
-    });
-
+    // 计算滚动条的位置
     const barStyle = computed(() => {
-      const { xScroll, size: value } = props;
-      const { size, top } = barSize.value;
-      const { disY } = data;
+      const { xScroll, size } = props;
+      const barSize = barSizeRef.value;
+      const barDis = barDisRef.value;
 
       return {
-        width: xScroll ? `${size}px` : `${value}px`,
-        height: xScroll ? `${value}px` : `${size}px`,
-        transform: `translate(${xScroll ? top : 0}px, ${xScroll ? 0 : top}px)`,
+        width: xScroll ? `${barSize}px` : `${size}px`,
+        height: xScroll ? `${size}px` : `${barSize}px`,
+        transform: `translate(${xScroll ? barDis : 0}px, ${xScroll ? 0 : barDis}px)`,
       };
     });
 
     const hoverRef = ref(false);
     const showBar = computed(() => {
       const { native, trigger } = props;
+      const { wrap, resize } = clientRect;
+      // 如果内容高度小于等于滚动的高度，隐藏
+      if (wrap >= resize) return false;
+
       if (native || trigger == "hide") {
         return false;
       } else if (trigger == "none") {
@@ -82,7 +117,8 @@ export default defineComponent({
     });
     const handleHover = (isEnter: boolean) => {
       return () => {
-        hoverRef.value = isEnter;
+        getElementRect();
+        hoverRef.value = isMove.value ? true : isEnter;
       };
     };
 
