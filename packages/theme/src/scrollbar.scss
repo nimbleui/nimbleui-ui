@@ -2,6 +2,7 @@
 
 @include b(scrollbar) {
   --y-scrollbar-bar-bg-color: var(--y-color-text-quaternary);
+  --y-scrollbar-bar-hover-color: var(--y-color-text-tertiary);
 }
 
 @include b(scrollbar) {
@@ -46,6 +47,10 @@
       pointer-events: all;
       border-radius: 3px;
       background-color: var(--y-scrollbar-bar-bg-color);
+
+      &:hover {
+        background-color: var(--y-scrollbar-bar-hover-color);
+      }
     }
   }
 }
