@@ -1,6 +1,6 @@
 <template>
-  <YLayout style="height: calc(100vh - var(--y-header-height))" has-sidebar>
-    <YSidebar collapsed style="border-right: 1px solid var(--y-color-border-secondary); overflow-y: scroll">
+  <YLayout content-style="height: calc(100vh - var(--y-header-height))" has-sidebar>
+    <YSidebar collapsed style="border-right: 1px solid var(--y-color-border-secondary)">
       <YMenu
         v-model="activeMenuItem"
         all-open
@@ -12,7 +12,7 @@
         @open-change="onOpenChange"
       ></YMenu>
     </YSidebar>
-    <YContent style="flex: 1; padding: 30px 20px 0 40px; overflow-y: scroll">
+    <YContent style="padding: 30px 20px 0 40px">
       <RouterView />
     </YContent>
   </YLayout>

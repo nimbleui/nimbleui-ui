@@ -28,6 +28,18 @@ const scrollbarProps = mergeCommonProp({
     type: [Array, Object, String] as PropType<StyleValue>,
   },
   /**
+   * @description 包裹容器的自定义类名
+   */
+  wrapClass: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["class"]>,
+  },
+  /**
+   * @description 包裹容器的自定义样式
+   */
+  wrapStyle: {
+    type: [Array, Object, String] as PropType<StyleValue>,
+  },
+  /**
    * @description 是否可以横向滚动
    */
   xScroll: {

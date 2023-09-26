@@ -8,25 +8,31 @@
   --y-header-height: 64px;
   --y-layout-header-bg-color: var(--y-color-bg-container);
   --y-layout-sidebar-bg-color: var(--y-color-bg-container);
+  --y-sidebar-width: 250px;
+  --y-sidebar-button-border-color: var(--y-color-border-secondary);
+  --y-sidebar-button-bg-color: var(--y-color-bg-elevated); 
 }
 
 @include b(layout) {
-  display: flex;
-  flex-direction: column;
   position: relative;
-  flex: auto;
-  box-sizing: border-box;
-  font-size: var(--y-layout-font-size);
-  color: var(--y-layout-text-color);
-  background-color: var(--y-layout-bg-color);
 
-  @include when(absolute) {
-    position: absolute;
-    inset: 0;
-  }
+  @include e(warp) {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    box-sizing: border-box;
+    font-size: var(--y-layout-font-size);
+    color: var(--y-layout-text-color);
+    background-color: var(--y-layout-bg-color);
 
-  @include when(sidebar) {
-    flex-direction: row;
+    @include when(absolute) {
+      position: absolute;
+      inset: 0;
+    }
+
+    @include when(sidebar) {
+      flex-direction: row;
+    }
   }
 }
 
@@ -48,12 +54,10 @@
 }
 
 @include b(layout-sidebar) {
-  --y-sidebar-width: 250px
-    --y-sidebar-button-border-color: var(--y-color-border-secondary);
-
   position: relative;
   box-sizing: border-box;
   width: var(--y-sidebar-width);
+  min-width: var(--y-sidebar-width);
   background-color: var(--y-layout-sidebar-bg-color);
 
   @include e(button) {
@@ -66,9 +70,11 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
     border: 1px solid var(--y-sidebar-button-border-color);
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
     transform: translateX(50%) translateY(-50%);
-    z-index: 10;
+    background-color: var(--y-sidebar-button-bg-color);
   }
 }

@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import { createNamespace } from "@nimble-ui/utils";
+import YScrollbar from "@nimble-ui/components/scrollbar";
 
 import layoutProps from "./types";
 
@@ -12,12 +13,18 @@ export default defineComponent({
     return () => {
       const { position, hasSidebar, contentClass, contentStyle } = props;
       return (
-        <div
-          class={[bem.b(), bem.is("sidebar", hasSidebar), bem.is("absolute", position === "absolute"), contentClass]}
-          style={contentStyle}
+        <YScrollbar
+          class={[bem.b()]}
+          contentStyle={contentStyle}
+          contentClass={[
+            bem.e("warp"),
+            bem.is("sidebar", hasSidebar),
+            bem.is("absolute", position === "absolute"),
+            contentClass,
+          ]}
         >
           {ctx.slots.default?.()}
-        </div>
+        </YScrollbar>
       );
     };
   },

@@ -1,4 +1,5 @@
 import { createNamespace } from "@nimble-ui/utils";
+import YScrollbar from "@nimble-ui/components/scrollbar";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -15,7 +16,7 @@ export default defineComponent({
     return () => {
       return (
         <div class={bem.b()}>
-          {ctx.slots.default?.()}
+          <YScrollbar trigger="hover">{ctx.slots.default?.()}</YScrollbar>
           {props.collapsed ? (
             <div class={bem.e("button")}>
               <i></i>
