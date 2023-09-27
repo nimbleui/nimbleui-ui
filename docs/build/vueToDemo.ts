@@ -85,7 +85,7 @@ ${content.style}
 
 function handleCode(content: string) {
   const firstIndex = content.indexOf("<template>");
-  const lastIndex = content.indexOf("</template>");
+  const lastIndex = content.lastIndexOf("</template>");
   // 获取模板的DOM元素
   const template = content.slice(firstIndex + 10, lastIndex);
   // 获取模板的脚本

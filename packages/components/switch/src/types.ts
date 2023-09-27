@@ -6,7 +6,7 @@ const switchProps = mergeCommonProp({
    * @description 开关选中状态
    */
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Boolean],
   },
   /**
    * @description 打开时对应的值
@@ -21,6 +21,24 @@ const switchProps = mergeCommonProp({
   uncheckedValue: {
     type: [String, Number, Boolean],
     default: false,
+  },
+  /**
+   * @description 是否禁用
+   */
+  disabled: {
+    type: Boolean,
+  },
+  /**
+   * @description 打开时的文字描述
+   */
+  checkedText: {
+    type: String,
+  },
+  /**
+   * @description 关闭时的文字描述
+   */
+  uncheckedText: {
+    type: String,
   },
 });
 

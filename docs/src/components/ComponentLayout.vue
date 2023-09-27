@@ -92,6 +92,10 @@ const items = reactive<MenuItems[]>([
         text: "文本输入 Input",
         link: "/component/input",
       },
+      {
+        text: "开关 Switch",
+        link: "/component/switch",
+      },
     ],
   },
   {

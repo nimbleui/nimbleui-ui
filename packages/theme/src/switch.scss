@@ -6,16 +6,24 @@
   --y-switch-active-color: var(--y-color-primary);
   --y-switch-inactive-color: var(--y-color-info-7);
   --y-switch-height: 22px;
-  --y-switch-handle: calc(var(--y-switch-height) - 4px);
+  --y-switch-double-height: calc(var(--y-switch-height) * 2);
   --y-switch-offset: 2px;
+  --y-switch-padding-end: 9px;
   --y-switch-border-radius: 4px;
   --y-switch-font-size: var(--y-font-size);
   --y-switch-text-color: var(--y-text-color-1);
+  --y-switch-double-offset: calc(var(--y-switch-offset) * 2);
+  --y-switch-handle: calc(var(--y-switch-height) - var(--y-switch-double-offset));
+  --y-switch-padding-start: calc(var(--y-switch-height) + var(--y-switch-offset));
+  --y-switch-double: calc(var(--y-switch-double-height) + var(--y-switch-double-offset));
+  --y-switch-disabled: var(--y-disabled-opacity);
 }
 
 @include b(switch) {
+  display: inline-flex;
   position: relative;
   height: var(--y-switch-height);
+  line-height: var(--y-switch-height);
   min-width: calc(var(--y-switch-height) * 2);
   box-sizing: border-box;
   border-radius: var(--y-switch-height);
@@ -24,6 +32,7 @@
   cursor: pointer;
   font-size: var(--y-font-size);
   color: var(--y-text-color-1);
+  vertical-align: middle;
 
   @include e(handle) {
     position: absolute;
@@ -36,42 +45,56 @@
     transition: all 0.2s ease-in-out;
   }
 
-  @include e(placeholder) {
-    height: var(--y-switch-height);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    pointer-events: none;
-    visibility: hidden;
-
-  }
-
   @include e(inner) {
-    position: absolute;
+    display: block;
+    overflow: hidden;
+    border-radius: 100px;
+    padding-inline-start: var(--y-switch-padding-start);
+    padding-inline-end: var(--y-switch-padding-end);
+    color: #fff;
+    transition: padding-inline-start 0.2s ease-in-out, padding-inline-end 0.2s ease-in-out;
+
+    @include m(checked) {
+      display: block;
+      margin-inline-start: calc(-100% + var(--y-switch-height) - var(--y-switch-double));
+      margin-inline-end: calc(100% - var(--y-switch-height) + var(--y-switch-double));
+      transition: margin-inline-start 0.2s ease-in-out, margin-inline-end 0.2s ease-in-out;
+    }
+
+    @include m(unchecked) {
+      display: block;
+      margin-top: calc(var(--y-switch-height) - var(--y-switch-double-height));
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      transition: margin-inline-start 0.2s ease-in-out, margin-inline-end 0.2s ease-in-out;
+    }
   }
 
   @include when(checked) {
     background-color: var(--y-switch-active-color);
 
-    &::after {
-      box-sizing: border-box;
-      position: absolute;
-      top: 0;
-      inset-inline-start: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid var(--y-switch-active-color);
-      animation-name: checkbox-checked-animation;
-      animation-duration: 0.3s;
-      animation-timing-function: ease-in-out;
-      content: "";
-      transition: all 0.3s;
-      animation-fill-mode: forwards;
-      border-radius: var(--y-switch-height);
-    }
-
     #{'.' + $b + $element-separator + 'handle'} {
       left: calc(100% - var(--y-switch-handle) - var(--y-switch-offset));
     }
+
+    #{'.' + $b + $element-separator + 'inner'} {
+      padding-inline-start: var(--y-switch-padding-end);
+      padding-inline-end: var(--y-switch-padding-start);
+
+      &#{$modifier-separator + 'checked'} {
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+      }
+
+      &#{$modifier-separator + 'unchecked'} {
+        margin-inline-start: calc(100% - var(--y-switch-height) + var(--y-switch-double));
+        margin-inline-end: calc(-100% + var(--y-switch-height) - var(--y-switch-double));
+      }
+    }
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+    opacity: var(--y-switch-disabled);
   }
 }

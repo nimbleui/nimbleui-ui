@@ -25,21 +25,19 @@ export default defineComponent({
     });
 
     const onChange = () => {
+      if (props.disabled) return;
       model.value = !model.value;
     };
 
     return () => {
+      const { disabled } = props;
       return (
-        <div class={[bem.b(), bem.is("checked", model.value)]} onClick={onChange}>
+        <div class={[bem.b(), bem.is("checked", model.value), bem.is("disabled", disabled)]} onClick={onChange}>
           <span class={[bem.e("handle")]}></span>
-          <div class={bem.e("placeholder")}>
-            <div>{ctx.slots.checked?.()}</div>
-            <div>{ctx.slots.unchecked?.()}</div>
-          </div>
-          <div class={[bem.e("inner")]}>
-            <span class={bem.m("checked")}>{ctx.slots.checked?.()}</span>
-            <span class={bem.m("unchecked")}>{ctx.slots.unchecked?.()}</span>
-          </div>
+          <span class={[bem.e("inner")]}>
+            <span class={bem.m("checked", "inner")}>{ctx.slots.checked?.()}</span>
+            <span class={bem.m("unchecked", "inner")}>{ctx.slots.unchecked?.()}</span>
+          </span>
         </div>
       );
     };
