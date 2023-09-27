@@ -1,5 +1,5 @@
 import { computed, defineComponent, reactive, ref } from "vue";
-import { createNamespace } from "@nimble-ui/utils";
+import { createNamespace, isNumber, isObject } from "@nimble-ui/utils";
 import { useMouseMove, useResizeObserver } from "@nimble-ui/hooks";
 
 import scrollbarProps from "./types";
@@ -124,6 +124,37 @@ export default defineComponent({
         hoverRef.value = isMove.value ? true : isEnter;
       };
     };
+
+    function scrollTo(options: ScrollToOptions): void;
+    function scrollTo(x: number, y: number): void;
+    function scrollTo(options: unknown, y?: number) {
+      if (isObject(options)) {
+        wrapRef.value?.scrollTo(options);
+      } else if (isNumber(options) && isNumber(y)) {
+        wrapRef.value?.scrollTo(options, y);
+      }
+    }
+
+    function setScrollTop(value: number) {
+      if (!isNumber(value)) {
+        return console.warn("Value必须是一个数字");
+      }
+      wrapRef.value && (wrapRef.value.scrollTop = value);
+    }
+
+    function setScrollLeft(value: number) {
+      if (!isNumber(value)) {
+        return console.warn("Value必须是一个数字");
+      }
+      wrapRef.value && (wrapRef.value.scrollLeft = value);
+    }
+
+    ctx.expose({
+      scrollTo,
+      setScrollTop,
+      setScrollLeft,
+      update: getElementRect,
+    });
 
     return () => {
       const { tag: Component, contentClass, contentStyle, native, xScroll, wrapClass, wrapStyle } = props;

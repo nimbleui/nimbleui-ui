@@ -1,4 +1,4 @@
-import { ExtractPropTypes, HTMLAttributes, PropType, StyleValue } from "vue";
+import { ComponentPublicInstance, ExtractPropTypes, HTMLAttributes, PropType, StyleValue } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 
 const scrollbarProps = mergeCommonProp({
@@ -61,5 +61,13 @@ const scrollbarProps = mergeCommonProp({
   },
 });
 
+export type ScrollbarExpose = {
+  update: () => void;
+  setScrollTop: (value: number) => void;
+  setScrollLeft: (value: number) => void;
+  scrollTo: (options: ScrollToOptions | number, y?: number) => void;
+};
+
 export default scrollbarProps;
 export type ScrollbarProps = ExtractPropTypes<ReturnType<typeof scrollbarProps>>;
+export type FormInstance = ComponentPublicInstance<ScrollbarProps, ScrollbarExpose>;

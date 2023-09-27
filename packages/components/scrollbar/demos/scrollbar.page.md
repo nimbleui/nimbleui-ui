@@ -30,3 +30,11 @@ trigger.vue
 | 名称 | 参数 | 说明 |
 | --- | --- | --- |
 | default | - | 滚动条的内容 |
+
+### Scrollbar Methods
+| 名称 | 说明 | 类型 |
+| --- | --- | --- |
+| scrollTo | 滚动到特定坐标 | `(options: ScrollToOptions) => void \| (x: number, y: number) => void` |
+| setScrollTop | 设置滚动条到顶部的距离 | `(value: number) => void` |
+| setScrollLeft | 设置滚动条到左边的距离 | `(value: number) => void` |
+| update | 手动更新滚动条状态 | `() => void` |
