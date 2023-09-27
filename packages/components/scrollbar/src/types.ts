@@ -70,4 +70,4 @@ export type ScrollbarExpose = {
 
 export default scrollbarProps;
 export type ScrollbarProps = ExtractPropTypes<ReturnType<typeof scrollbarProps>>;
-export type FormInstance = ComponentPublicInstance<ScrollbarProps, ScrollbarExpose>;
+export type ScrollbarInstance = ComponentPublicInstance<ScrollbarProps, ScrollbarExpose>;
