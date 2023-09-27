@@ -168,7 +168,7 @@ export default defineComponent({
           >
             <Component
               style={[contentStyle, { width: xScroll ? "fit-content" : undefined }]}
-              class={contentClass}
+              class={[bem.m("content", "wrap"), contentClass]}
               ref={resizeRef}
             >
               {ctx.slots.default?.()}

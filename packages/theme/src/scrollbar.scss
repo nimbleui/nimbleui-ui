@@ -25,6 +25,10 @@
         display: none;
       }
     }
+
+    @include m(content) {
+      min-height: 100%;
+    }
   }
 
   @include e(rail) {

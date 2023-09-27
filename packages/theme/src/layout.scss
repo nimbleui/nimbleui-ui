@@ -45,7 +45,6 @@
 @include b(layout-header) {
   box-sizing: border-box;
   height: var(--y-header-height);
-  height: 64px;
   background-color: var(--y-layout-header-bg-color);
 }
 
