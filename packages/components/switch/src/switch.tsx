@@ -19,24 +19,28 @@ export default defineComponent({
       },
       set: (val) => {
         selfModel.value = val;
-        ctx.emit("change", val);
-        ctx.emit("update:modelValue", val ? props.checkedValue : props.uncheckedValue);
+        const value = val ? props.checkedValue : props.uncheckedValue;
+        ctx.emit("change", value);
+        ctx.emit("update:modelValue", value);
       },
     });
 
     const onChange = () => {
-      if (props.disabled) return;
+      if (props.disabled || props.loading) return;
       model.value = !model.value;
     };
 
     return () => {
-      const { disabled } = props;
+      const { disabled, uncheckedText, checkedText, loading } = props;
       return (
-        <div class={[bem.b(), bem.is("checked", model.value), bem.is("disabled", disabled)]} onClick={onChange}>
-          <span class={[bem.e("handle")]}></span>
+        <div
+          onClick={onChange}
+          class={[bem.b(), bem.is("checked", model.value), bem.is("disabled", disabled), bem.is("loading", loading)]}
+        >
+          <div class={[bem.e("handle")]}></div>
           <span class={[bem.e("inner")]}>
-            <span class={bem.m("checked", "inner")}>{ctx.slots.checked?.()}</span>
-            <span class={bem.m("unchecked", "inner")}>{ctx.slots.unchecked?.()}</span>
+            <span class={bem.m("checked", "inner")}>{checkedText ?? ctx.slots.checked?.()}</span>
+            <span class={bem.m("unchecked", "inner")}>{uncheckedText ?? ctx.slots.unchecked?.()}</span>
           </span>
         </div>
       );

@@ -6,6 +6,8 @@
 basic.vue
 text.vue
 disabled.vue
+loading.vue
+customValue.vue
 ```
 
 ## API
@@ -15,6 +17,7 @@ disabled.vue
 | --- | --- | --- | --- | --- |
 | modelValue \| v-model | `string \| number \| boolean` | `false` | 开关选中状态 | |
 | disabled | `boolean` | `false` | 是否禁用 | |
+| loading | `boolean` | `false` | 是否加载 | |
 | checkedValue | `string \| number \| boolean` | `true` | 打开时对应的值 | |
 | uncheckedValue | `string \| number \| boolean` | `false` | 关闭时对应的值 | |
 | checkedText | `string` | - | 打开时的文字描述 | |

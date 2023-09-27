@@ -40,6 +40,12 @@ const switchProps = mergeCommonProp({
   uncheckedText: {
     type: String,
   },
+  /**
+   * @description 是否加载
+   */
+  loading: {
+    type: Boolean,
+  },
 });
 
 export default switchProps;

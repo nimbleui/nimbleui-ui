@@ -1,6 +1,7 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
 @use "./mixins/config.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(switch) {
   --y-switch-active-color: var(--y-color-primary);
@@ -40,6 +41,9 @@
     left: var(--y-switch-offset);
     height: var(--y-switch-handle);
     width: var(--y-switch-handle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #fff;
     border-radius: 50%;
     transition: all 0.2s ease-in-out;
@@ -96,5 +100,18 @@
   @include when(disabled) {
     cursor: not-allowed;
     opacity: var(--y-switch-disabled);
+  }
+
+  @include when(loading) {
+    cursor: wait;
+
+    #{'.' + $b + $element-separator + 'handle'} {
+      &::after {
+        display: block;
+        content: " ";
+
+        @include loading(10px, 10px)
+      }
+    }
   }
 }
