@@ -2,6 +2,10 @@ import path from "path";
 import fs from "fs";
 import { comRoot } from "../utils/path.js";
 
+function camelCaseToDashCase(str) {
+  return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
 const varCase = (str) => str.replace(/-[a-z]/g, (m) => m[1].toUpperCase());
 
 const indexTemplate = (name, _name) => {
@@ -15,6 +19,7 @@ export default Y${_name};
 declare module "vue" {
   export interface GlobalComponents {
     Y${_name}: typeof Y${_name};
+    "y-${camelCaseToDashCase(_name)}": typeof Y${_name};
   }
 }
 `;
@@ -54,7 +59,7 @@ export default defineComponent({
   name: "Y${_name}",
   props: ${name}Props(),
   setup(props, ctx) {
-    const bem = createNamespace("${name}");
+    const bem = createNamespace("${camelCaseToDashCase(name)}");
 
     return () => {
       return <div class={bem.b()}></div>;
@@ -68,7 +73,8 @@ const pageMdTemplate = (name, CNName = "", description = "") => {
   return `# ${CNName || ""} ${name}
 ${description || ""}
 
-\`\`\`deme
+## 代码演示
+\`\`\`demo
 
 \`\`\`
 ## API
