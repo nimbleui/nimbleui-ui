@@ -7,7 +7,8 @@
   --y-back-top-border-radius: 22px;
   --y-back-top-box-shadow: 0 2px 8px 0px rgb(0 0 0 / 12%);
   --y-back-top-text-color: var(--y-color-text);
-  --y-back-top-bg-color: var(--y-color-info-6);
+  --y-back-top-bg-color: var(--y-color-bg-container);
+  --y-back-top-border-color: var(--y-color-border-secondary);
 }
 
 @include b(back-top) { 
@@ -18,10 +19,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden;
   border-radius: var(--y-back-top-border-radius);
   color: var(--y-back-top-text-color);
   height: var(--y-back-top-height);
   min-width: var(--y-back-top-width);
   box-shadow: var(--y-back-top-box-shadow);
   background-color: var(--y-back-top-bg-color);
+  border: 1px solid var(--y-back-top-border-color);
 }

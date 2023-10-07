@@ -1,4 +1,4 @@
-import { Ref, onMounted, ref, unref } from "vue";
+import { Ref, isRef, onMounted, ref, unref, watch } from "vue";
 import { getScrollParent, isString } from "@nimble-ui/utils";
 import { useEventListener } from "./useEventListener";
 
@@ -14,13 +14,18 @@ export function useScrollParent(
     target: scrollParent,
   });
 
-  onMounted(() => {
+  function init() {
     const warp = unref(el);
     const scroll = isString(warp) ? document.querySelector(warp) : warp;
     if (scroll) {
       scrollParent.value = getScrollParent(scroll, undefined, root);
     }
-  });
+  }
+
+  onMounted(init);
+  if (isRef(el)) {
+    watch(el, () => init());
+  }
 
   return scrollParent;
 }
