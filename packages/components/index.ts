@@ -25,3 +25,4 @@ export * from "./card";
 export * from "./scrollbar";
 export * from "./space";
 export * from "./divider";
+export * from "./back-top";

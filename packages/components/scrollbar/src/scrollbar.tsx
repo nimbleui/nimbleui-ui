@@ -26,7 +26,7 @@ export default defineComponent({
       const wrap = wrapRef.value;
       if (!wrap) return;
       clientRect.scroll = props.xScroll ? wrap.scrollLeft : wrap.scrollTop;
-      ctx.emit("scroll", clientRect.scroll);
+      ctx.emit("scroll", { scrollLeft: wrap.scrollLeft, scrollTop: wrap.scrollTop, scroll: clientRect.scroll });
     };
 
     const getElementRect = () => {

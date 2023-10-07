@@ -54,6 +54,10 @@ const items = reactive<MenuItems[]>([
         text: "滚动条 Scrollbar",
         link: "/component/scrollbar",
       },
+      {
+        text: "回到顶部 BackTop",
+        link: "/component/backTop",
+      },
     ],
   },
   {

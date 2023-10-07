@@ -1,0 +1,27 @@
+@use "./mixins/mixins.scss" as *;
+@use "./common/transition.scss" as *;
+
+@include b(back-top) {
+  --y-back-top-width: 44px;
+  --y-back-top-height: 44px;
+  --y-back-top-border-radius: 22px;
+  --y-back-top-box-shadow: 0 2px 8px 0px rgb(0 0 0 / 12%);
+  --y-back-top-text-color: var(--y-color-text);
+  --y-back-top-bg-color: var(--y-color-info-6);
+}
+
+@include b(back-top) { 
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--y-back-top-border-radius);
+  color: var(--y-back-top-text-color);
+  height: var(--y-back-top-height);
+  min-width: var(--y-back-top-width);
+  box-shadow: var(--y-back-top-box-shadow);
+  background-color: var(--y-back-top-bg-color);
+}

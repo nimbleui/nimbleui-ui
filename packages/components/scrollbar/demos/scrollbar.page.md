@@ -24,7 +24,7 @@ trigger.vue
 ### Scrollbar Events
 | 事件名 | 说明 | 类型 |
 | --- | --- | --- |
-| scroll | 当触发滚动事件时，返回滚动的距离 | `(scroll: number) => void`|
+| scroll | 当触发滚动事件时，返回滚动的距离 | `({ scrollLeft: number, scrollTop: number, scroll: number }) => void`|
 
 ### Scrollbar Slots
 | 名称 | 参数 | 说明 |

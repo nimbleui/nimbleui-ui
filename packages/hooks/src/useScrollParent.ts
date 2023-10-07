@@ -1,10 +1,10 @@
-import { Ref, onMounted, ref } from "vue";
-import { getScrollParent } from "@nimble-ui/utils";
+import { Ref, onMounted, ref, unref } from "vue";
+import { getScrollParent, isString } from "@nimble-ui/utils";
 import { useEventListener } from "./useEventListener";
 
 type ScrollElement = HTMLElement | Window;
 export function useScrollParent(
-  el: Ref<Element | undefined>,
+  el: Ref<Element | string | undefined>,
   handle: (e: Event) => void,
   root?: ScrollElement | undefined
 ) {
@@ -15,8 +15,10 @@ export function useScrollParent(
   });
 
   onMounted(() => {
-    if (el.value) {
-      scrollParent.value = getScrollParent(el.value, undefined, root);
+    const warp = unref(el);
+    const scroll = isString(warp) ? document.querySelector(warp) : warp;
+    if (scroll) {
+      scrollParent.value = getScrollParent(scroll, undefined, root);
     }
   });
 

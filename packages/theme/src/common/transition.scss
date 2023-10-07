@@ -97,52 +97,81 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
 }
 
 // 改变宽的动画
-.#{$namespace}-fade-in-width-expand-leave-from, .#{$namespace}-fade-in-width-expand-enter-to {
-  opacity: 1;
-}
+.#{$namespace}-fade-in-width-expand {
+  &-leave-from, &-enter-to {
+    opacity: 1;
+  }
 
-.#{$namespace}-fade-in-width-expand-leave-to, .#{$namespace}-fade-in-width-expand-enter-from {
-  opacity: 0!important;
-  margin-left: 0!important;
-  margin-right: 0!important;
-}
+  &-leave-to, &-enter-from {
+    opacity: 0!important;
+    margin-left: 0!important;
+    margin-right: 0!important;
+  }
 
-.#{$namespace}-fade-in-width-expand-leave-active {
-  overflow: hidden;
-  transition:
-    opacity .2s cubic-bezier(.4, 0, .2, 1),
-    max-width .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
-    margin-left .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
-    margin-right .2s cubic-bezier(.4, 0, .2, 1) 0.1s;
-}
+  &-leave-active {
+    overflow: hidden;
+    transition:
+      opacity .2s cubic-bezier(.4, 0, .2, 1),
+      max-width .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+      margin-left .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+      margin-right .2s cubic-bezier(.4, 0, .2, 1) 0.1s;
+  }
 
-.#{$namespace}-fade-in-width-expand-enter-active {
-  overflow: hidden;
-  transition:
-    opacity .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
-    max-width .2s cubic-bezier(.4, 0, .2, 1),
-    margin-left .2s cubic-bezier(.4, 0, .2, 1),
-    margin-right .2s cubic-bezier(.4, 0, .2, 1);
+  &-enter-active {
+    overflow: hidden;
+    transition:
+      opacity .2s cubic-bezier(.4, 0, .2, 1) 0.1s,
+      max-width .2s cubic-bezier(.4, 0, .2, 1),
+      margin-left .2s cubic-bezier(.4, 0, .2, 1),
+      margin-right .2s cubic-bezier(.4, 0, .2, 1);
+  }
 }
 
 // 改变高的动画
-.#{$namespace}-expand-transition-leave-from, .#{$namespace}-expand-transition-enter-to {
-  opacity: 1
+.#{$namespace}-expand-transition {
+  &-leave-from, &-enter-to {
+    opacity: 1
+  }
+
+  &-enter-from, &-leave-to {
+    opacity: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  &-leave-active {
+    transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
+      opacity 0.2s cubic-bezier(0, 0, .2, 1),
+      margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
+      margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+  }
+
+  &-enter-active {
+    transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
+      opacity 0.2s cubic-bezier(0, 0, .2, 1),
+      margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
+      margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+  }
 }
-.#{$namespace}-expand-transition-enter-from, .#{$namespace}-expand-transition-leave-to {
-  opacity: 0;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-.#{$namespace}-expand-transition-leave-active {
-  transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
-    opacity 0.2s cubic-bezier(0, 0, .2, 1),
-    margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
-    margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
-}
-.#{$namespace}-expand-transition-enter-active {
-  transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
-    opacity 0.2s cubic-bezier(0, 0, .2, 1),
-    margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
-    margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+
+.#{$namespace}-fade-in-scale-up-transition {
+  &-enter-from, &-leave-to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  &-leave-from, &-enter-to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &-leave-active {
+    transform-origin: inherit;
+    transition: opacity 0.2s cubic-bezier(.4, 0, 1, 1), transform 0.2s cubic-bezier(.4, 0, 1, 1);
+  }
+
+  &-enter-active {
+    transform-origin: inherit;
+    transition: opacity 0.2s cubic-bezier(0, 0, .2, 1), transform 0.2s cubic-bezier(0, 0, .2, 1);
+  }
 }
