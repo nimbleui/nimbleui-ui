@@ -13,8 +13,8 @@ target.vue
 | --- | --- | --- | --- | --- |
 | bottom | `string \| number` | `40` | 距离页面底部的高度 |  |
 | right | `string \| number` | `40` | 距离页面右侧的宽度 |  |
-| listenTo | `string \| HTMLElement` | `40` | 监听滚动的元素，如果为 undefined 会监听距离最近的一个可滚动的祖先节点 |  |
-| mount | `string \| HTMLElement` | `40` | 渲染的容器节点 |  |
+| listenTo | `string \| HTMLElement` | - | 监听滚动的元素，如果为 undefined 会监听距离最近的一个可滚动的祖先节点 |  |
+| mount | `string \| HTMLElement` | `'body'` | 渲染的容器节点 |  |
 | scrollTop | `number` | `180` | 滚动时触发显示回到顶部的高度 |  |
 
 ### BackTop Slots
