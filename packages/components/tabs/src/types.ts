@@ -4,7 +4,7 @@ import type { ExtractPropTypes, PropType, VNodeChild } from "vue";
 export interface TabItemType {
   disabled?: boolean | (() => boolean);
   label?: VNodeChild | (() => VNodeChild);
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const tabsProps = mergeCommonProp({

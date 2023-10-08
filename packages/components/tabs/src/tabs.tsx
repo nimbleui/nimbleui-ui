@@ -22,7 +22,7 @@ export default defineComponent({
           <div class={bem.e("nav")}>
             <div class={bem.m("list", "nav")}>
               {items.map((item, index) => {
-                const key = item[keyField];
+                const key = item[keyField] as string;
                 const label = item[labelField];
 
                 return (
