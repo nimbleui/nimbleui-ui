@@ -29,6 +29,7 @@ import {
   YDivider,
   YScrollbar,
   YBackTop,
+  YTabs,
 } from "@nimble-ui/components";
 
 export default [
@@ -62,4 +63,5 @@ export default [
   YDivider,
   YScrollbar,
   YBackTop,
+  YTabs,
 ];

@@ -58,6 +58,10 @@ const items = reactive<MenuItems[]>([
         text: "回到顶部 BackTop",
         link: "/component/backTop",
       },
+      {
+        text: "标签页 Tabs",
+        link: "/component/tabs",
+      },
     ],
   },
   {
