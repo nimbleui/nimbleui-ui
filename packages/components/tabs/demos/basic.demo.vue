@@ -6,20 +6,22 @@
 </markdown>
 
 <template>
-  <YTabs :items="items"></YTabs>
+  <YTabs v-model="active" :items="items" />
 </template>
 
 <script setup lang="ts">
-import { reactive, h } from "vue";
+import { reactive, h, ref } from "vue";
 
 const items = reactive([
   {
-    id: 0,
-    label: () => h("div", { class: "name" }, "测试1"),
+    id: "2356",
+    label: h("div", { class: "name" }, "测试1"),
   },
   {
-    id: 1,
-    label: "测试2",
+    id: "8588",
+    label: "测试289898989",
   },
 ]);
+
+const active = ref("8588");
 </script>

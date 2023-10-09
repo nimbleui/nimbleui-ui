@@ -1,0 +1,76 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(tabs) {
+  --y-tabs-nav-border-color: var(--y-color-border-secondary);
+  --y-tabs-line-bg-color: var(--y-color-primary);
+  --y-tabs-nav-active-text-color: var(--y-color-primary);
+}
+
+@include b(tabs) {
+  display: block;
+  box-sizing: border-box;
+
+  @include e(nav) {
+    position: relative;
+    display: flex;
+    flex: auto;
+    align-self: stretch;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+
+    @include when(centered) {
+      justify-content: center;
+    }
+
+    &::before {
+      position: absolute;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border-bottom: 1px solid var(--y-tabs-nav-border-color);
+      content: '';
+    }
+
+    @include m(list) {
+      position: relative;
+      display: flex;
+      
+    }
+
+    @include m(list-tab) {
+      padding: 12px 0;
+      cursor: pointer;
+
+      &:not(&:first-child) {
+        margin-left: 32px;
+      }
+
+      &:hover {
+        color: var(--y-tabs-nav-active-text-color);
+      }
+
+      @include when(active) {
+        color: var(--y-tabs-nav-active-text-color);
+      }
+
+      @include when(card) {
+        padding: 6px 16px; 
+      }
+    }
+
+    @include m(list-btn) {
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    @include m(list-line) {
+      position: absolute;
+      background: var(--y-tabs-line-bg-color);
+      pointer-events: none;
+      height: 2px;
+      bottom: 0;
+      transition: width 0.3s, left 0.3s, right 0.3s;
+    }
+  }
+}
