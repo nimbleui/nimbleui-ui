@@ -9,6 +9,8 @@ export interface TabItemType {
   [key: string]: unknown;
 }
 
+export type TabsType = "line" | "card";
+
 const tabsProps = mergeCommonProp({
   /**
    * @description 绑定值，tabs参数中的 idField值，默认是id
@@ -54,6 +56,9 @@ const tabsProps = mergeCommonProp({
    */
   centered: {
     type: Boolean,
+  },
+  type: {
+    type: String as PropType<TabsType>,
   },
 });
 

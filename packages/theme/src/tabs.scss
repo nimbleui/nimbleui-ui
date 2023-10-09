@@ -3,6 +3,7 @@
 @include b(tabs) {
   --y-tabs-nav-border-color: var(--y-color-border-secondary);
   --y-tabs-line-bg-color: var(--y-color-primary);
+  --y-tabs-tab-card-bg-color: var(--y-color-fill-quaternary);
   --y-tabs-nav-active-text-color: var(--y-color-primary);
 }
 
@@ -23,13 +24,14 @@
       justify-content: center;
     }
 
-    &::before {
+    @include m(line) {
       position: absolute;
       right: 0;
       left: 0;
       bottom: 0;
-      border-bottom: 1px solid var(--y-tabs-nav-border-color);
-      content: '';
+      height: 1px;
+      width: 100%;
+      background-color: var(--y-tabs-nav-border-color);
     }
 
     @include m(list) {
@@ -40,10 +42,15 @@
 
     @include m(list-tab) {
       padding: 12px 0;
+      box-sizing: border-box;
       cursor: pointer;
 
       &:not(&:first-child) {
         margin-left: 32px;
+
+        @include when(card){
+          margin-left: 2px;
+        }
       }
 
       &:hover {
@@ -52,10 +59,18 @@
 
       @include when(active) {
         color: var(--y-tabs-nav-active-text-color);
+
+        &.is-card {
+          background-color: transparent;
+          border-bottom-color: transparent;
+        }
       }
 
       @include when(card) {
-        padding: 6px 16px; 
+        padding: 6px 16px;
+        background: var(--y-tabs-tab-card-bg-color);
+        border-radius: 8px 8px 0 0;
+        border: 1px solid var(--y-tabs-nav-border-color);
       }
     }
 
@@ -64,13 +79,18 @@
       transition: all 0.3s;
     }
 
-    @include m(list-line) {
+    @include m(list-bar) {
       position: absolute;
       background: var(--y-tabs-line-bg-color);
       pointer-events: none;
       height: 2px;
       bottom: 0;
       transition: width 0.3s, left 0.3s, right 0.3s;
+      z-index: 1;
+
+      @include when(hide) {
+        display: none;
+      }
     }
   }
 }
