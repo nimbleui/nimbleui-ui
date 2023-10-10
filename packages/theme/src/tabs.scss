@@ -14,39 +14,60 @@
   @include e(nav) {
     position: relative;
     display: flex;
-    flex: auto;
-    align-self: stretch;
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
 
-    @include when(centered) {
-      justify-content: center;
+    &::before, &::after {
+      display: block;
+      border-bottom: 1px solid var(--y-tabs-nav-border-color);
+      content: " ";
     }
 
-    @include m(line) {
+    &::after {
+      flex: 1;
+    }
+
+    @include when(centered) {
+      justify-content: center;
+
+      &::before{
+        flex: 1;
+      }
+    }
+
+    @include m(list-line) {
       position: absolute;
       right: 0;
       left: 0;
       bottom: 0;
-      height: 1px;
       width: 100%;
-      background-color: var(--y-tabs-nav-border-color);
+      border: 10px solid transparent;
     }
 
     @include m(list) {
       position: relative;
       display: flex;
-      
     }
 
     @include m(list-tab) {
+      position: relative;
       padding: 12px 0;
       box-sizing: border-box;
       cursor: pointer;
+      border-bottom: 1px solid var(--y-tabs-nav-border-color);
 
       &:not(&:first-child) {
         margin-left: 32px;
+
+        &::before {
+          position: absolute;
+          bottom: -1px;
+          width: 32px;
+          left: -32px;
+          border-bottom: 1px solid var(--y-tabs-nav-border-color);
+          content: " ";
+        }
 
         @include when(card){
           margin-left: 2px;
@@ -71,6 +92,11 @@
         background: var(--y-tabs-tab-card-bg-color);
         border-radius: 8px 8px 0 0;
         border: 1px solid var(--y-tabs-nav-border-color);
+
+        &::before {
+          left: -4px !important;
+          width: 4px !important;
+        }
       }
     }
 

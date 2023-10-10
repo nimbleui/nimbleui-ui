@@ -5,6 +5,7 @@
 ```demo
 basic.vue
 card.vue
+centered.vue
 ```
 ## API
 

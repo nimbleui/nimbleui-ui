@@ -39,8 +39,8 @@ export default defineComponent({
         <>
           <span ref={placeholderRef} style="display: none;"></span>
           <Teleport to={mount}>
-            <Transition v-show={show.value} name={bem.name("fade-in-scale-up-transition")}>
-              <div onClick={onBackTop} class={bem.b()} style={styles.value}>
+            <Transition name={bem.name("fade-in-scale-up-transition")}>
+              <div v-show={show.value} onClick={onBackTop} class={bem.b()} style={styles.value}>
                 {ctx.slots.default?.()}
               </div>
             </Transition>

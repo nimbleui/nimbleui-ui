@@ -9,7 +9,8 @@ export interface TabItemType {
   [key: string]: unknown;
 }
 
-export type TabsType = "line" | "card";
+export type TabsType = "line" | "card" | "radio" | "bar";
+export type TabPosition = "left" | "top" | "right" | "bottom";
 
 const tabsProps = mergeCommonProp({
   /**
@@ -57,8 +58,18 @@ const tabsProps = mergeCommonProp({
   centered: {
     type: Boolean,
   },
+  /**
+   * @description 页签的基本样式
+   */
   type: {
     type: String as PropType<TabsType>,
+  },
+  /**
+   * @description 页签位置
+   */
+  tabPosition: {
+    type: String as PropType<TabPosition>,
+    default: "top",
   },
 });
 

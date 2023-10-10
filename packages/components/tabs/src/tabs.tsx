@@ -11,7 +11,6 @@ export default defineComponent({
     const bem = createNamespace("tabs");
     const barElRef = ref<HTMLElement>();
     const tabsElRef = ref<HTMLElement>();
-    const lineElRef = ref<HTMLElement>();
     const selfModel = ref<string | number>();
 
     const getCurrentEl = () => {
@@ -29,12 +28,6 @@ export default defineComponent({
       barElRef.value.style.width = `${offsetWidth}px`;
       barElRef.value.style.transform = `translateX(-50%)`;
       barElRef.value.style.left = `${offsetLeft + offsetWidth / 2}px`;
-
-      if (lineElRef.value) {
-        lineElRef.value.style.background = `linear-gradient(to right, var(--y-tabs-nav-border-color) 0%, var(--y-tabs-nav-border-color) ${offsetLeft}px , transparent ${offsetLeft}px, transparent ${
-          offsetLeft + offsetWidth - 2
-        }px, var(--y-tabs-nav-border-color) ${offsetLeft + offsetWidth - 2}px, var(--y-tabs-nav-border-color) 100%)`;
-      }
     };
 
     const active = computed({
@@ -71,8 +64,8 @@ export default defineComponent({
       const { items, labelField, keyField, centered, type, renderTabBar } = props;
       return items?.length ? (
         <div class={bem.b()}>
-          <div ref={tabsElRef} class={bem.e("nav")}>
-            <div class={[bem.m("list", "nav"), bem.is("centered", centered)]}>
+          <div ref={tabsElRef} class={[bem.e("nav"), bem.is("centered", centered)]}>
+            <div class={bem.m("list", "nav")}>
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
@@ -90,7 +83,6 @@ export default defineComponent({
               })}
               <div ref={barElRef} class={[bem.m("list-bar", "nav"), bem.is("hide", type == "card")]}></div>
             </div>
-            <div ref={lineElRef} class={bem.m("line", "nav")}></div>
           </div>
           <div class={bem.e("content")}></div>
         </div>
