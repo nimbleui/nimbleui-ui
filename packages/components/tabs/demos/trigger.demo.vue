@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YTabs v-model="active" :items="items" />
+  <YTabs v-model="active" :items="items" trigger="hover" type="bar" />
 </template>
 
 <script setup lang="ts">

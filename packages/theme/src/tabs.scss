@@ -5,6 +5,7 @@
   --y-tabs-line-bg-color: var(--y-color-primary);
   --y-tabs-tab-card-bg-color: var(--y-color-fill-quaternary);
   --y-tabs-nav-active-text-color: var(--y-color-primary);
+  --y-tabs-nav-radio-active-color: var(--y-color-primary);
 }
 
 @include b(tabs) {
@@ -68,10 +69,6 @@
           border-bottom: 1px solid var(--y-tabs-nav-border-color);
           content: " ";
         }
-
-        @include when(card){
-          margin-left: 2px;
-        }
       }
 
       &:hover {
@@ -80,23 +77,6 @@
 
       @include when(active) {
         color: var(--y-tabs-nav-active-text-color);
-
-        &.is-card {
-          background-color: transparent;
-          border-bottom-color: transparent;
-        }
-      }
-
-      @include when(card) {
-        padding: 6px 16px;
-        background: var(--y-tabs-tab-card-bg-color);
-        border-radius: 8px 8px 0 0;
-        border: 1px solid var(--y-tabs-nav-border-color);
-
-        &::before {
-          left: -4px !important;
-          width: 4px !important;
-        }
       }
     }
 
@@ -118,5 +98,79 @@
         display: none;
       }
     }
+
+    @include when(card) {
+      .#{$be + '--list-tab'} {
+        padding: 6px 16px;
+        background: var(--y-tabs-tab-card-bg-color);
+        border-radius: 8px 8px 0 0;
+        border: 1px solid var(--y-tabs-nav-border-color);
+
+        &::before {
+          left: -4px;
+          width: 4px;
+        }
+
+        &:not(&:first-child) {
+          margin-left: 2px;
+        }
+
+        @include when(active) {
+          background-color: transparent;
+          border-bottom-color: transparent;
+        }
+      }
+    }
+
+    @include when(bar) {
+      &::before, &::after {
+        border-bottom-color: transparent;
+      }
+      .#{$be + '--list-tab'} {
+        border-bottom-color: transparent;
+
+        &::before, &::after {
+          border-bottom-color: transparent;
+        }
+      }
+    }
+
+    @include when(radio) {
+      &::before, &::after {
+        border-bottom-color: transparent;
+      }
+      .#{$be + '--list'} {
+        border-radius: 4px;
+        overflow: hidden;
+
+        &-tab {
+          padding: 6px 16px;
+          background: var(--y-tabs-tab-card-bg-color);
+          border: 1px solid var(--y-tabs-nav-border-color);
+  
+          &:not(&:first-child) {
+            margin-left: 0;
+          }
+  
+          &::before, &::after {
+            border-bottom-color: transparent;
+          }
+  
+          @include when(active) {
+            color: #fff;
+            border-color: var(--y-tabs-nav-radio-active-color);
+            background-color: var(--y-tabs-nav-radio-active-color);
+          }
+        }
+
+        &-bar {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @include e(content) {
+    margin-top: 16px;
   }
 }

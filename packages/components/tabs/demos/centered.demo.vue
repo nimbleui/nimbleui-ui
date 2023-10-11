@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YTabs v-model="active" :items="items" centered />
+  <YTabs v-model="active" :items="items" type="radio" />
 </template>
 
 <script setup lang="ts">
@@ -16,10 +16,12 @@ const items = reactive([
   {
     id: "2356",
     label: h("div", { class: "name" }, "测试1"),
+    children: "测试1",
   },
   {
     id: "8588",
     label: "测试289898989",
+    children: "测试289898989",
   },
 ]);
 

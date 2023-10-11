@@ -4,7 +4,7 @@ import type { ExtractPropTypes, PropType, VNodeChild } from "vue";
 export interface TabItemType {
   label?: VNodeChild;
   disabled?: boolean | (() => boolean);
-  children?: VNodeChild | (() => VNodeChild);
+  children?: VNodeChild | ((item: TabItemType) => VNodeChild);
   closable?: boolean;
   [key: string]: unknown;
 }

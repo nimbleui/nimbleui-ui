@@ -1,21 +1,32 @@
-import { createNamespace } from "@nimble-ui/utils";
-import { defineComponent, onMounted, computed, ref, watch, nextTick } from "vue";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { defineComponent, onMounted, computed, ref, watch, nextTick, reactive } from "vue";
 
 import tabsProps, { TabItemType } from "./types";
 
 export default defineComponent({
   name: "YTabs",
   props: tabsProps(),
-  emits: ["change", "update:modelValue"],
+  emits: ["change", "click", "update:modelValue"],
   setup(props, ctx) {
     const bem = createNamespace("tabs");
     const barElRef = ref<HTMLElement>();
     const tabsElRef = ref<HTMLElement>();
     const selfModel = ref<string | number>();
+    const contents: TabItemType[] = reactive([]);
+
+    const handelContent = (active: string | number) => {
+      const { items, keyField } = props;
+      const index = contents.findIndex((item) => item[keyField] == active);
+      if (index > -1) return;
+
+      const item = items?.find((item) => item[keyField] == active);
+      item && contents.push(item);
+    };
 
     const getCurrentEl = () => {
       const { value } = active;
       if (!value) return;
+      handelContent(value);
 
       const tabEl = tabsElRef.value?.querySelector(`[data-name="${value}"]`) as HTMLElement | null;
       if (tabEl) updateBarStyle(tabEl);
@@ -39,10 +50,14 @@ export default defineComponent({
       },
     });
 
-    const handleClick = (item: TabItemType) => {
-      return () => {
-        const value = item[props.keyField] as number | string;
-        active.value = value;
+    const handleEvent = (item: TabItemType, type: "click" | "enter") => {
+      return (e: Event) => {
+        const { keyField, trigger } = props;
+        const value = item[keyField] as number | string;
+        if ((trigger === "click" && type === "click") || (trigger === "hover" && type === "enter")) {
+          active.value = value;
+          ctx.emit("click", item, e);
+        }
       };
     };
 
@@ -60,11 +75,27 @@ export default defineComponent({
     });
     onMounted(getCurrentEl);
 
+    const contentRender = () => {
+      return (
+        <div class={bem.e("content")}>
+          {contents.map((item) => {
+            const child = isFunction(item.children) ? item.children(item) : item.children;
+            const key = item[props.keyField] as string | number;
+            return (
+              <div v-show={active.value == key} class={bem.m("pane", "content")}>
+                {child}
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
+
     return () => {
       const { items, labelField, keyField, centered, type, renderTabBar } = props;
       return items?.length ? (
         <div class={bem.b()}>
-          <div ref={tabsElRef} class={[bem.e("nav"), bem.is("centered", centered)]}>
+          <div ref={tabsElRef} class={[bem.e("nav"), bem.is("centered", centered), bem.is(type)]}>
             <div class={bem.m("list", "nav")}>
               {items.map((item) => {
                 const key = item[keyField] as string | number;
@@ -74,8 +105,9 @@ export default defineComponent({
                   <div
                     key={key}
                     data-name={key}
-                    class={[bem.m("list-tab", "nav"), bem.is("active", active.value == key), bem.is(type)]}
-                    onClick={handleClick(item)}
+                    class={[bem.m("list-tab", "nav"), bem.is("active", active.value == key)]}
+                    onClick={handleEvent(item, "click")}
+                    onMouseenter={handleEvent(item, "enter")}
                   >
                     <div class={bem.m("list-btn", "nav")}>{renderTabBar ? renderTabBar(item) : label}</div>
                   </div>
@@ -84,7 +116,7 @@ export default defineComponent({
               <div ref={barElRef} class={[bem.m("list-bar", "nav"), bem.is("hide", type == "card")]}></div>
             </div>
           </div>
-          <div class={bem.e("content")}></div>
+          {contentRender()}
         </div>
       ) : null;
     };
