@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 页签的基本样式
   
-  最简单的用法。
+  可以通过改变type属性，可选line、card、radio、bar
 </markdown>
 
 <template>

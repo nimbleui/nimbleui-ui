@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 居中
   
-  最简单的用法。
+  标签居中展示。
 </markdown>
 
 <template>
-  <YTabs v-model="active" :items="items" type="radio" />
+  <YTabs v-model="active" centered :items="items" />
 </template>
 
 <script setup lang="ts">

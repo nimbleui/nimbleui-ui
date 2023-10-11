@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 触发方式
   
-  最简单的用法。
+  可以使用 trigger='hover' 触发标签页的改变。
 </markdown>
 
 <template>

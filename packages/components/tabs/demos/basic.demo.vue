@@ -2,15 +2,15 @@
 <markdown>
   # 基础用法
   
-  最简单的用法。
+  默认选中第一项。
 </markdown>
 
 <template>
-  <YTabs v-model="active" :items="items" />
+  <YTabs :items="items" />
 </template>
 
 <script setup lang="ts">
-import { reactive, h, ref } from "vue";
+import { reactive, h } from "vue";
 
 const items = reactive([
   {
@@ -24,6 +24,4 @@ const items = reactive([
     children: "测试289898989",
   },
 ]);
-
-const active = ref("8588");
 </script>
