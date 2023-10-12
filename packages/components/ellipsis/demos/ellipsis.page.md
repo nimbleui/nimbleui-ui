@@ -4,12 +4,18 @@
 ```demo
 basic.vue
 max.vue
+custom.vue
 ```
 ## API
 
-### Divider Props
+### Ellipsis Props
 | 名称 | 类型 | 默认值 | 说明 | 版本 |
 | --- | --- | --- | --- | --- |
-| direction | `"left"` \| `"center"` \| `"right"` | `'center'` | 标题的位置 | |
-| dashed | `boolean` | `false` | 是否使用虚线分割 | |
-| vertical | `boolean` | `false` | 是否垂直分隔 | |
+| lineClamp | `number` | `0` | 最大行数 | |
+| maxWidth | `string \| number` | - | 最大宽度 | |
+
+### Ellipsis Slots
+| 名称 | 参数 | 说明 |
+| --- | --- | --- |
+| default | - | 文本省略的内容 |
+| tooltip | - | 提示的的内容 |

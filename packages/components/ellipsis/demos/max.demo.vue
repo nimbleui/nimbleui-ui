@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 最大行数
   
-  对不同段落的文本进行分割。
+  最大显示多少行，多出的隐藏
 </markdown>
 
 <template>

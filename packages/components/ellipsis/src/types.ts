@@ -10,13 +10,6 @@ const ellipsisProps = mergeCommonProp({
     default: 0,
   },
   /**
-   * @description Tooltip的属性
-   */
-  tooltip: {
-    type: Boolean,
-    default: true,
-  },
-  /**
    * @description 最大宽度
    */
   maxWidth: {
