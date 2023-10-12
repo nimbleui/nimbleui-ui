@@ -3,6 +3,7 @@
 
 ```demo
 basic.vue
+max.vue
 ```
 ## API
 

@@ -9,6 +9,7 @@
   --y-bg-color-overlay: var(--y-color-bg-spotlight);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
   --y-arrow-bg: var(--y-bg-color-overlay);
+  --y-tooltip-font-size: var(--y-font-size-ms);
   
   position: fixed;
   left: 0; 
@@ -26,7 +27,7 @@
     background-color: var(--y-bg-color-overlay);
     color: #fff;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: var(--y-tooltip-font-size);
 
     @include m('arrow') {
       position: absolute;
