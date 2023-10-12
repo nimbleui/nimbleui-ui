@@ -8,5 +8,6 @@ export default YEllipsis;
 declare module "vue" {
   export interface GlobalComponents {
     YEllipsis: typeof YEllipsis;
+    "y-ellipsis": typeof YEllipsis;
   }
 }

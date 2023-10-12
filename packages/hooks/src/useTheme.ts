@@ -121,7 +121,8 @@ export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
 
   // 设置背景色
   setGradient(bgGradient, theme, (name: string, val: number) => {
-    styleKeyValue.push(`--y-color-bg-${name}: ${setSolidColor(bgColor, val, theme)}`);
+    const value = name == "spotlight" && theme === "light" ? textColor : bgColor;
+    styleKeyValue.push(`--y-color-bg-${name}: ${setSolidColor(value, val, theme)}`);
   });
 
   styleKeyValue.push(`--y-color-theme: ${bgColor}`);

@@ -6,12 +6,12 @@
 @include b(tooltip-container) {
   --y-hover-text-color: var(--y-color-primary);
   --y-hover-bg-color: var(--y-color-primary-1);
-  --y-bg-color-overlay: var(--y-color-bg-elevated);
+  --y-bg-color-overlay: var(--y-color-bg-spotlight);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
-  --y-arrow-bg: var(--y-color-bg-elevated);
+  --y-arrow-bg: var(--y-bg-color-overlay);
   
   position: fixed;
-  left: 0;
+  left: 0; 
   top: 0;
   height: 0;
   pointer-events: none;
@@ -23,6 +23,10 @@
     position: relative;
     z-index: auto;
     pointer-events: all;
+    background-color: var(--y-bg-color-overlay);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
 
     @include m('arrow') {
       position: absolute;
