@@ -24,15 +24,15 @@
       </div>
       <div class="flex-c">
         <div class="flex-l">
-          <YTooltip placement="left-start">
+          <YTooltip trigger="hover" placement="left-start">
             <YButton :style="buttonStyle">LT</YButton>
             <template #content>提示文本 LT</template>
           </YTooltip>
-          <YTooltip placement="left">
+          <YTooltip trigger="hover" placement="left">
             <YButton :style="buttonStyle">L</YButton>
             <template #content>提示文本 L</template>
           </YTooltip>
-          <YTooltip placement="left-end">
+          <YTooltip trigger="hover" placement="left-end">
             <YButton :style="buttonStyle">LB</YButton>
             <template #content>提示文本 LB </template>
           </YTooltip>
@@ -42,11 +42,11 @@
             <YButton :style="buttonStyle">RT</YButton>
             <template #content>提示文本 RT</template>
           </YTooltip>
-          <YTooltip placement="right">
+          <YTooltip trigger="hover" placement="right">
             <YButton :style="buttonStyle">R</YButton>
             <template #content>提示文本 R</template>
           </YTooltip>
-          <YTooltip placement="right-end">
+          <YTooltip trigger="hover" placement="right-end">
             <YButton :style="buttonStyle">RB</YButton>
             <template #content>提示文本 RB</template>
           </YTooltip>

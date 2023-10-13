@@ -96,8 +96,8 @@ export default defineComponent({
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${y}px)`;
         transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       } else {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${y}px)`;
-        transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
+        transform = `translateX(${disR >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${y}px)`;
+        transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
       }
       styles.transform = transform;
       styles.transition = "none";
