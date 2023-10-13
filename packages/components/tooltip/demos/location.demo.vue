@@ -9,61 +9,61 @@
   <div class="warp">
     <div class="flex">
       <div class="flex-v">
-        <YTooltip placement="top-start">
+        <YTooltip trigger="hover" placement="top-start">
           <YButton :style="buttonStyle">TL</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 TL</template>
         </YTooltip>
-        <YTooltip placement="top">
+        <YTooltip trigger="hover" placement="top">
           <YButton :style="buttonStyle">T</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 T</template>
         </YTooltip>
-        <YTooltip placement="top-end">
+        <YTooltip trigger="hover" placement="top-end">
           <YButton :style="buttonStyle">TR</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 TR</template>
         </YTooltip>
       </div>
       <div class="flex-c">
         <div class="flex-l">
           <YTooltip placement="left-start">
             <YButton :style="buttonStyle">LT</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 LT</template>
           </YTooltip>
           <YTooltip placement="left">
             <YButton :style="buttonStyle">L</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 L</template>
           </YTooltip>
           <YTooltip placement="left-end">
             <YButton :style="buttonStyle">LB</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 LB </template>
           </YTooltip>
         </div>
         <div class="flex-l">
           <YTooltip placement="right-start">
             <YButton :style="buttonStyle">RT</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 RT</template>
           </YTooltip>
           <YTooltip placement="right">
             <YButton :style="buttonStyle">R</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 R</template>
           </YTooltip>
           <YTooltip placement="right-end">
             <YButton :style="buttonStyle">RB</YButton>
-            <template #content> 提示文本 </template>
+            <template #content>提示文本 RB</template>
           </YTooltip>
         </div>
       </div>
       <div class="flex-v">
-        <YTooltip placement="bottom-start">
+        <YTooltip trigger="hover" placement="bottom-start">
           <YButton :style="buttonStyle">BL</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 BL</template>
         </YTooltip>
-        <YTooltip placement="bottom">
+        <YTooltip trigger="hover" placement="bottom">
           <YButton :style="buttonStyle">B</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 B</template>
         </YTooltip>
-        <YTooltip placement="bottom-end">
+        <YTooltip trigger="hover" placement="bottom-end">
           <YButton :style="buttonStyle">BR</YButton>
-          <template #content> 提示文本 </template>
+          <template #content>提示文本 BR</template>
         </YTooltip>
       </div>
     </div>

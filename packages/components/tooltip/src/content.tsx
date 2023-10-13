@@ -46,16 +46,16 @@ export default defineComponent({
     // 设置箭头的位置
     const setArrowLocation = () => {
       const { placement } = props;
-      const seat = placement.split("-")[1];
+      const [direction, seat] = placement.split("-");
       // placement第一位是bottom或top，就改变箭头left、right
-      if (placement.indexOf("bottom") == 0 || placement.indexOf("top") == 0) {
+      if (direction == "bottom" || direction == "top") {
         const key = seat == "end" ? "right" : "left";
         arrowStyle[key] = seat ? "12px" : "50%";
-        !seat && (arrowStyle.transform = "translateX(-50%)");
+        !seat && (arrowStyle.transform = `translateX(-50%) translateY(${direction == "bottom" ? "-" : ""}100%)`);
       } else {
         const key = seat == "end" ? "bottom" : "top";
         arrowStyle[key] = seat ? "12px" : "50%";
-        !seat && (arrowStyle.transform = "translateY(-50%)");
+        !seat && (arrowStyle.transform = `translateX(${direction == "right" ? "-" : ""}100%) translateY(-50%)`);
       }
     };
 
@@ -69,6 +69,8 @@ export default defineComponent({
       const disR = window.innerWidth - rect?.right;
       const disL = rect?.left;
       const disT = rect?.top;
+      const right = rect?.right;
+      const bottom = rect?.bottom;
 
       const tTop = disT + height + DIS;
       const bTop = disT - offsetHeight - DIS;
@@ -78,23 +80,23 @@ export default defineComponent({
       const disY = offsetHeight - rect?.height;
       const disX = offsetWidth - rect?.width;
 
+      const seat = placement.split("-")[1];
       let transform = "";
       let transformOrigin = "";
+
+      const x = seat == "start" ? disL : seat == "end" ? right - offsetWidth : disL - disX / 2;
+      const y = seat == "start" ? disT : seat == "end" ? bottom - offsetHeight : disT - disY / 2;
       if (placement.indexOf("bottom") == 0) {
-        transform = `translateX(${disL - disX / 2}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
+        transform = `translateX(${x}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
         transformOrigin = disB >= offsetHeight + DIS_BOTTOM ? "top center" : "bottom center";
       } else if (placement.indexOf("top") == 0) {
-        transform = `translateX(${disL - disX / 2}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
+        transform = `translateX(${x}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
         transformOrigin = disT >= offsetHeight + DIS_BOTTOM ? "bottom center" : "top center";
       } else if (placement.indexOf("left") == 0) {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${
-          disT - disY / 2
-        }px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${y}px)`;
         transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       } else {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${
-          disT - disY / 2
-        }px)`;
+        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${y}px)`;
         transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       }
       styles.transform = transform;

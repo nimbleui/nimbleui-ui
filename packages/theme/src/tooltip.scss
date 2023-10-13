@@ -38,25 +38,29 @@
       position: absolute;
 
       @include when(bottom) {
-        bottom: -6px;
+        bottom: 1px;
+        transform: translateY(100%);
 
         @include utils-arrow-fill(7px, 'top');
       }
 
       @include when(top) {
-        top: -6px;
+        top: 1px;
+        transform: translateY(-100%);
 
         @include utils-arrow-fill(7px, 'bottom');
       }
 
       @include when(right) {
-        right: -6px;
+        right: 1px;
+        transform: translateX(100%);
 
         @include utils-arrow-fill(7px, 'left');
       }
 
       @include when(left) {
-        left: -6px;
+        left: 1px;
+        transform: translateX(-100%);
 
         @include utils-arrow-fill(7px, 'right');
       }

@@ -47,7 +47,7 @@ export const contentProps = () => ({
    */
   maxWidth: {
     type: [String, Number],
-    default: "400px",
+    default: "250px",
   },
   /**
    * @description 触发行为
@@ -60,7 +60,7 @@ export const contentProps = () => ({
    */
   maxHeight: {
     type: [String, Number],
-    default: "400px",
+    default: "250px",
   },
   /**
    * @description 弹框的方向
