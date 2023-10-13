@@ -1,7 +1,19 @@
 import { PropType } from "vue";
 import { TriggerType } from "./types";
 
-export type PlacementType = "bottom" | "top" | "right" | "left";
+export type PlacementType =
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
+  | "top"
+  | "top-start"
+  | "top-end"
+  | "right"
+  | "right-start"
+  | "right-end"
+  | "left"
+  | "left-start"
+  | "left-end";
 
 export const contentProps = () => ({
   /**
@@ -37,6 +49,9 @@ export const contentProps = () => ({
     type: [String, Number],
     default: "400px",
   },
+  /**
+   * @description 触发行为
+   */
   trigger: {
     type: String as PropType<TriggerType>,
   },

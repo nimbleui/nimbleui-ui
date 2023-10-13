@@ -21,7 +21,6 @@ export default defineComponent({
       rectInfo: {} as RectInfo,
     });
 
-    const { lazyRender } = useLazyRender(() => props.show);
     useScrollParent(tooltipContext.triggerRef, () => {
       if (tooltipContext.contentRef.value && props.show) {
         handleLocation(tooltipContext.contentRef.value);
@@ -42,6 +41,23 @@ export default defineComponent({
 
     const styles = reactive<CSSProperties>({});
     const zIndex = props.zIndex || nextZIndex();
+    const arrowStyle = reactive<CSSProperties>({});
+
+    // 设置箭头的位置
+    const setArrowLocation = () => {
+      const { placement } = props;
+      const seat = placement.split("-")[1];
+      // placement第一位是bottom或top，就改变箭头left、right
+      if (placement.indexOf("bottom") == 0 || placement.indexOf("top") == 0) {
+        const key = seat == "end" ? "right" : "left";
+        arrowStyle[key] = seat ? "12px" : "50%";
+        !seat && (arrowStyle.transform = "translateX(-50%)");
+      } else {
+        const key = seat == "end" ? "bottom" : "top";
+        arrowStyle[key] = seat ? "12px" : "50%";
+        !seat && (arrowStyle.transform = "translateY(-50%)");
+      }
+    };
 
     const handleLocation = (el: HTMLElement) => {
       const { height, width } = tooltipContext.rectInfo;
@@ -56,25 +72,25 @@ export default defineComponent({
 
       const tTop = disT + height + DIS;
       const bTop = disT - offsetHeight - DIS;
-      const lRight = disR + width + DIS;
-      const lLeft = disR - offsetWidth - DIS;
+      const lRight = disL + width + DIS;
+      const lLeft = disL - offsetWidth - DIS;
 
       const disY = offsetHeight - rect?.height;
       const disX = offsetWidth - rect?.width;
 
       let transform = "";
       let transformOrigin = "";
-      if (placement === "bottom") {
+      if (placement.indexOf("bottom") == 0) {
         transform = `translateX(${disL - disX / 2}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
         transformOrigin = disB >= offsetHeight + DIS_BOTTOM ? "top center" : "bottom center";
-      } else if (placement === "top") {
+      } else if (placement.indexOf("top") == 0) {
         transform = `translateX(${disL - disX / 2}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
         transformOrigin = disT >= offsetHeight + DIS_BOTTOM ? "bottom center" : "top center";
-      } else if (placement === "left") {
+      } else if (placement.indexOf("left") == 0) {
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${
           disT - disY / 2
         }px)`;
-        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
+        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
       } else {
         transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${
           disT - disY / 2
@@ -90,11 +106,13 @@ export default defineComponent({
     const handleEnter = (element: Element) => {
       const el = element as HTMLElement;
       const transformOrigin = handleLocation(el);
+      setArrowLocation();
 
       styles.zIndex = zIndex;
       el.style.transformOrigin = transformOrigin;
     };
 
+    const { lazyRender } = useLazyRender(() => props.show);
     const renderContent = lazyRender(() => {
       const { transition, show, maxHeight, maxWidth } = props;
       return (
@@ -112,7 +130,7 @@ export default defineComponent({
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
             >
-              <span class={[bem.m("arrow", "content"), bem.is(placementRef.value)]}></span>
+              <span style={arrowStyle} class={[bem.m("arrow", "content"), bem.is(placementRef.value)]}></span>
               {ctx.slots.default?.()}
             </div>
           </Transition>

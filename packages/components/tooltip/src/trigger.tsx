@@ -60,6 +60,7 @@ export default defineComponent({
       let width = el.offsetWidth;
       let height = el.offsetHeight;
       let parent: HTMLElement = el;
+      // 解决子元素用绝对定位导致父元素获取宽高错误问题
       while (parent !== elementRef.value) {
         if (width < parent.offsetWidth) {
           width = parent.offsetWidth;

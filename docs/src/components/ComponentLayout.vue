@@ -66,6 +66,10 @@ const items = reactive<MenuItems[]>([
         text: "文本省略 Ellipsis",
         link: "/component/ellipsis",
       },
+      {
+        text: "文字提示 Tooltip",
+        link: "/component/tooltip",
+      },
     ],
   },
   {

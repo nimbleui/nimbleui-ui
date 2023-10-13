@@ -6,5 +6,5 @@
 </markdown>
 
 <template>
-  <YEllipsis style="max-width: 240px">春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。</YEllipsis>
+  <YEllipsis max-width="240px">春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。</YEllipsis>
 </template>

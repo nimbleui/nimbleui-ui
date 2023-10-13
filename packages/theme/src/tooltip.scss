@@ -9,7 +9,7 @@
   --y-bg-color-overlay: var(--y-color-bg-spotlight);
   --y-box-shadow: 0 0 6px var(--y-color-fill);
   --y-arrow-bg: var(--y-bg-color-overlay);
-  --y-tooltip-font-size: var(--y-font-size-ms);
+  --y-tooltip-font-size: var(--y-font-size);
   
   position: fixed;
   left: 0; 
@@ -22,40 +22,43 @@
   
   @include e(content) {
     position: relative;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 6px 8px;
     z-index: auto;
     pointer-events: all;
     background-color: var(--y-bg-color-overlay);
     color: #fff;
     border-radius: 4px;
     font-size: var(--y-tooltip-font-size);
+    box-sizing: border-box;
+    visibility: visible; 
 
     @include m('arrow') {
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
 
       @include when(bottom) {
-        bottom: -9px;
+        bottom: -6px;
 
-        @include utils-arrow-fill(10px, 'top')
+        @include utils-arrow-fill(7px, 'top');
       }
 
       @include when(top) {
-        top: -9px;
+        top: -6px;
 
-        @include utils-arrow-fill(10px, 'bottom')
+        @include utils-arrow-fill(7px, 'bottom');
       }
 
       @include when(right) {
-        right: -9px;
+        right: -6px;
 
-        @include utils-arrow-fill(10px, 'left')
+        @include utils-arrow-fill(7px, 'left');
       }
 
       @include when(left) {
-        left: -9px;
+        left: -6px;
 
-        @include utils-arrow-fill(10px, 'right')
+        @include utils-arrow-fill(7px, 'right');
       }
     }
   }
