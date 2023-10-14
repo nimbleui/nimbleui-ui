@@ -38,7 +38,7 @@
           </YTooltip>
         </div>
         <div class="flex-l">
-          <YTooltip placement="right-start">
+          <YTooltip trigger="hover" placement="right-start">
             <YButton :style="buttonStyle">RT</YButton>
             <template #content>提示文本 RT</template>
           </YTooltip>

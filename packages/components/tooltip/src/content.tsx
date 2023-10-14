@@ -44,18 +44,24 @@ export default defineComponent({
     const arrowStyle = reactive<CSSProperties>({});
 
     // 设置箭头的位置
-    const setArrowLocation = () => {
+    const setArrowLocation = (flag: boolean) => {
       const { placement } = props;
       const [direction, seat] = placement.split("-");
       // placement第一位是bottom或top，就改变箭头left、right
       if (direction == "bottom" || direction == "top") {
         const key = seat == "end" ? "right" : "left";
         arrowStyle[key] = seat ? "12px" : "50%";
-        !seat && (arrowStyle.transform = `translateX(-50%) translateY(${direction == "bottom" ? "-" : ""}100%)`);
+        !seat &&
+          (arrowStyle.transform = `translateX(-50%) translateY(${
+            (direction == "bottom" && flag) || (direction == "top" && !flag) ? "-" : ""
+          }100%)`);
       } else {
         const key = seat == "end" ? "bottom" : "top";
         arrowStyle[key] = seat ? "12px" : "50%";
-        !seat && (arrowStyle.transform = `translateX(${direction == "right" ? "-" : ""}100%) translateY(-50%)`);
+        !seat &&
+          (arrowStyle.transform = `translateX(${
+            (direction == "right" && flag) || (direction == "left" && !flag) ? "-" : ""
+          }100%) translateY(-50%)`);
       }
     };
 
@@ -83,22 +89,28 @@ export default defineComponent({
       const seat = placement.split("-")[1];
       let transform = "";
       let transformOrigin = "";
+      let flag = false;
 
       const x = seat == "start" ? disL : seat == "end" ? right - offsetWidth : disL - disX / 2;
       const y = seat == "start" ? disT : seat == "end" ? bottom - offsetHeight : disT - disY / 2;
       if (placement.indexOf("bottom") == 0) {
-        transform = `translateX(${x}px) translateY(${disB >= offsetHeight + DIS_BOTTOM ? tTop : bTop}px)`;
-        transformOrigin = disB >= offsetHeight + DIS_BOTTOM ? "top center" : "bottom center";
+        flag = disB >= offsetHeight + DIS_BOTTOM;
+        transform = `translateX(${x}px) translateY(${flag ? tTop : bTop}px)`;
+        transformOrigin = flag ? "top center" : "bottom center";
       } else if (placement.indexOf("top") == 0) {
-        transform = `translateX(${x}px) translateY(${disT >= offsetHeight + DIS_BOTTOM ? bTop : tTop}px)`;
-        transformOrigin = disT >= offsetHeight + DIS_BOTTOM ? "bottom center" : "top center";
+        flag = disT >= offsetHeight + DIS_BOTTOM;
+        transform = `translateX(${x}px) translateY(${flag ? bTop : tTop}px)`;
+        transformOrigin = flag ? "bottom center" : "top center";
       } else if (placement.indexOf("left") == 0) {
-        transform = `translateX(${disL >= offsetWidth + DIS_BOTTOM ? lLeft : lRight}px) translateY(${y}px)`;
-        transformOrigin = disL >= offsetWidth + DIS_BOTTOM ? "right center" : "left center";
+        flag = disL >= offsetWidth + DIS_BOTTOM;
+        transform = `translateX(${flag ? lLeft : lRight}px) translateY(${y}px)`;
+        transformOrigin = flag ? "right center" : "left center";
       } else {
-        transform = `translateX(${disR >= offsetWidth + DIS_BOTTOM ? lRight : lLeft}px) translateY(${y}px)`;
-        transformOrigin = disR >= offsetWidth + DIS_BOTTOM ? "left center" : "right center";
+        flag = disR >= offsetWidth + DIS_BOTTOM;
+        transform = `translateX(${flag ? lRight : lLeft}px) translateY(${y}px)`;
+        transformOrigin = flag ? "left center" : "right center";
       }
+      setArrowLocation(flag);
       styles.transform = transform;
       styles.transition = "none";
       placementRef.value = transformOrigin.split(" ")[0] as PlacementType;
@@ -108,7 +120,6 @@ export default defineComponent({
     const handleEnter = (element: Element) => {
       const el = element as HTMLElement;
       const transformOrigin = handleLocation(el);
-      setArrowLocation();
 
       styles.zIndex = zIndex;
       el.style.transformOrigin = transformOrigin;
