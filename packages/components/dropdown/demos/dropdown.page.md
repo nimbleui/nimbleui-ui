@@ -5,4 +5,6 @@
 ## 代码演示
 ```demo
 basic.vue
+position.vue
+trigger.vue
 ```

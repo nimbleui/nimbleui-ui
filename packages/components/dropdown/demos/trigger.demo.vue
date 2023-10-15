@@ -6,8 +6,8 @@
 </markdown>
 
 <template>
-  <YDropdown :trigger="'hover'" :options="options" @select="handleSelect">
-    <YButton :type="'primary'">Dropdown List</YButton>
+  <YDropdown :trigger="'focus'" :options="options" @select="handleSelect">
+    <YInput />
   </YDropdown>
 </template>
 

@@ -13,8 +13,6 @@
   @include e(menus) {
     padding: 0;
     margin: 0;
-    box-shadow: var(--y-box-shadow);
-    background-color: var(--y-bg-color-overlay);
   }
 
   @include e(menu) {
