@@ -1,7 +1,8 @@
-import { createNamespace } from "@nimble-ui/utils";
-import { defineComponent } from "vue";
+import { createNamespace, isNumber } from "@nimble-ui/utils";
+import { computed, defineComponent, type CSSProperties } from "vue";
 
 import flexProps from "./types";
+const gapType = ["small", "middle", "large"];
 
 export default defineComponent({
   name: "YFlex",
@@ -9,18 +10,29 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("flex");
 
+    const flexCls = computed(() => {
+      const { vertical, justify, align, wrap, gap } = props;
+
+      return [
+        bem.b(),
+        bem.is("wrap", wrap),
+        bem.is(`align-${align}`),
+        bem.is("vertical", vertical),
+        bem.is(`justify-${justify}`),
+        bem.is(`gap-${gap}`, gapType.includes(gap as string)),
+      ];
+    });
+
+    const flexStyle = computed<CSSProperties>(() => {
+      const { gap } = props;
+      if (!gap) return {};
+      return { gap: isNumber(gap) ? `${gap}px` : gapType.includes(gap) ? undefined : gap };
+    });
+
     return () => {
-      const { tag: Component, vertical, justify, align, wrap } = props;
+      const { tag: Component } = props;
       return (
-        <Component
-          class={[
-            bem.b(),
-            bem.is("wrap", wrap),
-            bem.is(`align-${align}`),
-            bem.is("vertical", vertical),
-            bem.is(`justify-${justify}`),
-          ]}
-        >
+        <Component style={flexStyle.value} class={flexCls.value}>
           {ctx.slots.default?.()}
         </Component>
       );
