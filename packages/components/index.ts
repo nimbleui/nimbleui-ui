@@ -27,3 +27,4 @@ export * from "./space";
 export * from "./divider";
 export * from "./back-top";
 export * from "./tabs";
+export * from "./flex";

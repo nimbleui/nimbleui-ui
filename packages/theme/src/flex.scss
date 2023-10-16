@@ -1,0 +1,25 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(flex) {
+  display: flex;
+
+  @include when(vertical) {
+    flex-direction: column;
+  }
+
+  @include when(wrap) {
+    flex-wrap: wrap;
+  }
+
+  @each $type in (flex-start, center, flex-end, space-between, space-around, space-evenly) {
+    @include when(#{'justify-' + $type}) {
+      justify-content: $type;
+    }
+  }
+
+  @each $align in (flex-start, center, flex-end) {
+    @include when(#{'align-' + $align}) {
+      align-items: $align;
+    }
+  }
+}
