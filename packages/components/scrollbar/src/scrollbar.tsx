@@ -49,6 +49,7 @@ export default defineComponent({
       stop: true,
       prevent: true,
       boundary: barRef,
+      moveLimit: true,
       down() {
         memoYTop = clientRect.scroll;
       },

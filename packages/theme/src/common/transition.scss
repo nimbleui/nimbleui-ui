@@ -19,18 +19,19 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   opacity: 1;
 }
 
-.#{$namespace}-zoom-in-top-enter-active,
-.#{$namespace}-zoom-in-top-leave-active {
-  opacity: 1;
-  transform: scaleY(1);
-  transition: $transition-md-fade;
-  transform-origin: center top;
+.#{$namespace}-zoom-in-top {
+  &-enter-active, &-leave-active {
+    opacity: 1;
+    transform: scaleY(1);
+    transition: $transition-md-fade;
+  }
+
+  &-enter-from, &-leave-active {
+    opacity: 0;
+    transform: scaleY(0);
+  }
 }
-.#{$namespace}-zoom-in-top-enter-from,
-.#{$namespace}-zoom-in-top-leave-active {
-  opacity: 0;
-  transform: scaleY(0);
-}
+
 
 // tooltip动画
 .#{$namespace}-tooltip-enter-from, .#{$namespace}-tooltip-leave-to {
@@ -129,6 +130,8 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
 
 // 改变高的动画
 .#{$namespace}-expand-transition {
+  $duration: 0.2s;
+
   &-leave-from, &-enter-to {
     opacity: 1
   }
@@ -140,17 +143,17 @@ $transition-md-fade: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s cub
   }
 
   &-leave-active {
-    transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
-      opacity 0.2s cubic-bezier(0, 0, .2, 1),
-      margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
-      margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+    transition: max-height $duration cubic-bezier(.4, 0, .2, 1),
+      opacity $duration cubic-bezier(0, 0, .2, 1),
+      margin-top $duration cubic-bezier(.4, 0, .2, 1),
+      margin-bottom $duration cubic-bezier(.4, 0, .2, 1),
   }
 
   &-enter-active {
-    transition: max-height 0.2s cubic-bezier(.4, 0, .2, 1),
-      opacity 0.2s cubic-bezier(0, 0, .2, 1),
-      margin-top 0.2s cubic-bezier(.4, 0, .2, 1),
-      margin-bottom 0.2s cubic-bezier(.4, 0, .2, 1),
+    transition: max-height $duration cubic-bezier(.4, 0, .2, 1),
+      opacity $duration cubic-bezier(0, 0, .2, 1),
+      margin-top $duration cubic-bezier(.4, 0, .2, 1),
+      margin-bottom $duration cubic-bezier(.4, 0, .2, 1),
   }
 }
 

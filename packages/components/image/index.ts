@@ -8,5 +8,6 @@ export default YImage;
 declare module "vue" {
   export interface GlobalComponents {
     YImage: typeof YImage;
+    "y-image": typeof YImage;
   }
 }

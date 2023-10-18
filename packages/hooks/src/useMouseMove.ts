@@ -45,6 +45,10 @@ interface Options {
    * @description 阻止事件冒泡
    */
   stop?: boolean;
+  /**
+   * @description 配合boundary，移动是只能在boundary元素里移动
+   */
+  moveLimit?: boolean;
 }
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
@@ -113,11 +117,17 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
     const { clientX, clientY } = e;
-    const disX = clientX - data.startX;
-    const disY = clientY - data.startY;
+    let disX = clientX - data.startX;
+    let disY = clientY - data.startY;
+
+    if (options?.moveLimit && options?.boundary) {
+      disX = disX > 0 ? Math.min(moveDis.r, disX) : Math.max(moveDis.l, disX);
+      disY = disY > 0 ? Math.min(moveDis.b, disY) : Math.max(moveDis.t, disY);
+    }
+
     Object.assign(data, {
-      disX: disX > 0 ? Math.min(moveDis.r, disX) : Math.max(moveDis.l, disX),
-      disY: disY > 0 ? Math.min(moveDis.b, disY) : Math.max(moveDis.t, disY),
+      disX,
+      disY,
       moveX: clientX,
       moveY: clientY,
       maxMoveDisR: moveDis.r,

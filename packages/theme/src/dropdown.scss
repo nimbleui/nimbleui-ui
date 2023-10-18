@@ -16,6 +16,9 @@
   }
 
   @include e(menu) {
+    --y-hover-text-color: var(--y-color-primary);
+    --y-hover-bg-color: var(--y-color-primary-3);
+
     padding: 5px 12px;
     list-style: none;
     cursor: pointer;

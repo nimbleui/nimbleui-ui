@@ -1,7 +1,7 @@
 import { defineComponent, provide, reactive, ref, Teleport, Transition } from "vue";
 import YOverlay from "@nimble-ui/components/overlay";
 import { createNamespace } from "@nimble-ui/utils";
-import { useLazyRender, useMouseMove } from "@nimble-ui/hooks";
+import { useCreateIndex, useLazyRender, useMouseMove } from "@nimble-ui/hooks";
 import { imagePreviewContextKey } from "@nimble-ui/tokens";
 
 import imagePreviewProps from "./types";
@@ -123,10 +123,13 @@ export default defineComponent({
       };
     };
 
+    const { nextZIndex } = useCreateIndex();
+    const zIndex = nextZIndex();
+
     const renderToolbar = () => {
       const { isGroup } = props;
       return (
-        <div class={bem.e("toolbar")}>
+        <div class={bem.e("toolbar")} style={{ zIndex: zIndex + 1 }}>
           {isGroup ? (
             <>
               <i onClick={onCut("prev")} class={bem.m("icon", "toolbar")}>
@@ -162,11 +165,11 @@ export default defineComponent({
     };
 
     const renderContent = lazyRender(() => (
-      <div class={bem.b()}>
-        <YOverlay zIndex={1} onClick={onClose} show={show.value} disabled />
+      <div class={bem.b()} style={{ zIndex }}>
+        <YOverlay zIndex={zIndex} onClick={onClose} show={show.value} disabled />
         {renderToolbar()}
         <Transition appear name={bem.name("fade-in-scale")} onAfterLeave={onDestroy}>
-          <div v-show={show.value} class={bem.e("wrapper")}>
+          <div v-show={show.value} class={bem.e("wrapper")} style={{ zIndex }}>
             <img
               class="img"
               ref={imgRef}
