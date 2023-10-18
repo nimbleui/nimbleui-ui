@@ -2,6 +2,10 @@
 @use "./mixins/function.scss" as *;
 
 @include b(image-preview) {
+  --y-image-preview-toolbar-bg-color: var(--y-color-bg-spotlight);
+}
+
+@include b(image-preview) {
   position: fixed;
   left: 0;
   top: 0;
@@ -37,11 +41,10 @@
     height: 48px;
     bottom: 40px;
     padding: 0 12px;
-    background: rgb(0 0 0 / 80%);
     color: #fff;
     display: flex;
     align-items: center;
-    z-index: 3;
+    background: var(--y-image-preview-toolbar-bg-color);
 
     @include m(icon) {
       margin: 0 6px;

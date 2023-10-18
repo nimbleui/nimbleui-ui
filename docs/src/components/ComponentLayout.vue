@@ -115,6 +115,15 @@ const items = reactive<MenuItems[]>([
     ],
   },
   {
+    text: "数据展示",
+    items: [
+      {
+        text: "图像 Image",
+        link: "/component/image",
+      },
+    ],
+  },
+  {
     text: "反馈组件",
     items: [
       {
