@@ -30,6 +30,7 @@ import {
   YScrollbar,
   YBackTop,
   YTabs,
+  YFlex,
 } from "@nimble-ui/components";
 
 export default [
@@ -64,4 +65,5 @@ export default [
   YScrollbar,
   YBackTop,
   YTabs,
+  YFlex,
 ];

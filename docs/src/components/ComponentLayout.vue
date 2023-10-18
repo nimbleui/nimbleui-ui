@@ -91,6 +91,10 @@ const items = reactive<MenuItems[]>([
         text: "布局 Layout",
         link: "/component/layout",
       },
+      {
+        text: "弹性布局 Flex",
+        link: "/component/flex",
+      },
     ],
   },
   {

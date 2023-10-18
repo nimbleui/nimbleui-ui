@@ -63,6 +63,7 @@ const tabsProps = mergeCommonProp({
    */
   type: {
     type: String as PropType<TabsType>,
+    default: "line",
   },
   /**
    * @description 页签位置

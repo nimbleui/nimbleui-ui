@@ -16,9 +16,9 @@ export default defineComponent({
       return [
         bem.b(),
         bem.is("wrap", wrap),
-        bem.is(`align-${align}`),
         bem.is("vertical", vertical),
-        bem.is(`justify-${justify}`),
+        bem.is(`align-${align}`, !!align),
+        bem.is(`justify-${justify}`, !!justify),
         bem.is(`gap-${gap}`, gapType.includes(gap as string)),
       ];
     });

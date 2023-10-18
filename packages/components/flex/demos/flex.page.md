@@ -1,9 +1,11 @@
+<!--single-column-->
 # 弹性布局 Flex
 
 
 ## 代码演示
 ```demo
-
+basic.vue
+align.vue
 ```
 ## API
 
