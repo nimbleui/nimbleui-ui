@@ -1,10 +1,10 @@
-import { createNamespace, isNumber } from "@nimble-ui/utils";
+import { createNamespace, isFunction, isNumber } from "@nimble-ui/utils";
 import { computed, defineComponent, type CSSProperties } from "vue";
 
-import flexProps from "./types";
+import flexProps, { FlexItemsIsFlex } from "./types";
 const gapType = ["small", "middle", "large"];
 
-export default defineComponent({
+const YFlex = defineComponent({
   name: "YFlex",
   props: flexProps(),
   setup(props, ctx) {
@@ -24,18 +24,43 @@ export default defineComponent({
     });
 
     const flexStyle = computed<CSSProperties>(() => {
-      const { gap } = props;
-      if (!gap) return {};
-      return { gap: isNumber(gap) ? `${gap}px` : gapType.includes(gap) ? undefined : gap };
+      const { gap, flex } = props;
+      return { gap: isNumber(gap) ? `${gap}px` : gap && !gapType.includes(gap) ? gap : undefined, flex: flex };
     });
+
+    const isFlex = (item: any): item is FlexItemsIsFlex => !!item.isFlex;
+
+    const render = () => {
+      const { items, details } = props;
+      return items
+        ? items.map((item) => {
+            const children = isFunction(item.children) ? item.children(details) : item.children;
+            if (isFlex(item)) {
+              return (
+                <YFlex key={item.name} {...item}>
+                  {children}
+                </YFlex>
+              );
+            } else {
+              return (
+                <div key={item.name} class={item.class} style={item.style}>
+                  {children}
+                </div>
+              );
+            }
+          })
+        : ctx.slots.default?.();
+    };
 
     return () => {
       const { tag: Component } = props;
       return (
         <Component style={flexStyle.value} class={flexCls.value}>
-          {ctx.slots.default?.()}
+          {render()}
         </Component>
       );
     };
   },
 });
+
+export default YFlex;

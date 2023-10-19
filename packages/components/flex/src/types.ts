@@ -1,8 +1,24 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes, PropType } from "vue";
+import type { ExtractPropTypes, PropType, VNodeChild, HTMLAttributes } from "vue";
 
 export type FlexJustify = "flex-start" | "center" | "flex-end" | "space-between" | "space-around" | "space-evenly";
 export type FlexAlign = "flex-start" | "center" | "flex-end";
+
+export interface FlexItemsChildren {
+  name: string | number;
+  class?: HTMLAttributes["class"];
+  style?: HTMLAttributes["style"];
+  children?: VNodeChild | ((details: any) => VNodeChild);
+}
+export interface FlexItemsIsFlex extends FlexProps {
+  name: string | number;
+  isFlex: boolean;
+  children?: VNodeChild | (() => VNodeChild);
+}
+
+export type FlexItems = FlexItemsIsFlex[] | FlexItemsChildren[];
+export type FlexGap = "small" | "middle" | "large" | string | number;
+
 const flexProps = mergeCommonProp({
   /**
    * @description 自定义元素类型
@@ -45,10 +61,16 @@ const flexProps = mergeCommonProp({
    * @description 设置网格之间的间隙
    */
   gap: {
-    type: [Number, String] as PropType<"small" | "middle" | "large" | string | number>,
+    type: [Number, String] as PropType<FlexGap>,
+  },
+  /**
+   * @description
+   */
+  items: {
+    type: Array as PropType<FlexItems>,
   },
 });
 
 export default flexProps;
 
-export type FlexProps = ExtractPropTypes<ReturnType<typeof flexProps>>;
+export type FlexProps = Partial<ExtractPropTypes<ReturnType<typeof flexProps>>>;
