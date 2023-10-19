@@ -31,6 +31,7 @@ import {
   YBackTop,
   YTabs,
   YFlex,
+  YRadio,
 } from "@nimble-ui/components";
 
 export default [
@@ -66,4 +67,5 @@ export default [
   YBackTop,
   YTabs,
   YFlex,
+  YRadio,
 ];

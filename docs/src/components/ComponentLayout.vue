@@ -116,6 +116,10 @@ const items = reactive<MenuItems[]>([
         text: "开关 Switch",
         link: "/component/switch",
       },
+      {
+        text: "单选框 Radio",
+        link: "/component/radio",
+      },
     ],
   },
   {
