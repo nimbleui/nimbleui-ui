@@ -1,15 +1,20 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 对齐方式
   
-  最简单的用法。
+  设置对齐方式。
 </markdown>
 
 <template>
   <div style="margin-bottom: 10px">
-    <YTabs v-model="justify" :items="justifyList" key-field="label"></YTabs>
+    <p>选择justify :</p>
+    <YTabs v-model="justify" :items="justifyList" key-field="label" />
   </div>
-  <YFlex>
+  <div style="margin-bottom: 10px">
+    <p>选择align :</p>
+    <YTabs v-model="align" :items="alignList" key-field="label" />
+  </div>
+  <YFlex :align="align" :justify="justify" style="height: 200px; border: 1px solid var(--y-color-primary)">
     <YButton type="primary">primary</YButton>
     <YButton type="primary">primary</YButton>
     <YButton type="primary">primary</YButton>
@@ -18,8 +23,9 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
+import { FlexAlign, FlexJustify } from "@nimble-ui/vue";
 
-const justifyList = reactive([
+const justifyList = reactive<{ label: FlexJustify }[]>([
   {
     label: "flex-start",
   },
@@ -36,5 +42,19 @@ const justifyList = reactive([
     label: "space-evenly",
   },
 ]);
-const justify = ref("flex-start");
+
+const alignList = reactive<{ label: FlexAlign }[]>([
+  {
+    label: "flex-start",
+  },
+  {
+    label: "center",
+  },
+  {
+    label: "flex-end",
+  },
+]);
+
+const justify = ref<FlexJustify>("flex-start");
+const align = ref<FlexAlign>("flex-start");
 </script>

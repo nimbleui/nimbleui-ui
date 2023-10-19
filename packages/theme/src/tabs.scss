@@ -69,6 +69,12 @@
           border-bottom: 1px solid var(--y-tabs-nav-border-color);
           content: " ";
         }
+
+        @media (resolution >= 2dppx) {
+          &::before {
+            bottom: -0.5px;
+          }
+        }
       }
 
       &:hover {

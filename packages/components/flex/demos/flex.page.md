@@ -6,6 +6,7 @@
 ```demo
 basic.vue
 align.vue
+gap.vue
 ```
 ## API
 
