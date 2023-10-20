@@ -10,7 +10,7 @@ const radioProps = mergeCommonProp({
    * @description 绑定值
    */
   modelValue: {
-    type: [String, Number, Boolean],
+    type: [String, Number, Boolean] as PropType<string | number | boolean>,
   },
   /**
    * @@description 禁用状态
@@ -26,13 +26,8 @@ const radioProps = mergeCommonProp({
    * @description 选中的值
    */
   value: {
-    type: [String, Number, Boolean],
-  },
-  /**
-   * @description 选中状态
-   */
-  checked: {
-    type: Boolean,
+    type: [String, Number, Boolean] as PropType<string | number | boolean>,
+    default: true,
   },
   /**
    * @description 大小
