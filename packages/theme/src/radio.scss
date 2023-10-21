@@ -3,6 +3,7 @@
 @include b(radio) {
   --y-radio-width: 16px;
   --y-radio-checked-bg: var(--y-color-primary);
+  --y-radio-border-color: var(--y-color-border);
 }
 
 @include b(radio) {
@@ -37,7 +38,7 @@
       justify-content: center;
       width: var(--y-radio-width);
       height: var(--y-radio-width);
-      border: 1px solid #d9d9d9;
+      border: 1px solid var(--y-radio-border-color);
       border-radius: 50%;
       transition: all 0.2s;
 
@@ -56,6 +57,7 @@
       }
 
       @include when(checked) {
+        border-color: var(--y-radio-checked-bg);
         background-color: var(--y-radio-checked-bg);
 
         &::after {
@@ -64,5 +66,9 @@
         }
       }
     }
+  }
+
+  @include e(label) {
+    padding: 0 8px;
   }
 }

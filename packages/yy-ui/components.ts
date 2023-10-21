@@ -32,6 +32,7 @@ import {
   YTabs,
   YFlex,
   YRadio,
+  YRadioGroup,
 } from "@nimble-ui/components";
 
 export default [
@@ -68,4 +69,5 @@ export default [
   YTabs,
   YFlex,
   YRadio,
+  YRadioGroup,
 ];

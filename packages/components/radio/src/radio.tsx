@@ -1,5 +1,6 @@
+import { computed, defineComponent, ref, inject } from "vue";
 import { createNamespace, isFunction } from "@nimble-ui/utils";
-import { computed, defineComponent, ref } from "vue";
+import { radioGroupContextKey } from "@nimble-ui/tokens";
 
 import radioProps from "./types";
 
@@ -12,11 +13,14 @@ export default defineComponent({
     const radioRef = ref<HTMLInputElement>();
     const selfModel = ref<boolean | number | string>(false);
 
+    const radioGroupContext = inject(radioGroupContextKey);
+
     const model = computed({
-      get: () => props.modelValue || selfModel.value,
+      get: () => radioGroupContext?.modelValue.value || props.modelValue || selfModel.value,
       set: (val) => {
         selfModel.value = val;
         ctx.emit("update:modelValue", val);
+        radioGroupContext?.onChange(val);
       },
     });
 
@@ -25,10 +29,17 @@ export default defineComponent({
       ctx.emit("change", model.value);
     };
 
+    const checked = computed(() => model.value === props.value);
+    const renderLabel = () => {
+      const { label } = props;
+      return <span class={bem.e("label")}>{(isFunction(label) ? label() : label) ?? ctx.slots.default?.()}</span>;
+    };
+
     return () => {
-      const { label, name, disabled, value } = props;
+      const { name, disabled, value, labelPosition } = props;
       return (
         <label class={bem.b()}>
+          {labelPosition === "start" && renderLabel()}
           <span class={bem.e("input")}>
             <input
               value={value}
@@ -36,12 +47,13 @@ export default defineComponent({
               name={name}
               type="radio"
               disabled={disabled}
+              checked={checked.value}
               class={bem.m("original", "input")}
               onChange={onChange}
             />
-            <span class={[bem.m("inner", "input"), bem.is("checked", model.value === value)]}></span>
+            <span class={[bem.m("inner", "input"), bem.is("checked", checked.value)]}></span>
           </span>
-          <span class={bem.e("label")}>{(isFunction(label) ? label() : label) ?? ctx.slots.default?.()}</span>
+          {labelPosition == "end" && renderLabel()}
         </label>
       );
     };

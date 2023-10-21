@@ -1,7 +1,7 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes, PropType, VNodeChild } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 
-const radioProps = mergeCommonProp({
+const radioGroupProps = mergeCommonProp({
   /**
    * @description 单选按钮 radio 元素的 name 属性。
    */
@@ -17,19 +17,6 @@ const radioProps = mergeCommonProp({
    */
   disabled: Boolean,
   /**
-   * @description 标签
-   */
-  label: {
-    type: [Object, Function] as PropType<VNodeChild | (() => VNodeChild)>,
-  },
-  /**
-   * @description 选中的值
-   */
-  value: {
-    type: [String, Number, Boolean] as PropType<string | number | boolean>,
-    default: true,
-  },
-  /**
    * @description 大小
    */
   size: {
@@ -40,10 +27,9 @@ const radioProps = mergeCommonProp({
    */
   labelPosition: {
     type: String as PropType<"start" | "end">,
-    default: "end",
   },
 });
 
-export default radioProps;
+export default radioGroupProps;
 
-export type RadioProps = ExtractPropTypes<ReturnType<typeof radioProps>>;
+export type RadioGroupProps = ExtractPropTypes<ReturnType<typeof radioGroupProps>>;

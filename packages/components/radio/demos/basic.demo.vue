@@ -2,14 +2,14 @@
 <markdown>
   # 基础用法
   
-  创建第一个对话框
+  最简单的用法
 </markdown>
 
 <template>
-  <div class="demo-margin">
-    <YRadio v-model="value" :value="1">测试</YRadio>
-    <YRadio v-model="value" :value="2">测试1</YRadio>
-  </div>
+  <YRadioGroup v-model="value">
+    <YRadio :value="1">测试</YRadio>
+    <YRadio :value="2">测试1</YRadio>
+  </YRadioGroup>
 </template>
 
 <script setup lang="ts">
