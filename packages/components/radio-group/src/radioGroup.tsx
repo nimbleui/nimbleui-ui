@@ -1,4 +1,4 @@
-import { computed, defineComponent, provide, toRef } from "vue";
+import { computed, defineComponent, provide } from "vue";
 import { createNamespace } from "@nimble-ui/utils";
 import { radioGroupContextKey } from "@nimble-ui/tokens";
 
@@ -23,9 +23,11 @@ export default defineComponent({
       ctx.emit("change", value);
     };
 
+    const propsRef = computed(() => ({ ...props }));
+
     provide(radioGroupContextKey, {
       onChange,
-      modelValue: toRef(props, "modelValue"),
+      propsRef,
     });
 
     return () => {
