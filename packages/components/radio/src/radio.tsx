@@ -14,9 +14,10 @@ export default defineComponent({
     const selfModel = ref<boolean | number | string>(false);
 
     const radioGroupContext = inject(radioGroupContextKey);
+    const radioGroupProps = computed(() => radioGroupContext?.propsRef.value);
 
     const model = computed({
-      get: () => radioGroupContext?.modelValue.value || props.modelValue || selfModel.value,
+      get: () => radioGroupProps.value?.modelValue || props.modelValue || selfModel.value,
       set: (val) => {
         selfModel.value = val;
         ctx.emit("update:modelValue", val);
@@ -36,7 +37,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { name, disabled, value, labelPosition } = props;
+      const { name, disabled, value, labelPosition = "end" } = props;
       return (
         <label class={[bem.b(), bem.is("disabled", disabled)]}>
           {labelPosition === "start" && renderLabel()}

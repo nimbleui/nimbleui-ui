@@ -1,32 +1,21 @@
-import { mergeCommonProp } from "@nimble-ui/utils";
 import { ExtractPropTypes, PropType } from "vue";
+import { radioCommonProps } from "@nimble-ui/tokens";
+import { mergeCommonProp } from "@nimble-ui/utils";
+import { RadioProps } from "@nimble-ui/components/radio";
 
 const radioGroupProps = mergeCommonProp({
+  ...radioCommonProps,
   /**
-   * @description 单选按钮 radio 元素的 name 属性。
+   * @description radio列表配置
    */
-  name: String,
-  /**
-   * @description 绑定值
-   */
-  modelValue: {
-    type: [String, Number, Boolean] as PropType<string | number | boolean>,
+  options: {
+    type: Array as PropType<RadioProps[]>,
   },
   /**
-   * @@description 禁用状态
+   * @description 是否竖直排列
    */
-  disabled: Boolean,
-  /**
-   * @description 大小
-   */
-  size: {
-    type: String as PropType<"small" | "medium" | "large">,
-  },
-  /**
-   * @description 标签的位置
-   */
-  labelPosition: {
-    type: String as PropType<"start" | "end">,
+  vertical: {
+    type: Boolean,
   },
 });
 

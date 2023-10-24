@@ -84,3 +84,11 @@
     }
   }
 }
+
+@include b(radio-group) {
+  display: flex;
+
+  @include when(vertical) {
+    flex-direction: column;
+  }
+}

@@ -5,6 +5,7 @@
 ```demo
 basic.vue
 disabled.vue
+options.vue
 ```
 ## API
 
