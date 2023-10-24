@@ -72,3 +72,11 @@
     padding: 0 8px;
   }
 }
+
+@include b(radio-group) {
+  display: flex;
+
+  @include when(vertical) {
+    flex-direction: column;
+  }
+}

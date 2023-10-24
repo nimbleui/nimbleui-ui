@@ -21,4 +21,4 @@ const radioProps = mergeCommonProp({
 
 export default radioProps;
 
-export type RadioProps = ExtractPropTypes<ReturnType<typeof radioProps>>;
+export type RadioProps = Partial<ExtractPropTypes<ReturnType<typeof radioProps>>>;

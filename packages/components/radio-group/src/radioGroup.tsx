@@ -1,6 +1,7 @@
 import { computed, defineComponent, provide } from "vue";
 import { createNamespace } from "@nimble-ui/utils";
 import { radioGroupContextKey } from "@nimble-ui/tokens";
+import { YRadio } from "@nimble-ui/components/radio";
 
 import radioGroupProps from "./types";
 
@@ -31,7 +32,12 @@ export default defineComponent({
     });
 
     return () => {
-      return <div class={bem.b()}>{ctx.slots.default?.()}</div>;
+      const { options, vertical } = props;
+      return (
+        <div class={[bem.b(), bem.is("vertical", vertical)]}>
+          {options ? options.map((item, index) => <YRadio {...item} key={index} />) : ctx.slots.default?.()}
+        </div>
+      );
     };
   },
 });
