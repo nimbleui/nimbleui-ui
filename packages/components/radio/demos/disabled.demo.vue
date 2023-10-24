@@ -1,10 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 禁用
   
-  最简单的用法
+  禁用单选框
 </markdown>
 
 <template>
-  <YRadio label="A" />
+  <YRadio label="A" disabled />
+  <YRadio label="B" disabled />
 </template>

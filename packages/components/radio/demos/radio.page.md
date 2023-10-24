@@ -4,6 +4,7 @@
 ## 代码演示
 ```demo
 basic.vue
+disabled.vue
 ```
 ## API
 

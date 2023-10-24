@@ -31,14 +31,14 @@ export default defineComponent({
 
     const checked = computed(() => model.value === props.value);
     const renderLabel = () => {
-      const { label } = props;
-      return <span class={bem.e("label")}>{(isFunction(label) ? label() : label) ?? ctx.slots.default?.()}</span>;
+      const { label, disabled } = props;
+      return <span class={[bem.e("label")]}>{(isFunction(label) ? label() : label) ?? ctx.slots.default?.()}</span>;
     };
 
     return () => {
       const { name, disabled, value, labelPosition } = props;
       return (
-        <label class={bem.b()}>
+        <label class={[bem.b(), bem.is("disabled", disabled)]}>
           {labelPosition === "start" && renderLabel()}
           <span class={bem.e("input")}>
             <input
