@@ -10,7 +10,7 @@ import { isFunction } from "@nimble-ui/utils";
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
-  emits: ["select", "update:modelValue"],
+  emits: ["select", "update:modelValue", "events"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
     const contentRef = ref<HTMLElement>();
@@ -35,6 +35,8 @@ export default defineComponent({
     const onToggle = (e: Event, toggle: boolean) => {
       const { details, disabled } = props;
       const res = isFunction(disabled) ? disabled(details) : disabled;
+
+      ctx.emit("events", e.type);
       if (res) return;
 
       clearTimeout(time);

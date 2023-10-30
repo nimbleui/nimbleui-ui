@@ -4,6 +4,8 @@
 ## 代码演示
 ```demo
 basic.vue
+trigger.vue
+async.vue
 ```
 ## API
 

@@ -7,6 +7,7 @@ const switchProps = mergeCommonProp({
    */
   modelValue: {
     type: [String, Number, Boolean],
+    default: undefined,
   },
   /**
    * @description 打开时对应的值

@@ -19,17 +19,25 @@ export default defineComponent({
       ctx.emit("cancel");
     };
 
+    const loading = ref(false);
     const onConfirm = () => {
       const { beforeConfirm } = props;
       if (beforeConfirm) {
+        loading.value = true;
         beforeConfirm((cancel) => {
           show.value = cancel ?? false;
+          loading.value = false;
           ctx.emit("confirm");
         });
       } else {
         show.value = false;
         ctx.emit("confirm");
       }
+    };
+
+    const handelEvent = () => {
+      if (!props.disabled) return;
+      onConfirm();
     };
 
     return () => {
@@ -41,6 +49,7 @@ export default defineComponent({
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           disabled={disabled}
+          onEvents={handelEvent}
         >
           {{
             default: () => ctx.slots.default?.(),
@@ -63,7 +72,7 @@ export default defineComponent({
                       {cancelText || "取消"}
                     </YButton>
                   )}
-                  <YButton onClick={onConfirm} size={"small"} type={okType}>
+                  <YButton loading={loading.value} onClick={onConfirm} size={"small"} type={okType}>
                     {okText || "确定"}
                   </YButton>
                 </YFlex>
