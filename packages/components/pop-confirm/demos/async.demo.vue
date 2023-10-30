@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YPopConfirm :before-confirm="onBeforeConfirm" title="标题" description="您确定要删除此任务吗?" @confirm="onConfirm">
+  <YPopConfirm :before-confirm="onBeforeConfirm" title="标题" description="您确定要删除此任务吗?">
     <YButton plain :type="'error'">Delete</YButton>
   </YPopConfirm>
 </template>
@@ -14,12 +14,10 @@
 <script setup lang="ts">
 import { YMessage } from "@nimble-ui/vue";
 
-const onBeforeConfirm = (done: (cancel?: boolean) => void) => {
+const onBeforeConfirm = async (done: (cancel?: boolean) => void) => {
   setTimeout(() => {
     done();
+    YMessage("异步执行成功");
   }, 3000);
-};
-const onConfirm = () => {
-  YMessage("异步执行成功");
 };
 </script>

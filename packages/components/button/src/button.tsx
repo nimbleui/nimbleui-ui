@@ -11,7 +11,7 @@ export default defineComponent({
     const buttonGroupContext = inject(buttonGroupContextKey, undefined);
 
     const onClick = (e: Event) => {
-      if (props.disabled) return;
+      if (props.disabled || props.loading) return;
       ctx.emit("click", e);
     };
 

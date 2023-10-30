@@ -177,7 +177,7 @@
       display: block;
       content: " ";
 
-      @include loading(12px, 12px)
+      @include loading(10px, 10px)
     }
   }
 }
