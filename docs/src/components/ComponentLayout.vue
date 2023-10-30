@@ -146,6 +146,10 @@ const items = reactive<MenuItems[]>([
         text: "模态框 Modal",
         link: "/component/modal",
       },
+      {
+        text: "气泡确认框 PopConfirm",
+        link: "/component/popconfirm",
+      },
     ],
   },
 ]);

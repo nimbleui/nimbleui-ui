@@ -1,4 +1,4 @@
-import { PropType } from "vue";
+import { PropType, VNodeChild } from "vue";
 import { isFunction } from "./type";
 
 export type ObjectType = { [key: string]: any };
@@ -67,3 +67,12 @@ export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, 
   }
   return result;
 };
+
+export const makeChildProp = () => ({
+  type: [Object, Function, String, Array, Number] as PropType<VNodeChild | (() => VNodeChild)>,
+});
+
+export const makeNumericProp = <T>(defaultVal: T) => ({
+  type: [Number, String],
+  default: defaultVal,
+});

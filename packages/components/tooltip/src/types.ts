@@ -16,6 +16,13 @@ const tooltipProps = mergeCommonProp({
   disabled: {
     type: [Boolean, Function] as PropType<boolean | ((details: any) => boolean)>,
   },
+  /**
+   * @description 控制显示隐藏
+   */
+  modelValue: {
+    type: Boolean as PropType<boolean>,
+    default: undefined,
+  },
 });
 
 export default tooltipProps;

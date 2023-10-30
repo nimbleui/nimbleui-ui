@@ -127,23 +127,38 @@ export default defineComponent({
 
     const { lazyRender } = useLazyRender(() => props.show);
     const renderContent = lazyRender(() => {
-      const { transition, show, maxHeight, maxWidth } = props;
+      const {
+        transition,
+        show,
+        maxHeight,
+        maxWidth,
+        contentClass,
+        contentStyle = {},
+        arrowClass,
+        arrowStyle: arrowS = {},
+      } = props;
       return (
         <div style={styles} class={bem.b()}>
           <Transition appear name={transition} onEnter={handleEnter}>
             <div
               v-show={show}
-              class={bem.e("content")}
+              class={[bem.e("content"), contentClass]}
               ref={tooltipContext?.contentRef}
-              style={{
-                maxWidth: isNumber(maxWidth) ? `${maxWidth}px` : maxWidth,
-                maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight,
-              }}
+              style={[
+                contentStyle,
+                {
+                  maxWidth: isNumber(maxWidth) ? `${maxWidth}px` : maxWidth,
+                  maxHeight: isNumber(maxHeight) ? `${maxHeight}px` : maxHeight,
+                },
+              ]}
               onClick={handleEvent}
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
             >
-              <span style={arrowStyle} class={[bem.m("arrow", "content"), bem.is(placementRef.value)]}></span>
+              <span
+                style={[arrowStyle, arrowS]}
+                class={[bem.m("arrow", "content"), bem.is(placementRef.value), arrowClass]}
+              ></span>
               {ctx.slots.default?.()}
             </div>
           </Transition>

@@ -20,8 +20,8 @@
     display: inline-block;
     outline: none;
     cursor: pointer;
-    align-self: center;
     border-radius: 50%;
+    align-items: baseline;
 
     @include m(original) {
       position: absolute;

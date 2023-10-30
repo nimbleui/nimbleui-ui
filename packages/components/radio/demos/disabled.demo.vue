@@ -6,6 +6,8 @@
 </markdown>
 
 <template>
-  <YRadio label="A" disabled />
-  <YRadio label="B" disabled />
+  <YRadioGroup disabled>
+    <YRadio label="A" />
+    <YRadio label="B" />
+  </YRadioGroup>
 </template>

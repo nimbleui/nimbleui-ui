@@ -1,0 +1,23 @@
+@use "./mixins/mixins.scss" as *;
+@use "./common/var.scss" as *;
+
+@include b(pop-confirm) {
+  --y-pop-confirm-content-bg-color: var(--y-color-bg-elevated);
+  --y-pop-confirm-text-color: var(--y-color-text);
+
+  background-color: var(--y-pop-confirm-content-bg-color);
+  box-shadow: $box-shadow-secondary;
+  color: var(--y-pop-confirm-text-color);
+
+  @include e(message) {
+    margin-bottom: 8px;
+
+    @include m(text-title) {
+      font-weight: 600;
+    }
+
+    @include m(text-description) {
+      margin-top: 4px;
+    }
+  }
+}

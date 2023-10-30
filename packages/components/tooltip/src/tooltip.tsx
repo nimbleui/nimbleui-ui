@@ -1,4 +1,4 @@
-import { defineComponent, provide, ref } from "vue";
+import { computed, defineComponent, provide, ref } from "vue";
 import YTrigger from "./trigger";
 import YContent from "./content";
 
@@ -10,7 +10,7 @@ import { isFunction } from "@nimble-ui/utils";
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
-  emits: ["select"],
+  emits: ["select", "update:modelValue"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
     const contentRef = ref<HTMLElement>();
@@ -24,7 +24,14 @@ export default defineComponent({
     });
 
     let time = 0;
-    const show = ref(false);
+    const selfModel = ref(false);
+    const show = computed({
+      get: () => props.modelValue ?? selfModel.value,
+      set(val) {
+        selfModel.value = val;
+        ctx.emit("update:modelValue", val);
+      },
+    });
     const onToggle = (e: Event, toggle: boolean) => {
       const { details, disabled } = props;
       const res = isFunction(disabled) ? disabled(details) : disabled;
@@ -51,7 +58,17 @@ export default defineComponent({
     });
 
     return () => {
-      const { appendTo, trigger, teleported, transition, placement } = props;
+      const {
+        appendTo,
+        trigger,
+        teleported,
+        transition,
+        placement,
+        contentClass,
+        contentStyle,
+        arrowClass,
+        arrowStyle,
+      } = props;
       return (
         <>
           <YTrigger trigger={trigger} onToggle={onToggle}>
@@ -65,6 +82,10 @@ export default defineComponent({
             transition={transition || "y-tooltip"}
             teleported={teleported}
             onToggle={onToggle}
+            arrowClass={arrowClass}
+            arrowStyle={arrowStyle}
+            contentClass={contentClass}
+            contentStyle={contentStyle}
           >
             {ctx.slots.content?.()}
           </YContent>

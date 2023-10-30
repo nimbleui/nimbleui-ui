@@ -1,4 +1,4 @@
-import { PropType } from "vue";
+import { HTMLAttributes, PropType } from "vue";
 import { TriggerType } from "./types";
 
 export type PlacementType =
@@ -74,5 +74,29 @@ export const contentProps = () => ({
    */
   zIndex: {
     type: Number,
+  },
+  /**
+   * @description 提示内容的class
+   */
+  contentClass: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["class"]>,
+  },
+  /**
+   * @description 箭头的class
+   */
+  arrowClass: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["class"]>,
+  },
+  /**
+   * @description 提示内容的style
+   */
+  contentStyle: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
+  },
+  /**
+   * @description 箭头的style
+   */
+  arrowStyle: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
   },
 });

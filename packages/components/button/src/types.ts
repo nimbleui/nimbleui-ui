@@ -55,5 +55,7 @@ const buttonProps = mergeCommonProp({
   loading: Boolean,
 });
 
+export { ButtonShape, ButtonSize, ButtonTypes };
+
 export default buttonProps;
 export type ButtonProps = ExtractPropTypes<ReturnType<typeof buttonProps>>;
