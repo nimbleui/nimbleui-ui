@@ -33,13 +33,14 @@ export default defineComponent({
     };
 
     return () => {
-      const { hideCancel, okText, cancelText, okType = "primary", title, description, icon } = props;
+      const { disabled, hideCancel, okText, cancelText, okType = "primary", title, description, icon } = props;
       return (
         <YTooltip
           v-model={show.value}
           placement="top"
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
+          disabled={disabled}
         >
           {{
             default: () => ctx.slots.default?.(),
