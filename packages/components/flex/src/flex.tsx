@@ -7,6 +7,7 @@ const gapType = ["small", "middle", "large"];
 const YFlex = defineComponent({
   name: "YFlex",
   props: flexProps(),
+  emits: ["click"],
   setup(props, ctx) {
     const bem = createNamespace("flex");
 
@@ -52,10 +53,14 @@ const YFlex = defineComponent({
         : ctx.slots.default?.();
     };
 
+    const onClick = (e: Event) => {
+      ctx.emit("click", e);
+    };
+
     return () => {
       const { tag: Component } = props;
       return (
-        <Component style={flexStyle.value} class={flexCls.value}>
+        <Component style={flexStyle.value} class={flexCls.value} onClick={onClick}>
           {render()}
         </Component>
       );

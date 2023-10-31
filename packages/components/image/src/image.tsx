@@ -45,6 +45,7 @@ export default defineComponent({
           onClick={onClick}
           onLoad={handleLoad}
           onError={handleError}
+          class={bem.e("img")}
         />
       );
     };

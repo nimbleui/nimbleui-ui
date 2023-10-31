@@ -34,6 +34,7 @@ import {
   YRadio,
   YRadioGroup,
   YPopConfirm,
+  YUpload,
 } from "@nimble-ui/components";
 
 export default [
@@ -72,4 +73,5 @@ export default [
   YRadio,
   YRadioGroup,
   YPopConfirm,
+  YUpload,
 ];

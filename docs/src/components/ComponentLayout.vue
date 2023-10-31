@@ -120,6 +120,10 @@ const items = reactive<MenuItems[]>([
         text: "单选框 Radio",
         link: "/component/radio",
       },
+      {
+        text: "上传 Upload",
+        link: "/component/upload",
+      },
     ],
   },
   {

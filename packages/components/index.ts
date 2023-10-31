@@ -31,3 +31,4 @@ export * from "./flex";
 export * from "./radio";
 export * from "./radio-group";
 export * from "./pop-confirm";
+export * from "./upload";
