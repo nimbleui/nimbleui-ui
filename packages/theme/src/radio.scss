@@ -71,6 +71,10 @@
 
   @include e(label) {
     padding: 0 8px;
+
+    @include when(disabled) {
+      color: var(--y-color-text-quaternary);
+    }
   }
 
   @include when(disabled) {

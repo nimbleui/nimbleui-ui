@@ -1,6 +1,7 @@
 import { computed, defineComponent, ref, inject } from "vue";
-import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { createNamespace } from "@nimble-ui/utils";
 import { radioGroupContextKey } from "@nimble-ui/tokens";
+import { useMergePropOrContext } from "@nimble-ui/hooks";
 
 import radioProps from "./types";
 
@@ -13,11 +14,11 @@ export default defineComponent({
     const radioRef = ref<HTMLInputElement>();
     const selfModel = ref<boolean | number | string>(false);
 
-    const radioGroupContext = inject(radioGroupContextKey);
-    const radioGroupProps = computed(() => radioGroupContext?.propsRef.value);
+    const radioGroupContext = inject(radioGroupContextKey, undefined);
+    const newProps = useMergePropOrContext(props, radioGroupContext?.propsRef);
 
     const model = computed({
-      get: () => radioGroupProps.value?.modelValue || props.modelValue || selfModel.value,
+      get: () => newProps.value.modelValue ?? selfModel.value,
       set: (val) => {
         selfModel.value = val;
         ctx.emit("update:modelValue", val);
@@ -32,14 +33,15 @@ export default defineComponent({
 
     const checked = computed(() => model.value === props.value);
     const renderLabel = () => {
-      const { label, disabled } = props;
-      return <span class={[bem.e("label")]}>{(isFunction(label) ? label() : label) ?? ctx.slots.default?.()}</span>;
+      const { label, disabled } = newProps.value;
+      return <span class={[bem.e("label"), bem.is("disabled", !!disabled)]}>{label ?? ctx.slots.default?.()}</span>;
     };
 
     return () => {
-      const { name, disabled, value, labelPosition = "end" } = props;
+      const { name, disabled, value, labelPosition = "end" } = newProps.value;
+
       return (
-        <label class={[bem.b(), bem.is("disabled", disabled)]}>
+        <label class={[bem.b(), bem.is("disabled", !!disabled)]}>
           {labelPosition === "start" && renderLabel()}
           <span class={bem.e("input")}>
             <input
