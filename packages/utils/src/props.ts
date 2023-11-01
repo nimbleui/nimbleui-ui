@@ -3,7 +3,7 @@ import { isFunction } from "./type";
 
 export type ObjectType = { [key: string]: any };
 
-export type Fun<T> = (details: any, uuId?: string | number | symbol) => T;
+type Fun<T> = (details: any, uuId?: string | number | symbol) => T;
 
 export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
   if (defaultVal) {

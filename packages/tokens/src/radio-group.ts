@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, InjectionKey, PropType, Ref } from "vue";
+import type { ContainFunction } from "@nimble-ui/utils";
 
 export const radioCommonProps = {
   /**
@@ -10,11 +11,15 @@ export const radioCommonProps = {
    */
   modelValue: {
     type: [String, Number, Boolean] as PropType<string | number | boolean>,
+    default: undefined,
   },
   /**
    * @@description 禁用状态
    */
-  disabled: Boolean,
+  disabled: {
+    type: [Boolean, Function] as PropType<ContainFunction<(details: any, uuId: number) => boolean>>,
+    default: undefined,
+  },
   /**
    * @description 大小
    */
