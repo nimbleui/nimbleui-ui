@@ -141,6 +141,7 @@ export function useTheme(opt: Opts = {}, theme: ThemeType = "light") {
   styleKeyValue.push(`--y-height-m: 32px`);
   styleKeyValue.push(`--y-height-s: 24px`);
   styleKeyValue.push(`--y-theme-status: ${theme}`);
+  styleKeyValue.push(`--y-mask-bg-color: rgba(0,0,0,0.45)`);
 
   style.innerHTML = `:root{${styleKeyValue.join(";")}}`;
 }

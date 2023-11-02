@@ -6,7 +6,7 @@
   --y-upload-hover-border-color: var(--y-color-primary);
   --y-upload-icon-color: var(--y-color-text-tertiary);
   --y-upload-item-width: 102px;
-  --y-upload-image-overlay-color: var(--y-color-text-tertiary);
+  --y-upload-image-overlay-color: var(--y-mask-bg-color);
 }
 
 @include b(upload) {
@@ -68,9 +68,30 @@
       width: calc(100% - 16px);
       height: calc(100% - 16px);
       z-index: 1;
+      opacity: 0;
       background-color: var(--y-upload-image-overlay-color);
       content: " ";
       transition: all 0.3s;
     }
+
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+
+      @include when('hover') {
+        display: block;
+      }
+    }
+
+    @include m(actions) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 2;
+      display: none;
+      transform: translate(-50%, -50%);
+    }
+
   }
 }

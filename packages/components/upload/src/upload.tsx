@@ -1,9 +1,9 @@
-import { createNamespace } from "@nimble-ui/utils";
+import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { defineComponent, ref } from "vue";
 import { YFlex } from "@nimble-ui/components/flex";
 import { YImage } from "@nimble-ui/components/image";
 
-import uploadProps, { UploadRawFile, UploaderItem } from "./types";
+import uploadProps, { UploadRawFile, UploadFileItem } from "./types";
 let fileId = 1;
 const genFileId = () => Date.now() + fileId++;
 
@@ -16,9 +16,12 @@ export default defineComponent({
     const bem = createNamespace("upload");
 
     const handleStart = (file: UploadRawFile) => {
-      file.uid = genFileId();
+      if (!file.uid) {
+        file.uid = genFileId();
+      }
+      const { fileList, listType } = props;
 
-      const uploadFile: UploaderItem = {
+      const uploadFile: UploadFileItem = {
         name: file.name,
         percentage: 0,
         status: "ready",
@@ -26,8 +29,17 @@ export default defineComponent({
         raw: file,
         uid: file.uid,
       };
-      const { "onUpdate:fileList": _onUpdateFileList } = props;
-      _onUpdateFileList?.(uploadFile);
+
+      if (listType == "picture" || listType == "picture-card") {
+        try {
+          uploadFile.url = URL.createObjectURL(file);
+        } catch (e: unknown) {
+          console.log(e);
+        }
+      }
+
+      fileList.push(uploadFile);
+      ctx.emit("update:fileList", fileList);
     };
     const handleProgress = () => {
       console.log(222);
@@ -44,11 +56,17 @@ export default defineComponent({
 
     const handleFiles = (files: File[]) => {
       if (files.length === 0) return;
-      const { fileList, maxCount } = props;
 
+      const { fileList, maxCount } = props;
       if (maxCount && fileList?.length + files.length > maxCount) {
         ctx.emit("exceed", files, fileList);
         return;
+      }
+
+      for (const file of files) {
+        const rawFile = file as UploadRawFile;
+        rawFile.uid = genFileId();
+        handleStart(rawFile);
       }
     };
 
@@ -68,13 +86,13 @@ export default defineComponent({
       if (maxCount && maxCount >= fileList.length) {
         return null;
       }
-
+      const d = isFunction(disabled) ? disabled() : disabled;
       const Input = readonly ? null : (
         <input
           type="file"
           ref={inputRef}
           accept={accept}
-          disabled={disabled}
+          disabled={d}
           multiple={multiple}
           class={bem.e("input")}
           onChange={onChange}
@@ -103,10 +121,11 @@ export default defineComponent({
       const { fileList } = props;
       return (
         <>
-          {fileList.map((item, index) => {
+          {fileList.map((item) => {
             return (
-              <div key={index} class={bem.e("image")}>
-                <YImage src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+              <div key={item.uid} class={bem.e("image")}>
+                <YImage src={item.url} />
+                <span class={[bem.m("actions", "image"), bem.is("hover")]}>删除</span>
               </div>
             );
           })}

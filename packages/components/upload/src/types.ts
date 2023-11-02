@@ -1,12 +1,11 @@
-import { mergeCommonProp } from "@nimble-ui/utils";
+import { mergeCommonProp, type Awaitable, type ContainFunction } from "@nimble-ui/utils";
 import { ExtractPropTypes, PropType } from "vue";
 
-export type ImageFit = "contain" | "cover" | "fill" | "none" | "scale-down";
 export type UploadStatus = "ready" | "uploading" | "success" | "fail";
 export interface UploadRawFile extends File {
   uid: number;
 }
-export type UploaderItem = {
+export type UploadFileItem = {
   name: string;
   percentage?: number;
   status: UploadStatus;
@@ -17,7 +16,8 @@ export type UploaderItem = {
   raw?: UploadRawFile;
   [key: string]: any;
 };
-export type UploadFiles = UploaderItem[];
+export type UploadFiles = UploadFileItem[];
+export type UploadListType = "text" | "picture" | "picture-card";
 const uploadProps = mergeCommonProp({
   /**
    * @description 限制上传数量。当为 1 时，始终用最新上传的文件代替当前文件
@@ -28,7 +28,9 @@ const uploadProps = mergeCommonProp({
   /**
    * @description 是否禁用上传
    */
-  disabled: Boolean,
+  disabled: {
+    type: [Function, Boolean] as PropType<ContainFunction<() => boolean>>,
+  },
   fileList: {
     type: Array as PropType<UploadFiles>,
     default: () => [],
@@ -48,6 +50,15 @@ const uploadProps = mergeCommonProp({
   },
   uploadText: {
     type: String,
+  },
+  /**
+   * @description 文件列表的类型
+   */
+  listType: {
+    type: String as PropType<UploadListType>,
+  },
+  beforeRemove: {
+    type: Function as PropType<() => Awaitable<boolean>>,
   },
 });
 
