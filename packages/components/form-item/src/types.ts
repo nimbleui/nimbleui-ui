@@ -46,6 +46,17 @@ const formItemProp = mergeCommonProp({
    * @description 和label原生标签相同能力
    */
   for: String,
+  /**
+   * @description 主轴的方向是否垂直
+   */
+  vertical: Boolean,
+  /**
+   * @description 是否有边框
+   */
+  bordered: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export default formItemProp;

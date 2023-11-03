@@ -53,6 +53,10 @@ const buttonProps = mergeCommonProp({
    * @description 是否为加载中状态
    */
   loading: Boolean,
+  /**
+   * @description 将控件联系到表单元素中
+   */
+  form: String,
 });
 
 export { ButtonShape, ButtonSize, ButtonTypes };

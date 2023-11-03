@@ -56,6 +56,12 @@
       
     &:not(.is-disabled):hover {
       border-color: var(--y-input-hover-border-color);
+      border-inline-end-width: 1px; 
+    }
+
+    &.is-focus {
+      border-color: var(--y-input-focus-border-color);
+      box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
       border-inline-end-width: 1px;
     }
   }
@@ -67,12 +73,6 @@
     input {
       cursor: not-allowed;
     }
-  }
-
-  @include when(focus) {
-    border-color: var(--y-input-focus-border-color);
-    box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
-    border-inline-end-width: 1px;
   }
 
   @include e(clear) {

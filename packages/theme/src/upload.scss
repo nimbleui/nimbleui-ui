@@ -1,4 +1,5 @@
 @use "./mixins/mixins.scss" as *;
+@use "./mixins/config.scss" as *;
 
 @include b(upload) {
   --y-upload-text-color: var(--y-color-text);
@@ -79,7 +80,7 @@
         opacity: 1;
       }
 
-      @include when('hover') {
+      .#{$be + $modifier-separator + 'actions'} {
         display: block;
       }
     }
@@ -92,6 +93,5 @@
       display: none;
       transform: translate(-50%, -50%);
     }
-
   }
 }

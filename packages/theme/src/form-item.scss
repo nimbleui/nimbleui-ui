@@ -7,7 +7,8 @@
   --y-form-item-error-font-size: var(--y-font-size-ms);
   --y-form-item-error-color: var(--y-color-error);
   --y-form-item-disabled-opacity: var(--y-disabled-opacity);
-  --y-form-item-height: var(--y-height-m);
+  --y-form-item-border-color: var(--y-color-border);
+  --y-form-item-hover-border-color: var(--y-color-primary-8);
 }
 
 @include b(form-item) {
@@ -18,6 +19,7 @@
   width: 100%;
   font-size: var(--y-form-item-font-size);
   color: var(--y-form-item-text-color);
+  border-radius: 4px;
 
   @include when(column) {
     flex-direction: column;
@@ -27,11 +29,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 8px;
+    padding: 8px 8px 0;
     white-space: nowrap;
     vertical-align: middle;
-    height: var(--y-form-item-height);
-    line-height: var(--y-form-item-height);
 
     @include when(disabled) {
       cursor: not-allowed;
@@ -51,5 +51,10 @@
     left: 0;
     font-size: var(--y-form-item-error-font-size);
     color: var(--y-form-item-error-color);
+  }
+
+  @include when(border) {
+    border: 1px solid;
+    border-color: var(--y-form-item-border-color);
   }
 }

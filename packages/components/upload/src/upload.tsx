@@ -125,7 +125,7 @@ export default defineComponent({
             return (
               <div key={item.uid} class={bem.e("image")}>
                 <YImage src={item.url} />
-                <span class={[bem.m("actions", "image"), bem.is("hover")]}>删除</span>
+                <span class={[bem.m("actions", "image")]}>删除</span>
               </div>
             );
           })}

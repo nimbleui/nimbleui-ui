@@ -1,4 +1,4 @@
-# 图像 Image
+# 输入框 Input
 
 
 ## 代码演示
@@ -7,6 +7,6 @@ basic.vue
 ```
 ## API
 
-### Image Props
+### Input Props
 | 名称 | 类型 | 默认值 | 说明 | 版本 |
 | --- | --- | --- | --- | --- |

@@ -2,11 +2,11 @@ import { computed, defineComponent, reactive } from "vue";
 import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
 import { useParent, useChildren, useExpose } from "@nimble-ui/hooks";
 import { createNamespace, isFunction } from "@nimble-ui/utils";
-import { YCol } from "@nimble-ui/components/col";
 
 import formItemProp from "./types";
 import type { FormItemExpose, FormItemValidateError } from "./types";
 import { getRuleMessage, runSyncRule, isEmptyValue, runRuleValidator, formatRules, filterRules } from "./utils";
+import { YFlex } from "@nimble-ui/components/flex";
 
 export default defineComponent({
   name: "YFormItem",
@@ -45,9 +45,9 @@ export default defineComponent({
 
     const bem = createNamespace("form-item");
     const formItemCls = computed(() => {
-      const { labelAlign } = props;
+      const { bordered } = props;
 
-      return [bem.b(), bem.b(labelAlign || "row", labelAlign != "row")];
+      return [bem.b(), bem.is("border", bordered)];
     });
 
     // 执行校验规则
@@ -143,22 +143,18 @@ export default defineComponent({
     });
 
     return () => {
-      const { span, label, uuId } = props;
+      const { label, uuId, vertical } = props;
 
       return (
-        <YCol uuId={uuId} span={span}>
-          <div class={formItemCls.value}>
-            {
-              <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled.value ?? false)]}>
-                {isFunction(label)
-                  ? label(details.value, uuId)
-                  : label || ctx.slots.label?.({ details: details.value })}
-              </label>
-            }
-            <div class="y-form-item__content">{ctx.slots.default?.({ details: details.value })}</div>
-            {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
-          </div>
-        </YCol>
+        <YFlex vertical={vertical} class={formItemCls.value}>
+          {
+            <label for={labelFor.value} class={[bem.e("label"), bem.is("disabled", disabled.value ?? false)]}>
+              {isFunction(label) ? label(details.value, uuId) : label || ctx.slots.label?.({ details: details.value })}
+            </label>
+          }
+          <div class="y-form-item__content">{ctx.slots.default?.({ details: details.value })}</div>
+          {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
+        </YFlex>
       );
     };
   },
