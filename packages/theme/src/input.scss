@@ -88,3 +88,21 @@
     }
   }
 }
+
+@keyframes j-shake-enter {
+  0%, 100% {
+    right: 0;
+  }
+
+  12.5%, 62.5% {
+    right: -0.3rem;
+  }
+
+  37.5%, 87.5% {
+    right: 0.3rem;
+  }
+}
+
+.y-input-shake-enter-active {
+  animation: j-shake-enter 0.2s;
+}

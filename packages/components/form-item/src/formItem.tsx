@@ -1,4 +1,4 @@
-import { computed, defineComponent, reactive } from "vue";
+import { Transition, computed, defineComponent, reactive } from "vue";
 import { formContextKey, formItemContextKey, Rule, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
 import { useParent, useChildren, useExpose } from "@nimble-ui/hooks";
 import { createNamespace, isFunction } from "@nimble-ui/utils";
@@ -160,7 +160,9 @@ export default defineComponent({
           }
           <div class="y-form-item__content">{ctx.slots.default?.({ details: details.value })}</div>
           {state.status === "failed" ? (
-            <div class={[bem.e("error"), bem.is(errorPosition)]}>{state.message}</div>
+            <Transition appear name="y-input-shake">
+              <div class={[bem.e("error"), bem.is(errorPosition)]}>{state.message}</div>
+            </Transition>
           ) : null}
         </YFlex>
       );
