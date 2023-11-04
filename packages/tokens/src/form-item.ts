@@ -1,6 +1,5 @@
 import type { InjectionKey, ComputedRef } from "vue";
 import type { ProvideContext, TriggerEventType } from "./types";
-import type { FormItemProps } from "@nimble-ui/components";
 
 export interface FormItemState {
   status: "failed" | "passed" | "init";
@@ -10,8 +9,7 @@ export interface FormItemState {
 
 type FormItemContext = ProvideContext<{
   state: FormItemState;
-  props: FormItemProps;
-  details: ComputedRef<any>;
+  propsRef: ComputedRef<{ details?: any }>;
   events: (type: TriggerEventType, value: string | number | boolean) => void;
 }>;
 

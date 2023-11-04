@@ -24,8 +24,9 @@ export default defineComponent({
     const { linkChildren, children } = useChildren(formItemContextKey);
     linkChildren({
       state,
-      props,
-      details,
+      propsRef: computed(() => ({
+        details: props.details,
+      })),
       // input事件
       events(type) {
         if (type === "onChange") {
@@ -47,7 +48,7 @@ export default defineComponent({
     const formItemCls = computed(() => {
       const { bordered } = props;
 
-      return [bem.b(), bem.is("border", bordered)];
+      return [bem.b(), bem.is("border", bordered), bem.is("focus", state.focus)];
     });
 
     // 执行校验规则
@@ -55,9 +56,7 @@ export default defineComponent({
       return rules.reduce((promise, rule) => {
         return promise.then(() => {
           if (state.status == "failed") return;
-
-          let value = children[0]?.public.modelValue;
-
+          let value = children[0]?.public.formValue.value;
           if (rule.formatter) {
             value = rule.formatter(value, rule, details.value);
           }
@@ -89,9 +88,16 @@ export default defineComponent({
       rules = formatRules(rules || props.rules, details.value);
 
       return new Promise<FormItemValidateError | void>((resolve) => {
-        if (!rules) {
-          return resolve();
+        if (props.required && !children[0]?.public.formValue.value) {
+          state.status = "failed";
+          state.message = props.required;
+          return Promise.resolve({
+            name: children[0]?.public.name,
+            message: state.message,
+          });
         }
+        if (!rules) return resolve();
+
         runRules(rules).then(() => {
           if (state.status === "failed") {
             resolve({
@@ -122,14 +128,14 @@ export default defineComponent({
       let value: any;
       if (children.length > 1) {
         value = children.reduce<any[]>((acc, child) => {
-          const modelValue = child?.public.modelValue;
+          const modelValue = child?.public.formValue.value;
           if (modelValue) {
             acc.push(modelValue);
           }
           return acc;
         }, []);
       } else {
-        value = children[0]?.public.modelValue;
+        value = children[0]?.public.formValue.value;
       }
       return { name, value };
     });
@@ -143,7 +149,7 @@ export default defineComponent({
     });
 
     return () => {
-      const { label, uuId, vertical } = props;
+      const { label, uuId, vertical, errorPosition } = props;
 
       return (
         <YFlex vertical={vertical} class={formItemCls.value}>
@@ -153,7 +159,9 @@ export default defineComponent({
             </label>
           }
           <div class="y-form-item__content">{ctx.slots.default?.({ details: details.value })}</div>
-          {state.status === "failed" ? <div class="y-form-item__error">{state.message}</div> : null}
+          {state.status === "failed" ? (
+            <div class={[bem.e("error"), bem.is(errorPosition)]}>{state.message}</div>
+          ) : null}
         </YFlex>
       );
     };

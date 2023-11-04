@@ -5,6 +5,7 @@ import { useExpose, useParent, useCreateId } from "@nimble-ui/hooks";
 
 import inputProp from "./types";
 import type { InputExpose } from "./types";
+import { eyeIcon, eyeInvisibleIcon } from "./icons";
 
 export default defineComponent({
   name: "YInput",
@@ -14,10 +15,11 @@ export default defineComponent({
     // 处理formItem组件传过的数据
     const formItemContext = useParent(formItemContextKey);
     const isFocus = computed(() => formItemContext?.parent.state.focus);
+    const selfModel = ref("");
 
     const inputRef = ref<HTMLInputElement>();
-    const formValue = computed(() => props.modelValue);
-    const getModelValue = () => String(props.modelValue ?? "");
+    const formValue = computed(() => props.modelValue ?? selfModel.value);
+    const getModelValue = () => String(props.modelValue == null ? "" : props.modelValue);
 
     // 根据props生成className
     const bem = createNamespace("input");
@@ -36,9 +38,9 @@ export default defineComponent({
     });
 
     // 更新输入框内容
-    const updateValue = (value: string, trigger: TriggerEventType = "onChange") => {
-      if (value !== props.modelValue) {
-        console.log(trigger);
+    const updateValue = (value: string) => {
+      if (value !== formValue.value) {
+        selfModel.value = value;
         ctx.emit("update:modelValue", value);
       }
       inputRef.value && (inputRef.value.value = value);
@@ -49,6 +51,7 @@ export default defineComponent({
       const { target } = event;
       if (!(target as any).composing) {
         updateValue((target as HTMLInputElement).value);
+        formItemContext?.parent.events("onChange", formValue.value);
       }
     };
 
@@ -68,7 +71,6 @@ export default defineComponent({
       () => props.modelValue,
       () => {
         updateValue(getModelValue());
-        formItemContext?.parent.events("onChange", formValue.value);
       }
     );
 
@@ -90,6 +92,16 @@ export default defineComponent({
       inputRef.value?.focus();
     };
 
+    const isEye = ref(false);
+    const onEye = () => (isEye.value = false);
+    const onInvisible = () => (isEye.value = true);
+    const newType = computed(() => {
+      const { type } = props;
+      if (type == "password") {
+        return isEye.value ? "text" : "password";
+      }
+      return type;
+    });
     return () => {
       const { type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } = props;
 
@@ -97,7 +109,7 @@ export default defineComponent({
         <div class={inputData.value.cls}>
           <span class={bem.e("wrapper")}>
             <input
-              type={type}
+              type={newType.value}
               ref={inputRef}
               id={inputId.value}
               readonly={readonly}
@@ -122,6 +134,20 @@ export default defineComponent({
                 </span>
               ) : null)}
           </span>
+          {type == "password" && (
+            <span class={bem.e("password")}>
+              {isEye.value && (
+                <i onClick={onEye} class={bem.m("icon", "password")}>
+                  {eyeIcon}
+                </i>
+              )}
+              {!isEye.value && (
+                <i onClick={onInvisible} class={bem.m("icon", "password")}>
+                  {eyeInvisibleIcon}
+                </i>
+              )}
+            </span>
+          )}
         </div>
       );
     };

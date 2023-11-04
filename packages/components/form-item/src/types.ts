@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
+import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, Prop, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 import type { Rules, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
 
@@ -6,8 +6,6 @@ export interface FormItemValidateError {
   name?: string;
   message: string;
 }
-
-type LabelAlignType = "row" | "column";
 
 const formItemProp = mergeCommonProp({
   /**
@@ -37,12 +35,6 @@ const formItemProp = mergeCommonProp({
     type: [String, Array] as PropType<TriggerEventType | Array<TriggerEventType>>,
   },
   /**
-   * label标签与输入框的排列方式
-   */
-  labelAlign: {
-    type: String as PropType<LabelAlignType>,
-  },
-  /**
    * @description 和label原生标签相同能力
    */
   for: String,
@@ -56,6 +48,19 @@ const formItemProp = mergeCommonProp({
   bordered: {
     type: Boolean,
     default: true,
+  },
+  /**
+   * @description 错误提示的位置
+   */
+  errorPosition: {
+    type: String as PropType<"right-top" | "bottom">,
+    default: "right-top",
+  },
+  /**
+   * @description 是否必填，这个是错误提示信息
+   */
+  required: {
+    type: String,
   },
 });
 

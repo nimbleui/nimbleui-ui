@@ -48,9 +48,18 @@
   @include e(error) {
     position: absolute;
     top: 100%;
-    left: 0;
     font-size: var(--y-form-item-error-font-size);
     color: var(--y-form-item-error-color);
+
+    @include when(right-top){
+      top: 8px;
+      right: 8px;
+    }
+
+    @include when(bottom) {
+      bottom: 4px;
+      left: 0;
+    } 
   }
 
   @include when(border) {

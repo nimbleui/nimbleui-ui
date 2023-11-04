@@ -79,4 +79,12 @@
     cursor: pointer;
     font-size: 10px;
   }
+
+  @include e(password) {
+    padding-right: 8px;
+
+    @include m(icon) {
+      cursor: pointer;
+    }
+  }
 }

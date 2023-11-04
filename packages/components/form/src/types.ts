@@ -1,11 +1,8 @@
 import { ExtractPropTypes, ComponentPublicInstance, PropType } from "vue";
-import { rowUniqueProp } from "@nimble-ui/components/row";
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 import { TriggerEventType, Rules } from "@nimble-ui/tokens";
 
 const formProps = mergeCommonProp({
-  // row组件的参数
-  ...rowUniqueProp,
   /**
    * @description 是否在提交表单且校验不通过时滚动至错误的表单项
    */

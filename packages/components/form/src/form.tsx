@@ -1,7 +1,5 @@
 import { defineComponent } from "vue";
 import { formContextKey } from "@nimble-ui/tokens";
-import { YRow } from "@nimble-ui/components/row";
-import { pick } from "@nimble-ui/utils";
 import { useChildren } from "@nimble-ui/hooks";
 
 import formProps from "./types";
@@ -91,13 +89,7 @@ export default defineComponent({
 
     return () => {
       const { details } = props;
-      return (
-        <form onSubmit={onSubmit}>
-          <YRow {...pick(props, ["span", "justify", "align", "details", "gutter"])}>
-            {ctx.slots.default?.({ details })}
-          </YRow>
-        </form>
-      );
+      return <form onSubmit={onSubmit}>{ctx.slots.default?.({ details })}</form>;
     };
   },
 });

@@ -29,7 +29,6 @@ export const inputUniqueProp = {
    */
   modelValue: {
     type: [String, Number],
-    default: "",
   },
   /**
    * @description 是否有边框
