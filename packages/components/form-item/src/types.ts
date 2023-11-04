@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, Prop, PropType, VNodeChild } from "vue";
+import type { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 import type { Rules, TriggerEventType, FormItemState } from "@nimble-ui/tokens";
 
