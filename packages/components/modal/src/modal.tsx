@@ -3,6 +3,7 @@ import { useEventListener, useLazyRender, useCreateIndex } from "@nimble-ui/hook
 import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { YOverlay } from "@nimble-ui/components/overlay";
 import { YButton } from "@nimble-ui/components/button";
+import { YFlex } from "@nimble-ui/components/flex";
 
 import modalProps, { type ModalAction } from "./types";
 
@@ -28,12 +29,18 @@ export default defineComponent({
     });
 
     const renderButton = () => {
-      const { confirmText, cancelText } = props;
+      const { confirmText, cancelText, confirmType, cancelType, hideCancel } = props;
       return (
-        <>
-          <YButton onClick={onCancel}>{cancelText}</YButton>
-          <YButton onClick={onConfirm}>{confirmText}</YButton>
-        </>
+        <YFlex justify="flex-end" gap={16} class={bem.m("buttons", "body")}>
+          {!hideCancel && (
+            <YButton type={cancelType} onClick={onCancel}>
+              {cancelText}
+            </YButton>
+          )}
+          <YButton type={confirmType} onClick={onConfirm}>
+            {confirmText}
+          </YButton>
+        </YFlex>
       );
     };
 
@@ -47,7 +54,7 @@ export default defineComponent({
       return (
         <div onClick={onClose} class={bem.e("body")}>
           <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
-            <div v-show={modelValue} style={{ zIndex: zIndex.value + 1 }} class={bem.e("body-content")}>
+            <div v-show={modelValue} style={{ zIndex: zIndex.value + 1 }} class={bem.m("content", "body")}>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
             </div>

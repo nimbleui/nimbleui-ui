@@ -1,5 +1,6 @@
 import { ExtractPropTypes, PropType, VNode } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
+import { ButtonTypes } from "@nimble-ui/tokens";
 
 export type ModalAction = "confirm" | "close" | "cancel";
 type DoneFn = (cancel?: boolean) => void;
@@ -64,11 +65,31 @@ const modalProps = mergeCommonProp({
     default: "确定",
   },
   /**
+   * @description 确定按钮的类型
+   */
+  confirmType: {
+    type: String as PropType<ButtonTypes>,
+    default: "primary",
+  },
+  /**
    * @description 取消按钮的文案
    */
   cancelText: {
     type: String,
     default: "取消",
+  },
+  /**
+   * @description 取消按钮的类型
+   */
+  cancelType: {
+    type: String as PropType<ButtonTypes>,
+    default: "info",
+  },
+  /**
+   * @description 是否隐藏取消按钮
+   */
+  hideCancel: {
+    type: Boolean,
   },
 });
 

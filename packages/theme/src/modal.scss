@@ -19,14 +19,18 @@
     box-sizing: border-box;
     min-width: 100vw;
     z-index: 99999; 
-  }
 
-  @include e(body-content) {
-    margin: auto;
-    border-radius: 5px;
-    font-size: var(--y-modal-font-size);
-    color: var(--y-modal-text-color);
-    background-color: var(--y-modal-bg-color);
+    @include m(content) {
+      margin: auto;
+      border-radius: 5px;
+      font-size: var(--y-modal-font-size);
+      color: var(--y-modal-text-color);
+      background-color: var(--y-modal-bg-color);
+    }
+
+    @include m(buttons) {
+      padding: 8px;
+    }
   }
 }
 
