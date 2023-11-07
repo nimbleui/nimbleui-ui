@@ -1,6 +1,7 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
 @use "./mixins/config.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(modal) {
   --y-modal-bg-color: var(--y-color-bg-elevated);
@@ -21,6 +22,7 @@
     z-index: 99999; 
 
     @include m(content) {
+      position: relative;
       margin: auto;
       border-radius: 5px;
       font-size: var(--y-modal-font-size);
@@ -30,6 +32,20 @@
 
     @include m(buttons) {
       padding: 8px;
+    }
+
+    @include m(close) {
+      right: 10px;
+      top: 10px;
+      display: block;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      border-radius: 3px;
+
+      @include utils-close-icon;
+
+      position: absolute; 
     }
   }
 }

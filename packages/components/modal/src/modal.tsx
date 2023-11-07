@@ -55,6 +55,7 @@ export default defineComponent({
         <div onClick={onClose} class={bem.e("body")}>
           <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
             <div v-show={modelValue} style={{ zIndex: zIndex.value + 1 }} class={bem.m("content", "body")}>
+              <span class={bem.m("close", "body")}></span>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
             </div>
