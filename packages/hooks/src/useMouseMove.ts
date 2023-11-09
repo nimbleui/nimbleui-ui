@@ -102,6 +102,8 @@ export function useMouseMove(el: TargetElement, options?: Options) {
   const { moveDis, sunBoundary } = handleBoundary(el, options?.boundary);
 
   const mousedown = (e: MouseEvent) => {
+    options?.prevent && e.preventDefault();
+    options?.stop && e.stopPropagation();
     const { clientX, clientY } = e;
     isMove.value = true;
     data.startX = clientX;
@@ -139,6 +141,8 @@ export function useMouseMove(el: TargetElement, options?: Options) {
   };
 
   const mouseup = (e: MouseEvent) => {
+    options?.prevent && e.preventDefault();
+    options?.stop && e.stopPropagation();
     if (!isMove.value) return;
     isMove.value = false;
     options?.prevent && e.preventDefault();
@@ -147,7 +151,7 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     Object.assign(data, defaultData);
   };
 
-  useEventListener("mousedown", mousedown, { target: el });
+  useEventListener("mousedown", mousedown, { target: el, passive: true });
   useEventListener("mouseup", mouseup, { target: document });
   useEventListener("mousemove", mousemove, { target: document });
 
