@@ -36,7 +36,7 @@ export default defineComponent({
       onItemClick(site, item, key) {
         activeSite.length = 0;
         activeSite.push(...site);
-        ctx.emit("select", item);
+        if (key) ctx.emit("select", item);
         // 更新选择的key
         if (key) {
           selectKey.value = key;

@@ -107,12 +107,19 @@
 
   @each $type in (primary, success, warning, error, info) {
     @include when($type) {
+      .is-loading {
+        &::after {
+          border-color: #fff;
+          border-bottom-color: transparent;
+        }
+      }
+
       &:not(.is-plain) {
         border-color: get-css-var('button', $type, 'border-color');
         background-color: get-css-var('button', $type, 'bg-color');
         color: get-css-var('button', $type, 'text-color');
   
-        &:not(.is-disabled) {
+        &:not(.is-disabled), &:not(.is-loading) {
           &::after {
             box-shadow: 0 0 0 8px get-css-var('button', $type, 'border-color');
           }
@@ -133,7 +140,7 @@
         border-color: get-css-var('button', $type, 'border-color');
         color: get-css-var('button', $type, 'bg-color');
 
-        &:not(.is-disabled) {
+        &:not(.is-disabled), &:not(.is-loading) {
           &::after {
             box-shadow: 0 0 0 8px get-css-var('button', $type, 'border-color');
           }
@@ -159,14 +166,19 @@
       }
 
       @if $size == 'small' {
-        padding: 5px 11px;
+        padding: 5px 11px; 
       }
     }
   }
 
   @include when(block) {
-    display: block;
+    display: flex;
     width: 100%;
+  }
+
+  @include when(loading) {
+    cursor: not-allowed;
+    opacity: get-css-var('button', 'disabled', 'opacity');
   }
 
   .is-loading {
@@ -178,6 +190,7 @@
       content: " ";
 
       @include loading(10px, 10px)
+
     }
   }
 }

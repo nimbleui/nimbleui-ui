@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YButton :loading="loading" @click="handleClick">点我</YButton>
+  <YButton :type="'primary'" :loading="loading" @click="handleClick">点我</YButton>
 </template>
 
 <script setup lang="ts">
