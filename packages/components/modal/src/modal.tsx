@@ -97,7 +97,7 @@ export default defineComponent({
       const { modal, modelValue } = props;
       return (
         <Teleport to="body">
-          <div class={bem.b()}>
+          <div class={bem.b()} style={{ zIndex: zIndex.value }}>
             {modal && <YOverlay zIndex={zIndex.value} disabled show={modelValue} />}
             {renderContent()}
           </div>

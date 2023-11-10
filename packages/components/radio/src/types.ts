@@ -17,6 +17,9 @@ const radioProps = mergeCommonProp({
     type: [String, Number, Boolean] as PropType<string | number | boolean>,
     default: true,
   },
+  hide: {
+    type: [Boolean, Function] as PropType<((details: any) => boolean) | boolean>,
+  },
 });
 
 export default radioProps;

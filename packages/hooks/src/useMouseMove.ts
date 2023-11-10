@@ -151,7 +151,7 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     Object.assign(data, defaultData);
   };
 
-  useEventListener("mousedown", mousedown, { target: el, passive: true });
+  useEventListener("mousedown", mousedown, { target: el });
   useEventListener("mouseup", mouseup, { target: document });
   useEventListener("mousemove", mousemove, { target: document });
 

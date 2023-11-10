@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YRadioGroup v-model="value" label-position="start" :options="options" @change="onChange" />
+  <YRadioGroup v-model="value" :details="data" label-position="start" :options="options" @change="onChange" />
 </template>
 
 <script setup lang="ts">
@@ -14,10 +14,14 @@ import { ref, reactive } from "vue";
 import { RadioProps } from "@nimble-ui/vue";
 
 const value = ref(1);
+const data = ref({ a: 1, b: 2 });
 const options = reactive<RadioProps[]>([
   {
     value: 1,
     label: () => "测试1",
+    hide: (details) => {
+      return details != 1;
+    },
   },
   {
     value: 2,

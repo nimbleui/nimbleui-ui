@@ -38,26 +38,27 @@ export default defineComponent({
     };
 
     return () => {
-      const { name, disabled, value, labelPosition = "end" } = newProps.value;
-
+      const { name, disabled, value, labelPosition = "end", hide } = newProps.value;
       return (
-        <label class={[bem.b(), bem.is("disabled", !!disabled)]}>
-          {labelPosition === "start" && renderLabel()}
-          <span class={bem.e("input")}>
-            <input
-              value={value}
-              ref={radioRef}
-              name={name}
-              type="radio"
-              disabled={disabled}
-              checked={checked.value}
-              class={bem.m("original", "input")}
-              onChange={onChange}
-            />
-            <span class={[bem.m("inner", "input"), bem.is("checked", checked.value)]}></span>
-          </span>
-          {labelPosition == "end" && renderLabel()}
-        </label>
+        !hide && (
+          <label class={[bem.b(), bem.is("disabled", !!disabled)]}>
+            {labelPosition === "start" && renderLabel()}
+            <span class={bem.e("input")}>
+              <input
+                value={value}
+                ref={radioRef}
+                name={name}
+                type="radio"
+                disabled={disabled}
+                checked={checked.value}
+                class={bem.m("original", "input")}
+                onChange={onChange}
+              />
+              <span class={[bem.m("inner", "input"), bem.is("checked", checked.value)]}></span>
+            </span>
+            {labelPosition == "end" && renderLabel()}
+          </label>
+        )
       );
     };
   },
