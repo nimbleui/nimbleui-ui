@@ -1,4 +1,4 @@
-import { Ref, reactive, ref, unref } from "vue";
+import { type Ref, reactive, ref, unref } from "vue";
 import { useEventListener } from "./useEventListener";
 
 const defaultData = {
@@ -49,6 +49,10 @@ interface Options {
    * @description 配合boundary，移动是只能在boundary元素里移动
    */
   moveLimit?: boolean;
+  /**
+   * @description 缩放比例
+   */
+  scale?: Ref<number> | number;
 }
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
@@ -62,19 +66,31 @@ const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) 
   }
 };
 
-const handleBoundary = (el: TargetElement, boundary?: BoundaryElement | TargetElement) => {
+const numScale = (e: MouseEvent, options?: Options) => {
+  const { clientX, clientY } = e;
+  const scale = unref(options?.scale) ?? 1;
+
+  return {
+    clientX: clientX / scale,
+    clientY: clientY / scale,
+  };
+};
+
+const handleBoundary = (el: TargetElement, options?: Options) => {
   const moveDis = { l: 0, r: 0, t: 0, b: 0 };
 
   const sunBoundary = () => {
     const element = unref(el);
+    const boundary = unref(options?.boundary);
     if (!element || !boundary) return;
+    const s = unref(options?.scale) ?? 1;
 
     let boundaryT = 0;
     let boundaryL = 0;
     let boundaryR = document.documentElement.clientWidth;
     let boundaryB = document.documentElement.clientHeight;
     if (boundary !== window) {
-      const { left, top, right, bottom } = (unref(boundary) as Element).getBoundingClientRect();
+      const { left, top, right, bottom } = (boundary as Element).getBoundingClientRect();
       boundaryT = top;
       boundaryL = left;
       boundaryR = right;
@@ -83,10 +99,10 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement | TargetEl
 
     const rect = element.getBoundingClientRect();
     Object.assign(moveDis, {
-      l: boundaryL - rect.left,
-      r: boundaryR - rect.right,
-      t: boundaryT - rect.top,
-      b: boundaryB - rect.bottom,
+      l: (boundaryL - rect.left) / s,
+      r: (boundaryR - rect.right) / s,
+      t: (boundaryT - rect.top) / s,
+      b: (boundaryB - rect.bottom) / s,
     });
   };
 
@@ -99,18 +115,17 @@ const handleBoundary = (el: TargetElement, boundary?: BoundaryElement | TargetEl
 export function useMouseMove(el: TargetElement, options?: Options) {
   const isMove = ref(false);
   const data = reactive<DataType>({ ...defaultData });
-  const { moveDis, sunBoundary } = handleBoundary(el, options?.boundary);
+  const { moveDis, sunBoundary } = handleBoundary(el, options);
 
   const mousedown = (e: MouseEvent) => {
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
-    const { clientX, clientY } = e;
+    const { clientX, clientY } = numScale(e, options);
     isMove.value = true;
     data.startX = clientX;
     data.startY = clientY;
     sunBoundary();
     getDisElement(el, data, clientX, clientY);
-
     options?.down?.(data, e);
   };
 
@@ -118,7 +133,7 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     if (!isMove.value) return;
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
-    const { clientX, clientY } = e;
+    const { clientX, clientY } = numScale(e, options);
     let disX = clientX - data.startX;
     let disY = clientY - data.startY;
 
@@ -145,8 +160,6 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     options?.stop && e.stopPropagation();
     if (!isMove.value) return;
     isMove.value = false;
-    options?.prevent && e.preventDefault();
-    options?.stop && e.stopPropagation();
     options?.up?.(data, e);
     Object.assign(data, defaultData);
   };
