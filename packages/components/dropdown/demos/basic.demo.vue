@@ -6,13 +6,13 @@
 </markdown>
 
 <template>
-  <YDropdown :trigger="'hover'" :options="options" @select="handleSelect">
+  <YDropdown :trigger="'click'" :options="numList" @select="handleSelect">
     <YButton :type="'primary'">Dropdown List</YButton>
   </YDropdown>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { computed, ref } from "vue";
 import { YMessage } from "@nimble-ui/vue";
 
 interface Options {
@@ -20,26 +20,14 @@ interface Options {
   id: number;
 }
 
-const options = reactive<Options[]>([
-  {
-    label: "春眠不觉晓",
-    id: 1,
-  },
-  {
-    label: "处处闻啼鸟",
-    id: 2,
-  },
-  {
-    label: "夜来风雨声",
-    id: 3,
-  },
-  {
-    label: "花落知多少",
-    id: 4,
-  },
-]);
+const type = ref(1);
+const numList = computed(() => {
+  const start = !type.value ? 15 : type.value == 1 ? 12 : 12;
+  const end = !type.value ? 90 : type.value == 1 ? 30 : 36;
+  return Array.from({ length: end - start + 1 }, (v, k) => ({ label: k + start }));
+});
 
 const handleSelect = (item: Options) => {
-  YMessage.info(item.label);
+  YMessage.info(String(item.label));
 };
 </script>

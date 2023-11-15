@@ -1,8 +1,15 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
 @use "./mixins/config.scss" as *;
+@use "./common/var.scss" as *;
 
 @include b(dropdown) {
+  --y-dropdown-bg-color: var(--y-color-bg-elevated);
+
+  background-color: var(--y-dropdown-bg-color);
+  box-shadow: $box-shadow-secondary;
+  color: var(--y-pop-confirm-text-color); 
+
   @include e(title) {
     position: relative;
     display: inline-flex;
@@ -13,6 +20,7 @@
   @include e(menus) {
     padding: 0;
     margin: 0;
+    max-height: 240px;
   }
 
   @include e(menu) {
