@@ -1,5 +1,5 @@
 <template>
-  <YLayout content-style="height: calc(100vh - var(--y-header-height))" has-sidebar>
+  <YLayout style="flex: 1">
     <YSidebar collapsed style="border-right: 1px solid var(--y-color-border-secondary)">
       <YMenu
         v-model="activeMenuItem"

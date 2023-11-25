@@ -6,25 +6,12 @@
 </markdown>
 
 <template>
-  <YUpload v-model:file-list="fileList" :list-type="'picture-card'" />
+  <YUpload v-model:file-list="fileList" :max-count="1" :list-type="'picture-card'" />
 </template>
 
 <script setup lang="ts">
 import { UploadFiles } from "@nimble-ui/vue";
 import { reactive } from "vue";
 
-const fileList = reactive<UploadFiles>([
-  {
-    name: "11",
-    uid: 1,
-    status: "success",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-  },
-  {
-    name: "11",
-    uid: 2,
-    status: "success",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-  },
-]);
+const fileList = reactive<UploadFiles>([]);
 </script>

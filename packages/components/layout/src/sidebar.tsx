@@ -1,6 +1,7 @@
 import { createNamespace } from "@nimble-ui/utils";
-import YScrollbar from "@nimble-ui/components/scrollbar";
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
+import { layoutContextKey } from "@nimble-ui/tokens";
+import { YScrollbar } from "@nimble-ui/components/scrollbar";
 
 export default defineComponent({
   name: "YSidebar",
@@ -13,16 +14,19 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("layout-sidebar");
 
+    const layoutContext = inject(layoutContextKey, undefined);
+    layoutContext?.setSider(true);
+
     return () => {
       return (
-        <div class={bem.b()}>
+        <aside class={bem.b()}>
           <YScrollbar trigger="hover">{ctx.slots.default?.()}</YScrollbar>
           {props.collapsed ? (
             <div class={bem.e("button")}>
               <i></i>
             </div>
           ) : null}
-        </div>
+        </aside>
       );
     };
   },

@@ -8,5 +8,6 @@ export * from "./src/tooltip";
 export * from "./src/image-preview";
 export * from "./src/menu";
 export * from "./src/radio-group";
+export * from "./src/layout";
 
 export * from "./src/types";

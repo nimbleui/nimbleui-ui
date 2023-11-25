@@ -8,7 +8,7 @@ const radioProps = mergeCommonProp({
    * @description 标签
    */
   label: {
-    type: [Object, Function, String] as PropType<VNodeChild | (() => VNodeChild)>,
+    type: [Object, Function, String] as PropType<VNodeChild | ((details: any) => VNodeChild)>,
   },
   /**
    * @description 选中的值

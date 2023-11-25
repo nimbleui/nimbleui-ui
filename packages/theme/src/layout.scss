@@ -14,25 +14,15 @@
 }
 
 @include b(layout) {
-  position: relative;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--y-layout-bg-color);
+  color: var(--y-layout-text-color);
 
-  @include e(warp) {
-    display: flex;
-    flex-direction: column;
-    flex: auto;
-    box-sizing: border-box;
-    font-size: var(--y-layout-font-size);
-    color: var(--y-layout-text-color);
-    background-color: var(--y-layout-bg-color);
-
-    @include when(absolute) {
-      position: absolute;
-      inset: 0;
-    }
-
-    @include when(sidebar) {
-      flex-direction: row;
-    }
+  @include when(sidebar) {
+    flex-direction: row;
   }
 }
 
@@ -58,22 +48,4 @@
   width: var(--y-sidebar-width);
   min-width: var(--y-sidebar-width);
   background-color: var(--y-layout-sidebar-bg-color);
-
-  @include e(button) {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    z-index: 1;
-    cursor: pointer;
-    border: 1px solid var(--y-sidebar-button-border-color);
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
-    transform: translateX(50%) translateY(-50%);
-    background-color: var(--y-sidebar-button-bg-color);
-  }
 }

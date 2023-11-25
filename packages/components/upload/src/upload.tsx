@@ -10,7 +10,7 @@ const genFileId = () => Date.now() + fileId++;
 export default defineComponent({
   name: "YUpload",
   props: uploadProps(),
-  emits: ["clickUpload", "update:fileList", "exceed"],
+  emits: ["clickUpload", "update:fileList", "exceed", "change"],
   setup(props, ctx) {
     const inputRef = ref<HTMLInputElement>();
     const bem = createNamespace("upload");
@@ -73,7 +73,9 @@ export default defineComponent({
     const onChange = (e: Event) => {
       const { files } = e.target as HTMLInputElement;
       if (!files) return;
-      handleFiles(Array.from(files));
+      const list = Array.from(files);
+      handleFiles(list);
+      ctx.emit("change", list);
     };
 
     const onClickUpload = (event: MouseEvent) => {
@@ -83,7 +85,7 @@ export default defineComponent({
 
     const renderUpload = () => {
       const { maxCount, fileList, readonly, disabled, multiple, accept, uploadText } = props;
-      if (maxCount && maxCount >= fileList.length) {
+      if (maxCount && maxCount >= fileList.length && maxCount != 1) {
         return null;
       }
       const d = isFunction(disabled) ? disabled() : disabled;
