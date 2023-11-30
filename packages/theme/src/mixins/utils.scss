@@ -10,17 +10,19 @@
   align-items: center;
 }
 
-@mixin utils-close-icon {
+@mixin utils-close-icon($size: 1.5px, $color: var(--y-color-text)) {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &::after, &::before {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1.5px;
+    width: 80%;
+    height: $size;
     background-color: var(--y-color-text-tertiary);
+    margin-left: 10%;
   }
 
   &::before {
@@ -35,7 +37,7 @@
     background-color: var(--y-color-fill-secondary);
 
     &::after, &::before {
-      background-color: var(--y-color-text);
+      background-color: $color;
     }
   }
 }

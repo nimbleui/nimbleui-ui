@@ -14,7 +14,7 @@ export default defineComponent({
   setup(props, ctx) {
     // 处理formItem组件传过的数据
     const formItemContext = useParent(formItemContextKey);
-    const isFocus = computed(() => formItemContext?.parent.state.focus);
+    const isFocus = ref(false);
     const selfModel = ref("");
 
     const inputRef = ref<HTMLInputElement>();
@@ -39,6 +39,11 @@ export default defineComponent({
 
     // 更新输入框内容
     const updateValue = (value: string) => {
+      const { formatter, parser } = props;
+      if (formatter) {
+        value = parser ? parser(value) : value;
+        value = formatter(value);
+      }
       if (value !== formValue.value) {
         selfModel.value = value;
         ctx.emit("update:modelValue", value);
@@ -58,12 +63,14 @@ export default defineComponent({
     // 输入框失去焦点
     const onBlur = (event: Event) => {
       ctx.emit("blur", event);
+      isFocus.value = false;
       formItemContext?.parent.events("onBlur", formValue.value);
     };
 
     // 输入框获取焦点
     const onFocus = (event: Event) => {
       ctx.emit("focus", event);
+      isFocus.value = true;
       formItemContext?.parent.events("onFocus", formValue.value);
     };
 
@@ -129,9 +136,7 @@ export default defineComponent({
             {allowClear &&
               formValue.value &&
               (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
-                <span onClick={onClear} class={bem.e("clear")}>
-                  清除
-                </span>
+                <span onClick={onClear} class={bem.e("clear")}></span>
               ) : null)}
           </span>
           {type == "password" && (

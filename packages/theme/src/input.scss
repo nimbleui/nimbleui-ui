@@ -1,5 +1,6 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/function.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(input) {
   --y-input-text-color: var(--y-color-text);
@@ -10,6 +11,7 @@
   --y-input-disabled-opacity: var(--y-disabled-opacity);
   --y-input-font-size: var(--y-font-size);
   --y-input-height: var(--y-height-m, 32px);
+  --y-input-clear: var(--y-color-text-quaternary);
 }
 
 @include b(input) {
@@ -70,14 +72,22 @@
     cursor: not-allowed;
     opacity: var(--y-input-disabled-opacity);
 
-    input {
+    input { 
       cursor: not-allowed;
     }
   }
 
+  @include e(suffix) { 
+    padding: 0 5px;
+  }
+
   @include e(clear) {
+    width: 12px;
+    height: 12px;
+    background-color: var(--y-input-clear);
     cursor: pointer;
-    font-size: 10px;
+
+    @include utils-close-icon(1px);
   }
 
   @include e(password) {
