@@ -8,7 +8,9 @@ export default defineComponent({
     return () => {
       return (
         <div class={bem.b()}>
-          <div class={bem.e("panel")}></div>
+          <div class={bem.e("panel")}>
+            <div class={bem.m("colors", "panel")}></div>
+          </div>
         </div>
       );
     };

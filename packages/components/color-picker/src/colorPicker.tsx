@@ -14,7 +14,12 @@ export default defineComponent({
     return () => {
       return (
         <div class={bem.b()}>
-          <YTooltip contentClass={bem.e("content")} placement="bottom-start" maxWidth={260}>
+          <YTooltip
+            contentClass={bem.e("content")}
+            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
+            placement="bottom-start"
+            maxWidth={260}
+          >
             {{
               default: () => (
                 <div class={bem.e("title")}>

@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YColorPicker v-model="checked">复选框</YColorPicker>
+  <YColorPicker v-model="checked"></YColorPicker>
 </template>
 
 <script setup lang="ts">

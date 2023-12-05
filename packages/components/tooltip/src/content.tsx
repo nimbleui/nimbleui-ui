@@ -90,25 +90,39 @@ export default defineComponent({
       let transform = "";
       let transformOrigin = "";
       let flag = false;
+      let x = disL;
+      let y = disT;
+      let xSeat = "left";
+      let ySeat = "top";
 
-      const x = seat == "start" ? disL : seat == "end" ? right - offsetWidth : disL - disX / 2;
-      const y = seat == "start" ? disT : seat == "end" ? bottom - offsetHeight : disT - disY / 2;
+      if (seat == "end") {
+        x = right - offsetWidth;
+        y = bottom - offsetHeight;
+        xSeat = "right";
+        ySeat = "bottom";
+      } else if (!seat) {
+        x = disL - disX / 2;
+        y = disT - disY / 2;
+        xSeat = "center";
+        ySeat = "center";
+      }
+
       if (placement.indexOf("bottom") == 0) {
         flag = disB >= offsetHeight + DIS_BOTTOM;
         transform = `translateX(${x}px) translateY(${flag ? tTop : bTop}px)`;
-        transformOrigin = flag ? "top center" : "bottom center";
+        transformOrigin = `${flag ? "top" : "bottom"} ${xSeat}`;
       } else if (placement.indexOf("top") == 0) {
         flag = disT >= offsetHeight + DIS_BOTTOM;
         transform = `translateX(${x}px) translateY(${flag ? bTop : tTop}px)`;
-        transformOrigin = flag ? "bottom center" : "top center";
+        transformOrigin = `${flag ? "bottom" : "top"} ${xSeat}`;
       } else if (placement.indexOf("left") == 0) {
         flag = disL >= offsetWidth + DIS_BOTTOM;
         transform = `translateX(${flag ? lLeft : lRight}px) translateY(${y}px)`;
-        transformOrigin = flag ? "right center" : "left center";
+        transformOrigin = `${flag ? "right" : "left"} ${ySeat}`;
       } else {
         flag = disR >= offsetWidth + DIS_BOTTOM;
         transform = `translateX(${flag ? lRight : lLeft}px) translateY(${y}px)`;
-        transformOrigin = flag ? "left center" : "right center";
+        transformOrigin = `${flag ? "left" : "right"} ${ySeat}`;
       }
       setArrowLocation(flag);
       styles.transform = transform;
