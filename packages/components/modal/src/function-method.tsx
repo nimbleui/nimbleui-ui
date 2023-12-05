@@ -1,7 +1,7 @@
 import { AppContext, createVNode, ref, render } from "vue";
 import ModalConstructor from "./modal";
 
-import type { ModalProps } from "./types";
+import type { ModalProps, ModalAction } from "./types";
 
 function createModal(
   options: Partial<ModalProps & { onClose: (type: string) => void; onConfirm: () => void }>,
@@ -31,12 +31,12 @@ function createModal(
   render(vNode, container);
 }
 
-export function showModal(options: Partial<ModalProps>) {
+export function showModal(options: Partial<ModalProps>): Promise<ModalAction> {
   return new Promise((resolve) => {
     createModal({
       ...options,
       onClose: (type: string) => {
-        resolve(type);
+        resolve(type as ModalAction);
       },
       onConfirm() {
         resolve("confirm");

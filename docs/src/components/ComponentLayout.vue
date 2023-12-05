@@ -124,6 +124,10 @@ const items = reactive<MenuItems[]>([
         text: "上传 Upload",
         link: "/component/upload",
       },
+      {
+        text: "颜色选择器 ColorPicker",
+        link: "/component/colorPicker",
+      },
     ],
   },
   {

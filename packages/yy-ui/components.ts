@@ -35,6 +35,7 @@ import {
   YRadioGroup,
   YPopConfirm,
   YUpload,
+  YColorPicker,
 } from "@nimble-ui/components";
 
 export default [
@@ -74,4 +75,5 @@ export default [
   YRadioGroup,
   YPopConfirm,
   YUpload,
+  YColorPicker,
 ];

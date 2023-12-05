@@ -4,4 +4,5 @@
 ## 代码演示
 ```demo
 basic.vue
+function.vue
 ```

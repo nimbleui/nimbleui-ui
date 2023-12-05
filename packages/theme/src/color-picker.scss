@@ -1,0 +1,32 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(color-picker) {
+  --color-picker-title-border-color: var(--y-color-border);
+
+  min-width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--color-picker-title-border-color);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 3px;
+
+  @include e(content) {
+    --y-color-picker-content-bg: var(--y-color-bg-elevated);
+
+    background-clip: padding-box;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);  
+    background-color: var(--y-color-picker-content-bg);
+  }
+}
+
+@include b(color-content) { 
+  @include e(panel) {
+    width: 234px;
+    height: 160px;
+    border-radius: inherit;
+    box-shadow: inset 0 0 1px 0 rgb(255 255 255 / 25%);
+    inset: 0;
+  }
+}

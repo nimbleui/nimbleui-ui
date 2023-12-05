@@ -76,12 +76,13 @@
       cursor: not-allowed;
     }
   }
-
-  @include e(suffix) { 
+ 
+  @include e(suffix) {
     padding: 0 5px;
   }
 
   @include e(clear) {
+    border-radius: 50%;
     width: 12px;
     height: 12px;
     background-color: var(--y-input-clear);

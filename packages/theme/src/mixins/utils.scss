@@ -19,10 +19,10 @@
   &::after, &::before {
     content: "";
     position: absolute;
-    width: 80%;
+    width: 70%;
     height: $size;
     background-color: var(--y-color-text-tertiary);
-    margin-left: 10%;
+    margin: 2% 0 0 5%;
   }
 
   &::before {
