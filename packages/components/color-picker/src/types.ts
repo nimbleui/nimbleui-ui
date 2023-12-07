@@ -14,6 +14,9 @@ const colorPickerProps = mergeCommonProp({
   format: {
     type: String as PropType<"rgb" | "hex" | "hsb">,
   },
+  modelValue: {
+    type: String,
+  },
 });
 
 export default colorPickerProps;

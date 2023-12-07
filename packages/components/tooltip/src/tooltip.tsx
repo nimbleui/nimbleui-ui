@@ -10,7 +10,7 @@ import { isFunction } from "@nimble-ui/utils";
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
-  emits: ["select", "update:modelValue", "events"],
+  emits: ["select", "update:modelValue", "events", "toggle"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
     const contentRef = ref<HTMLElement>();
@@ -30,6 +30,7 @@ export default defineComponent({
       set(val) {
         selfModel.value = val;
         ctx.emit("update:modelValue", val);
+        ctx.emit("toggle", val);
       },
     });
     const onToggle = (e: Event, toggle: boolean) => {
@@ -70,6 +71,8 @@ export default defineComponent({
         contentStyle,
         arrowClass,
         arrowStyle,
+        maxWidth,
+        maxHeight,
       } = props;
       return (
         <>
@@ -88,6 +91,8 @@ export default defineComponent({
             arrowStyle={arrowStyle}
             contentClass={contentClass}
             contentStyle={contentStyle}
+            maxHeight={maxHeight}
+            maxWidth={maxWidth}
           >
             {ctx.slots.content?.()}
           </YContent>

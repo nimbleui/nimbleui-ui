@@ -53,6 +53,10 @@ interface Options {
    * @description 缩放比例
    */
   scale?: Ref<number> | number;
+  /**
+   * @description 边界元素扩大
+   */
+  expand?: number;
 }
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
@@ -84,6 +88,7 @@ const handleBoundary = (el: TargetElement, options?: Options) => {
     const boundary = unref(options?.boundary);
     if (!element || !boundary) return;
     const s = unref(options?.scale) ?? 1;
+    const expand = options?.expand ?? 0;
 
     let boundaryT = 0;
     let boundaryL = 0;
@@ -91,10 +96,10 @@ const handleBoundary = (el: TargetElement, options?: Options) => {
     let boundaryB = document.documentElement.clientHeight;
     if (boundary !== window) {
       const { left, top, right, bottom } = (boundary as Element).getBoundingClientRect();
-      boundaryT = top;
-      boundaryL = left;
-      boundaryR = right;
-      boundaryB = bottom;
+      boundaryT = top - expand;
+      boundaryL = left - expand;
+      boundaryR = right + expand;
+      boundaryB = bottom + expand;
     }
 
     const rect = element.getBoundingClientRect();

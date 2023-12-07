@@ -1,5 +1,5 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import ColorContent from "./colorContent";
 
@@ -11,14 +11,24 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("color-picker");
 
+    const onChange = () => {
+      // console.log(111);
+    };
+
+    const active = ref(false);
+    const onToggle = (val: boolean) => (active.value = val);
+
     return () => {
+      const { modelValue } = props;
       return (
-        <div class={bem.b()}>
+        <div class={[bem.b(), bem.is("active", active.value)]}>
           <YTooltip
             contentClass={bem.e("content")}
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
             placement="bottom-start"
             maxWidth={260}
+            maxHeight={300}
+            onToggle={onToggle}
           >
             {{
               default: () => (
@@ -26,7 +36,7 @@ export default defineComponent({
                   {ctx.slots.default?.() ?? <span class={bem.m("color", "title")}></span>}
                 </div>
               ),
-              content: () => <ColorContent></ColorContent>,
+              content: () => <ColorContent onChange={onChange} color={modelValue} />,
             }}
           </YTooltip>
         </div>

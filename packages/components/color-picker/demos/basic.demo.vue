@@ -6,11 +6,11 @@
 </markdown>
 
 <template>
-  <YColorPicker v-model="checked"></YColorPicker>
+  <YColorPicker v-model="color" />
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 
-const checked = ref(true);
+const color = ref("#1677FF");
 </script>
