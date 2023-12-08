@@ -1,4 +1,4 @@
-class BEM {
+export class BEM {
   private block = "";
   constructor(name: string) {
     this.block = `y-${name}`;

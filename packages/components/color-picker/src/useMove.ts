@@ -19,7 +19,7 @@ export default function useMove(options: OptionsType) {
 
   const getSiteColor = ({ disX, disY }: { disX: number; disY: number }) => {
     const canvas = canvasRef.value;
-    const ctx = canvas?.getContext("2d");
+    const ctx = canvas?.getContext("2d", { willReadFrequently: true });
     if (!ctx || !canvas || !moveRef.value) return;
 
     const { width, height } = canvas.getBoundingClientRect();
@@ -74,7 +74,7 @@ export default function useMove(options: OptionsType) {
       const { left, top } = el.getBoundingClientRect();
       const disX = clientX - left;
       const disY = clientY - top;
-      const ctx = el.getContext("2d");
+      const ctx = el.getContext("2d", { willReadFrequently: true });
       const imageData = ctx?.getImageData(isX ? disX : 0, isY ? disY : 0, 1, 1);
       console.log(imageData);
     },

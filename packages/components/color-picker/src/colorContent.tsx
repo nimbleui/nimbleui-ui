@@ -1,11 +1,8 @@
-import { createNamespace } from "@nimble-ui/utils";
-import { computed, defineComponent, reactive, type CSSProperties, onMounted } from "vue";
-import HueSlider from "./hueSlider";
-import { YFlex } from "@nimble-ui/components/flex";
+import { BEM } from "@nimble-ui/utils";
+import { computed, defineComponent, reactive, type CSSProperties, onMounted, PropType } from "vue";
 
 import { createLinearGradient } from "./color";
 import useMove from "./useMove";
-
 export default defineComponent({
   name: "ColorContent",
   props: {
@@ -13,10 +10,13 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    bem: {
+      type: Object as PropType<BEM>,
+      required: true,
+    },
   },
   emits: ["change"],
   setup(props, ctx) {
-    const bem = createNamespace("color-content");
     const rgba = reactive<number[]>([]);
 
     const { dis, data, moveRef, canvasRef, containerRef } = useMove({
@@ -52,26 +52,13 @@ export default defineComponent({
       }
     });
 
-    const sliderChange = (rgba: number[]) => {
-      renderPanelColor(`rgba(${rgba.join(",")})`);
-    };
-
     return () => {
+      const { bem } = props;
       return (
-        <YFlex vertical class={bem.b()}>
-          <div ref={containerRef} class={bem.e("panel")}>
-            <canvas ref={canvasRef} class={bem.m("colors", "panel")}></canvas>
-            <span style={moveStyle.value} ref={moveRef} class={bem.m("move", "panel")}></span>
-          </div>
-
-          <YFlex gap={12} class={bem.e("slider")}>
-            <YFlex flex="1" vertical gap={12}>
-              <HueSlider onChange={sliderChange} />
-              <HueSlider />
-            </YFlex>
-            <div style={{ backgroundColor: `rgba(${rgba.join(",")})` }} class={bem.m("block", "slider")}></div>
-          </YFlex>
-        </YFlex>
+        <div ref={containerRef} class={bem.e("panel")}>
+          <canvas ref={canvasRef} class={bem.m("colors", "panel")}></canvas>
+          <span style={moveStyle.value} ref={moveRef} class={bem.m("move", "panel")}></span>
+        </div>
       );
     };
   },
