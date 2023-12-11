@@ -87,5 +87,6 @@ export default function useMove(options: OptionsType) {
     moveRef,
     canvasRef,
     containerRef,
+    getSiteColor,
   };
 }

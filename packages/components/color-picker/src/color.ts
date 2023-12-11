@@ -43,3 +43,40 @@ export function rgb2hsv(r: number, g: number, b: number) {
 
   return [h, s, v];
 }
+
+const HEX_INT_MAP: Record<string, number> = {
+  A: 10,
+  B: 11,
+  C: 12,
+  D: 13,
+  E: 14,
+  F: 15,
+};
+
+const parseHexChannel = function (hex: string) {
+  if (hex.length === 2) {
+    return (HEX_INT_MAP[hex[0].toUpperCase()] || +hex[0]) * 16 + (HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1]);
+  }
+  return HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1];
+};
+
+export const hex2rgb = (value: string) => {
+  const hex = value.replace("#", "").trim();
+  const rgba = [0, 0, 0, 1];
+  if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$|^[0-9a-fA-F]{8}$/.test(hex)) return rgba;
+
+  if (hex.length === 3) {
+    rgba[0] = parseHexChannel(hex[0] + hex[0]);
+    rgba[1] = parseHexChannel(hex[1] + hex[1]);
+    rgba[2] = parseHexChannel(hex[2] + hex[2]);
+  } else if (hex.length === 6 || hex.length === 8) {
+    rgba[0] = parseHexChannel(hex.slice(0, 2));
+    rgba[1] = parseHexChannel(hex.slice(2, 4));
+    rgba[2] = parseHexChannel(hex.slice(4, 6));
+  }
+  if (hex.length === 8) {
+    rgba[3] = parseHexChannel(hex.slice(6)) / 255;
+  }
+
+  return rgba;
+};

@@ -14,18 +14,21 @@ export default defineComponent({
       type: Object as PropType<BEM>,
       required: true,
     },
+    background: {
+      type: String,
+    },
   },
   emits: ["change"],
   setup(props, ctx) {
     const rgba = reactive<number[]>([]);
 
-    const { dis, data, moveRef, canvasRef, containerRef } = useMove({
+    const { dis, data, moveRef, canvasRef, containerRef, getSiteColor } = useMove({
       expand: 8,
       direction: "xy",
       onChange(value) {
         rgba.length = 0;
         rgba.push(...value);
-        ctx.emit("change", value);
+        ctx.emit("change", value, { x: data.disX + dis.x, y: data.disY + dis.y });
       },
     });
 
@@ -47,9 +50,20 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      if (props.color) {
-        renderPanelColor(props.color);
+      if (props.background) {
+        renderPanelColor(props.background);
       }
+    });
+
+    const getColor = () => {
+      const color = getSiteColor({ disX: dis.x, disY: dis.y });
+      if (!color) return "";
+      return `rgba(${color[0]},${color[1]},${color[2]},${color[3] / 255})`;
+    };
+
+    ctx.expose({
+      getColor,
+      renderPanelColor,
     });
 
     return () => {

@@ -22,6 +22,7 @@ module.exports = defineConfig({
     "prettier/prettier": "error",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "vue/require-default-prop": "off",
   },
 
   overrides: [
