@@ -1,10 +1,10 @@
-import { useEventListener, useMouseMove } from "@nimble-ui/hooks";
+import { useEventListener, useMouseMove, type MoveDataType } from "@nimble-ui/hooks";
 import { onMounted, reactive, ref } from "vue";
 
 interface OptionsType {
   expand: number;
-  direction: "x" | "y" | "xy";
-  onChange: (rgba: [number, number, number, number]) => void;
+  direction?: "x" | "y" | "xy";
+  onChange: (rgba: [number, number, number, number], data: MoveDataType) => void;
 }
 
 export default function useMove(options: OptionsType) {
@@ -14,8 +14,8 @@ export default function useMove(options: OptionsType) {
   const moveRef = ref<HTMLSpanElement>();
   const dis = reactive({ x: 0, y: 0 });
 
-  const isX = direction.includes("x");
-  const isY = direction.includes("y");
+  const isX = direction?.includes("x");
+  const isY = direction?.includes("y");
 
   const getSiteColor = ({ disX, disY }: { disX: number; disY: number }) => {
     const canvas = canvasRef.value;
@@ -46,7 +46,7 @@ export default function useMove(options: OptionsType) {
       const value = getSiteColor(data);
       if (value) {
         const [r, g, b, a] = value;
-        options.onChange([r, g, b, a / 255]);
+        options.onChange([r, g, b, a / 255], data);
       }
     },
     up(data) {

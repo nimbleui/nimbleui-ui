@@ -80,3 +80,28 @@ export const hex2rgb = (value: string) => {
 
   return rgba;
 };
+
+export interface HSVType {
+  h: number;
+  s: number;
+  v: number;
+}
+
+export const color2hsv = (value: string, callback: (hsv: HSVType, rgba: number[], color: string) => void) => {
+  let rgba: number[] = [];
+  if (value?.includes("#")) {
+    rgba = hex2rgb(value);
+  } else if (value?.includes("rgb")) {
+    const parts = value
+      .replace(/rgba|rgb|\(|\)/gm, "")
+      .split(/\s|,/g)
+      .filter((val) => val !== "")
+      .map((val, index) => (index > 2 ? Number.parseFloat(val) : Number.parseInt(val, 10)));
+
+    if (parts.length == 3) parts[3] = 1;
+    rgba = parts;
+  }
+
+  const hsv = rgb2hsv(rgba[0], rgba[1], rgba[2]);
+  callback({ h: hsv[0], s: hsv[1], v: hsv[2] }, rgba, value);
+};

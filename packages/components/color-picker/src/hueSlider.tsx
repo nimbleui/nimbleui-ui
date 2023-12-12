@@ -1,10 +1,16 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { computed, defineComponent, reactive, type CSSProperties, onMounted } from "vue";
+import { computed, defineComponent, reactive, type CSSProperties, onMounted, PropType, watch } from "vue";
 
 import useMove from "./useMove";
+import { type HSVType } from "./color";
 
 export default defineComponent({
   name: "HueSlider",
+  props: {
+    hsv: {
+      type: Object as PropType<HSVType>,
+    },
+  },
   emits: ["change"],
   setup(props, ctx) {
     const bem = createNamespace("hue-slider");
@@ -45,9 +51,20 @@ export default defineComponent({
       ctx.fillRect(0, 0, width, height);
     };
 
+    const color2Site = () => {
+      const val = props.hsv;
+      const canvas = canvasRef.value;
+      if (!val || !canvas) return;
+      const { h } = val;
+      const { width } = canvas;
+      dis.x = Math.max((1 - h / 360) * width - 6, 0);
+    };
+
     onMounted(() => {
       renderHueColor();
+      color2Site();
     });
+    watch(() => props.hsv, color2Site, { deep: true });
 
     return () => {
       return (

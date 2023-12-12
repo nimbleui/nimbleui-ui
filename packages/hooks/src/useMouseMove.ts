@@ -58,6 +58,7 @@ interface Options {
    */
   expand?: number;
 }
+export type MoveDataType = DataType;
 
 const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
   const element = unref(el);
