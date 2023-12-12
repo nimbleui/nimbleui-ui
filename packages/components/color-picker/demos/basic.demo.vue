@@ -13,4 +13,8 @@
 import { ref } from "vue";
 
 const color = ref("#1677FF");
+
+setTimeout(() => {
+  color.value = "rgb(30, 255, 75)";
+}, 3000);
 </script>

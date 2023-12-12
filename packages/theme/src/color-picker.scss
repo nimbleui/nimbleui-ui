@@ -77,7 +77,20 @@
       width: 28px;
       height: 28px;
       border-radius: 4px;
-      background-color: red;
+      overflow: hidden; 
+      background-color: #ccc; 
+      background-image: linear-gradient(45deg,#333 25%, transparent 25%), 
+        linear-gradient(135deg,#333 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#333 75%),
+        linear-gradient(135deg,transparent 75%,#333 75%);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 0, 4px -4px,0 4px;
+    }
+
+    @include m(color) {
+      display: block;
+      height: 100%;
+      width: 100%;
     }
   }
 }

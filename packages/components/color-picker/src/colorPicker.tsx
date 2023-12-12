@@ -1,7 +1,9 @@
 import { createNamespace } from "@nimble-ui/utils";
 import { defineComponent, nextTick, reactive, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
-import YFlex from "@nimble-ui/components/flex";
+import { YFlex } from "@nimble-ui/components/flex";
+import { YButton } from "@nimble-ui/components/button";
+import { YInput } from "@nimble-ui/components/input";
 
 import ColorContent from "./colorContent";
 import AlphaSlider from "./alphaSlider";
@@ -36,6 +38,7 @@ export default defineComponent({
           colorValue.background = `hsl(${hsv.h}, 100%, 50%)`;
           colorValue.alpha = rgba[3];
           colorValue.rgb = rgba.slice(0, 3);
+          colorContentRef.value?.renderPanelColor(value);
         });
       },
       { immediate: true }
@@ -92,10 +95,17 @@ export default defineComponent({
                       <HueSlider hsv={colorValue.hsv} onChange={sliderChange} />
                       <AlphaSlider color={colorValue.rgb} alpha={colorValue.alpha} onChange={onChangeAlpha} />
                     </YFlex>
-                    <div
-                      style={{ backgroundColor: `rgba(${colorValue.rgb.join(",")},${colorValue.alpha})` }}
-                      class={bem.m("block", "slider")}
-                    ></div>
+                    <div class={bem.m("block", "slider")}>
+                      <span
+                        style={{ backgroundColor: `rgba(${colorValue.rgb.join(",")},${colorValue.alpha})` }}
+                        class={bem.m("color", "slider")}
+                      ></span>
+                    </div>
+                  </YFlex>
+
+                  <YFlex gap={12}>
+                    <YInput />
+                    <YButton size={"small"}>ok</YButton>
                   </YFlex>
                 </YFlex>
               ),
