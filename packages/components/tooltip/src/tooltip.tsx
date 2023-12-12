@@ -48,12 +48,16 @@ export default defineComponent({
 
     const onClose = () => (show.value = false);
 
-    useEventListener("click", (e) => {
+    let flag: boolean;
+    useEventListener("mousedown", (e) => {
       const target = e.target as HTMLElement;
       const contentCheck = contentRef.value?.contains(target);
       const triggerCheck = triggerRef.value?.contains(target);
-
-      if (!contentCheck && !triggerCheck) onClose();
+      flag = !contentCheck && !triggerCheck;
+    });
+    useEventListener("mouseup", () => {
+      if (flag) onClose();
+      flag = false;
     });
 
     ctx.expose({
