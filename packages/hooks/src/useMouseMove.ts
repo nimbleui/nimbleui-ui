@@ -162,9 +162,9 @@ export function useMouseMove(el: TargetElement, options?: Options) {
   };
 
   const mouseup = (e: MouseEvent) => {
+    if (!isMove.value) return;
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
-    if (!isMove.value) return;
     isMove.value = false;
     options?.up?.(data, e);
     Object.assign(data, defaultData);
