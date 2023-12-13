@@ -1,10 +1,10 @@
-import { useEventListener, useMouseMove, type MoveDataType } from "@nimble-ui/hooks";
+import { useEventListener, useMouseMove } from "@nimble-ui/hooks";
 import { onMounted, reactive, ref } from "vue";
 
 interface OptionsType {
   expand: number;
   direction?: "x" | "y" | "xy";
-  onChange: (rgba: [number, number, number, number], data: MoveDataType) => void;
+  onChange: (rgba: [number, number, number, number]) => void;
 }
 
 export default function useMove(options: OptionsType) {
@@ -46,7 +46,7 @@ export default function useMove(options: OptionsType) {
       const value = getSiteColor(data);
       if (value) {
         const [r, g, b, a] = value;
-        options.onChange([r, g, b, a / 255], data);
+        options.onChange([r, g, b, a / 255]);
       }
     },
     up(data) {
@@ -76,7 +76,14 @@ export default function useMove(options: OptionsType) {
       const disY = clientY - top;
       const ctx = el.getContext("2d", { willReadFrequently: true });
       const imageData = ctx?.getImageData(isX ? disX : 0, isY ? disY : 0, 1, 1);
-      console.log(imageData);
+      if (!imageData || !moveRef.value) return;
+
+      const { width, height } = moveRef.value.getBoundingClientRect();
+      dis.x = disX - width / 2;
+      dis.y = disY - height / 2;
+
+      const [r, g, b, a] = imageData.data;
+      options.onChange([r, g, b, a / 255]);
     },
     { target: canvasRef }
   );
