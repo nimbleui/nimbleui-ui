@@ -8,6 +8,9 @@ export const contentPropsKey = Object.keys(contentProp);
 
 const dropdownProps = mergeCommonProp({
   ...contentProp,
+  value: {
+    type: [String, Number],
+  },
   trigger: {
     type: String as PropType<TriggerType>,
   },

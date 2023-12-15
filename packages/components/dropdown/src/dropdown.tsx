@@ -8,7 +8,7 @@ import dropdownProps, { contentPropsKey } from "./types";
 export default defineComponent({
   name: "YDropdown",
   props: dropdownProps(),
-  emits: ["select"],
+  emits: ["select", "update:value"],
   setup(props, ctx) {
     const tooltipRef = ref();
     const bem = createNamespace("dropdown");
@@ -17,6 +17,7 @@ export default defineComponent({
       return () => {
         tooltipRef.value?.onClose();
         ctx.emit("select", item, { index, options: props.options });
+        ctx.emit("update:value", item[props.keyField]);
       };
     };
 
