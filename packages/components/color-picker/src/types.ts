@@ -25,6 +25,12 @@ const colorPickerProps = mergeCommonProp({
     type: String as PropType<"bottom-start" | "bottom-end">,
     default: "bottom-start",
   },
+  /**
+   * @description 禁用颜色选择器
+   */
+  disabled: {
+    type: Boolean,
+  },
 });
 
 export default colorPickerProps;

@@ -14,32 +14,47 @@ export function createLinearGradient(
   ctx.fillRect(0, 0, width, height);
 }
 
-export function rgb2hsv(r: number, g: number, b: number) {
-  r = r / 255;
-  g = g / 255;
-  b = b / 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const delta = max - min;
+function bound01(value: number, max: number) {
+  value = Math.min(max as number, Math.max(0, value));
 
-  let h = 0;
-  if (max == min) {
-    h = 0;
-  } else if (max === r) {
-    if (g >= b) {
-      h = (60 * (g - b)) / delta;
-    } else {
-      h = (60 * (g - b)) / delta + 360;
-    }
-  } else if (max === g) {
-    h = (60 * (b - r)) / delta + 120;
-  } else if (max == b) {
-    h = (60 * (r - g)) / delta + 240;
+  if (Math.abs(value - (max as number)) < 0.000001) {
+    return 1;
   }
 
-  h = Math.floor(h);
-  const s = parseFloat((max === 0 ? 0 : 1 - min / max).toFixed(2));
-  const v = parseFloat(max.toFixed(2));
+  return (value % (max as number)) / max;
+}
+
+export function rgb2hsv(r: number, g: number, b: number) {
+  r = bound01(r, 255);
+  g = bound01(g, 255);
+  b = bound01(b, 255);
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  const v = max;
+  const d = max - min;
+  const s = max === 0 ? 0 : d / max;
+
+  if (max === min) {
+    h = 0; // achromatic
+  } else {
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+      default:
+        break;
+    }
+
+    h /= 6;
+  }
 
   return [h, s, v];
 }

@@ -17,7 +17,7 @@ export default defineComponent({
     const rgba = reactive<number[]>([]);
 
     const { dis, data, moveRef, canvasRef, containerRef } = useMove({
-      expand: 8,
+      expand: 6,
       direction: "x",
       onChange(value) {
         rgba.length = 0;
@@ -57,7 +57,7 @@ export default defineComponent({
       if (!val || !canvas) return;
       const { h } = val;
       const { width } = canvas;
-      dis.x = Math.max((1 - h / 360) * width - 6, 0);
+      dis.x = Math.max((1 - h) * width - 6, 0);
     };
 
     onMounted(() => {

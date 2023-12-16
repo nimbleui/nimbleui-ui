@@ -39,11 +39,13 @@ export default defineComponent({
       (value) => {
         if (!value) return;
         color2hsv(value, (hsv, rgba) => {
+          const rgb = rgba.slice(0, 3);
+          if (colorValue.rgb.length && colorValue.rgb.join("") == rgb.join("")) return;
           colorValue.hsv = hsv;
-          colorValue.background = `hsl(${hsv.h}, 100%, 50%)`;
+          colorValue.background = `hsl(${hsv.h * 360}, 100%, 50%)`;
           colorValue.alpha = rgba[3];
-          colorValue.rgb = rgba.slice(0, 3);
-          colorContentRef.value?.renderPanelColor(`rgb(${colorValue.rgb.join(",")})`);
+          colorValue.rgb = rgb;
+          colorContentRef.value?.renderPanelColor(`rgb(${rgb.join(",")})`);
         });
       },
       { immediate: true }
@@ -74,7 +76,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { modelValue, placement } = props;
+      const { modelValue, placement, disabled } = props;
       return (
         <div class={[bem.b(), bem.is("active", active.value)]}>
           <YTooltip
@@ -85,6 +87,7 @@ export default defineComponent({
             maxHeight={300}
             onToggle={onToggle}
             v-model={show.value}
+            disabled={disabled}
           >
             {{
               default: () => (
