@@ -69,7 +69,7 @@ export default defineComponent({
           height = parent.offsetHeight;
         }
 
-        parent = el.parentElement as HTMLElement;
+        parent = parent.parentElement as HTMLElement;
       }
 
       const rect = parent.getBoundingClientRect();
