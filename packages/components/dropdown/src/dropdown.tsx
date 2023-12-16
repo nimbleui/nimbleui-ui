@@ -46,6 +46,7 @@ export default defineComponent({
           transition={bem.name("zoom-in-top")}
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
+          maxHeight={240}
         >
           {{
             default: () => {

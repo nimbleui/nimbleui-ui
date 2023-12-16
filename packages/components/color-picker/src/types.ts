@@ -16,6 +16,14 @@ const colorPickerProps = mergeCommonProp({
   },
   modelValue: {
     type: String,
+    default: "#1677ff",
+  },
+  /**
+   * @description 弹框的方向
+   */
+  placement: {
+    type: String as PropType<"bottom-start" | "bottom-end">,
+    default: "bottom-start",
   },
 });
 
