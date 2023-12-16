@@ -33,3 +33,4 @@ export * from "./radio-group";
 export * from "./pop-confirm";
 export * from "./upload";
 export * from "./color-picker";
+export * from "./select";
