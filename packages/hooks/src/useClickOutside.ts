@@ -1,3 +1,10 @@
 import { Ref } from "vue";
+import { useEventListener } from "./useEventListener";
 
-export function useClickOutside(target: Ref<HTMLElement>) {}
+type TargetType = Ref<HTMLElement | null> | HTMLElement;
+
+function useClickOutside(target: TargetType | Array<TargetType>, handle: () => void) {
+  useEventListener("mousedown", () => {
+    console.log(111);
+  });
+}

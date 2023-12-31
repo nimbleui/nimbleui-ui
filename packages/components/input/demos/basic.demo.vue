@@ -9,10 +9,19 @@
   <YForm @submit="onSubmit">
     <YFlex vertical :gap="12">
       <YFormItem required="账号不能为空" vertical label="账号">
-        <YInput allow-clear clear-trigger="always" :bordered="false" name="name" placeholder="请输入" />
+        <YInput
+          v-model="value.aa"
+          allow-clear
+          clear-trigger="always"
+          :bordered="false"
+          name="name"
+          placeholder="请输入"
+          :formatter="(value) => `${Number(value) / 100}`"
+          :parser="(value) => `${Number(value) * 100}`"
+        />
       </YFormItem>
       <YFormItem required="密码不能为空" vertical label="密码">
-        <YInput type="password" :bordered="false" name="password" placeholder="请输入" />
+        <YInput v-model="value.bb" type="password" :bordered="false" name="password" placeholder="请输入" />
       </YFormItem>
       <YButton :native-type="'submit'" :size="'large'" :type="'primary'" block>登录</YButton>
     </YFlex>
@@ -20,6 +29,11 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from "vue";
+
+const value = reactive<any>({
+  aa: 22,
+});
 const onSubmit = (data: any) => {
   console.log(data);
 };

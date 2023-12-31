@@ -128,6 +128,10 @@ const items = reactive<MenuItems[]>([
         text: "颜色选择器 ColorPicker",
         link: "/component/colorPicker",
       },
+      {
+        text: "选择器 Select",
+        link: "/component/select",
+      },
     ],
   },
   {

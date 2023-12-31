@@ -1,20 +1,57 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes, PropType, VNode } from "vue";
+
+export interface SelectOptions {
+  id?: string | number;
+  label?: string;
+  renderLabel?: VNode | ((details: any) => VNode);
+  [key: string]: any;
+}
 
 const selectProps = mergeCommonProp({
-  // 这是参数模板
   /**
-   * @description 总列数
+   * @description 配置项
    */
-  column: {
-    type: Number,
-    default: 0,
+  options: {
+    type: Array as PropType<SelectOptions[]>,
+  },
+  /**
+   * @description 禁用
+   */
+  disabled: {
+    type: Boolean,
+  },
+  /**
+   * @description 绑定的值
+   */
+  modelValue: {
+    type: [String, Number],
+  },
+  /**
+   * @description 绑定值的key
+   */
+  field: {
+    type: String,
+    default: "id",
+  },
+  /**
+   * @description 展示的值
+   */
+  label: {
+    type: [String, Number],
+  },
+  /**
+   * @description 展示值的key
+   */
+  labelField: {
+    type: String,
+    default: "label",
+  },
+  show: {
+    type: Boolean,
   },
 });
 
 export default selectProps;
-
-// 给组件ref智能提示
-export type selectExpose = {};
 
 export type SelectProps = ExtractPropTypes<ReturnType<typeof selectProps>>;

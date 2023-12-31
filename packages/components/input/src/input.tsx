@@ -1,16 +1,15 @@
-import { defineComponent, computed, watch, ref, onMounted } from "vue";
+import { defineComponent, computed, watch, ref, onMounted, nextTick } from "vue";
 import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@nimble-ui/utils";
-import { TriggerEventType, formItemContextKey } from "@nimble-ui/tokens";
-import { useExpose, useParent, useCreateId } from "@nimble-ui/hooks";
+import { formItemContextKey } from "@nimble-ui/tokens";
+import { useParent, useCreateId } from "@nimble-ui/hooks";
 
 import inputProp from "./types";
-import type { InputExpose } from "./types";
 import { eyeIcon, eyeInvisibleIcon } from "./icons";
 
 export default defineComponent({
   name: "YInput",
   props: inputProp(),
-  emits: ["blur", "focus", "change", "update:modelValue", "clear"],
+  emits: ["blur", "focus", "change", "update:modelValue", "clear", "input"],
   setup(props, ctx) {
     // 处理formItem组件传过的数据
     const formItemContext = useParent(formItemContextKey);
@@ -18,8 +17,7 @@ export default defineComponent({
     const selfModel = ref("");
 
     const inputRef = ref<HTMLInputElement>();
-    const formValue = computed(() => props.modelValue ?? selfModel.value);
-    const getModelValue = () => String(props.modelValue == null ? "" : props.modelValue);
+    const formValue = computed(() => (props.modelValue == null ? selfModel.value : String(props.modelValue)));
 
     // 根据props生成className
     const bem = createNamespace("input");
@@ -37,27 +35,40 @@ export default defineComponent({
       };
     });
 
+    const focus = async () => {
+      await nextTick();
+      isFocus.value = true;
+      inputRef.value?.focus();
+    };
+
     // 更新输入框内容
-    const updateValue = (value: string) => {
-      const { formatter, parser } = props;
-      if (formatter) {
-        value = parser ? parser(value) : value;
-        value = formatter(value);
-      }
-      if (value !== formValue.value) {
-        selfModel.value = value;
-        ctx.emit("update:modelValue", value);
-      }
-      inputRef.value && (inputRef.value.value = value);
+    const setNativeInputValue = () => {
+      const input = inputRef.value;
+      const formatterValue = props.formatter?.(formValue.value) ?? formValue.value;
+      if (!input || input.value === formatterValue) return;
+
+      input.value = formatterValue;
     };
 
     // 输入框内容发生变化
     const onInput = (event: Event) => {
       const { target } = event;
-      if (!(target as any).composing) {
-        updateValue((target as HTMLInputElement).value);
-        formItemContext?.parent.events("onChange", formValue.value);
+      if ((target as any).composing) return;
+
+      let { value } = event.target as HTMLInputElement;
+      if (props.formatter) {
+        value = props.parser ? props.parser(value) : value;
       }
+
+      if (value === formValue.value) {
+        return setNativeInputValue();
+      }
+
+      ctx.emit("update:modelValue", value);
+      ctx.emit("input", value);
+      selfModel.value = value;
+
+      setNativeInputValue();
     };
 
     // 输入框失去焦点
@@ -70,24 +81,29 @@ export default defineComponent({
     // 输入框获取焦点
     const onFocus = (event: Event) => {
       ctx.emit("focus", event);
-      isFocus.value = true;
+      focus();
       formItemContext?.parent.events("onFocus", formValue.value);
+    };
+
+    const onChange = (event: Event) => {
+      ctx.emit("change", (event.target as HTMLInputElement).value);
     };
 
     watch(
       () => props.modelValue,
       () => {
-        updateValue(getModelValue());
+        setNativeInputValue();
       }
     );
 
     onMounted(() => {
-      updateValue(getModelValue());
+      setNativeInputValue();
     });
 
     const { id: inputId } = useCreateId();
 
-    useExpose<InputExpose>({
+    ctx.expose({
+      focus,
       inputId,
       formValue,
       formItemDisabled: computed(() => inputData.value.disabled || false),
@@ -100,8 +116,10 @@ export default defineComponent({
     };
 
     const isEye = ref(false);
-    const onEye = () => (isEye.value = false);
-    const onInvisible = () => (isEye.value = true);
+    const onEye = (bool: boolean) => {
+      isEye.value = bool;
+      focus();
+    };
     const newType = computed(() => {
       const { type } = props;
       if (type == "password") {
@@ -114,6 +132,7 @@ export default defineComponent({
 
       return (
         <div class={inputData.value.cls}>
+          {ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>}
           <span class={bem.e("wrapper")}>
             <input
               type={newType.value}
@@ -128,29 +147,25 @@ export default defineComponent({
               onBlur={onBlur}
               onFocus={onFocus}
               onInput={onInput}
+              onChange={onChange}
               onCompositionend={endComposing}
               onCompositionstart={startComposing}
             />
           </span>
           <span class={bem.e("suffix")}>
+            <slot name="suffix" />
             {allowClear &&
               formValue.value &&
               (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
                 <span onClick={onClear} class={bem.e("clear")}></span>
               ) : null)}
+            <div></div>
           </span>
           {type == "password" && (
             <span class={bem.e("password")}>
-              {isEye.value && (
-                <i onClick={onEye} class={bem.m("icon", "password")}>
-                  {eyeIcon}
-                </i>
-              )}
-              {!isEye.value && (
-                <i onClick={onInvisible} class={bem.m("icon", "password")}>
-                  {eyeInvisibleIcon}
-                </i>
-              )}
+              <i onClick={onEye.bind(null, !isEye.value)} class={bem.m("icon", "password")}>
+                {isEye.value ? eyeIcon : eyeInvisibleIcon}
+              </i>
             </span>
           )}
         </div>

@@ -1,0 +1,7 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(select) {
+  @include e(list) {
+    display: flex;
+  }
+}

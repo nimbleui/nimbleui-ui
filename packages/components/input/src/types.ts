@@ -2,7 +2,7 @@ import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 type InputType = "text" | "number" | "password";
-type FunType = (value: string | number) => string;
+type FunType = (value: string) => string;
 
 export const inputUniqueProp = {
   /**
@@ -93,6 +93,7 @@ export type InputExpose = {
   inputId: ComputedRef<string>;
   formValue: ComputedRef<unknown>;
   formItemDisabled: ComputedRef<boolean>;
+  focus: () => void;
 };
 
 export type InputProps = ExtractPropTypes<ReturnType<typeof inputProp>>;
