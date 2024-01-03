@@ -1,5 +1,5 @@
 import { createNamespace, isFunction } from "@nimble-ui/utils";
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { InputInstance, YInput } from "@nimble-ui/components/input";
 import YFlex from "@nimble-ui/components/flex";
@@ -31,17 +31,37 @@ export default defineComponent({
       },
     });
 
+    // 初始化设置label的值
+    const initFindLabel = () => {
+      const { options, labelField, field } = props;
+      const val = modelCop.value;
+      if (!labelCop.value && val != null) {
+        const item = options?.find((el) => el[field] == val);
+
+        if (item) {
+          labelCop.value = item[labelField];
+        }
+      }
+    };
+    watch([modelCop, () => props.options], initFindLabel);
+    onMounted(initFindLabel);
+
     const onClick = (item: SelectOptions) => {
-      console.log(item);
-      inputRef.value?.focus();
+      const { labelField, field } = props;
+      modelCop.value = item[field];
+      labelCop.value = item[labelField];
     };
 
     const renderContent = () => {
-      const { options, details } = props;
+      const { options, details, field } = props;
       return (
         <YFlex vertical class={bem.e("list")}>
           {options?.map((item) => (
-            <div onClick={onClick.bind(null, item)} class={bem.m("item", "list")}>
+            <div
+              onClick={onClick.bind(null, item)}
+              style={{ background: item[field] == modelCop.value ? "red" : "" }}
+              class={bem.m("item", "list")}
+            >
               {isFunction(item.renderLabel) ? item.renderLabel(details) : item.renderLabel ?? item.label}
             </div>
           ))}
@@ -54,7 +74,7 @@ export default defineComponent({
         <div class={bem.b()}>
           <YTooltip trigger="focus">
             {{
-              default: () => <YInput ref={inputRef} />,
+              default: () => <YInput readonly ref={inputRef} />,
               content: renderContent,
             }}
           </YTooltip>

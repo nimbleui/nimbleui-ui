@@ -7,13 +7,14 @@
 
 <template>
   <div class="demo-margin">
-    <YSelect :options="options" />
+    <YSelect v-model="model" :options="options" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
+const model = ref(1);
 const options = reactive([
   {
     id: 1,
