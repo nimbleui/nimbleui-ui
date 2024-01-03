@@ -74,7 +74,11 @@ export default defineComponent({
         <div class={bem.b()}>
           <YTooltip trigger="focus">
             {{
-              default: () => <YInput readonly ref={inputRef} />,
+              default: () => (
+                <YInput modelValue={labelCop.value} readonly ref={inputRef}>
+                  {{ suffix: () => "sss" }}
+                </YInput>
+              ),
               content: renderContent,
             }}
           </YTooltip>

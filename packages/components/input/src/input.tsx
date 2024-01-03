@@ -153,7 +153,7 @@ export default defineComponent({
             />
           </span>
           <span class={bem.e("suffix")}>
-            <slot name="suffix" />
+            {ctx.slots.suffix?.()}
             {allowClear &&
               formValue.value &&
               (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
