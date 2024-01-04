@@ -1,5 +1,5 @@
 import { createNamespace, isFunction } from "@nimble-ui/utils";
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { CSSProperties, computed, defineComponent, onMounted, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { InputInstance, YInput } from "@nimble-ui/components/input";
 import YFlex from "@nimble-ui/components/flex";
@@ -9,7 +9,7 @@ import selectProps, { SelectOptions } from "./types";
 export default defineComponent({
   name: "YSelect",
   props: selectProps(),
-  emits: ["update:modelValue", "update:label"],
+  emits: ["update:modelValue", "update:label", "change"],
   setup(props, ctx) {
     const inputRef = ref<InputInstance>();
     const bem = createNamespace("select");
@@ -31,6 +31,11 @@ export default defineComponent({
       },
     });
 
+    const show = ref(false);
+    const updateShow = (val: boolean) => {
+      val && (show.value = val);
+    };
+
     // 初始化设置label的值
     const initFindLabel = () => {
       const { options, labelField, field } = props;
@@ -46,21 +51,34 @@ export default defineComponent({
     watch([modelCop, () => props.options], initFindLabel);
     onMounted(initFindLabel);
 
+    const styles = computed<CSSProperties>(() => {
+      const el = inputRef.value?.$el as HTMLElement | undefined;
+      const rect = el?.getBoundingClientRect();
+      return { width: `${rect?.width || 200}px` };
+    });
+
     const onClick = (item: SelectOptions) => {
       const { labelField, field } = props;
+      if (item.disabled) return;
+
       modelCop.value = item[field];
       labelCop.value = item[labelField];
+      show.value = false;
+      ctx.emit("change", item);
+    };
+    const onOutside = (flag: boolean) => {
+      flag && (show.value = false);
     };
 
     const renderContent = () => {
       const { options, details, field } = props;
       return (
         <YFlex vertical class={bem.e("list")}>
-          {options?.map((item) => (
+          {options?.map((item, index) => (
             <div
+              key={item[field] ?? index}
               onClick={onClick.bind(null, item)}
-              style={{ background: item[field] == modelCop.value ? "red" : "" }}
-              class={bem.m("item", "list")}
+              class={[bem.m("item", "list"), bem.is("active", item[field] == modelCop.value)]}
             >
               {isFunction(item.renderLabel) ? item.renderLabel(details) : item.renderLabel ?? item.label}
             </div>
@@ -70,13 +88,24 @@ export default defineComponent({
     };
 
     return () => {
+      const { disabled, name } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip trigger="focus">
+          <YTooltip
+            trigger="focus"
+            disabled={disabled}
+            modelValue={show.value}
+            contentStyle={styles.value}
+            contentClass={bem.e("content")}
+            transition={bem.name("zoom-in-top")}
+            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
+            onOutside={onOutside}
+            onUpdate:modelValue={updateShow}
+          >
             {{
               default: () => (
-                <YInput modelValue={labelCop.value} readonly ref={inputRef}>
-                  {{ suffix: () => "sss" }}
+                <YInput name={name} disabled={disabled} modelValue={labelCop.value} ref={inputRef}>
+                  {{ suffix: () => <span class={[bem.e("arrow"), bem.is("positive")]}></span> }}
                 </YInput>
               ),
               content: renderContent,

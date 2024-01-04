@@ -10,7 +10,7 @@ import { isFunction } from "@nimble-ui/utils";
 export default defineComponent({
   name: "YTooltip",
   props: tooltipProps(),
-  emits: ["select", "update:modelValue", "events", "toggle"],
+  emits: ["select", "update:modelValue", "events", "toggle", "outside"],
   setup(props, ctx) {
     const triggerRef = ref<HTMLElement>();
     const contentRef = ref<HTMLElement>();
@@ -57,6 +57,7 @@ export default defineComponent({
     });
     useEventListener("mouseup", () => {
       if (flag) onClose();
+      ctx.emit("outside", flag);
       flag = false;
     });
 

@@ -4,11 +4,18 @@ import type { ExtractPropTypes, PropType, VNode } from "vue";
 export interface SelectOptions {
   id?: string | number;
   label?: string;
+  disabled?: boolean;
   renderLabel?: VNode | ((details: any) => VNode);
   [key: string]: any;
 }
 
 const selectProps = mergeCommonProp({
+  /**
+   * @description name唯一标识，给form收集数据
+   */
+  name: {
+    type: String,
+  },
   /**
    * @description 配置项
    */
@@ -46,9 +53,6 @@ const selectProps = mergeCommonProp({
   labelField: {
     type: String,
     default: "label",
-  },
-  show: {
-    type: Boolean,
   },
 });
 

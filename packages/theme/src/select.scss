@@ -1,7 +1,48 @@
 @use "./mixins/mixins.scss" as *;
+@use "./common/var.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(select) {
-  @include e(list) {
-    display: flex;
+  --y-select-arrow-color: var(--y-color-text-quaternary);
+
+  display: inline-flex;
+
+  @include e(content) {
+    --y-select-bg-color: var(--y-color-bg-elevated);
+    --y-select-item-active-bg-color: var(--y-color-primary-2);
+    --y-select-item-hover-bg-color: var(--y-color-fill-tertiary);
+
+    background-color: var(--y-select-bg-color);
+    box-shadow: $box-shadow-secondary;
+    color: var(--y-pop-confirm-text-color);
+    border-radius: 8px;
   }
+
+  @include e(arrow) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 12px;
+    margin-top: 6px;
+    color: var(--y-select-arrow-color);
+
+    @include utils-arrow;
+  }
+
+  @include e(list) {
+    @include m(item) {
+      padding: 8px 12px; 
+      border-radius: 3px;
+      cursor: pointer;
+
+      &:hover { 
+        background-color: var(--y-select-item-hover-bg-color);
+      }
+
+      @include when(active) {
+        font-weight: 500;
+        background-color: var(--y-select-item-active-bg-color);
+      }
+    }
+  } 
 }
