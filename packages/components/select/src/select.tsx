@@ -71,7 +71,7 @@ export default defineComponent({
     };
 
     const renderContent = () => {
-      const { options, details, field } = props;
+      const { options, details, field, labelField } = props;
       return (
         <YFlex vertical class={bem.e("list")}>
           {options?.map((item, index) => (
@@ -80,7 +80,7 @@ export default defineComponent({
               onClick={onClick.bind(null, item)}
               class={[bem.m("item", "list"), bem.is("active", item[field] == modelCop.value)]}
             >
-              {isFunction(item.renderLabel) ? item.renderLabel(details) : item.renderLabel ?? item.label}
+              {isFunction(item.renderLabel) ? item.renderLabel(details) : item.renderLabel ?? item[labelField]}
             </div>
           ))}
         </YFlex>
