@@ -104,7 +104,7 @@ export default defineComponent({
           >
             {{
               default: () => (
-                <YInput name={name} disabled={disabled} modelValue={labelCop.value} ref={inputRef}>
+                <YInput name={name} disabled={disabled} readonly modelValue={labelCop.value} ref={inputRef}>
                   {{ suffix: () => <span class={[bem.e("arrow"), bem.is("positive")]}></span> }}
                 </YInput>
               ),
