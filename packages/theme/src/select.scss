@@ -30,6 +30,8 @@
   }
 
   @include e(list) {
+    max-height: 240px; 
+
     @include m(item) {
       padding: 5px 12px; 
       border-radius: 3px;

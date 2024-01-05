@@ -2,7 +2,7 @@ import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { CSSProperties, computed, defineComponent, onMounted, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { InputInstance, YInput } from "@nimble-ui/components/input";
-import YFlex from "@nimble-ui/components/flex";
+import { YScrollbar } from "@nimble-ui/components/scrollbar";
 
 import selectProps, { SelectOptions } from "./types";
 
@@ -73,7 +73,7 @@ export default defineComponent({
     const renderContent = () => {
       const { options, details, field, labelField } = props;
       return (
-        <YFlex vertical class={bem.e("list")}>
+        <YScrollbar trigger="hover" class={bem.e("list")}>
           {options?.map((item, index) => (
             <div
               key={item[field] ?? index}
@@ -83,7 +83,7 @@ export default defineComponent({
               {isFunction(item.renderLabel) ? item.renderLabel(details) : item.renderLabel ?? item[labelField]}
             </div>
           ))}
-        </YFlex>
+        </YScrollbar>
       );
     };
 
