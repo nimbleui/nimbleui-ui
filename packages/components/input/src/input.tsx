@@ -1,7 +1,7 @@
 import { defineComponent, computed, watch, ref, onMounted, nextTick } from "vue";
 import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@nimble-ui/utils";
 import { formItemContextKey } from "@nimble-ui/tokens";
-import { useParent, useCreateId } from "@nimble-ui/hooks";
+import { useParent, useCreateId, useExpose } from "@nimble-ui/hooks";
 
 import inputProp from "./types";
 import { eyeIcon, eyeInvisibleIcon } from "./icons";
@@ -102,7 +102,7 @@ export default defineComponent({
 
     const { id: inputId } = useCreateId();
 
-    ctx.expose({
+    useExpose({
       focus,
       inputId,
       formValue,
