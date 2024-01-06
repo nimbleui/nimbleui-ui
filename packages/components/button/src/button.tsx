@@ -23,7 +23,7 @@ export default defineComponent({
         bem.b(),
         bem.is("disabled", res.disabled),
         bem.is("block", props.block),
-        bem.is(res.type, res.type !== "default"),
+        bem.is(`type-${res.type}`, res.type !== "default"),
         bem.is(res.shape, res.shape !== "default"),
         bem.is(res.size, res.size !== "default"),
         bem.is("plain", props.plain),

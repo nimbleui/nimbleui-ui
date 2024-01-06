@@ -6,9 +6,16 @@
 </markdown>
 
 <template>
-  <YButtonGroup type="primary">
-    <YButton>按钮</YButton>
-    <YButton>按钮</YButton>
-    <YButton>按钮</YButton>
-  </YButtonGroup>
+  <YFlex vertical :gap="10">
+    <YButtonGroup type="primary">
+      <YButton>按钮</YButton>
+      <YButton>按钮</YButton>
+      <YButton>按钮</YButton>
+    </YButtonGroup>
+    <YButtonGroup :size="'small'">
+      <YButton>按钮</YButton>
+      <YButton>按钮</YButton>
+      <YButton>按钮</YButton>
+    </YButtonGroup>
+  </YFlex>
 </template>

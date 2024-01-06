@@ -106,7 +106,7 @@
   }
 
   @each $type in (primary, success, warning, error, info) {
-    @include when($type) {
+    @include when(type-#{$type}) {
       .is-loading {
         &::after {
           border-color: #fff;

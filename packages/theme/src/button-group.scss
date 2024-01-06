@@ -12,7 +12,7 @@
     border-left-color: var(--y-button-group-border-color);
     border-right-color: var(--y-button-group-border-color);
 
-    &[class*="is-"] {
+    &[class*="is-type-"] {
       border-left-color: #fff;
       border-right-color: #fff;
     }
@@ -21,7 +21,7 @@
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
 
-      &[class*="is-"] {
+      &[class*="is-type-"] { 
         border-left-color: transparent;
       }
     }
@@ -30,7 +30,7 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
 
-      &[class*="is-"] {
+      &[class*="is-type-"] {
         border-right-color: transparent;
       }
     }
