@@ -132,6 +132,10 @@ const items = reactive<MenuItems[]>([
         text: "选择器 Select",
         link: "/component/select",
       },
+      {
+        text: "滑动输入条 Slider",
+        link: "/component/slider",
+      },
     ],
   },
   {
