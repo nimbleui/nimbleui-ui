@@ -30,9 +30,9 @@ type DataType = typeof defaultData;
 type TargetElement = Ref<HTMLElement | undefined> | HTMLElement;
 type BoundaryElement = Element | Window;
 interface Options {
-  up?: (data: DataType, e: Event) => void;
-  move?: (data: DataType, e: Event) => void;
-  down?: (data: DataType, e: Event) => void;
+  up?: (data: DataType, e: Event, target: HTMLElement) => void;
+  move?: (data: DataType, e: Event, target: HTMLElement) => void;
+  down?: (data: DataType, e: Event, target: HTMLElement) => void;
   /**
    * @description 拖拽的边界元素
    */
@@ -57,18 +57,25 @@ interface Options {
    * @description 边界元素扩大
    */
   expand?: number;
+  /**
+   * @description 是否代理
+   */
+  agency?: boolean;
+  /**
+   * @description 代理处理目标元素
+   * @param target 点击当前元素
+   */
+  agencyTarget?: (target: HTMLElement) => HTMLElement | undefined | false;
 }
 export type MoveDataType = DataType;
 
-const getDisElement = (el: TargetElement, data: DataType, x: number, y: number) => {
-  const element = unref(el);
+const getDisElement = (element: HTMLElement, data: DataType, x: number, y: number) => {
+  if (!element) return;
   const rect = element?.getBoundingClientRect();
-  if (rect) {
-    Object.assign(data, {
-      elDisY: y - rect.top,
-      elDisX: x - rect.left,
-    });
-  }
+  Object.assign(data, {
+    elDisY: y - rect.top,
+    elDisX: x - rect.left,
+  });
 };
 
 const numScale = (e: MouseEvent, options?: Options) => {
@@ -81,11 +88,10 @@ const numScale = (e: MouseEvent, options?: Options) => {
   };
 };
 
-const handleBoundary = (el: TargetElement, options?: Options) => {
+const handleBoundary = (options?: Options) => {
   const moveDis = { l: 0, r: 0, t: 0, b: 0 };
 
-  const sunBoundary = () => {
-    const element = unref(el);
+  const sunBoundary = (element?: HTMLElement) => {
     const boundary = unref(options?.boundary);
     if (!element || !boundary) return;
     const s = unref(options?.scale) ?? 1;
@@ -118,21 +124,39 @@ const handleBoundary = (el: TargetElement, options?: Options) => {
   };
 };
 
+const getTarget = (e: MouseEvent, el: TargetElement, options?: Options) => {
+  const target = e.target as HTMLElement;
+  const agency = options?.agency;
+  const agencyTarget = options?.agencyTarget;
+  if (!agency) return unref(el);
+
+  const t = agencyTarget?.(target) ?? target;
+  if (!t) return false;
+  return t;
+};
+
 export function useMouseMove(el: TargetElement, options?: Options) {
   const isMove = ref(false);
   const data = reactive<DataType>({ ...defaultData });
-  const { moveDis, sunBoundary } = handleBoundary(el, options);
+  const { moveDis, sunBoundary } = handleBoundary(options);
 
+  let target: HTMLElement;
   const mousedown = (e: MouseEvent) => {
+    const res = getTarget(e, el, options);
+    if (!res) return;
+    target = res;
+
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
     const { clientX, clientY } = numScale(e, options);
     isMove.value = true;
     data.startX = clientX;
     data.startY = clientY;
-    sunBoundary();
-    getDisElement(el, data, clientX, clientY);
-    options?.down?.(data, e);
+    sunBoundary(target);
+    getDisElement(target, data, clientX, clientY);
+    options?.down?.(data, e, target);
+    document.addEventListener("mousemove", mousemove);
+    document.addEventListener("mouseup", mouseup);
   };
 
   const mousemove = (e: MouseEvent) => {
@@ -158,7 +182,7 @@ export function useMouseMove(el: TargetElement, options?: Options) {
       maxMoveDisB: moveDis.b,
       maxMoveDisT: moveDis.t,
     });
-    options?.move?.(data, e);
+    options?.move?.(data, e, target);
   };
 
   const mouseup = (e: MouseEvent) => {
@@ -166,14 +190,13 @@ export function useMouseMove(el: TargetElement, options?: Options) {
     options?.prevent && e.preventDefault();
     options?.stop && e.stopPropagation();
     isMove.value = false;
-    options?.up?.(data, e);
+    options?.up?.(data, e, target);
     Object.assign(data, defaultData);
+    document.removeEventListener("mousemove", mousemove);
+    document.removeEventListener("mouseup", mouseup);
   };
 
   useEventListener("mousedown", mousedown, { target: el });
-  useEventListener("mouseup", mouseup, { target: document });
-  useEventListener("mousemove", mousemove, { target: document });
-
   return {
     data,
     isMove,
