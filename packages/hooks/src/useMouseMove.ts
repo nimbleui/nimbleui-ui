@@ -62,7 +62,7 @@ interface Options {
    */
   agency?: boolean;
   /**
-   * @description 代理处理目标元素
+   * @description agency参数使用，代理处理目标元素，返回空和false阻止拖拽
    * @param target 点击当前元素
    */
   agencyTarget?: (target: HTMLElement) => HTMLElement | undefined | false;
@@ -78,6 +78,7 @@ const getDisElement = (element: HTMLElement, data: DataType, x: number, y: numbe
   });
 };
 
+// 计算缩放比例
 const numScale = (e: MouseEvent, options?: Options) => {
   const { clientX, clientY } = e;
   const scale = unref(options?.scale) ?? 1;
@@ -88,6 +89,7 @@ const numScale = (e: MouseEvent, options?: Options) => {
   };
 };
 
+// 计算边界值
 const handleBoundary = (options?: Options) => {
   const moveDis = { l: 0, r: 0, t: 0, b: 0 };
 
@@ -124,13 +126,14 @@ const handleBoundary = (options?: Options) => {
   };
 };
 
+// 获取目标元素
 const getTarget = (e: MouseEvent, el: TargetElement, options?: Options) => {
   const target = e.target as HTMLElement;
   const agency = options?.agency;
   const agencyTarget = options?.agencyTarget;
   if (!agency) return unref(el);
 
-  const t = agencyTarget?.(target) ?? target;
+  const t = agencyTarget ? agencyTarget(target) : target;
   if (!t) return false;
   return t;
 };

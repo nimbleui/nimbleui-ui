@@ -1,12 +1,12 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType, VNode } from "vue";
 
 const sliderProps = mergeCommonProp({
   /**
    * @description 选中项绑定值
    */
   modelValue: {
-    type: Number,
+    type: [Number, Array] as PropType<number | number[]>,
     default: 0,
   },
   /**
@@ -35,6 +35,9 @@ const sliderProps = mergeCommonProp({
    */
   vertical: {
     type: Boolean,
+  },
+  marks: {
+    type: Object as PropType<{ [key: number]: VNode | (() => VNode) }>,
   },
 });
 

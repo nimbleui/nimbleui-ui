@@ -6,6 +6,10 @@
 </markdown>
 
 <template>
-  <YSlider />
+  <YSlider v-model="model" :step="20" :min="20" :max="200" />
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+
+const model = ref(40);
+</script>
