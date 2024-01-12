@@ -1,5 +1,5 @@
 import { createNamespace, isFunction, isNumber } from "@nimble-ui/utils";
-import { type VNode, defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { type VNodeChild, defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { useMouseMove } from "@nimble-ui/hooks";
 
 import sliderProps from "./types";
@@ -12,7 +12,7 @@ export default defineComponent({
     const bem = createNamespace("slider");
     const railRef = ref<HTMLElement>();
     const model = reactive<number[]>([]);
-    const marksList = ref<Array<{ label: VNode | (() => VNode); site: number }>>([]);
+    const marksList: { label: VNodeChild | (() => VNodeChild); site: number }[] = reactive([]);
 
     let startSite = 0;
     useMouseMove(railRef, {
@@ -83,13 +83,16 @@ export default defineComponent({
     const transformMarks = () => {
       const val = props.marks;
       if (!val) return;
-      marksList.value = Object.keys(val).map((key) => {
+      marksList.length = 0;
+      const list = Object.keys(val).map((key) => {
         const num = +key;
         return {
           label: val[num],
           site: sunSite(num),
         };
       });
+      console.log(list);
+      marksList.push(...list);
     };
 
     onMounted(() => {
@@ -112,8 +115,10 @@ export default defineComponent({
           </div>
           <div class={bem.e("step")}></div>
           <div class={bem.e("marks")}>
-            {marksList.value.map((item) => (
-              <span class={bem.m("mark", "marks")}>{isFunction(item.label) ? item.label() : item.label}</span>
+            {marksList.map((item) => (
+              <span style={{ left: `${item.site}px` }} class={bem.m("mark", "marks")}>
+                {isFunction(item.label) ? item.label() : item.label}
+              </span>
             ))}
           </div>
         </div>

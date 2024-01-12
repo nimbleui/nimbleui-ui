@@ -35,5 +35,10 @@
   @include e(marks) {
     position: relative;
     width: 100%;
+
+    @include m(mark) {
+      position: absolute;
+      transform: translateX(-50%);
+    }
   }
 }

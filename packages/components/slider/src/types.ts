@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes, PropType, VNode } from "vue";
+import { ExtractPropTypes, PropType, VNodeChild } from "vue";
 
 const sliderProps = mergeCommonProp({
   /**
@@ -37,7 +37,7 @@ const sliderProps = mergeCommonProp({
     type: Boolean,
   },
   marks: {
-    type: Object as PropType<{ [key: number]: VNode | (() => VNode) }>,
+    type: Object as PropType<{ [key: number]: VNodeChild | (() => VNodeChild) }>,
   },
 });
 
