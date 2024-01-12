@@ -31,4 +31,9 @@
       }
     }
   }
+
+  @include e(marks) {
+    position: relative;
+    width: 100%;
+  }
 }

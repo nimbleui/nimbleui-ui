@@ -1,5 +1,5 @@
-import { createNamespace, isNumber } from "@nimble-ui/utils";
-import { defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { createNamespace, isFunction, isNumber } from "@nimble-ui/utils";
+import { type VNode, defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { useMouseMove } from "@nimble-ui/hooks";
 
 import sliderProps from "./types";
@@ -12,6 +12,7 @@ export default defineComponent({
     const bem = createNamespace("slider");
     const railRef = ref<HTMLElement>();
     const model = reactive<number[]>([]);
+    const marksList = ref<Array<{ label: VNode | (() => VNode); site: number }>>([]);
 
     let startSite = 0;
     useMouseMove(railRef, {
@@ -79,15 +80,24 @@ export default defineComponent({
       }
     };
 
-    onMounted(settingSite);
+    const transformMarks = () => {
+      const val = props.marks;
+      if (!val) return;
+      marksList.value = Object.keys(val).map((key) => {
+        const num = +key;
+        return {
+          label: val[num],
+          site: sunSite(num),
+        };
+      });
+    };
+
+    onMounted(() => {
+      settingSite();
+      transformMarks();
+    });
     watch(() => props.modelValue, settingSite, { deep: true });
-    watch(
-      () => props.marks,
-      (val) => {
-        console.log(val);
-      },
-      { immediate: true, deep: true }
-    );
+    watch(() => props.marks, transformMarks, { immediate: true, deep: true });
 
     return () => {
       return (
@@ -95,13 +105,17 @@ export default defineComponent({
           <div ref={railRef} class={bem.e("rail")}>
             <div class={bem.m("track", "rail")}></div>
             {model.map((val, index) => (
-              <span style={{ left: `${val}px` }} data-index={index} class={bem.m("handle", "rail")}>
+              <span key={index} style={{ left: `${val}px` }} data-index={index} class={bem.m("handle", "rail")}>
                 {ctx.slots.thumb?.()}
               </span>
             ))}
           </div>
           <div class={bem.e("step")}></div>
-          <div class={bem.e("mark")}></div>
+          <div class={bem.e("marks")}>
+            {marksList.value.map((item) => (
+              <span class={bem.m("mark", "marks")}>{isFunction(item.label) ? item.label() : item.label}</span>
+            ))}
+          </div>
         </div>
       );
     };
