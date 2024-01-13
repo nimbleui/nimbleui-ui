@@ -4,8 +4,13 @@
 
 @include b(slider) {
   --y-slider-rail-bg-color: var(--y-color-fill-tertiary);
-  --y-slider-handle-border-color: var(--y-color-primary);
+  --y-slider-handle-border-color: var(--y-color-primary-6);
   --y-slider-handle-bg-color: var(--y-color-bg-elevated);
+  --y-slider-dot-border-color: var(--y-color-primary-6);
+  --y-slider-dot-bg-color: var(--y-color-bg-elevated);
+  --y-slider-track-bg-color: var(--y-color-primary-6);
+
+  position: relative;
 
   @include e(rail) {
     position: relative;
@@ -13,6 +18,7 @@
     height: 4px;
     border-radius: 4px;
     background-color: var(--y-slider-rail-bg-color);
+    cursor: pointer;
 
     @include m('handle') {
       position: absolute;
@@ -20,25 +26,46 @@
       width: 14px;
       box-sizing: border-box;
       border-radius: 50%;
-      top: -5px;
-      background-color: var(--y-slider-handle-bg-color);
-      border: 2px solid var(--y-slider-handle-border-color); 
+      top: -5px; 
       cursor: pointer;
+      z-index: 10;
       transition: transform 0.1s;
+      transform: translateX(-50%);
+      background-color: var(--y-slider-handle-bg-color);
+      border: 2px solid var(--y-slider-handle-border-color);
 
       &:hover {
-        transform: scale(1.2);
+        transform: translateX(-50%) scale(1.2);
       }
+    }
+
+    @include m(track) {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background-color: var(--y-slider-track-bg-color);
     }
   }
 
   @include e(marks) {
-    position: relative;
+    position: absolute;
+    top: 50%;
     width: 100%;
 
     @include m(mark) {
       position: absolute;
-      transform: translateX(-50%);
+      transform: translate(-50%, 50%);
+    }
+    
+    @include m(dot) {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      transform: translate(-50%,-50%);
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 2px solid var(--y-slider-dot-border-color);
+      background-color: var(--y-slider-dot-bg-color);
     }
   }
 }

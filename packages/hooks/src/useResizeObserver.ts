@@ -16,3 +16,20 @@ export function useResizeObserver(target: Ref<HTMLElement | undefined>, callback
     stopWatch();
   });
 }
+
+export function useMutationObserver(target: Ref<HTMLElement | undefined>, callback: MutationCallback) {
+  let observer: MutationObserver | undefined = new MutationObserver(callback);
+
+  const stopWatch = watch(target, (el) => {
+    observer?.disconnect();
+    if (el) {
+      observer?.observe(el, { attributes: true, childList: true, subtree: true });
+    }
+  });
+
+  onBeforeUnmount(() => {
+    observer?.disconnect();
+    observer = undefined;
+    stopWatch();
+  });
+}

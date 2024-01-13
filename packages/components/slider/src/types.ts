@@ -36,8 +36,29 @@ const sliderProps = mergeCommonProp({
   vertical: {
     type: Boolean,
   },
+  /**
+   * @description slider上的标记
+   */
   marks: {
     type: Object as PropType<{ [key: number]: VNodeChild | (() => VNodeChild) }>,
+  },
+  /**
+   * @description 格式化 tooltip
+   */
+  formatTooltip: {
+    type: Function as PropType<(value: number) => VNodeChild>,
+  },
+  /**
+   * @description 是否一直显示 tooltip
+   */
+  showTooltip: {
+    type: Boolean,
+  },
+  /**
+   * @description 是否禁用
+   */
+  disabled: {
+    type: Boolean,
   },
 });
 

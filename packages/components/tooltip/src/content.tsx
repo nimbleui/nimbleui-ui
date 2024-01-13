@@ -1,7 +1,7 @@
 import { Teleport, Transition, defineComponent, inject, reactive, ref, CSSProperties } from "vue";
 import { tooltipContextKey, type RectInfo } from "@nimble-ui/tokens";
 import { createNamespace, isNumber } from "@nimble-ui/utils";
-import { useCreateIndex, useLazyRender, useScrollParent } from "@nimble-ui/hooks";
+import { useCreateIndex, useLazyRender, useMutationObserver, useScrollParent } from "@nimble-ui/hooks";
 
 import { contentProps, type PlacementType } from "./props";
 
@@ -21,12 +21,20 @@ export default defineComponent({
       rectInfo: {} as RectInfo,
     });
 
+    // 监听是否父级滚动
     useScrollParent(tooltipContext.triggerRef, () => {
       if (tooltipContext.contentRef.value && props.show) {
         handleLocation(tooltipContext.contentRef.value);
       }
     });
     const { nextZIndex } = useCreateIndex();
+
+    // 监听trigger元素是否发生变化
+    useMutationObserver(tooltipContext.triggerRef, () => {
+      if (tooltipContext.contentRef.value && props.show) {
+        handleLocation(tooltipContext.contentRef.value);
+      }
+    });
 
     const handleEvent = (e: Event) => {
       e.stopPropagation();
