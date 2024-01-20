@@ -82,10 +82,14 @@ export default defineComponent({
       const { modelValue } = props;
 
       if (isNumber(modelValue)) {
-        model[0] = Object.assign(model[0] ?? {}, { value: modelValue, site: sunSite(modelValue) });
+        model[0] = Object.assign(model[0] ?? {}, {
+          value: modelValue,
+          site: sunSite(modelValue),
+          show: props.showTooltip,
+        });
       } else {
         modelValue?.forEach((val, index) => {
-          model[index] = Object.assign(model[index] ?? {}, { value: val, site: sunSite(val) });
+          model[index] = Object.assign(model[index] ?? {}, { value: val, site: sunSite(val), show: props.showTooltip });
         });
       }
     };
@@ -111,6 +115,7 @@ export default defineComponent({
     let currentItem: ModelTypes; // 当前项
     const onUp = () => {
       if (props.showTooltip) return;
+      console.log(1111);
       currentItem.show = false;
       currentItem.isDown = false;
       document.removeEventListener("mouseup", onUp, false);
@@ -122,10 +127,12 @@ export default defineComponent({
       currentItem = item;
       document.addEventListener("mouseup", onUp, false);
     };
-    const onToggle = (val: boolean, item: ModelTypes) => {
+    function onToggle(item: ModelTypes, val: boolean) {
+      console.log("boolean", item.isDown, val);
       if ((item.isDown && !val) || props.showTooltip) return;
+      console.log(val, item.show);
       item.show = val;
-    };
+    }
     // end：处理tooltip的显示与隐藏
 
     const trackSite = computed(() => {
@@ -152,7 +159,7 @@ export default defineComponent({
             {model.map((item, index) => (
               <YTooltip
                 modelValue={item.show}
-                onUpdate:modelValue={(val: boolean) => onToggle(val, item)}
+                onUpdate:modelValue={onToggle.bind(null, item)}
                 trigger="hover"
                 placement="top"
               >
@@ -160,7 +167,7 @@ export default defineComponent({
                   default: () => (
                     <span
                       key={index}
-                      onMousedown={() => onDown(item)}
+                      onMousedown={onDown.bind(null, item)}
                       style={{ left: `${item.site}px` }}
                       data-index={index}
                       class={bem.m("handle", "rail")}

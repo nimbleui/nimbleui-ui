@@ -136,6 +136,10 @@ const items = reactive<MenuItems[]>([
         text: "滑动输入条 Slider",
         link: "/component/slider",
       },
+      {
+        text: "日期选择框 datePicker",
+        link: "/component/datePicker",
+      },
     ],
   },
   {

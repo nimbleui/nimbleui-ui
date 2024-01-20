@@ -5,6 +5,7 @@
 @include b(slider) {
   --y-slider-rail-bg-color: var(--y-color-fill-tertiary);
   --y-slider-handle-border-color: var(--y-color-primary-6);
+  --y-slider-handle-hover-border-color: var(--y-color-primary);
   --y-slider-handle-bg-color: var(--y-color-bg-elevated);
   --y-slider-dot-border-color: var(--y-color-primary-6);
   --y-slider-dot-bg-color: var(--y-color-bg-elevated);
@@ -36,6 +37,7 @@
 
       &:hover {
         transform: translateX(-50%) scale(1.2);
+        border-color: var(--y-slider-handle-hover-border-color);
       }
     }
 

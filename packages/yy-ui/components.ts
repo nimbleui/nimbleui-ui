@@ -38,6 +38,7 @@ import {
   YColorPicker,
   YSelect,
   YSlider,
+  YDatePicker,
 } from "@nimble-ui/components";
 
 export default [
@@ -80,4 +81,5 @@ export default [
   YColorPicker,
   YSelect,
   YSlider,
+  YDatePicker,
 ];

@@ -35,3 +35,4 @@ export * from "./upload";
 export * from "./color-picker";
 export * from "./select";
 export * from "./slider";
+export * from "./datePicker";
