@@ -6,15 +6,7 @@
 </markdown>
 
 <template>
-  <YDatePicker />
+  <YDatePicker :type="'dateRange'" :placeholder="['开始时间', '结束时间']" />
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-
-const color = ref("#1677FF");
-
-setTimeout(() => {
-  color.value = "rgb(30, 255, 75)";
-}, 10000);
-</script>
+<script setup lang="ts"></script>

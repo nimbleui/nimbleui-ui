@@ -33,7 +33,7 @@ const datePickerProps = mergeCommonProp({
    * @description 非范围选择时的占位内容
    */
   placeholder: {
-    type: String,
+    type: [String, Array] as PropType<string | [string, string]>,
   },
   /**
    * @description 禁用

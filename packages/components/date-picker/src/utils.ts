@@ -1,3 +1,6 @@
+import { isDate, isNumber, isString } from "@nimble-ui/utils";
+import type { DatePickerModelValue, DatePickerType } from "./types";
+
 /**
  * 生成日期列表
  * @param date 当前时间
@@ -26,4 +29,50 @@ export function getCalendar(date: Date) {
   return list;
 }
 
-// export function formatDate(date: Date) {}
+function transitionModelValueString(value: string, type: DatePickerType) {
+  let time = "";
+  if (type.indexOf("time")) {
+    const index = value.lastIndexOf(" ");
+    time = value.substring(index);
+    value = value.substring(0, index);
+  }
+
+  return value.replace(/[- ]/g, "/") + time;
+}
+
+/**
+ * 把传入的值转成时间数组
+ * @param type 类型
+ * @param value 目标
+ * @returns
+ */
+export function formatModelValue(type: DatePickerType, value?: DatePickerModelValue) {
+  const isRange = type.indexOf("Range") > -1;
+  const startDate = new Date();
+  const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1);
+  // 判断是否为空
+  if (!value) return isRange ? [startDate, endDate] : [startDate];
+
+  const formatValue: Array<string | number | Date> =
+    isNumber(value) || isString(value) || isDate(value) ? [value] : value;
+
+  const list = formatValue.map((v) => {
+    if (isString(v)) {
+      return new Date(transitionModelValueString(v, type));
+    } else if (isNumber(v)) {
+      return new Date(v);
+    }
+    return v;
+  });
+
+  if (isRange && list.length < 2) {
+    const start = list[0];
+    if (start) {
+      list[1] = new Date(start.getFullYear(), start.getMonth() + 1, 1);
+    } else {
+      list.push(startDate, endDate);
+    }
+  }
+
+  return list;
+}

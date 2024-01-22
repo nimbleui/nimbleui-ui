@@ -1,0 +1,77 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/utils.scss" as *;
+@use "./common/var.scss" as *;
+
+@include b(date-picker) {
+  --y-date-picker-border-color: var(--y-color-border);
+  --y-date-picker-icon-color: var(--y-color-text-tertiary);
+
+  @include e(title) {
+    text-align: center;
+    border: 1px solid var(--y-date-picker-border-color);
+    border-radius: 4px;
+
+    @include m(icon) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      color: var(--y-date-picker-icon-color);
+
+      &::before{
+        content: "";
+        display: block;
+        width: 15px;
+        height: 1.5px;
+        background-color: currentcolor;
+      }
+    }
+
+    @include m(arrow) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateZ(90deg);
+
+      @include utils-arrow;
+    }
+  }
+
+  @include e(content) {
+    --y-date-picker-bg-color: var(--y-color-bg-elevated);
+
+    background-color: var(--y-date-picker-bg-color);
+    box-shadow: $box-shadow-secondary;
+    color: var(--y-pop-confirm-text-color);
+  }
+}
+
+@include b(date-panel) {
+  --y-date-panel-border-color: var(--y-color-border);
+  --y-date-panel-date-alike-color: var(--y-color-text-tertiary);
+
+  width: 252px;
+
+  @include e(weeks) {
+    @include m(week) {
+      min-width: 36px;
+      line-height: 36px;
+      text-align: center;
+    }
+  }
+
+  @include e(dates) {
+    @include m(date) {
+      width: 36px;
+      line-height: 36px;
+      text-align: center;
+      cursor: pointer;
+
+      @include when(alike) {
+        color: var(--y-date-panel-date-alike-color);
+        cursor: default;
+      }
+    }
+  }
+}
+
