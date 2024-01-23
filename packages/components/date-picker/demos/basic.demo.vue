@@ -6,7 +6,17 @@
 </markdown>
 
 <template>
-  <YDatePicker :type="'dateRange'" :placeholder="['开始时间', '结束时间']" />
+  <YDatePicker :type="'dateRange'" :placeholder="['开始时间', '结束时间']" :disabled-date="disabledDate" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 7);
+const minDate = new Date();
+minDate.setDate(minDate.getDate() - 7);
+const disabledDate = (date: Date) => {
+  const now = date.getTime();
+  console.log(now);
+  return maxDate.getTime() < now && minDate.getTime() > now;
+};
+</script>

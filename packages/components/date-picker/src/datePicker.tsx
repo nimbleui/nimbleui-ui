@@ -45,11 +45,11 @@ export default defineComponent({
               <i class={bem.m("icon", "panel")}></i>
             </div>
           </YFlex>
-          <div>
+          <YFlex gap={35}>
             {dateList.value.map((item, index) => (
-              <DatePanel {...item} key={index} />
+              <DatePanel {...item} key={index} disabledDate={props.disabledDate} />
             ))}
-          </div>
+          </YFlex>
         </YFlex>
       );
     };
@@ -60,7 +60,7 @@ export default defineComponent({
         <div class={bem.b()}>
           <YTooltip
             maxWidth={600}
-            maxHeight={600}
+            maxHeight={350}
             contentClass={bem.e("content")}
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           >

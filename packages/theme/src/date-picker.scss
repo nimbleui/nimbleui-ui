@@ -37,6 +37,12 @@
     }
   }
 
+  @include e(panel) {
+    @include m(left) {
+      flex: 1;
+    }
+  }
+
   @include e(content) {
     --y-date-picker-bg-color: var(--y-color-bg-elevated);
 
@@ -49,6 +55,7 @@
 @include b(date-panel) {
   --y-date-panel-border-color: var(--y-color-border);
   --y-date-panel-date-alike-color: var(--y-color-text-tertiary);
+  --y-date-panel-date-disabled-color: var(--y-color-text-tertiary);
 
   width: 252px;
 
@@ -62,14 +69,22 @@
 
   @include e(dates) {
     @include m(date) {
+      padding: 5px 0;
       width: 36px;
-      line-height: 36px;
+      height: 36px;
       text-align: center;
+      vertical-align: center;
       cursor: pointer;
+      box-sizing: border-box;
 
       @include when(alike) {
         color: var(--y-date-panel-date-alike-color);
         cursor: default;
+      }
+
+      @include when('disabled') {
+        cursor: not-allowed;
+        color: var(--y-date-panel-date-disabled-color);
       }
     }
   }
