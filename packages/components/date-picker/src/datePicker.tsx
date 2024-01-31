@@ -5,7 +5,7 @@ import { YInput } from "@nimble-ui/components/input";
 import { YFlex } from "@nimble-ui/components/flex";
 
 import datePickerProps, { type DatePickerModelValue } from "./types";
-import { getCalendar, formatModelValue } from "./utils";
+import { getCalendar, formatModelValue, formatDate } from "./utils";
 import DatePanel from "./datePanel";
 
 export default defineComponent({
@@ -35,15 +35,16 @@ export default defineComponent({
     const renderContent = () => {
       return (
         <YFlex vertical class={bem.e("panel")}>
-          <YFlex justify={"space-between"}>
-            <div class={bem.m("left", "panel")}>
-              <i class={bem.m("icon", "panel")}></i>
-              <span>11111</span>
-            </div>
-            <div class={bem.m("right", "panel")}>
-              <span>22222</span>
-              <i class={bem.m("icon", "panel")}></i>
-            </div>
+          <YFlex class={bem.e("top")} justify={"space-between"}>
+            <YFlex class={bem.m("icon", "top")}>
+              <i class="month is-opposite"></i>
+              <i style={{ marginLeft: "5px" }} class="month is-opposite"></i>
+              <i style={{ marginLeft: "12px" }} class="date is-opposite"></i>
+            </YFlex>
+            <span class={bem.m("text", "top")}>{formatDate(dateList.value[0].date, "yyyy年 M月")}</span>
+
+            <span class={bem.m("text", "top")}>{formatDate(dateList.value[1].date, "yyyy年 M月")}</span>
+            <i class={bem.m("icon", "top")}></i>
           </YFlex>
           <YFlex gap={35}>
             {dateList.value.map((item, index) => (

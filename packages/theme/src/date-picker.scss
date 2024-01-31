@@ -37,9 +37,37 @@
     }
   }
 
-  @include e(panel) {
-    @include m(left) {
+  @include e(top) {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--y-color-border);
+
+    @include m(icon) {
+      width: 25px;
+      margin-left: 10px; 
+
+      .month {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotateZ(-90deg); 
+
+        @include utils-arrow;
+      }
+
+      .date {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotateZ(-90deg); 
+
+        @include utils-arrow;
+      }
+    }
+
+    @include m(text) {
       flex: 1;
+      text-align: center;
+      margin-right: 35px;
     }
   }
 

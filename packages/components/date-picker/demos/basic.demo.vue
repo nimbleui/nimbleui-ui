@@ -16,7 +16,6 @@ const minDate = new Date();
 minDate.setDate(minDate.getDate() - 7);
 const disabledDate = (date: Date) => {
   const now = date.getTime();
-  console.log(now);
-  return maxDate.getTime() < now && minDate.getTime() > now;
+  return maxDate.getTime() > now && minDate.getTime() < now;
 };
 </script>
