@@ -67,7 +67,6 @@
     @include m(text) {
       flex: 1;
       text-align: center;
-      margin-right: 35px;
     }
   }
 
@@ -115,6 +114,34 @@
         color: var(--y-date-panel-date-disabled-color);
       }
     }
+  }
+}
+
+@include b(date-arrow) {
+  --y-date-arrow-color: var(--y-color-text-secondary);
+
+  width: 25px;
+  color: var(--y-date-arrow-color);
+
+  @include when(reverse) {
+    transform: rotateY(-180deg);
+  }
+
+  i.icon {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    transform: rotateZ(-90deg);
+
+    @include utils-arrow;
+  }
+
+  @include e(month) {
+    cursor: pointer;
+  }
+
+  @include e(date) {
+    cursor: pointer;
   }
 }
 

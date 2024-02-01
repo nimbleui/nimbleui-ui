@@ -1,3 +1,5 @@
+import { isString } from "./type";
+
 export class BEM {
   private block = "";
   constructor(name: string) {
@@ -12,11 +14,17 @@ export class BEM {
     return e;
   }
 
-  m(modifier: string, element?: string) {
-    if (element) {
-      return `${this.block}__${element}--${modifier}`;
+  m(modifier: string | string[], element?: string) {
+    if (isString(modifier)) {
+      modifier = [modifier];
     }
-    return modifier ? `${this.block}--${modifier}` : undefined;
+
+    return modifier.map((m) => {
+      if (element) {
+        return `${this.block}__${element}--${m}`;
+      }
+      return m ? `${this.block}--${m}` : undefined;
+    });
   }
 
   is<T extends string>(name: T | undefined, state = true) {

@@ -12,7 +12,7 @@ const YFlex = defineComponent({
     const bem = createNamespace("flex");
 
     const flexCls = computed(() => {
-      const { vertical, justify, align, wrap, gap } = props;
+      const { vertical, justify, align, wrap, gap, reverse } = props;
 
       return [
         bem.b(),
@@ -21,6 +21,7 @@ const YFlex = defineComponent({
         bem.is(`align-${align}`, !!align),
         bem.is(`justify-${justify}`, !!justify),
         bem.is(`gap-${gap}`, gapType.includes(gap as string)),
+        bem.is(`${reverse}-reverse`, !!reverse),
       ];
     });
 

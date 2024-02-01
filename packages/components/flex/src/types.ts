@@ -69,6 +69,12 @@ const flexProps = mergeCommonProp({
   items: {
     type: Array as PropType<FlexItems>,
   },
+  /**
+   * @description 反转
+   */
+  reverse: {
+    type: String as PropType<"row" | "column">,
+  },
 });
 
 export default flexProps;

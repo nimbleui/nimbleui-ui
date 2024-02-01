@@ -31,4 +31,12 @@
       gap: $value;
     }
   }
+
+  @include when(row-reverse) {
+    flex-direction: row-reverse;
+  }
+
+  @include when(column-reverse) {
+    flex-direction: column-reverse;
+  }
 }
