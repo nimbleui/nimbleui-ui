@@ -82,14 +82,16 @@ export default defineComponent({
       const { modelValue } = props;
 
       if (isNumber(modelValue)) {
-        model[0] = Object.assign(model[0] ?? {}, {
+        const item = model[0] ?? {};
+        model[0] = Object.assign(item, {
           value: modelValue,
           site: sunSite(modelValue),
-          show: props.showTooltip,
+          show: item.show ?? props.showTooltip,
         });
       } else {
         modelValue?.forEach((val, index) => {
-          model[index] = Object.assign(model[index] ?? {}, { value: val, site: sunSite(val), show: props.showTooltip });
+          const item = model[index] ?? {};
+          model[index] = Object.assign(item, { value: val, site: sunSite(val), show: item.show ?? props.showTooltip });
         });
       }
     };
@@ -115,7 +117,6 @@ export default defineComponent({
     let currentItem: ModelTypes; // 当前项
     const onUp = () => {
       if (props.showTooltip) return;
-      console.log(1111);
       currentItem.show = false;
       currentItem.isDown = false;
       document.removeEventListener("mouseup", onUp, false);
@@ -128,9 +129,7 @@ export default defineComponent({
       document.addEventListener("mouseup", onUp, false);
     };
     function onToggle(item: ModelTypes, val: boolean) {
-      console.log("boolean", item.isDown, val);
       if ((item.isDown && !val) || props.showTooltip) return;
-      console.log(val, item.show);
       item.show = val;
     }
     // end：处理tooltip的显示与隐藏
