@@ -24,6 +24,10 @@ const defaultData = {
   maxMoveDisL: 0,
   maxMoveDisT: 0,
   maxMoveDisB: 0,
+  // 移动的竖直方向
+  vertical: "none" as "none" | "top" | "bottom",
+  // 移动的水平方向
+  level: "none" as "none" | "left" | "right",
 };
 
 type DataType = typeof defaultData;
@@ -184,6 +188,8 @@ export function useMouseMove(el: TargetElement, options?: Options) {
       maxMoveDisL: moveDis.l,
       maxMoveDisB: moveDis.b,
       maxMoveDisT: moveDis.t,
+      vertical: disY - data.disY > 0 ? "bottom" : "top",
+      level: disX - data.disX > 0 ? "right" : "left",
     });
     options?.move?.(data, e, target);
   };
