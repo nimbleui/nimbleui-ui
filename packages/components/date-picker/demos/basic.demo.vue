@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YDatePicker :type="'dateRange'" :placeholder="['开始时间', '结束时间']" :disabled-date="disabledDate" />
+  <YDatePicker :type="'date'" :placeholder="'开始时间'" :disabled-date="disabledDate" />
 </template>
 
 <script setup lang="ts">

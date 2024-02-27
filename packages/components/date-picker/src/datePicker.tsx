@@ -14,7 +14,7 @@ export default defineComponent({
   props: datePickerProps(),
   setup(props, ctx) {
     const bem = createNamespace("date-picker");
-    const current = ref<Date>(new Date());
+    const isRange = computed(() => props.type.includes("Range"));
 
     const selfModel = ref<DatePickerModelValue>();
     const model = computed({
@@ -33,14 +33,23 @@ export default defineComponent({
       }));
     });
 
+    const onMonthPrev = () => {
+      console.log(22);
+    };
+    const onYearPrev = () => {
+      console.log(111);
+    };
+
     const renderContent = () => {
       return (
         <YFlex vertical class={bem.e("panel")}>
           <YFlex class={bem.e("top")} justify={"space-between"}>
-            <DateArrowIcon />
+            <DateArrowIcon onMonth={onMonthPrev} onYear={onYearPrev} />
             <span class={bem.m("text", "top")}>{formatDate(dateList.value[0].date, "yyyy年 M月")}</span>
 
-            <span class={bem.m("text", "top")}>{formatDate(dateList.value[1].date, "yyyy年 M月")}</span>
+            {dateList.value[1] && (
+              <span class={bem.m("text", "top")}>{formatDate(dateList.value[1].date, "yyyy年 M月")}</span>
+            )}
             <DateArrowIcon reverse />
           </YFlex>
           <YFlex gap={35}>
@@ -70,14 +79,18 @@ export default defineComponent({
                     bordered={false}
                     placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
                   />
-                  <span class={bem.m("icon", "title")}>
-                    <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
-                  </span>
-                  <YInput
-                    readonly
-                    bordered={false}
-                    placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
-                  />
+                  {isRange.value && (
+                    <>
+                      <span class={bem.m("icon", "title")}>
+                        <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
+                      </span>
+                      <YInput
+                        readonly
+                        bordered={false}
+                        placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
+                      />
+                    </>
+                  )}
                 </YFlex>
               ),
               content: renderContent,
