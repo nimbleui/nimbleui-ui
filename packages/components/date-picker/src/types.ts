@@ -13,7 +13,7 @@ export type DatePickerType =
   | "decade"
   | "decadeRange";
 
-export type DatePickerModelValue = string | number | Date | [string, string] | [number, number] | [Date, Date];
+export type DatePickerModelValue = string | number | Date | [string | number | Date, string | number | Date];
 
 const datePickerProps = mergeCommonProp({
   /**
