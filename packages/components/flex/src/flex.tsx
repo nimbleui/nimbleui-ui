@@ -1,7 +1,7 @@
-import { createNamespace, isFunction, isNumber } from "@nimble-ui/utils";
+import { createNamespace, isNumber } from "@nimble-ui/utils";
 import { computed, defineComponent, type CSSProperties } from "vue";
 
-import flexProps, { FlexItemsIsFlex } from "./types";
+import flexProps from "./types";
 const gapType = ["small", "middle", "large"];
 
 const YFlex = defineComponent({
@@ -12,11 +12,12 @@ const YFlex = defineComponent({
     const bem = createNamespace("flex");
 
     const flexCls = computed(() => {
-      const { vertical, justify, align, wrap, gap, reverse } = props;
+      const { vertical, justify, align, wrap, gap, reverse, inline } = props;
 
       return [
         bem.b(),
         bem.is("wrap", wrap),
+        bem.is("inline", inline),
         bem.is("vertical", vertical),
         bem.is(`align-${align}`, !!align),
         bem.is(`justify-${justify}`, !!justify),
@@ -30,30 +31,6 @@ const YFlex = defineComponent({
       return { gap: isNumber(gap) ? `${gap}px` : gap && !gapType.includes(gap) ? gap : undefined, flex: flex };
     });
 
-    const isFlex = (item: any): item is FlexItemsIsFlex => !!item.isFlex;
-
-    const render = () => {
-      const { items, details } = props;
-      return items
-        ? items.map((item) => {
-            const children = isFunction(item.children) ? item.children(details) : item.children;
-            if (isFlex(item)) {
-              return (
-                <YFlex key={item.name} {...item}>
-                  {children}
-                </YFlex>
-              );
-            } else {
-              return (
-                <div key={item.name} class={item.class} style={item.style}>
-                  {children}
-                </div>
-              );
-            }
-          })
-        : ctx.slots.default?.();
-    };
-
     const onClick = (e: Event) => {
       ctx.emit("click", e);
     };
@@ -62,7 +39,7 @@ const YFlex = defineComponent({
       const { tag: Component } = props;
       return (
         <Component style={flexStyle.value} class={flexCls.value} onClick={onClick}>
-          {render()}
+          {ctx.slots.default?.()}
         </Component>
       );
     };

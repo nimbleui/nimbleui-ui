@@ -64,16 +64,16 @@ const flexProps = mergeCommonProp({
     type: [Number, String] as PropType<FlexGap>,
   },
   /**
-   * @description
-   */
-  items: {
-    type: Array as PropType<FlexItems>,
-  },
-  /**
    * @description 反转
    */
   reverse: {
     type: String as PropType<"row" | "column">,
+  },
+  /**
+   * @description 是否为行内元素
+   */
+  inline: {
+    type: Boolean,
   },
 });
 

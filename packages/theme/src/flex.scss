@@ -39,4 +39,8 @@
   @include when(column-reverse) {
     flex-direction: column-reverse;
   }
+
+  @include when(inline) {
+    display: inline-block;
+  }
 }
