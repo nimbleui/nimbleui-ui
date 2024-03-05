@@ -100,3 +100,22 @@ export function formatDate(date: Date, fmt = "yyyy-MM-dd") {
 
   return fmt;
 }
+
+const REGEX_PARSE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
+function toDate(date?: Date | string | number | null): Date {
+  if (isDate(date)) return date;
+  if (isNumber(date)) return new Date(date);
+
+  if (isString(date)) {
+    const d = date.match(REGEX_PARSE);
+    if (d) {
+      const m = d[2] || 0;
+    }
+  }
+
+  return new Date();
+}
+
+export function moment(value?: Date | string | number | null) {
+  const date = toDate(value);
+}

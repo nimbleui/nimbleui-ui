@@ -23,6 +23,7 @@
       <YFormItem required="密码不能为空" vertical label="密码">
         <YInput v-model="value.bb" type="password" :bordered="false" name="password" placeholder="请输入" />
       </YFormItem>
+      <YInput prefix="前缀" suffix="后缀" />
       <YButton :native-type="'submit'" :size="'large'" :type="'primary'" block>登录</YButton>
     </YFlex>
   </YForm>

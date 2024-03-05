@@ -83,6 +83,18 @@ export const inputUniqueProp = {
   parser: {
     type: Function as PropType<FunType>,
   },
+  /**
+   * @description 前缀
+   */
+  prefix: {
+    type: String,
+  },
+  /**
+   * @description 后缀
+   */
+  suffix: {
+    type: String,
+  },
 };
 
 const inputProp = mergeCommonProp(inputUniqueProp);

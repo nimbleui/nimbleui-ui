@@ -49,6 +49,10 @@
     @include m(list) {
       position: relative;
       display: flex;
+
+      @include when(vertical) {
+        flex-direction: column; 
+      }
     }
 
     @include m(list-tab) {
@@ -111,19 +115,51 @@
         background: var(--y-tabs-tab-card-bg-color);
         border-radius: 8px 8px 0 0;
         border: 1px solid var(--y-tabs-nav-border-color);
+      }
 
-        &::before {
-          left: -4px;
-          width: 4px;
+      .#{$be + '--list'}:not(.is-vertical) {
+        
+        .#{$be + '--list-tab'} {
+          &::before {
+            left: -4px;
+            width: 4px;
+          }
+
+          &:not(&:first-child) {
+            margin-left: 2px;
+          }
+
+          @include when(active) {
+            background-color: transparent;
+            border-bottom-color: transparent;
+          }
+
         }
+      }
 
-        &:not(&:first-child) {
-          margin-left: 2px;
-        }
+      .is-vertical {
+        .#{$be + '--list-tab'} {
+          padding: 6px 16px;
+          border-radius: 8px 0 0 8px;
 
-        @include when(active) {
-          background-color: transparent;
-          border-bottom-color: transparent;
+          &::before {
+            top: -4px;
+            height: 3px;
+            width: 0;
+            left: auto;
+            right: -1px;
+            border-right: 1px solid var(--y-tabs-nav-border-color);
+          }
+
+          &:not(&:first-child) {
+            margin-left: 0;
+            margin-top: 2px;
+          }
+
+          @include when(active) {
+            background-color: transparent;
+            border-right-color: transparent;
+          }
         }
       }
     }
@@ -178,5 +214,6 @@
 
   @include e(content) {
     margin-top: 16px;
+    flex: 1;
   }
 }

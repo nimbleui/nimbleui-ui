@@ -128,11 +128,13 @@ export default defineComponent({
       return type;
     });
     return () => {
-      const { type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } = props;
+      const { prefix, suffix, type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } =
+        props;
 
       return (
         <div class={inputData.value.cls}>
           {ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>}
+          {prefix && <span class={bem.e("prefix-text")}>{prefix}</span>}
           <span class={bem.e("wrapper")}>
             <input
               type={newType.value}
@@ -152,15 +154,13 @@ export default defineComponent({
               onCompositionstart={startComposing}
             />
           </span>
-          <span class={bem.e("suffix")}>
-            {ctx.slots.suffix?.()}
-            {allowClear &&
-              formValue.value &&
-              (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
+          {allowClear &&
+            formValue.value &&
+            (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
+              <span class={bem.e("suffix-icon")}>
                 <span onClick={onClear} class={bem.e("clear")}></span>
-              ) : null)}
-            <div></div>
-          </span>
+              </span>
+            ) : null)}
           {type == "password" && (
             <span class={bem.e("password")}>
               <i onClick={onEye.bind(null, !isEye.value)} class={bem.m("icon", "password")}>
@@ -168,6 +168,8 @@ export default defineComponent({
               </i>
             </span>
           )}
+          {suffix && <span class={bem.e("suffix-text")}>{suffix}</span>}
+          {ctx.slots.suffix && <span class={bem.e("prefix")}>{ctx.slots.suffix?.()}</span>}
         </div>
       );
     };

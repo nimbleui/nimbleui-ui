@@ -7,6 +7,7 @@ basic.vue
 card.vue
 centered.vue
 trigger.vue
+vertical.vue
 ```
 ## API
 

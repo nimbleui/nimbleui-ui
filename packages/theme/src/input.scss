@@ -77,8 +77,26 @@
     }
   }
  
-  @include e(suffix) {
+  @include e(suffix-icon) {
     padding: 0 5px;
+  }
+
+  @include e(prefix-text) {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    border-right: 1px solid var(--y-input-border-color);
+    background-color: var(--y-color-fill-tertiary);
+  }
+
+  @include e(suffix-text) {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    border-left: 1px solid var(--y-input-border-color);
+    background-color: var(--y-color-fill-tertiary);
   }
 
   @include e(clear) {

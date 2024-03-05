@@ -2,6 +2,7 @@ import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { defineComponent, onMounted, computed, ref, watch, nextTick, reactive } from "vue";
 
 import tabsProps, { TabItemType } from "./types";
+import YFlex from "@nimble-ui/components/flex/";
 
 export default defineComponent({
   name: "YTabs",
@@ -92,11 +93,11 @@ export default defineComponent({
     };
 
     return () => {
-      const { items, labelField, keyField, centered, type, renderTabBar } = props;
+      const { items, labelField, keyField, centered, type, renderTabBar, vertical } = props;
       return items?.length ? (
-        <div class={bem.b()}>
+        <YFlex class={bem.b()} vertical={!vertical}>
           <div ref={tabsElRef} class={[bem.e("nav"), bem.is("centered", centered), bem.is(type)]}>
-            <div class={bem.m("list", "nav")}>
+            <div class={[bem.m("list", "nav"), bem.is("vertical", vertical)]}>
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
@@ -117,7 +118,7 @@ export default defineComponent({
             </div>
           </div>
           {contentRender()}
-        </div>
+        </YFlex>
       ) : null;
     };
   },
