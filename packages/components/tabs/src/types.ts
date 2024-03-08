@@ -72,12 +72,6 @@ const tabsProps = mergeCommonProp({
     type: String as PropType<TabPosition>,
     default: "top",
   },
-  /**
-   * @description 垂直
-   */
-  vertical: {
-    type: Boolean,
-  },
 });
 
 export default tabsProps;

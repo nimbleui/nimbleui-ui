@@ -22,198 +22,123 @@
     &::before, &::after {
       display: block;
       border-bottom: 1px solid var(--y-tabs-nav-border-color);
-      content: " ";
+      content: " "; 
     }
 
     &::after {
       flex: 1;
     }
 
-    @include when(centered) {
-      justify-content: center;
-
-      &::before{
+    @include when('center') {
+      &::before {
         flex: 1;
       }
     }
+  }
 
-    @include m(list-line) {
-      position: absolute;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      border: 10px solid transparent;
-    }
+  @include e(list) {
+    position: relative;
 
-    @include m(list) {
-      position: relative;
-      display: flex;
-
-      @include when(vertical) {
-        flex-direction: column; 
-      }
-    }
-
-    @include m(list-tab) {
-      position: relative;
-      padding: 12px 0;
-      box-sizing: border-box;
-      cursor: pointer;
-      border-bottom: 1px solid var(--y-tabs-nav-border-color);
-
+    @include m(tab) {
       &:not(&:first-child) {
-        margin-left: 32px;
-
         &::before {
-          position: absolute;
-          bottom: -1px;
-          width: 32px;
-          left: -32px;
-          border-bottom: 1px solid var(--y-tabs-nav-border-color);
-          content: " ";
-        }
-
-        @media (resolution >= 2dppx) {
-          &::before {
-            bottom: -0.5px;
-          }
-        }
-      }
-
-      &:hover {
-        color: var(--y-tabs-nav-active-text-color);
+          display: block;
+          content: "";
+        } 
       }
 
       @include when(active) {
         color: var(--y-tabs-nav-active-text-color);
       }
+
+      @include when (top) {
+        &::before {
+          width: 36px; 
+          border-bottom: 1px solid var(--y-tabs-nav-border-color);
+        }
+
+        .#{$be + '--tab-btn'} {
+          padding: 8px 0;
+          border-bottom: 1px solid var(--y-tabs-nav-border-color);
+        }
+      }
+
+      @include when (bottom) {
+        &::before {
+          width: 36px; 
+          border-top: 1px solid var(--y-tabs-nav-border-color);
+        }
+
+        .#{$be + '--tab-btn'} {
+          padding: 8px 0;
+          border-top: 1px solid var(--y-tabs-nav-border-color);
+        }
+      }
+
+      @include when(left) { 
+        &::before {
+          height: 16px;
+          border-right: 1px solid var(--y-tabs-nav-border-color);
+        }
+
+        .#{$be + '--tab-btn'} {
+          padding: 8px 10px;
+          border-right: 1px solid var(--y-tabs-nav-border-color);
+        }
+      }
+
+      @include when(right) {
+        &::before {
+          height: 16px;
+          border-left: 1px solid var(--y-tabs-nav-border-color);
+        }
+
+        .#{$be + '--tab-btn'} {
+          padding: 8px 10px;
+          border-left: 1px solid var(--y-tabs-nav-border-color);
+        }
+      }
     }
 
-    @include m(list-btn) {
-      outline: none;
-      transition: all 0.3s;
+    @include m(tab-btn) {
+      cursor: pointer;
+      box-sizing: border-box;
     }
 
-    @include m(list-bar) {
+    @include m(bar) {
       position: absolute;
       background: var(--y-tabs-line-bg-color);
       pointer-events: none;
-      height: 2px;
-      bottom: 0;
-      transition: width 0.3s, left 0.3s, right 0.3s;
+      transition: width .3s, left .3s, right .3s, top .3s, bottom .3s;
       z-index: 1;
 
       @include when(hide) {
         display: none;
       }
-    }
 
-    @include when(card) {
-      .#{$be + '--list-tab'} {
-        padding: 6px 16px;
-        background: var(--y-tabs-tab-card-bg-color);
-        border-radius: 8px 8px 0 0;
-        border: 1px solid var(--y-tabs-nav-border-color);
+      @include when (left) {
+        width: 2px;
+        right: 0;
       }
 
-      .#{$be + '--list'}:not(.is-vertical) {
-        
-        .#{$be + '--list-tab'} {
-          &::before {
-            left: -4px;
-            width: 4px;
-          }
-
-          &:not(&:first-child) {
-            margin-left: 2px;
-          }
-
-          @include when(active) {
-            background-color: transparent;
-            border-bottom-color: transparent;
-          }
-
-        }
+      @include when (right) {
+        width: 2px;
+        left: 0; 
       }
 
-      .is-vertical {
-        .#{$be + '--list-tab'} {
-          padding: 6px 16px;
-          border-radius: 8px 0 0 8px;
-
-          &::before {
-            top: -4px;
-            height: 3px;
-            width: 0;
-            left: auto;
-            right: -1px;
-            border-right: 1px solid var(--y-tabs-nav-border-color);
-          }
-
-          &:not(&:first-child) {
-            margin-left: 0;
-            margin-top: 2px;
-          }
-
-          @include when(active) {
-            background-color: transparent;
-            border-right-color: transparent;
-          }
-        }
+      @include when (top) {
+        height: 2px;
+        bottom: 0;
       }
-    }
 
-    @include when(bar) {
-      &::before, &::after {
-        border-bottom-color: transparent;
-      }
-      .#{$be + '--list-tab'} {
-        border-bottom-color: transparent;
-
-        &::before, &::after {
-          border-bottom-color: transparent;
-        }
-      }
-    }
-
-    @include when(radio) {
-      &::before, &::after {
-        border-bottom-color: transparent;
-      }
-      .#{$be + '--list'} {
-        border-radius: 4px;
-        overflow: hidden;
-
-        &-tab {
-          padding: 6px 16px;
-          background: var(--y-tabs-tab-card-bg-color);
-          border: 1px solid var(--y-tabs-nav-border-color);
-  
-          &:not(&:first-child) {
-            margin-left: 0;
-          }
-  
-          &::before, &::after {
-            border-bottom-color: transparent;
-          }
-  
-          @include when(active) {
-            color: #fff;
-            border-color: var(--y-tabs-nav-radio-active-color);
-            background-color: var(--y-tabs-nav-radio-active-color);
-          }
-        }
-
-        &-bar {
-          display: none;
-        }
+      @include when (bottom) {
+        height: 2px;
+        top: 0;
       }
     }
   }
-
+ 
   @include e(content) {
-    margin-top: 16px;
     flex: 1;
   }
 }

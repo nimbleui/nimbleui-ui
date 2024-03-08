@@ -2,7 +2,7 @@ import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { defineComponent, onMounted, computed, ref, watch, nextTick, reactive } from "vue";
 
 import tabsProps, { TabItemType } from "./types";
-import YFlex from "@nimble-ui/components/flex/";
+import YFlex, { FlexInstance } from "@nimble-ui/components/flex";
 
 export default defineComponent({
   name: "YTabs",
@@ -11,7 +11,7 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("tabs");
     const barElRef = ref<HTMLElement>();
-    const tabsElRef = ref<HTMLElement>();
+    const tabsElRef = ref<FlexInstance>();
     const selfModel = ref<string | number>();
     const contents: TabItemType[] = reactive([]);
 
@@ -29,17 +29,25 @@ export default defineComponent({
       if (!value) return;
       handelContent(value);
 
-      const tabEl = tabsElRef.value?.querySelector(`[data-name="${value}"]`) as HTMLElement | null;
+      const tabEl = tabsElRef.value?.$el.querySelector(`[data-name="${value}"]`) as HTMLElement | null;
       if (tabEl) updateBarStyle(tabEl);
     };
 
-    const updateBarStyle = (el: HTMLElement) => {
-      const { offsetWidth, offsetLeft } = el;
-      if (!barElRef.value) return;
+    const vertical = computed(() => {
+      const { tabPosition } = props;
+      return tabPosition == "left" || tabPosition == "right";
+    });
 
-      barElRef.value.style.width = `${offsetWidth}px`;
-      barElRef.value.style.transform = `translateX(-50%)`;
-      barElRef.value.style.left = `${offsetLeft + offsetWidth / 2}px`;
+    const updateBarStyle = (el: HTMLElement) => {
+      const { offsetWidth: w, offsetLeft: l, offsetHeight: h, offsetTop: t } = el;
+      if (!barElRef.value) return;
+      const { value } = vertical;
+      const size = value ? h : w;
+      const site = value ? t : l;
+
+      barElRef.value.style[value ? "height" : "width"] = `${size}px`;
+      barElRef.value.style.transform = `translate${value ? "Y" : "X"}(-50%)`;
+      barElRef.value.style[value ? "top" : "left"] = `${site + size / 2}px`;
     };
 
     const active = computed({
@@ -93,31 +101,48 @@ export default defineComponent({
     };
 
     return () => {
-      const { items, labelField, keyField, centered, type, renderTabBar, vertical } = props;
+      const { items, labelField, keyField, centered, type, renderTabBar, tabPosition } = props;
       return items?.length ? (
-        <YFlex class={bem.b()} vertical={!vertical}>
-          <div ref={tabsElRef} class={[bem.e("nav"), bem.is("centered", centered), bem.is(type)]}>
-            <div class={[bem.m("list", "nav"), bem.is("vertical", vertical)]}>
+        <YFlex ref={tabsElRef} class={bem.b()} vertical={!vertical.value}>
+          {(tabPosition == "right" || tabPosition == "bottom") && contentRender()}
+          <YFlex
+            class={[bem.e("nav"), bem.is("center", centered)]}
+            justify={centered ? "center" : "flex-start"}
+            align="flex-end"
+          >
+            <YFlex
+              class={bem.e("list")}
+              vertical={vertical.value}
+              align={tabPosition == "right" || tabPosition == "bottom" ? "flex-start" : "flex-end"}
+            >
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
 
                 return (
-                  <div
+                  <YFlex
                     key={key}
-                    data-name={key}
-                    class={[bem.m("list-tab", "nav"), bem.is("active", active.value == key)]}
-                    onClick={handleEvent(item, "click")}
-                    onMouseenter={handleEvent(item, "enter")}
+                    class={[bem.m("tab", "list"), bem.is("active", active.value == key), bem.is(tabPosition)]}
+                    vertical={vertical.value}
                   >
-                    <div class={bem.m("list-btn", "nav")}>{renderTabBar ? renderTabBar(item) : label}</div>
-                  </div>
+                    <div
+                      data-name={key}
+                      class={bem.m("tab-btn", "list")}
+                      onClick={handleEvent(item, "click")}
+                      onMouseenter={handleEvent(item, "enter")}
+                    >
+                      {renderTabBar ? renderTabBar(item) : label}
+                    </div>
+                  </YFlex>
                 );
               })}
-              <div ref={barElRef} class={[bem.m("list-bar", "nav"), bem.is("hide", type == "card")]}></div>
-            </div>
-          </div>
-          {contentRender()}
+              <div
+                ref={barElRef}
+                class={[bem.m("bar", "list"), bem.is("hide", type == "card"), bem.is(tabPosition)]}
+              ></div>
+            </YFlex>
+          </YFlex>
+          {(tabPosition == "left" || tabPosition == "top") && contentRender()}
         </YFlex>
       ) : null;
     };

@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import type { ExtractPropTypes, PropType, VNodeChild, HTMLAttributes } from "vue";
+import type { ExtractPropTypes, PropType, VNodeChild, HTMLAttributes, ComponentPublicInstance } from "vue";
 
 export type FlexJustify = "flex-start" | "center" | "flex-end" | "space-between" | "space-around" | "space-evenly";
 export type FlexAlign = "flex-start" | "center" | "flex-end";
@@ -80,3 +80,4 @@ const flexProps = mergeCommonProp({
 export default flexProps;
 
 export type FlexProps = Partial<ExtractPropTypes<ReturnType<typeof flexProps>>>;
+export type FlexInstance = ComponentPublicInstance<FlexProps>;
