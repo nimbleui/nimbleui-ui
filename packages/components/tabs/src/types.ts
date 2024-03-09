@@ -3,8 +3,8 @@ import type { ExtractPropTypes, PropType, VNodeChild } from "vue";
 
 export interface TabItemType {
   label?: VNodeChild;
-  disabled?: boolean | (() => boolean);
-  children?: VNodeChild | ((item: TabItemType) => VNodeChild);
+  disabled?: boolean | ((details: any) => boolean);
+  children?: VNodeChild | ((item: TabItemType, details: any) => VNodeChild);
   closable?: boolean;
   [key: string]: unknown;
 }
@@ -47,10 +47,10 @@ const tabsProps = mergeCommonProp({
     default: "click",
   },
   /**
-   * @description 替换默认TabBar
+   * @description 替换默认TabBar，如果返回false、undefined，渲染默认
    */
   renderTabBar: {
-    type: Function as PropType<(item: TabItemType) => VNodeChild>,
+    type: Function as PropType<(item: TabItemType, details: any) => VNodeChild | void | false>,
   },
   /**
    * @description 标签居中展示

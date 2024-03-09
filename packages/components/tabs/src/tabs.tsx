@@ -59,8 +59,10 @@ export default defineComponent({
       },
     });
 
-    const handleEvent = (item: TabItemType, type: "click" | "enter") => {
+    const handleEvent = (item: TabItemType, type: "click" | "enter", disabled?: boolean) => {
       return (e: Event) => {
+        if (disabled) return;
+
         const { keyField, trigger } = props;
         const value = item[keyField] as number | string;
         if ((trigger === "click" && type === "click") || (trigger === "hover" && type === "enter")) {
@@ -88,7 +90,7 @@ export default defineComponent({
       return (
         <div class={bem.e("content")}>
           {contents.map((item) => {
-            const child = isFunction(item.children) ? item.children(item) : item.children;
+            const child = isFunction(item.children) ? item.children(item, props.details) : item.children;
             const key = item[props.keyField] as string | number;
             return (
               <div v-show={active.value == key} class={bem.m("pane", "content")}>
@@ -101,7 +103,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { items, labelField, keyField, centered, type, renderTabBar, tabPosition } = props;
+      const { items, labelField, keyField, centered, type, renderTabBar, tabPosition, details } = props;
       return items?.length ? (
         <YFlex ref={tabsElRef} class={bem.b()} vertical={!vertical.value}>
           {(tabPosition == "right" || tabPosition == "bottom") && contentRender()}
@@ -114,6 +116,7 @@ export default defineComponent({
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
+                const disabled = isFunction(item.disabled) ? item.disabled(details) : item.disabled ?? false;
 
                 return (
                   <YFlex
@@ -123,16 +126,17 @@ export default defineComponent({
                       bem.is(tabPosition),
                       bem.is("card", type == "card"),
                       bem.is("active", active.value == key),
+                      bem.is("disabled", disabled),
                     ]}
                     vertical={vertical.value}
                   >
                     <div
                       data-name={key}
                       class={bem.m("tab-btn", "list")}
-                      onClick={handleEvent(item, "click")}
-                      onMouseenter={handleEvent(item, "enter")}
+                      onClick={handleEvent(item, "click", disabled)}
+                      onMouseenter={handleEvent(item, "enter", disabled)}
                     >
-                      {renderTabBar ? renderTabBar(item) : label}
+                      {renderTabBar?.(item, details) || label}
                     </div>
                   </YFlex>
                 );

@@ -10,18 +10,25 @@
 </template>
 
 <script setup lang="ts">
+import { TabItemType } from "@nimble-ui/vue";
 import { reactive, h } from "vue";
 
-const items = reactive([
+const items = reactive<TabItemType[]>([
   {
     id: "2356",
-    label: h("div", { class: "name" }, "测试1"),
-    children: "测试1",
+    label: h("div", { class: "name", style: "color: red" }, "Tab 1"),
+    children: "Tab 1",
   },
   {
     id: "8588",
-    label: "测试289898989",
-    children: "测试289898989",
+    label: "Tab 2",
+    children: "Tab 2",
+    disabled: true,
+  },
+  {
+    id: "536",
+    label: "Tab 3",
+    children: "Tab 3",
   },
 ]);
 </script>

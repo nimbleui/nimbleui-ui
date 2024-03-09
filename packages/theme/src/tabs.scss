@@ -7,6 +7,7 @@
   --y-tabs-tab-card-bg-color: var(--y-color-fill-quaternary);
   --y-tabs-nav-active-text-color: var(--y-color-primary);
   --y-tabs-nav-radio-active-color: var(--y-color-primary);
+  --y-tabs-disabled-color: var(--y-color-text-quaternary);
 }
 
 $list-position: (
@@ -108,9 +109,18 @@ $tab-bar: (
             &.is-active {
               #{$bem}{
                 #{map.get($value,border) + '-color'}: transparent;
+                background-color: transparent;
               }
             }
           }
+        }
+      }
+
+      @include when(disabled) {
+        color: var(--y-tabs-disabled-color);
+
+        #{$bem} {
+          cursor: not-allowed;
         }
       }
     }
