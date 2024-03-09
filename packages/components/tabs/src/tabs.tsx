@@ -108,13 +108,9 @@ export default defineComponent({
           <YFlex
             class={[bem.e("nav"), bem.is("center", centered)]}
             justify={centered ? "center" : "flex-start"}
-            align="flex-end"
+            align={tabPosition === "top" || tabPosition == "left" ? "flex-end" : "flex-start"}
           >
-            <YFlex
-              class={bem.e("list")}
-              vertical={vertical.value}
-              align={tabPosition == "right" || tabPosition == "bottom" ? "flex-start" : "flex-end"}
-            >
+            <YFlex class={bem.e("list")} vertical={vertical.value}>
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
@@ -122,7 +118,12 @@ export default defineComponent({
                 return (
                   <YFlex
                     key={key}
-                    class={[bem.m("tab", "list"), bem.is("active", active.value == key), bem.is(tabPosition)]}
+                    class={[
+                      bem.m("tab", "list"),
+                      bem.is(tabPosition),
+                      bem.is("card", type == "card"),
+                      bem.is("active", active.value == key),
+                    ]}
                     vertical={vertical.value}
                   >
                     <div

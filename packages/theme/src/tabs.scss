@@ -1,4 +1,5 @@
 @use "./mixins/mixins.scss" as *;
+@use 'sass:map';
 
 @include b(tabs) {
   --y-tabs-nav-border-color: var(--y-color-border-secondary);
@@ -7,6 +8,25 @@
   --y-tabs-nav-active-text-color: var(--y-color-primary);
   --y-tabs-nav-radio-active-color: var(--y-color-primary);
 }
+
+$list-position: (
+  top: (size: 36px, border: bottom, padding: 8px 0, field: width, text-align: right),
+  bottom: (size: 36px, border: top, padding: 8px 0, field: width, text-align: left),
+  left: (size: 16px, border: right, padding: 8px 10px, field: height, text-align: right),
+  right: (size: 16px, border: left, padding: 8px 10px, field: height, text-align: left),
+);
+$list-card: (
+  top: (radius: 8px 8px 0 0, border: border-bottom, field: width),
+  bottom: (radius: 0 0 8px 8px, border: border-top, field: width),
+  left: (radius: 8px 0 0 8px, border: border-right, field: height),
+  right: (radius: 0 8px 8px 0, border: border-right, field: height),
+);
+$tab-bar: (
+  top: (size: height, site: bottom),
+  bottom: (size: height, site: top),
+  left: (size: width, site: right),
+  right: (size: width, site: left),
+);
 
 @include b(tabs) {
   display: block;
@@ -39,7 +59,9 @@
   @include e(list) {
     position: relative;
 
-    @include m(tab) {
+    @include m(tab) { 
+      $bem: #{'.' + $be + '--tab-btn'};
+
       &:not(&:first-child) {
         &::before {
           display: block;
@@ -51,51 +73,44 @@
         color: var(--y-tabs-nav-active-text-color);
       }
 
-      @include when (top) {
-        &::before {
-          width: 36px; 
-          border-bottom: 1px solid var(--y-tabs-nav-border-color);
-        }
+      @each $name, $value in $list-position { 
+        @include when ($name) {
+          &::before {
+            #{map.get($value, field)}: map.get($value, size); 
+            #{border + '-' + map.get($value, border)}: 1px solid var(--y-tabs-nav-border-color);
+          }
 
-        .#{$be + '--tab-btn'} {
-          padding: 8px 0;
-          border-bottom: 1px solid var(--y-tabs-nav-border-color);
-        }
-      }
-
-      @include when (bottom) {
-        &::before {
-          width: 36px; 
-          border-top: 1px solid var(--y-tabs-nav-border-color);
-        }
-
-        .#{$be + '--tab-btn'} {
-          padding: 8px 0;
-          border-top: 1px solid var(--y-tabs-nav-border-color);
+          #{$bem} {
+            text-align: map.get($value, text-align); 
+            padding: map.get($value, padding);
+            #{border + '-' + map.get($value, border)}: 1px solid var(--y-tabs-nav-border-color);
+          }
         }
       }
 
-      @include when(left) { 
-        &::before {
-          height: 16px;
-          border-right: 1px solid var(--y-tabs-nav-border-color);
+      @include when (card) {
+        #{$bem} {
+          padding: 6px 16px;
+          background: var(--y-tabs-tab-card-bg-color);
+          border: 1px solid var(--y-tabs-nav-border-color);
         }
 
-        .#{$be + '--tab-btn'} {
-          padding: 8px 10px;
-          border-right: 1px solid var(--y-tabs-nav-border-color);
-        }
-      }
+        @each $name, $value in $list-card {
+          &.#{'is-' + $name} {
+            &::before {
+              #{map.get($value, field)}: 2px !important;
+            }
+    
+            #{$bem}{
+              border-radius: map.get($value, radius);
+            }
 
-      @include when(right) {
-        &::before {
-          height: 16px;
-          border-left: 1px solid var(--y-tabs-nav-border-color);
-        }
-
-        .#{$be + '--tab-btn'} {
-          padding: 8px 10px;
-          border-left: 1px solid var(--y-tabs-nav-border-color);
+            &.is-active {
+              #{$bem}{
+                #{map.get($value,border) + '-color'}: transparent;
+              }
+            }
+          }
         }
       }
     }
@@ -116,28 +131,15 @@
         display: none;
       }
 
-      @include when (left) {
-        width: 2px;
-        right: 0;
-      }
-
-      @include when (right) {
-        width: 2px;
-        left: 0; 
-      }
-
-      @include when (top) {
-        height: 2px;
-        bottom: 0;
-      }
-
-      @include when (bottom) {
-        height: 2px;
-        top: 0;
+      @each $name, $value in $tab-bar {
+        @include when ($name) {
+          #{map.get($value, size)}: 2px;
+          #{map.get($value, site)}: 0;
+        }
       }
     }
   }
- 
+
   @include e(content) {
     flex: 1;
   }

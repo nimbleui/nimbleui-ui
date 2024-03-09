@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YTabs v-model="active" :items="items" type="card" />
+  <YTabs v-model="active" :items="items" type="card" tab-position="left" />
 </template>
 
 <script setup lang="ts">
