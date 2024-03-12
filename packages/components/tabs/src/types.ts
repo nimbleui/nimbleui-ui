@@ -9,7 +9,7 @@ export interface TabItemType {
   [key: string]: unknown;
 }
 
-export type TabsType = "line" | "card" | "radio" | "bar";
+export type TabsType = "line" | "card" | "bar" | "editable-card";
 export type TabPosition = "left" | "top" | "right" | "bottom";
 
 const tabsProps = mergeCommonProp({

@@ -8,6 +8,7 @@ card.vue
 centered.vue
 trigger.vue
 vertical.vue
+scroll.vue
 ```
 ## API
 

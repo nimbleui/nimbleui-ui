@@ -1,5 +1,6 @@
 import { PropType, VNodeChild } from "vue";
 import { isFunction } from "./type";
+import { keysOf } from "./object";
 
 export type ObjectType = { [key: string]: any };
 
@@ -76,3 +77,47 @@ export const makeNumericProp = <T>(defaultVal: T) => ({
   type: [Number, String],
   default: defaultVal,
 });
+
+export const nativeEvents = {
+  onWheel: {
+    type: Function as PropType<(e: WheelEvent) => void>,
+  },
+  onClick: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMouseenter: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onKeydown: {
+    type: Function as PropType<(e: KeyboardEvent) => void>,
+  },
+  onKeyup: {
+    type: Function as PropType<(e: KeyboardEvent) => void>,
+  },
+  onMousedown: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMouseleave: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMousemove: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMouseout: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMouseover: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onMouseup: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
+  onResize: {
+    type: Function as PropType<(e: UIEvent) => void>,
+  },
+  onScroll: {
+    type: Function as PropType<(e: Event) => void>,
+  },
+};
+
+export const nativeEventsKeys = keysOf(nativeEvents);

@@ -102,6 +102,13 @@ export default defineComponent({
       );
     };
 
+    const onWheel = (e: WheelEvent) => {
+      const { deltaX, deltaY } = e;
+      console.log(deltaX);
+      console.log(deltaY);
+      e.preventDefault();
+    };
+
     return () => {
       const { items, labelField, keyField, centered, type, renderTabBar, tabPosition, details } = props;
       return items?.length ? (
@@ -111,6 +118,7 @@ export default defineComponent({
             class={[bem.e("nav"), bem.is("center", centered)]}
             justify={centered ? "center" : "flex-start"}
             align={tabPosition === "top" || tabPosition == "left" ? "flex-end" : "flex-start"}
+            onWheel={onWheel}
           >
             <YFlex class={bem.e("list")} vertical={vertical.value}>
               {items.map((item) => {
