@@ -1,4 +1,4 @@
-import { mergeCommonProp } from "@nimble-ui/utils";
+import { mergeCommonProp, nativeEvents } from "@nimble-ui/utils";
 import type { ExtractPropTypes, PropType, VNodeChild, HTMLAttributes, ComponentPublicInstance } from "vue";
 
 export type FlexJustify = "flex-start" | "center" | "flex-end" | "space-between" | "space-around" | "space-evenly";
@@ -75,6 +75,7 @@ const flexProps = mergeCommonProp({
   inline: {
     type: Boolean,
   },
+  ...nativeEvents,
 });
 
 export default flexProps;

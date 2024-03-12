@@ -1,13 +1,11 @@
-import { createNamespace, isNumber } from "@nimble-ui/utils";
+import { createNamespace, isNumber, pick, nativeEventsKeys } from "@nimble-ui/utils";
 import { computed, defineComponent, type CSSProperties } from "vue";
 
 import flexProps from "./types";
 const gapType = ["small", "middle", "large"];
-
 const YFlex = defineComponent({
   name: "YFlex",
   props: flexProps(),
-  emits: ["click", "mouseenter"],
   setup(props, ctx) {
     const bem = createNamespace("flex");
 
@@ -31,17 +29,10 @@ const YFlex = defineComponent({
       return { gap: isNumber(gap) ? `${gap}px` : gap && !gapType.includes(gap) ? gap : undefined, flex: flex };
     });
 
-    const onClick = (e: Event) => {
-      ctx.emit("click", e);
-    };
-
-    const onMouseenter = (e: Event) => {
-      ctx.emit("mouseenter", e);
-    };
-
     return () => {
+      const events = pick(props, nativeEventsKeys);
       return (
-        <div style={flexStyle.value} class={flexCls.value} onClick={onClick} onMouseenter={onMouseenter}>
+        <div style={flexStyle.value} class={flexCls.value} {...events}>
           {ctx.slots.default?.()}
         </div>
       );
