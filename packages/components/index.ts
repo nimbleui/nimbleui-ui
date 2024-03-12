@@ -36,3 +36,4 @@ export * from "./color-picker";
 export * from "./select";
 export * from "./slider";
 export * from "./date-picker";
+export * from "./number";
