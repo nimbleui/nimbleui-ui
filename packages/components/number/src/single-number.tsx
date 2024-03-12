@@ -22,9 +22,13 @@ export default defineComponent({
       }
 
       const prevIndex = unitNumberList.findIndex((n) => n % 10 === prevValue);
-      return unitNumberList.map((n) => {
+      return unitNumberList.map((n, index) => {
         const number = n % 10;
-        return <span>{number}</span>;
+        return (
+          <span key={n} style={{ position: "absolute", top: `${index - prevIndex}00%`, left: 0 }}>
+            {number}
+          </span>
+        );
       });
     };
 
