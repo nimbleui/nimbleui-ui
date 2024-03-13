@@ -1,4 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+
 <markdown>
   # 修改样式、类名
   
@@ -25,8 +26,8 @@ const onSun = (num: number) => {
 };
 </script>
 
-<style lang="scss">
-.number {
+<style lang="scss" scoped>
+:deep(.number) {
   display: flex;
   justify-content: center;
   align-items: center;

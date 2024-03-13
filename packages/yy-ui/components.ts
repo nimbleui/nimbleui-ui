@@ -40,6 +40,7 @@ import {
   YSlider,
   YDatePicker,
   YNumber,
+  YBadge,
 } from "@nimble-ui/components";
 
 export default [
@@ -84,4 +85,5 @@ export default [
   YSlider,
   YDatePicker,
   YNumber,
+  YBadge,
 ];

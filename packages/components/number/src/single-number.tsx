@@ -43,7 +43,7 @@ export default defineComponent({
           const unit = newValue[1] > oldValue[1] ? 1 : -1;
           const offset = getOffset(prev, next, unit);
           styles.transform = `translateY(${-offset}00%)`;
-          styles.transition = "all .3s";
+          styles.transition = "all .2s";
         }
       },
       { immediate: true }

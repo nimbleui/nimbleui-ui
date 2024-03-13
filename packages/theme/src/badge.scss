@@ -1,0 +1,55 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(badge) {
+  --y-badge-error-bg: var(--y-color-error);
+  --y-badge-primary-bg: var(--y-color-primary);
+  --y-badge-success-bg: var(--y-color-success);
+  --y-badge-warning-bg: var(--y-color-warning);
+  --y-badge-info-bg: var(--y-color-info);
+  --y-badge-height: 20px;
+
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  box-sizing: border-box;
+
+  @include e(sup) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    min-width: var(--y-badge-height);
+    height: var(--y-badge-height);
+    border-radius: 10px;
+    transform: translate(50%, -50%);
+
+    @include when(multiple-words) {
+      padding: 0 6px;
+    }
+
+    @include when(error) {
+      background-color: var(--y-badge-error-bg);
+    }
+
+    @include when(primary) {
+      background-color: var(--y-badge-primary-bg);
+    }
+
+    @include when(success) {
+      background-color: var(--y-badge-success-bg);
+    }
+
+    @include when(warning) {
+      background-color: var(--y-badge-warning-bg);
+    }
+
+    @include when(info) {
+      background-color: var(--y-badge-info-bg);
+    }
+
+    @include when(dot) {
+      min-width: 6px;
+      height: 6px;
+    }
+  }
+}

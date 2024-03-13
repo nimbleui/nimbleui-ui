@@ -37,3 +37,4 @@ export * from "./select";
 export * from "./slider";
 export * from "./date-picker";
 export * from "./number";
+export * from "./badge";
