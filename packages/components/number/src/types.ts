@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes, PropType, StyleValue } from "vue";
 
 const numberProps = mergeCommonProp({
   /**
@@ -13,6 +13,24 @@ const numberProps = mergeCommonProp({
    */
   max: {
     type: [String, Number],
+  },
+  /**
+   * @description 数字的类名
+   */
+  numberClass: {
+    type: [String, Array, Object],
+  },
+  /**
+   * @description 数字的样式
+   */
+  numberStyle: {
+    type: [String, Array, Object] as PropType<StyleValue>,
+  },
+  /**
+   * @description 数字间的间隙
+   */
+  gap: {
+    type: [Number, String],
   },
 });
 

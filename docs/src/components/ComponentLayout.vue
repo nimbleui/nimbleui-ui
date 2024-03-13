@@ -149,6 +149,10 @@ const items = reactive<MenuItems[]>([
         text: "图像 Image",
         link: "/component/image",
       },
+      {
+        text: "数字动画 number",
+        link: "/component/number",
+      },
     ],
   },
   {
@@ -180,6 +184,7 @@ a {
   outline: none;
   text-decoration: none;
   color: var(--y-color-text);
+
   &.active {
     color: var(--y-color-primary);
   }

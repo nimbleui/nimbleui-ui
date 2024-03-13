@@ -1,0 +1,25 @@
+@use "./mixins/mixins.scss" as *;
+
+@include b(number) {
+  overflow: hidden;
+
+  @include e(scroll){
+    height: 20px;
+  }
+
+  @include e(only) {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    text-align: center;
+
+    @include m(unit) {
+      display: inline-block;
+      position: absolute;
+
+      @include when(current) {
+        position: relative;
+      }
+    }
+  }
+}
