@@ -25,6 +25,7 @@
     width: 12px;
     margin-top: 6px;
     color: var(--y-select-arrow-color);
+    margin-right: 5px;
 
     @include utils-arrow;
   }

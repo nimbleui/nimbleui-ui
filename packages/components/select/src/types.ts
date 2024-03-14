@@ -54,6 +54,19 @@ const selectProps = mergeCommonProp({
     type: String,
     default: "label",
   },
+  /**
+   * @description 是否显示边框
+   */
+  bordered: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * @description 箭头的颜色
+   */
+  arrowColor: {
+    type: String,
+  },
 });
 
 export default selectProps;
