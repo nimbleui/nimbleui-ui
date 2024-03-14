@@ -1,5 +1,5 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, type CSSProperties } from "vue";
 
 import badgeProps from "./types";
 import YNumber from "@nimble-ui/components/number";
@@ -16,15 +16,27 @@ export default defineComponent({
       if (hide) return false;
       return count == 0 ? showZero : true;
     });
+
+    const styles = computed<CSSProperties>(() => {
+      const { color, offset } = props;
+      if (!offset) return {};
+      const [left, top] = offset;
+
+      return {
+        background: color,
+        right: `-${left}px`,
+        marginTop: `${top}px`,
+      };
+    });
     return () => {
-      const { count, type, dot, max, color } = props;
+      const { count, type, dot, max } = props;
       return (
         <span class={bem.b()}>
           {show.value && (
             <YFlex
               align="center"
               justify="center"
-              style={{ background: color }}
+              style={styles.value}
               class={[
                 bem.e("sup"),
                 bem.is("dot", dot),

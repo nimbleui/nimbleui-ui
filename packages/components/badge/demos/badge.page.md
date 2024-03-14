@@ -7,6 +7,7 @@ basic.vue
 type.vue
 zero.vue
 max.vue
+offset.vue
 ```
 ## API
 
@@ -21,3 +22,8 @@ max.vue
 | showZero | `boolean` | `false` | 为 0 时是否显示 | - |
 | hide | `boolean` | `false` | 是否隐藏 | - |
 | type | `'success' \| 'error' \| 'warning' \| 'info'` | `'error'` | 类型 | - |
+
+### Scrollbar Slots
+| 名称    | 参数 | 说明         |
+| ------- | ---- | ------------ |
+| default | -    | 内容 |
