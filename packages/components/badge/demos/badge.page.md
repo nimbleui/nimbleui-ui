@@ -4,6 +4,9 @@
 ## 代码演示
 ```demo
 basic.vue
+type.vue
+zero.vue
+max.vue
 ```
 ## API
 

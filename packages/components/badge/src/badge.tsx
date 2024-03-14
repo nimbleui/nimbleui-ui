@@ -1,5 +1,5 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 
 import badgeProps from "./types";
 import YNumber from "@nimble-ui/components/number";
@@ -11,22 +11,30 @@ export default defineComponent({
   setup(props, ctx) {
     const bem = createNamespace("badge");
 
+    const show = computed(() => {
+      const { count, showZero, hide } = props;
+      if (hide) return false;
+      return count == 0 ? showZero : true;
+    });
     return () => {
-      const { count, type, dot, max } = props;
+      const { count, type, dot, max, color } = props;
       return (
         <span class={bem.b()}>
-          <YFlex
-            align="center"
-            justify="center"
-            class={[
-              bem.e("sup"),
-              bem.is("dot", dot),
-              bem.is(type ?? "error"),
-              bem.is("multiple-words", Number(count) > 9 && !dot),
-            ]}
-          >
-            {!dot && <YNumber count={count} max={max} />}
-          </YFlex>
+          {show.value && (
+            <YFlex
+              align="center"
+              justify="center"
+              style={{ background: color }}
+              class={[
+                bem.e("sup"),
+                bem.is("dot", dot),
+                bem.is(type ?? "error"),
+                bem.is("multiple-words", Number(count) > 9 && !dot),
+              ]}
+            >
+              {!dot && <YNumber count={count} max={max} />}
+            </YFlex>
+          )}
           {ctx.slots.default?.()}
         </span>
       );

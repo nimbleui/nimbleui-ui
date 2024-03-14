@@ -1,36 +1,27 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 
 <markdown>
-# 基础用法
+# 类型
 
-最简单的用法
+有`success`、`error`、`warning`、`info`类型。
 </markdown>
 
 <template>
   <YFlex :gap="20" align="center">
-    <YBadge :count="count">
-      <div class="badge"></div>
-    </YBadge>
-
     <YBadge dot>
       <div class="badge"></div>
     </YBadge>
-
-    <YButtonGroup>
-      <YButton @click="onSun(-1)">-</YButton>
-      <YButton @click="onSun(1)">+</YButton>
-    </YButtonGroup>
+    <YBadge dot type="success">
+      <div class="badge"></div>
+    </YBadge>
+    <YBadge dot type="warning">
+      <div class="badge"></div>
+    </YBadge>
+    <YBadge dot type="info">
+      <div class="badge"></div>
+    </YBadge>
   </YFlex>
 </template>
-
-<script lang="ts" setup>
-import { ref } from "vue";
-
-const count = ref(9);
-const onSun = (num: number) => {
-  count.value = count.value + num;
-};
-</script>
 
 <style scoped>
 .badge {

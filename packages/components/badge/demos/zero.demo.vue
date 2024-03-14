@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 
 <markdown>
-# 基础用法
+# 是否显示 0
 
-最简单的用法
+通过设置属性`show-zero`来显示。
 </markdown>
 
 <template>
@@ -11,25 +11,16 @@
     <YBadge :count="count">
       <div class="badge"></div>
     </YBadge>
-
-    <YBadge dot>
+    <YBadge :count="count" show-zero>
       <div class="badge"></div>
     </YBadge>
-
-    <YButtonGroup>
-      <YButton @click="onSun(-1)">-</YButton>
-      <YButton @click="onSun(1)">+</YButton>
-    </YButtonGroup>
   </YFlex>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const count = ref(9);
-const onSun = (num: number) => {
-  count.value = count.value + num;
-};
+const count = ref(0);
 </script>
 
 <style scoped>

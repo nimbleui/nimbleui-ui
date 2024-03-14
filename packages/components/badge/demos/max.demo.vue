@@ -1,18 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 
 <markdown>
-# 基础用法
+# 最大值
 
-最简单的用法
+通过设置属性`max`来控制
 </markdown>
 
 <template>
   <YFlex :gap="20" align="center">
-    <YBadge :count="count">
+    <YBadge :count="count" :max="15">
       <div class="badge"></div>
     </YBadge>
 
-    <YBadge dot>
+    <YBadge :count="count" :max="15">
       <div class="badge"></div>
     </YBadge>
 
@@ -28,7 +28,8 @@ import { ref } from "vue";
 
 const count = ref(9);
 const onSun = (num: number) => {
-  count.value = count.value + num;
+  const value = count.value + num;
+  count.value = value > 16 ? 16 : value;
 };
 </script>
 
