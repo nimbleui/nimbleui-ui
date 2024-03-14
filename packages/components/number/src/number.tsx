@@ -13,7 +13,7 @@ export default defineComponent({
 
     const countRef = computed(() => {
       const { count, max } = props;
-      if (!count || Number(count) % 1 !== 0) return [];
+      if (count == undefined || Number(count) % 1 !== 0) return [];
 
       const value = (count as number) > (max as number) ? max : count;
       return String(value).split("");
