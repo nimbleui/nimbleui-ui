@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import type { ExtractPropTypes, PropType, VNode } from "vue";
+import type { ExtractPropTypes, PropType, StyleValue, VNode } from "vue";
 
 export interface SelectOptions {
   id?: string | number;
@@ -66,6 +66,24 @@ const selectProps = mergeCommonProp({
    */
   arrowColor: {
     type: String,
+  },
+  /**
+   * @description 输入框占位提示文字
+   */
+  placeholder: {
+    type: String,
+  },
+  /**
+   * @description 输入框的类名
+   */
+  inputClass: {
+    type: [String, Array, Object],
+  },
+  /**
+   * @description 输入框的样式
+   */
+  inputStyle: {
+    type: [String, Array, Object] as PropType<StyleValue>,
   },
 });
 

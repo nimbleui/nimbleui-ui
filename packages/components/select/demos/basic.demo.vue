@@ -7,7 +7,7 @@
 
 <template>
   <div class="demo-margin">
-    <YSelect v-model="model" :options="options" />
+    <YSelect v-model="model" :options="options" input-class="input" />
   </div>
 </template>
 
@@ -74,3 +74,12 @@ const options = reactive([
   },
 ]);
 </script>
+
+<style lang="scss" scoped>
+:deep(.input) {
+  width: 95px;
+  height: 27px;
+  border: 2px solid;
+  border-image: linear-gradient(to right, #055a7a, #08b2fb, #055a7a) 1;
+}
+</style>

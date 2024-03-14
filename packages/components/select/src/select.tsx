@@ -88,7 +88,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { disabled, name, bordered, arrowColor } = props;
+      const { disabled, name, bordered, arrowColor, placeholder, inputClass, inputStyle } = props;
       return (
         <div class={bem.b()}>
           <YTooltip
@@ -108,8 +108,11 @@ export default defineComponent({
                   ref={inputRef}
                   readonly
                   name={name}
+                  class={inputClass}
+                  style={inputStyle}
                   disabled={disabled}
                   bordered={bordered}
+                  placeholder={placeholder}
                   modelValue={labelCop.value}
                 >
                   {{
