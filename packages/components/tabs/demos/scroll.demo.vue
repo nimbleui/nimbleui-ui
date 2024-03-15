@@ -8,6 +8,10 @@
 
 <template>
   <YTabs v-model="active" :items="items" />
+
+  <div style="height: 200px">
+    <YTabs v-model="active" tab-position="left" :items="items" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -48,6 +52,11 @@ const items = reactive([
     id: "8944",
     label: "Tab 7",
     children: "Tab 7",
+  },
+  {
+    id: "852",
+    label: "Tab 8",
+    children: "Tab 8",
   },
 ]);
 

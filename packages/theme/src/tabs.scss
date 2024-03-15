@@ -32,6 +32,7 @@ $tab-bar: (
 @include b(tabs) {
   display: block;
   box-sizing: border-box;
+  max-height: 100%;
 
   @include e(nav) {
     position: relative;

@@ -1,8 +1,9 @@
 @use "./config.scss" as *;
+@use "../common/var.scss" as *;
 
 // BEM
 @mixin b($block) {
-  $b: $namespace + '-' + $block !global;
+  $b: $namespace + $common-separator + $block !global;
 
   .#{$b} {
     @content;

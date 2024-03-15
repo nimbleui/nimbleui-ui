@@ -102,11 +102,25 @@ export default defineComponent({
       );
     };
 
+    const navRef = ref<FlexInstance>();
+    const offset = ref<number>(0);
     const onWheel = (e: WheelEvent) => {
-      const { deltaX, deltaY } = e;
-      console.log(deltaX);
-      console.log(deltaY);
       e.preventDefault();
+      const { deltaX, deltaY } = e;
+      const el = navRef.value?.$el as HTMLElement;
+      const { offsetHeight, offsetWidth, scrollHeight, scrollWidth } = el;
+      const offsetTop = scrollHeight - offsetHeight;
+      const offsetLeft = scrollWidth - offsetWidth;
+      const absX = Math.abs(deltaX);
+      const absY = Math.abs(deltaY);
+      const mixed = absX > absY ? deltaX : deltaY;
+      console.log(vertical.value);
+      console.log(scrollHeight, offsetHeight);
+      if (mixed < 0) {
+        offset.value = Math.max(offset.value + mixed, 0);
+      } else {
+        offset.value = Math.min(offset.value + mixed, vertical.value ? offsetTop : offsetLeft);
+      }
     };
 
     return () => {
@@ -115,12 +129,21 @@ export default defineComponent({
         <YFlex ref={tabsElRef} class={bem.b()} vertical={!vertical.value}>
           {(tabPosition == "right" || tabPosition == "bottom") && contentRender()}
           <YFlex
+            ref={navRef}
             class={[bem.e("nav"), bem.is("center", centered)]}
             justify={centered ? "center" : "flex-start"}
-            align={tabPosition === "top" || tabPosition == "left" ? "flex-end" : "flex-start"}
+            align={tabPosition === "top" ? "flex-end" : "flex-start"}
             onWheel={onWheel}
           >
-            <YFlex class={bem.e("list")} vertical={vertical.value}>
+            <YFlex
+              class={bem.e("list")}
+              vertical={vertical.value}
+              style={{
+                transform: `translate(-${!vertical.value ? offset.value : 0}px, -${
+                  vertical.value ? offset.value : 0
+                }px)`,
+              }}
+            >
               {items.map((item) => {
                 const key = item[keyField] as string | number;
                 const label = item[labelField];
