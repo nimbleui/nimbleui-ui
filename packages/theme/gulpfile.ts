@@ -11,7 +11,7 @@ import consola from "consola";
 const projRoot = resolve(__dirname, "..", "..");
 
 const distFolder = resolve(__dirname, "dist");
-const distBundle = resolve(projRoot, "yy", "theme");
+const distBundle = resolve(projRoot, "dist", "theme");
 
 const { NODE_ENV } = process.env;
 
@@ -33,7 +33,7 @@ function buildThemeChalk() {
     .pipe(
       rename((path) => {
         if (!noElPrefixFile.test(path.basename)) {
-          path.basename = `yy-${path.basename}`;
+          path.basename = `y-${path.basename}`;
         }
       })
     )
