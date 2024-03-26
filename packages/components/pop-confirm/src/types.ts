@@ -1,6 +1,7 @@
 import { mergeCommonProp, makeChildProp } from "@nimble-ui/utils";
-import { ExtractPropTypes, PropType } from "vue";
-import { ButtonTypes } from "@nimble-ui/components/button";
+import { type ExtractPropTypes, type PropType } from "vue";
+import { type ButtonTypes } from "@nimble-ui/components/button";
+import { type PlacementType } from "@nimble-ui/components/tooltip";
 
 type DoneFn = (cancel?: boolean) => void;
 type BeforeConfirmFn = (done: DoneFn) => void;
@@ -44,6 +45,13 @@ const popConfirmProps = mergeCommonProp({
    */
   beforeConfirm: {
     type: Function as PropType<BeforeConfirmFn>,
+  },
+  /**
+   * @description tooltip的弹框的方向
+   */
+  placement: {
+    type: String as PropType<PlacementType>,
+    default: "top",
   },
 });
 
