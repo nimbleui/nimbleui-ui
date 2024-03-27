@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 
-import { contentProps } from "./props";
+import { contentProps, type PlacementType } from "./props";
 
 export type TriggerType = "hover" | "click" | "focus" | "contextmenu";
 
@@ -25,5 +25,6 @@ const tooltipProps = mergeCommonProp({
   },
 });
 
+export { PlacementType };
 export default tooltipProps;
 export type TooltipProps = ExtractPropTypes<ReturnType<typeof tooltipProps>>;
