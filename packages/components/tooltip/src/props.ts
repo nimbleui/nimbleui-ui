@@ -99,4 +99,10 @@ export const contentProps = () => ({
   arrowStyle: {
     type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
   },
+  /**
+   * @description 是否隐藏箭头
+   */
+  hideArrow: {
+    type: Boolean,
+  },
 });

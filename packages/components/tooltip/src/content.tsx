@@ -158,6 +158,7 @@ export default defineComponent({
         contentStyle = {},
         arrowClass,
         arrowStyle: arrowS = {},
+        hideArrow,
       } = props;
       return (
         <div style={styles} class={bem.b()}>
@@ -177,10 +178,13 @@ export default defineComponent({
               onMouseleave={handleEvent}
               onMouseenter={handleEvent}
             >
-              <span
-                style={[arrowStyle, arrowS]}
-                class={[bem.m("arrow", "content"), bem.is(placementRef.value), arrowClass]}
-              ></span>
+              {!hideArrow && (
+                <span
+                  style={[arrowStyle, arrowS]}
+                  class={[bem.m("arrow", "content"), bem.is(placementRef.value), arrowClass]}
+                ></span>
+              )}
+
               {ctx.slots.default?.()}
             </div>
           </Transition>

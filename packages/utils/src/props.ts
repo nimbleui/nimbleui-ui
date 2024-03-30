@@ -43,9 +43,9 @@ export const mergeCommonProp = <T extends { [key: string]: ObjectType }>(props: 
  * @param callback 回调函数
  * @returns 整合后的新对象
  */
-export const handlePropOrContext = <T extends ObjectType, D extends ObjectType, K extends keyof T & keyof D>(
+export const handlePropOrContext = <T extends ObjectType, D extends T, K extends keyof T>(
   props: T,
-  context: D | undefined,
+  context: Partial<D> | undefined,
   keys: Array<K>,
   callback?: (value: T[K], contextValue: D[K] | undefined, key: K) => Exclude<T[K], Fun<any>>
 ) => {

@@ -20,7 +20,7 @@ async.vue
 | hideCancel | `boolean` | - | 是否隐藏取消按钮 | |
 | title | `VNodeChild \| (() => VNodeChild)` | - | 确认框标题 | |
 | description | `VNodeChild \| (() => VNodeChild)` | - | 确认内容的详细描述 | |
-| beforeConfirm | `(done: (cancel?: boolean) => void) => void` | 确认前执行的函数，回调函数内执行 done 参数方法的时候才是真正关闭对话框的时候。 | |
+| beforeConfirm | `(done: (cancel?: boolean) => void) => void` | - | 确认前执行的函数，回调函数内执行 done 参数方法的时候才是真正关闭对话框的时候。 | |
 
 ### PopConfirm Events
 | 事件名 | 说明 | 类型 |

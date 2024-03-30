@@ -114,8 +114,7 @@ export default defineComponent({
       const absX = Math.abs(deltaX);
       const absY = Math.abs(deltaY);
       const mixed = absX > absY ? deltaX : deltaY;
-      console.log(vertical.value);
-      console.log(scrollHeight, offsetHeight);
+
       if (mixed < 0) {
         offset.value = Math.max(offset.value + mixed, 0);
       } else {

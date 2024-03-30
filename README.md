@@ -13,7 +13,7 @@
 
 ```bash
 npm i @nimble-ui/vue --save
-yarn i @nimble-ui/vue --save
+yarn add @nimble-ui/vue --save
 ```
 
 ### 使用

@@ -41,6 +41,10 @@ const dropdownProps = mergeCommonProp({
     type: [String, Number],
     default: 200,
   },
+  childrenKey: {
+    type: String,
+    default: "children",
+  },
 });
 
 export default dropdownProps;
