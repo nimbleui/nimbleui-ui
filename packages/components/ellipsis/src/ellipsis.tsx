@@ -30,10 +30,10 @@ export default defineComponent({
     const ellipsisCls = computed(() => [bem.e("title"), bem.is("line-clamp", props.lineClamp > 1)]);
 
     return () => {
-      const { maxWidth, lineClamp } = props;
+      const { maxWidth, lineClamp, trigger } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip disabled={tooltipDisabled} trigger="hover" placement="top">
+          <YTooltip disabled={tooltipDisabled} trigger={trigger || "hover"} placement="top">
             {{
               default: () => (
                 <div

@@ -1,10 +1,16 @@
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 import { TriggerType } from "@nimble-ui/components/tooltip";
 import { contentProps } from "@nimble-ui/components/tooltip/src/props";
 
 const contentProp = contentProps();
 export const contentPropsKey = Object.keys(contentProp);
+export interface DropdownOptionsItem {
+  disabled?: boolean;
+  label?: VNodeChild | (() => VNodeChild);
+  show?: boolean | (() => boolean);
+  [key: string]: any;
+}
 
 const dropdownProps = mergeCommonProp({
   ...contentProp,
@@ -18,7 +24,7 @@ const dropdownProps = mergeCommonProp({
    * @description 菜单配置项
    */
   options: {
-    type: Array as PropType<Array<{ [key: string]: any }>>,
+    type: Array as PropType<Array<DropdownOptionsItem>>,
   },
   /**
    * @description label 的字段名
