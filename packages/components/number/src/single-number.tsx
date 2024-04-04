@@ -1,4 +1,4 @@
-import { watch, defineComponent, ref, reactive, type CSSProperties } from "vue";
+import { watch, defineComponent, ref, reactive, type CSSProperties, onMounted } from "vue";
 import { createNamespace } from "@nimble-ui/utils";
 
 function getOffset(start: number, end: number, unit: -1 | 1) {
@@ -31,23 +31,30 @@ export default defineComponent({
     const prevValue = ref<number>();
     const styles = reactive<CSSProperties>({});
 
+    const setOffset = (prev: number | string, next: number | string, unit: 1 | -1) => {
+      next = Number(next);
+      prev = Number(prev);
+      value.value = next;
+      prevValue.value = prev;
+      if (!Number.isNaN(next) && !Number.isNaN(prev)) {
+        const offset = getOffset(prev, next, unit);
+        styles.transition = "all .2s";
+        styles.transform = `translateY(${-offset}00%)`;
+      }
+    };
+
     watch(
       () => [props.value, props.count],
       (newValue, oldValue) => {
-        const next = Number(newValue[0]);
-        const prev = Number(oldValue?.[0]);
-        value.value = next;
-        prevValue.value = prev;
-
-        if (oldValue && !Number.isNaN(next) && !Number.isNaN(prev)) {
+        if (oldValue != null) {
           const unit = newValue[1] > oldValue[1] ? 1 : -1;
-          const offset = getOffset(prev, next, unit);
-          styles.transform = `translateY(${-offset}00%)`;
-          styles.transition = "all .2s";
+          setOffset(oldValue[0], newValue[0], unit);
         }
-      },
-      { immediate: true }
+      }
     );
+    onMounted(() => {
+      setOffset(0, props.value, -1);
+    });
 
     const renderUnitNumber = () => {
       const next = value.value;

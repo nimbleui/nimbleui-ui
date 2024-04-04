@@ -12,7 +12,7 @@
       <template #unchecked>否</template>
     </YSwitch>
   </div>
-  <YFlex :vertical="vertical">
+  <YFlex :vertical="vertical" @click="onClick">
     <div
       v-for="(item, index) in list"
       :key="index"
@@ -31,4 +31,7 @@ import { reactive, ref } from "vue";
 
 const list = reactive(Array.from({ length: 4 }));
 const vertical = ref(false);
+const onClick = () => {
+  console.log(222);
+};
 </script>

@@ -8,7 +8,7 @@
 
 <template>
   <YSpace :size="8">
-    <YDropdown :trigger="'hover'" placement="top-start" :options="options" @select="handleSelect">
+    <YDropdown :trigger="'click'" placement="top-start" :options="options" @select="handleSelect">
       <YButton>top-start</YButton>
     </YDropdown>
     <YDropdown :trigger="'hover'" placement="top" :options="options" @select="handleSelect">
@@ -36,6 +36,7 @@ import { YMessage } from "@nimble-ui/vue";
 interface Options {
   label: string;
   id: number;
+  children?: Options[];
 }
 
 const options = reactive<Options[]>([
@@ -54,6 +55,20 @@ const options = reactive<Options[]>([
   {
     label: "花落知多少",
     id: 4,
+    children: [
+      {
+        label: "花落知多少1",
+        id: 5,
+      },
+      {
+        label: "花落知多少2",
+        id: 6,
+      },
+      {
+        label: "花落知多少3",
+        id: 7,
+      },
+    ],
   },
 ]);
 

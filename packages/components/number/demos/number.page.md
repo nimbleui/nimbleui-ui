@@ -3,9 +3,7 @@
 
 ## 代码演示
 ```demo
-basic.vue
 gap.vue
-class.vue
 ```
 ## API
 

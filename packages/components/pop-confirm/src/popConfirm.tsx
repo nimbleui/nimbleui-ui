@@ -41,11 +41,22 @@ export default defineComponent({
     };
 
     return () => {
-      const { disabled, hideCancel, okText, cancelText, okType = "primary", title, description, icon } = props;
+      const {
+        disabled,
+        hideCancel,
+        okText,
+        cancelText,
+        okType = "primary",
+        title,
+        description,
+        icon,
+        placement,
+      } = props;
+
       return (
         <YTooltip
           v-model={show.value}
-          placement="top"
+          placement={placement}
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           disabled={disabled}

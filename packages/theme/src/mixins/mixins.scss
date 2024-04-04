@@ -40,3 +40,13 @@
     }
   }
 }
+
+@mixin res($key, $map: $breakpoints) {
+  @if map-has-key($map, $key) {
+    @media only screen and #{unquote(map-get($map, $key))} {
+      @content;
+    }
+  } @else {
+    @warn "没找到: `#{$map}`";
+  }
+}

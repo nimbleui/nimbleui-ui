@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YDropdown :trigger="'click'" :options="numList" @select="handleSelect">
+  <YDropdown :trigger="'hover'" :options="numList" @select="handleSelect">
     <YButton :type="'primary'">Dropdown List</YButton>
   </YDropdown>
 </template>

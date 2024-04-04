@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const count = ref(22);
+const count = ref(32);
 const onSun = (num: number) => {
   count.value = count.value + num;
 };

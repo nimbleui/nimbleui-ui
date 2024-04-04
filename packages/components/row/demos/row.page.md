@@ -7,6 +7,7 @@
 ```demo
 basic.vue
 gutter.vue
+respond.vue
 ```
 
 ## API
@@ -19,6 +20,9 @@ gutter.vue
 | align | `'top'` \| `'middle'` \| `'bottom'` | `'top'` | flex 布局下的垂直排列方式 | |
 | justify | `'start'` \| `'end'` \| `'center'` \| `'space-around'` \| `'space-between'` \| `'space-evenly'` | `'start'` | flex 布局下的水平排列方式 | |
 | tag | `'string'` | `'div'` | 自定义元素标签 | |
+
+### Col Props
+
 
 ### Row Slots
 | 名称 | 参数 | 说明 |

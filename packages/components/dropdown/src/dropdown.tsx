@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { YScrollbar } from "@nimble-ui/components/scrollbar";
 import { createNamespace, isFunction, pick } from "@nimble-ui/utils";
@@ -21,17 +21,29 @@ export default defineComponent({
       };
     };
 
-    function renderItem() {
-      const { options, labelField, keyField, details } = props;
+    function renderItem(i: number, list?: any[]) {
+      const { labelField, keyField, details, childrenKey } = props;
       return (
         <YScrollbar trigger="hover" class={bem.e("menus")}>
-          {options?.map((item, index) => {
+          {list?.map((item, index) => {
             const key = item[keyField];
             const value = item[labelField];
-            return (
-              <div onClick={onClick(item, index)} class={bem.e("menu")} key={key}>
-                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(options, details) : value}</>}
+            const currentIndex = i + 1;
+
+            const itemEl = (
+              <div key={key} onClick={onClick(item, index)} class={bem.e("menu")}>
+                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(list, details) : value}</>}
               </div>
+            );
+            return item[childrenKey] ? (
+              <YTooltip teleported key={key} hideArrow trigger="hover" placement="right-start">
+                {{
+                  default: () => itemEl,
+                  content: () => renderItem(currentIndex, item[childrenKey]),
+                }}
+              </YTooltip>
+            ) : (
+              itemEl
             );
           })}
         </YScrollbar>
@@ -47,12 +59,13 @@ export default defineComponent({
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           maxHeight={240}
+          maxWidth={800}
         >
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;
             },
-            content: renderItem,
+            content: () => renderItem(0, props.options),
           }}
         </YTooltip>
       );

@@ -5,7 +5,7 @@ import YContent from "./content";
 import tooltipProps from "./types";
 import { tooltipContextKey, type RectInfo } from "@nimble-ui/tokens";
 import { useEventListener } from "@nimble-ui/hooks";
-import { isFunction } from "@nimble-ui/utils";
+import { isFunction, pick } from "@nimble-ui/utils";
 
 export default defineComponent({
   name: "YTooltip",
@@ -37,7 +37,7 @@ export default defineComponent({
       const { details, disabled } = props;
       const res = isFunction(disabled) ? disabled(details) : disabled;
 
-      ctx.emit("events", e.type);
+      ctx.emit("events", e.type, toggle);
       if (res) return;
 
       clearTimeout(time);
@@ -66,38 +66,29 @@ export default defineComponent({
     });
 
     return () => {
-      const {
-        appendTo,
-        trigger,
-        teleported,
-        transition,
-        placement,
-        contentClass,
-        contentStyle,
-        arrowClass,
-        arrowStyle,
-        maxWidth,
-        maxHeight,
-      } = props;
+      const contentProps = pick(props, [
+        "appendTo",
+        "trigger",
+        "teleported",
+        "placement",
+        "contentClass",
+        "contentStyle",
+        "arrowClass",
+        "arrowStyle",
+        "maxWidth",
+        "maxHeight",
+        "hideArrow",
+      ]);
       return (
         <>
-          <YTrigger trigger={trigger} onToggle={onToggle}>
+          <YTrigger trigger={props.trigger} onToggle={onToggle}>
             {ctx.slots.default?.()}
           </YTrigger>
           <YContent
             show={show.value}
-            trigger={trigger}
-            appendTo={appendTo}
-            placement={placement}
-            transition={transition || "y-tooltip"}
-            teleported={teleported}
+            transition={props.transition || "y-tooltip"}
             onToggle={onToggle}
-            arrowClass={arrowClass}
-            arrowStyle={arrowStyle}
-            contentClass={contentClass}
-            contentStyle={contentStyle}
-            maxHeight={maxHeight}
-            maxWidth={maxWidth}
+            {...contentProps}
           >
             {ctx.slots.content?.()}
           </YContent>
