@@ -5,6 +5,12 @@ import { contentProps } from "@nimble-ui/components/tooltip/src/props";
 
 const contentProp = contentProps();
 export const contentPropsKey = Object.keys(contentProp);
+export interface DropdownOptionsItem {
+  disabled?: boolean;
+  label?: VNodeChild | (() => VNodeChild);
+  show?: boolean | (() => boolean);
+  [key: string]: any;
+}
 
 export interface DropdownOptionItem {
   key?: string | number;
