@@ -9,5 +9,6 @@ export * from "./src/event";
 export * from "./src/array";
 export * from "./src/scroll";
 export * from "./src/style";
+export * from "./src/dom";
 
 export * from "./src/typescript";

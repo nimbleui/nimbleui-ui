@@ -1,0 +1,8 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/config.scss" as *;
+
+@include b(popper) {
+  @include e(content) {
+    position: absolute;
+  }
+}

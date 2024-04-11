@@ -20,7 +20,7 @@ export const contentProps = () => ({
    * @description 渲染在哪里
    */
   appendTo: {
-    type: String,
+    type: [String, Object] as PropType<string | HTMLElement>,
     default: "body",
   },
   /**

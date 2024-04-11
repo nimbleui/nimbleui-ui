@@ -38,3 +38,5 @@ export * from "./slider";
 export * from "./date-picker";
 export * from "./number";
 export * from "./badge";
+export * from "./popper";
+export * from "./slot";

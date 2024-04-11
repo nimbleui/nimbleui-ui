@@ -1,9 +1,9 @@
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
-import { YScrollbar } from "@nimble-ui/components/scrollbar";
-import { createNamespace, isFunction, pick } from "@nimble-ui/utils";
+import { createNamespace, pick } from "@nimble-ui/utils";
 
 import dropdownProps, { contentPropsKey } from "./types";
+import YDropdownMenu from "./dropdownMenu";
 
 export default defineComponent({
   name: "YDropdown",
@@ -21,36 +21,9 @@ export default defineComponent({
       };
     };
 
-    function renderItem(i: number, list?: any[]) {
-      const { labelField, keyField, details, childrenKey } = props;
-      return (
-        <YScrollbar trigger="hover" class={bem.e("menus")}>
-          {list?.map((item, index) => {
-            const key = item[keyField];
-            const value = item[labelField];
-            const currentIndex = i + 1;
-
-            const itemEl = (
-              <div key={key} onClick={onClick(item, index)} class={bem.e("menu")}>
-                {ctx.slots.dropdown?.({ item, index }) || <>{isFunction(value) ? value(list, details) : value}</>}
-              </div>
-            );
-            return item[childrenKey] ? (
-              <YTooltip teleported key={key} hideArrow trigger="hover" placement="right-start">
-                {{
-                  default: () => itemEl,
-                  content: () => renderItem(currentIndex, item[childrenKey]),
-                }}
-              </YTooltip>
-            ) : (
-              itemEl
-            );
-          })}
-        </YScrollbar>
-      );
-    }
-
     return () => {
+      const menuProps = pick(props, ["keyField", "labelField", "childrenKey", "options"]);
+
       return (
         <YTooltip
           ref={tooltipRef}
@@ -58,14 +31,14 @@ export default defineComponent({
           transition={bem.name("zoom-in-top")}
           contentClass={bem.b()}
           arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
-          maxHeight={240}
-          maxWidth={800}
+          maxHeight={1000}
+          maxWidth={1000}
         >
           {{
             default: () => {
               return <span class={bem.e("title")}>{ctx.slots.default?.()}</span>;
             },
-            content: () => renderItem(0, props.options),
+            content: () => <YDropdownMenu {...menuProps} />,
           }}
         </YTooltip>
       );

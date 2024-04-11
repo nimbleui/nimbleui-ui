@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 import { TriggerType } from "@nimble-ui/components/tooltip";
 import { contentProps } from "@nimble-ui/components/tooltip/src/props";
@@ -6,20 +6,18 @@ import { contentProps } from "@nimble-ui/components/tooltip/src/props";
 const contentProp = contentProps();
 export const contentPropsKey = Object.keys(contentProp);
 
-const dropdownProps = mergeCommonProp({
-  ...contentProp,
-  value: {
-    type: [String, Number],
-  },
-  trigger: {
-    type: String as PropType<TriggerType>,
-  },
-  /**
-   * @description 菜单配置项
-   */
-  options: {
-    type: Array as PropType<Array<{ [key: string]: any }>>,
-  },
+export interface DropdownOptionItem {
+  key?: string | number;
+  label?: string;
+  disabled?: boolean;
+  show?: boolean;
+  type?: string;
+  render?: () => VNodeChild;
+  children?: Array<DropdownOptionItem>;
+  [key: string]: any;
+}
+
+const commonProp = {
   /**
    * @description label 的字段名
    */
@@ -35,17 +33,52 @@ const dropdownProps = mergeCommonProp({
     default: "id",
   },
   /**
-   * @description 菜单最大高度
+   * @description children 的字段名
    */
-  maxHeight: {
-    type: [String, Number],
-    default: 200,
-  },
   childrenKey: {
     type: String,
     default: "children",
   },
+};
+
+const dropdownProps = mergeCommonProp({
+  ...contentProp,
+  ...commonProp,
+  value: {
+    type: [String, Number],
+  },
+  trigger: {
+    type: String as PropType<TriggerType>,
+  },
+  /**
+   * @description 菜单配置项
+   */
+  options: {
+    type: Array as PropType<Array<DropdownOptionItem>>,
+  },
+  maxHeight: {
+    type: [String, Number],
+    default: 200,
+  },
 });
+
+export const dropdownMenuProps = {
+  ...commonProp,
+  options: {
+    type: Array as PropType<Array<DropdownOptionItem>>,
+  },
+} as const;
+
+export const dropdownOptionProps = {
+  ...commonProp,
+  item: {
+    type: Object as PropType<DropdownOptionItem>,
+    required: true,
+  },
+  domEl: {
+    type: Object as PropType<HTMLDivElement>,
+  },
+} as const;
 
 export default dropdownProps;
 

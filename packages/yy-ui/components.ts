@@ -41,6 +41,7 @@ import {
   YDatePicker,
   YNumber,
   YBadge,
+  YPopper,
 } from "@nimble-ui/components";
 
 export default [
@@ -86,4 +87,5 @@ export default [
   YDatePicker,
   YNumber,
   YBadge,
+  YPopper,
 ];
