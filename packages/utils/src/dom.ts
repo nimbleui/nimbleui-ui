@@ -53,3 +53,34 @@ export function getNodeScroll(element: Element | Window): {
     scrollTop: element.scrollY,
   };
 }
+
+type Polyfill = (element: HTMLElement) => Element | null;
+function getTrueOffsetParent(element: Element, polyfill: Polyfill | undefined): Element | null {
+  if (!isHTMLElement(element) || getComputedStyle(element).position === "fixed") {
+    return null;
+  }
+
+  if (polyfill) return polyfill(element);
+
+  return element.offsetParent;
+}
+
+export function getOffsetParent(element: Element, polyfill?: Polyfill): Element | Window {
+  if (!isHTMLElement(element)) return window;
+
+  let offsetParent = getTrueOffsetParent(element, polyfill);
+
+  while (offsetParent && getComputedStyle(offsetParent).position === "static") {
+    offsetParent = getTrueOffsetParent(offsetParent, polyfill);
+  }
+
+  if (
+    offsetParent &&
+    (getNodeName(offsetParent) === "html" ||
+      (getNodeName(offsetParent) === "body" && getComputedStyle(offsetParent).position === "static"))
+  ) {
+    return window;
+  }
+
+  return offsetParent || window;
+}

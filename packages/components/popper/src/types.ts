@@ -1,25 +1,11 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, HTMLAttributes, PropType } from "vue";
 
 export type PopperAlignment = "start" | "end";
 export type PopperSide = "top" | "right" | "bottom" | "left";
 export type PopperAlignedPlacement = `${PopperSide}-${PopperAlignment}`;
 export type PopperPlacement = PopperSide | PopperAlignedPlacement;
-export type PopperStrategy = "absolute" | "fixed";
 
-export type PopperRect = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-export interface DOMClientRect extends PopperRect {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
-}
 export type TriggerType = "hover" | "click" | "focus" | "contextmenu";
 
 const popperProps = mergeCommonProp({
@@ -35,6 +21,7 @@ const popperProps = mergeCommonProp({
    */
   trigger: {
     type: String as PropType<TriggerType>,
+    default: "click",
   },
   /***
    * @description Tooltip 组件是否禁用
@@ -48,6 +35,50 @@ const popperProps = mergeCommonProp({
   modelValue: {
     type: Boolean as PropType<boolean>,
     default: undefined,
+  },
+  /**
+   * @description 渲染在哪里
+   */
+  appendTo: {
+    type: [String, Object] as PropType<string | HTMLElement>,
+    default: "body",
+  },
+  /**
+   * @description 是否禁止穿梭功能
+   */
+  teleported: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * @description 动画名称
+   */
+  transition: {
+    type: String,
+  },
+  /**
+   * @description 提示内容的class
+   */
+  contentClass: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["class"]>,
+  },
+  /**
+   * @description 箭头的class
+   */
+  arrowClass: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["class"]>,
+  },
+  /**
+   * @description 提示内容的style
+   */
+  contentStyle: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
+  },
+  /**
+   * @description 箭头的style
+   */
+  arrowStyle: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
   },
   "onUpdate:modelValue": {
     type: Function as PropType<(value: boolean) => void>,

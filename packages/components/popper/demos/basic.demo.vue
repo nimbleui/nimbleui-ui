@@ -6,18 +6,18 @@
 </markdown>
 
 <template>
-  <YPopper>
+  <YPopper placement="left-start" trigger="hover">
     <YButton>标题</YButton>
     <template #content>
-      <div class="content"></div>
+      <div class="popper-content"></div>
     </template>
   </YPopper>
 </template>
 
 <style lang="scss">
-.content {
-  width: 150px;
-  height: 300px;
+.popper-content {
+  width: 100px;
+  height: 200px;
   background-color: red;
 }
 </style>

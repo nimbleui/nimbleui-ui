@@ -1,18 +1,22 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, nextTick, computed } from "vue";
+import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed } from "vue";
 import { OnlyChildEventFn, YOnlyChild } from "@nimble-ui/components/slot";
-import { useLazyRender } from "@nimble-ui/hooks";
+import { computePositionOffset, useComputePosition, useLazyRender } from "@nimble-ui/hooks";
 
 import popperProps from "./types";
-import { computePosition } from "./dimensions";
 
 export default defineComponent({
   name: "YPopper",
   props: popperProps(),
   setup(props, ctx) {
     const bem = createNamespace("popper");
-    const triggerRef = ref<Element | null>(null);
-    const contentRef = ref<Element | null>(null);
+    const triggerRef = ref<Element>();
+    const contentRef = ref<Element>();
+
+    const { computePosition } = useComputePosition(triggerRef, contentRef, {
+      placement: props.placement,
+      middleware: [computePositionOffset(5)],
+    });
 
     const selfModel = ref(false);
     const show = computed({
@@ -24,36 +28,54 @@ export default defineComponent({
     });
     const styles = reactive<CSSProperties>({});
 
-    const handlePosition = () => {
-      nextTick(() => {
-        if (triggerRef.value && contentRef.value) {
-          const { placement } = props;
-
-          // const [start, end] = placement.split("-");
-          // styles.transformOrigin = `${start} ${end ? (end == "end" ? "" : "") : "center"}`;
-
-          const { x, y } = computePosition(triggerRef.value, contentRef.value, {
-            placement,
-          });
-          styles.top = `${y}px`;
-          styles.left = `${x}px`;
-        }
-      });
+    const handlePosition = async () => {
+      const { x, y } = await computePosition();
+      styles.left = `${x}px`;
+      styles.top = `${y}px`;
     };
 
+    let time = 0;
     const onEvent: OnlyChildEventFn = (type, e) => {
       if (type === "element") {
         triggerRef.value = e as Element;
-      } else if (type == "click") {
-        show.value = !show.value;
-        handlePosition();
+        return;
+      }
+
+      const { trigger } = props;
+      switch (trigger) {
+        case "click": {
+          if (type == "click") {
+            show.value = !show.value;
+            handlePosition();
+          }
+          break;
+        }
+        case "hover": {
+          clearTimeout(time);
+          if (type == "mouseenter") {
+            show.value = true;
+            handlePosition();
+          } else if (type === "mouseleave") {
+            time = window.setTimeout(() => {
+              show.value = false;
+            }, 80);
+          }
+          break;
+        }
       }
     };
 
     const { lazyRender } = useLazyRender(show);
     const renderContent = lazyRender(() => (
-      <Transition appear name="y-tooltip">
-        <div v-show={show.value} class={bem.e("content")} style={styles} ref={contentRef}>
+      <Transition appear name={props.transition ?? "y-tooltip"}>
+        <div
+          style={styles}
+          ref={contentRef}
+          v-show={show.value}
+          class={bem.e("content")}
+          onMouseenter={(e) => onEvent("mouseenter", e)}
+          onMouseleave={(e) => onEvent("mouseleave", e)}
+        >
           {ctx.slots.content?.()}
         </div>
       </Transition>
