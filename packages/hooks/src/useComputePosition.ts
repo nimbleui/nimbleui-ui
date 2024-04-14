@@ -191,6 +191,44 @@ export function computePositionOffset(number: number): Middleware {
   };
 }
 
+export const computePositionAutoPlacement = (number = 0): Middleware => {
+  return {
+    name: "autoPlacement",
+    type: "before",
+    fn(state) {
+      const { placement: initPlacement, rects } = state;
+      const { reference, floating } = rects;
+      const [side, alignment] = initPlacement.split("-") as [Side, Alignment];
+      const { innerHeight, innerWidth } = window;
+
+      let placement = initPlacement;
+      if (side == "bottom") {
+        const flag = reference.bottom + floating.height + number > innerHeight;
+        if (flag) {
+          placement = `top-${alignment}`;
+        }
+      } else if (side == "top") {
+        const flag = floating.height + number > reference.y;
+        if (flag) {
+          placement = `bottom-${alignment}`;
+        }
+      } else if (side == "left") {
+        const flag = floating.width + number > reference.x;
+        if (flag) {
+          placement = `right-${alignment}`;
+        }
+      } else if (side == "right") {
+        const flag = reference.right + floating.width + number > innerWidth;
+        if (flag) {
+          placement = `left-${alignment}`;
+        }
+      }
+
+      return { placement };
+    },
+  };
+};
+
 const handleMiddleware = async (
   list: Middleware[],
   type: MiddlewareExecuteType,
@@ -204,6 +242,7 @@ const handleMiddleware = async (
   }
 ) => {
   let { placement, x = 0, y = 0, middlewareData } = options;
+  const { elements, rects } = options;
 
   for (let i = 0; i < list.length; i++) {
     const { name, type: t = "after", fn } = list[i];
@@ -219,8 +258,8 @@ const handleMiddleware = async (
       y,
       placement,
       middlewareData,
-      elements: options.elements,
-      rects: options.rects,
+      elements,
+      rects,
     });
 
     placement = nextPlacement ?? placement;
@@ -237,11 +276,12 @@ const handleMiddleware = async (
 
 export function useComputePosition(reference: TagElement, floating: TagElement, config: ComputePositionConfig = {}) {
   const dataPosition = reactive({ x: 0, y: 0 });
-  const { strategy = "absolute", middleware = [] } = config;
-  let placement = config.placement ?? "bottom";
 
   const computePosition = async () => {
     await nextTick();
+
+    const { strategy = "absolute", middleware = [] } = config;
+    let placement = config.placement ?? "bottom";
 
     const referenceEl = unref(reference);
     const floatingEl = unref(floating);
@@ -278,7 +318,7 @@ export function useComputePosition(reference: TagElement, floating: TagElement, 
     dataPosition.x = x;
     dataPosition.y = y;
 
-    return { x, y };
+    return { x, y, placement };
   };
 
   return { dataPosition, computePosition };

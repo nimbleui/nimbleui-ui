@@ -1,7 +1,13 @@
 import { createNamespace } from "@nimble-ui/utils";
 import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed } from "vue";
 import { OnlyChildEventFn, YOnlyChild } from "@nimble-ui/components/slot";
-import { computePositionOffset, useComputePosition, useLazyRender } from "@nimble-ui/hooks";
+import {
+  computePositionAutoPlacement,
+  computePositionOffset,
+  useClickOutside,
+  useComputePosition,
+  useLazyRender,
+} from "@nimble-ui/hooks";
 
 import popperProps from "./types";
 
@@ -15,7 +21,7 @@ export default defineComponent({
 
     const { computePosition } = useComputePosition(triggerRef, contentRef, {
       placement: props.placement,
-      middleware: [computePositionOffset(5)],
+      middleware: [computePositionAutoPlacement(5), computePositionOffset(10)],
     });
 
     const selfModel = ref(false);
@@ -26,8 +32,8 @@ export default defineComponent({
         ctx.emit("update:modelValue", val);
       },
     });
-    const styles = reactive<CSSProperties>({});
 
+    const styles = reactive<CSSProperties>({});
     const handlePosition = async () => {
       const { x, y } = await computePosition();
       styles.left = `${x}px`;
@@ -62,8 +68,21 @@ export default defineComponent({
           }
           break;
         }
+        case "focus": {
+          if (type == "focus") {
+            show.value = true;
+            handlePosition();
+          } else if (type == "blur") {
+            show.value = false;
+          }
+          break;
+        }
       }
     };
+
+    useClickOutside([contentRef, triggerRef], () => {
+      show.value = false;
+    });
 
     const { lazyRender } = useLazyRender(show);
     const renderContent = lazyRender(() => (
@@ -85,7 +104,9 @@ export default defineComponent({
       return (
         <>
           <YOnlyChild onEvent={onEvent}>{ctx.slots.default?.()}</YOnlyChild>
-          <Teleport to={"body"}>{renderContent()}</Teleport>
+          <Teleport to={props.appendTo} disabled={props.teleported}>
+            {renderContent()}
+          </Teleport>
         </>
       );
     };

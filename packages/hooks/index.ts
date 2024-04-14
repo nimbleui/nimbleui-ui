@@ -11,3 +11,4 @@ export * from "./src/useScrollParent";
 export * from "./src/useMouseMove";
 export * from "./src/useMergePropOrContext";
 export * from "./src/useComputePosition";
+export * from "./src/useClickOutside";

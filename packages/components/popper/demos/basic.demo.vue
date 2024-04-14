@@ -6,12 +6,28 @@
 </markdown>
 
 <template>
-  <YPopper placement="left-start" trigger="hover">
-    <YButton>标题</YButton>
-    <template #content>
-      <div class="popper-content"></div>
-    </template>
-  </YPopper>
+  <YFlex :gap="15">
+    <YPopper placement="top">
+      <YButton>触发方式：click</YButton>
+      <template #content>
+        <div class="popper-content"></div>
+      </template>
+    </YPopper>
+
+    <YPopper placement="bottom" trigger="hover">
+      <YButton>触发方式：hover</YButton>
+      <template #content>
+        <div class="popper-content"></div>
+      </template>
+    </YPopper>
+
+    <YPopper trigger="focus">
+      <YInput />
+      <template #content>
+        <div class="popper-content"></div>
+      </template>
+    </YPopper>
+  </YFlex>
 </template>
 
 <style lang="scss">
