@@ -7,7 +7,7 @@ import {
   isHTMLElement,
   isOverflowElement,
 } from "@nimble-ui/utils";
-import { Ref, nextTick, reactive, unref } from "vue";
+import { ComputedRef, Ref, nextTick, reactive, unref } from "vue";
 
 type Alignment = "start" | "end";
 type Side = "top" | "right" | "bottom" | "left";
@@ -159,11 +159,6 @@ type Middleware = {
   type?: MiddlewareExecuteType;
   fn: (state: MiddlewareState) => Promise<MiddlewareReturn> | MiddlewareReturn;
 };
-interface ComputePositionConfig {
-  placement?: Placement;
-  strategy?: Strategy;
-  middleware?: Middleware[];
-}
 
 export function computePositionOffset(number: number): Middleware {
   return {
@@ -274,6 +269,12 @@ const handleMiddleware = async (
   return { placement, x, y, middlewareData };
 };
 
+interface ComputePositionConfig {
+  placement?: ComputedRef<Placement> | Placement;
+  strategy?: Strategy;
+  middleware?: Middleware[];
+}
+
 export function useComputePosition(reference: TagElement, floating: TagElement, config: ComputePositionConfig = {}) {
   const dataPosition = reactive({ x: 0, y: 0 });
 
@@ -281,7 +282,7 @@ export function useComputePosition(reference: TagElement, floating: TagElement, 
     await nextTick();
 
     const { strategy = "absolute", middleware = [] } = config;
-    let placement = config.placement ?? "bottom";
+    let placement = unref(config.placement) ?? "bottom";
 
     const referenceEl = unref(reference);
     const floatingEl = unref(floating);

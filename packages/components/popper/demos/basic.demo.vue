@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YFlex :gap="15">
+  <YFlex wrap :gap="15">
     <YPopper placement="top">
       <YButton>触发方式：click</YButton>
       <template #content>
@@ -27,8 +27,24 @@
         <div class="popper-content"></div>
       </template>
     </YPopper>
+
+    <YPopper v-model="show" @outside="onOutside">
+      只有文本
+      <template #content>
+        <div class="popper-content"></div>
+      </template>
+    </YPopper>
   </YFlex>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+const show = ref(false);
+const onOutside = (e: MouseEvent) => {
+  console.log(e);
+};
+</script>
 
 <style lang="scss">
 .popper-content {

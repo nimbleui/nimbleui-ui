@@ -83,6 +83,12 @@ const popperProps = mergeCommonProp({
   "onUpdate:modelValue": {
     type: Function as PropType<(value: boolean) => void>,
   },
+  /**
+   * @description clickOutside 时触发的回调函数
+   */
+  onOutside: {
+    type: Function as PropType<(e: MouseEvent) => void>,
+  },
 });
 
 export default popperProps;

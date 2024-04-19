@@ -7,6 +7,7 @@ import {
   useClickOutside,
   useComputePosition,
   useLazyRender,
+  useScrollParent,
 } from "@nimble-ui/hooks";
 
 import popperProps from "./types";
@@ -19,8 +20,9 @@ export default defineComponent({
     const triggerRef = ref<Element>();
     const contentRef = ref<Element>();
 
+    const placement = computed(() => props.placement);
     const { computePosition } = useComputePosition(triggerRef, contentRef, {
-      placement: props.placement,
+      placement,
       middleware: [computePositionAutoPlacement(5), computePositionOffset(10)],
     });
 
@@ -80,8 +82,10 @@ export default defineComponent({
       }
     };
 
-    useClickOutside([contentRef, triggerRef], () => {
+    useScrollParent(triggerRef, handlePosition);
+    useClickOutside([contentRef, triggerRef], (e) => {
       show.value = false;
+      ctx.emit("outside", e);
     });
 
     const { lazyRender } = useLazyRender(show);
