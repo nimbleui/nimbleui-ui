@@ -6,7 +6,7 @@ export type PopperSide = "top" | "right" | "bottom" | "left";
 export type PopperAlignedPlacement = `${PopperSide}-${PopperAlignment}`;
 export type PopperPlacement = PopperSide | PopperAlignedPlacement;
 
-export type TriggerType = "hover" | "click" | "focus" | "contextmenu";
+export type TriggerType = "hover" | "click" | "focus" | "manual";
 
 const popperProps = mergeCommonProp({
   /**
@@ -55,6 +55,18 @@ const popperProps = mergeCommonProp({
    */
   transition: {
     type: String,
+  },
+  /**
+   * @description 手动控制位置是，top的距离
+   */
+  top: {
+    type: Number,
+  },
+  /**
+   * @description 手动控制位置是，left的距离
+   */
+  left: {
+    type: Number,
   },
   /**
    * @description 提示内容的class

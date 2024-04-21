@@ -8,41 +8,49 @@
 <template>
   <YFlex wrap :gap="15">
     <YPopper placement="top">
-      <YButton>触发方式：click</YButton>
-      <template #content>
-        <div class="popper-content"></div>
+      <template #trigger>
+        <YButton>触发方式：click</YButton>
       </template>
+      <div class="popper-content"></div>
     </YPopper>
 
     <YPopper placement="bottom" trigger="hover">
-      <YButton>触发方式：hover</YButton>
-      <template #content>
-        <div class="popper-content"></div>
+      <template #trigger>
+        <YButton>触发方式：hover</YButton>
       </template>
+      <div class="popper-content"></div>
     </YPopper>
 
     <YPopper trigger="focus">
-      <YInput />
-      <template #content>
-        <div class="popper-content"></div>
+      <template #trigger>
+        <YInput />
       </template>
+      <div class="popper-content"></div>
     </YPopper>
 
-    <YPopper v-model="show" @outside="onOutside">
-      只有文本
-      <template #content>
-        <div class="popper-content"></div>
-      </template>
+    <YPopper @outside="onOutside">
+      <template #trigger> 只有文本 </template>
+      <div class="popper-content"></div>
     </YPopper>
+
+    <div class="trigger" @contextmenu="onContextmenu"></div>
+    <YPopper v-model="show" trigger="manual" v-bind="client">厉害</YPopper>
   </YFlex>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
-const show = ref(false);
 const onOutside = (e: MouseEvent) => {
   console.log(e);
+};
+const show = ref(false);
+const client = reactive({ left: 0, top: 0 });
+const onContextmenu = (e: MouseEvent) => {
+  e.preventDefault();
+  show.value = true;
+  client.left = e.pageX;
+  client.top = e.pageY;
 };
 </script>
 
@@ -51,5 +59,10 @@ const onOutside = (e: MouseEvent) => {
   width: 100px;
   height: 200px;
   background-color: red;
+}
+.trigger {
+  width: 300px;
+  height: 300px;
+  background-color: rgba(0, 128, 0, 0.5);
 }
 </style>

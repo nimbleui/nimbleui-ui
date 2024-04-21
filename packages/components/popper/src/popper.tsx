@@ -1,9 +1,9 @@
 import { createNamespace } from "@nimble-ui/utils";
-import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed } from "vue";
+import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed, watch } from "vue";
 import { OnlyChildEventFn, YOnlyChild } from "@nimble-ui/components/slot";
 import {
-  computePositionAutoPlacement,
-  computePositionOffset,
+  computePositionAutoPlacement as autoPlacement,
+  computePositionOffset as offset,
   useClickOutside,
   useComputePosition,
   useLazyRender,
@@ -23,20 +23,33 @@ export default defineComponent({
     const placement = computed(() => props.placement);
     const { computePosition } = useComputePosition(triggerRef, contentRef, {
       placement,
-      middleware: [computePositionAutoPlacement(5), computePositionOffset(10)],
+      middleware: [autoPlacement(5), offset(10)],
     });
 
     const selfModel = ref(false);
     const show = computed({
-      get: () => props.modelValue ?? selfModel.value,
+      get: () => {
+        const { modelValue, left, top, trigger } = props;
+        if (trigger == "manual" && left == undefined && top == undefined) {
+          return false;
+        }
+        return modelValue ?? selfModel.value;
+      },
       set(val) {
         selfModel.value = val;
         ctx.emit("update:modelValue", val);
       },
     });
 
+    watch([() => props.left, () => props.top], (val) => {
+      styles.left = `${val[0]}px`;
+      styles.top = `${val[1]}px`;
+    });
+
     const styles = reactive<CSSProperties>({});
     const handlePosition = async () => {
+      if (props.trigger == "manual") return;
+
       const { x, y } = await computePosition();
       styles.left = `${x}px`;
       styles.top = `${y}px`;
@@ -99,7 +112,7 @@ export default defineComponent({
           onMouseenter={(e) => onEvent("mouseenter", e)}
           onMouseleave={(e) => onEvent("mouseleave", e)}
         >
-          {ctx.slots.content?.()}
+          {ctx.slots.default?.()}
         </div>
       </Transition>
     ));
@@ -107,7 +120,7 @@ export default defineComponent({
     return () => {
       return (
         <>
-          <YOnlyChild onEvent={onEvent}>{ctx.slots.default?.()}</YOnlyChild>
+          <YOnlyChild onEvent={onEvent}>{ctx.slots.trigger?.()}</YOnlyChild>
           <Teleport to={props.appendTo} disabled={props.teleported}>
             {renderContent()}
           </Teleport>
