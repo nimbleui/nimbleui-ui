@@ -1,4 +1,4 @@
-import { createNamespace } from "@nimble-ui/utils";
+import { createNamespace, isEmpty } from "@nimble-ui/utils";
 import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed, watch } from "vue";
 import { OnlyChildEventFn, YOnlyChild } from "@nimble-ui/components/slot";
 import {
@@ -30,7 +30,7 @@ export default defineComponent({
     const show = computed({
       get: () => {
         const { modelValue, left, top, trigger } = props;
-        if (trigger == "manual" && left == undefined && top == undefined) {
+        if (trigger == "manual" && isEmpty(left) && isEmpty(top)) {
           return false;
         }
         return modelValue ?? selfModel.value;
@@ -102,20 +102,23 @@ export default defineComponent({
     });
 
     const { lazyRender } = useLazyRender(show);
-    const renderContent = lazyRender(() => (
-      <Transition appear name={props.transition ?? "y-tooltip"}>
-        <div
-          style={styles}
-          ref={contentRef}
-          v-show={show.value}
-          class={bem.e("content")}
-          onMouseenter={(e) => onEvent("mouseenter", e)}
-          onMouseleave={(e) => onEvent("mouseleave", e)}
-        >
-          {ctx.slots.default?.()}
-        </div>
-      </Transition>
-    ));
+    const renderContent = lazyRender(() => {
+      const { transition, contentStyle = {}, contentClass } = props;
+      return (
+        <Transition appear name={transition ?? "y-tooltip"}>
+          <div
+            style={[styles, contentStyle]}
+            ref={contentRef}
+            v-show={show.value}
+            class={[bem.e("content"), contentClass]}
+            onMouseenter={(e) => onEvent("mouseenter", e)}
+            onMouseleave={(e) => onEvent("mouseleave", e)}
+          >
+            {ctx.slots.default?.()}
+          </div>
+        </Transition>
+      );
+    });
 
     return () => {
       return (

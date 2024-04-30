@@ -7,14 +7,16 @@
 
 <template>
   <YFlex wrap :gap="15">
-    <YPopper placement="top">
-      <template #trigger>
-        <YButton>触发方式：click</YButton>
-      </template>
-      <div class="popper-content"></div>
-    </YPopper>
+    <div class="warp">
+      <YPopper teleported placement="top">
+        <template #trigger>
+          <YButton>触发方式：click</YButton>
+        </template>
+        <div class="popper-content"></div>
+      </YPopper>
+    </div>
 
-    <YPopper placement="bottom" trigger="hover">
+    <YPopper placement="top">
       <template #trigger>
         <YButton>触发方式：hover</YButton>
       </template>
@@ -34,7 +36,9 @@
     </YPopper>
 
     <div class="trigger" @contextmenu="onContextmenu"></div>
-    <YPopper v-model="show" trigger="manual" v-bind="client">厉害</YPopper>
+    <YPopper v-model="show" trigger="manual" v-bind="client">
+      <div class="manual"></div>
+    </YPopper>
   </YFlex>
 </template>
 
@@ -64,5 +68,13 @@ const onContextmenu = (e: MouseEvent) => {
   width: 300px;
   height: 300px;
   background-color: rgba(0, 128, 0, 0.5);
+}
+.manual {
+  width: 120px;
+  height: 180px;
+  background-color: rgb(3, 56, 27);
+}
+.warp {
+  position: relative;
 }
 </style>

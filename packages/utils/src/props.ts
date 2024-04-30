@@ -24,14 +24,25 @@ export const mergeFunctionProp = <T = any>(type: any, defaultVal?: T) => {
  * @param props 组件参数
  * @returns 整合公共参数的对象
  */
-export const mergeCommonProp = <T extends { [key: string]: ObjectType }>(props: T) => {
+export const mergeCommonProp = <T extends { [key: string]: ObjectType }>(
+  props: T
+): (() => T & {
+  details: {
+    type: PropType<ObjectType | Array<any>>;
+  };
+  uuId: {
+    type: PropType<string | number | symbol>;
+  };
+}) => {
   return () =>
     Object.assign({}, props, {
       details: {
         type: [Object, Array] as PropType<ObjectType | Array<any>>,
       },
       // 组件唯一标识
-      uuId: [String, Number, Symbol],
+      uuId: {
+        type: [String, Number, Symbol] as PropType<string | number | symbol>,
+      },
     });
 };
 

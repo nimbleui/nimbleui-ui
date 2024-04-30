@@ -26,7 +26,7 @@ export default defineComponent({
     });
     const currentColor = computed(() => {
       const { rgb, alpha } = colorValue;
-      return `rgba(${rgb.join(",")},${Number(alpha.toFixed(3))})`;
+      return `rgba(${rgb.join(",")},${alpha.toFixed(3)})`;
     });
 
     const show = ref(false);

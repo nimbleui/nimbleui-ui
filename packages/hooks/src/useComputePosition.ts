@@ -6,6 +6,7 @@ import {
   getWindow,
   isHTMLElement,
   isOverflowElement,
+  getScrollParent,
 } from "@nimble-ui/utils";
 import { ComputedRef, Ref, nextTick, reactive, unref } from "vue";
 
@@ -191,29 +192,38 @@ export const computePositionAutoPlacement = (number = 0): Middleware => {
     name: "autoPlacement",
     type: "before",
     fn(state) {
-      const { placement: initPlacement, rects } = state;
-      const { reference, floating } = rects;
+      const { placement: initPlacement, rects, elements } = state;
+      const { floating } = rects;
       const [side, alignment] = initPlacement.split("-") as [Side, Alignment];
       const { innerHeight, innerWidth } = window;
+      const scrollEl = getScrollParent(elements.reference);
+      let { left, top, bottom, right } = elements.reference.getBoundingClientRect();
 
+      if (isHTMLElement(scrollEl)) {
+        const scrollRect = scrollEl.getBoundingClientRect();
+        top = top - scrollRect.top;
+        left = left - scrollRect.left;
+        right = scrollRect.right - right;
+        bottom = scrollRect.bottom - bottom;
+      }
       let placement = initPlacement;
       if (side == "bottom") {
-        const flag = reference.bottom + floating.height + number > innerHeight;
+        const flag = bottom + floating.height + number > innerHeight;
         if (flag) {
           placement = `top-${alignment}`;
         }
       } else if (side == "top") {
-        const flag = floating.height + number > reference.y;
+        const flag = floating.height + number > top;
         if (flag) {
           placement = `bottom-${alignment}`;
         }
       } else if (side == "left") {
-        const flag = floating.width + number > reference.x;
+        const flag = floating.width + number > left;
         if (flag) {
           placement = `right-${alignment}`;
         }
       } else if (side == "right") {
-        const flag = reference.right + floating.width + number > innerWidth;
+        const flag = right + floating.width + number > innerWidth;
         if (flag) {
           placement = `left-${alignment}`;
         }
@@ -295,7 +305,7 @@ export function useComputePosition(reference: TagElement, floating: TagElement, 
     const isRTL = getComputedStyle(floatingEl).direction === "rtl";
 
     const elementInfo = {
-      elements: { floating: referenceEl, reference: floatingEl },
+      elements: { floating: floatingEl, reference: referenceEl },
       rects: { floating: rectToClientRect(floatingRect), reference: rectToClientRect(referenceRect) },
     };
 
