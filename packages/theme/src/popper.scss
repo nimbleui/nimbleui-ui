@@ -1,8 +1,41 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/config.scss" as *;
+@use "./mixins/utils.scss" as *;
 
 @include b(popper) {
   @include e(content) {
     position: absolute;
+
+    @include m('arrow') {
+      position: absolute;
+        
+      @include when(bottom) {
+        bottom: 1px;
+        transform: translateY(100%);
+        
+        @include utils-arrow-fill(7px, 'top');
+      }
+        
+      @include when(top) {
+        top: 1px;
+        transform: translateY(-100%);
+        
+        @include utils-arrow-fill(7px, 'bottom');
+      }
+        
+      @include when(right) {
+        right: 1px;
+        transform: translateX(100%);
+        
+        @include utils-arrow-fill(7px, 'left');
+      }
+        
+      @include when(left) {
+        left: 1px;
+        transform: translateX(-100%);
+        
+        @include utils-arrow-fill(7px, 'right');
+      }
+    }
   }
 }

@@ -6,6 +6,7 @@ import {
   computePositionOffset as offset,
   useClickOutside,
   useComputePosition,
+  useCreateIndex,
   useLazyRender,
   useScrollParent,
 } from "@nimble-ui/hooks";
@@ -25,6 +26,7 @@ export default defineComponent({
       placement,
       middleware: [autoPlacement(5), offset(10)],
     });
+    const { nextZIndex, currentZIndex } = useCreateIndex();
 
     const selfModel = ref(false);
     const show = computed({
@@ -49,10 +51,11 @@ export default defineComponent({
     const styles = reactive<CSSProperties>({});
     const handlePosition = async () => {
       if (props.trigger == "manual") return;
-
+      nextZIndex();
       const { x, y } = await computePosition();
       styles.left = `${x}px`;
       styles.top = `${y}px`;
+      styles.zIndex = currentZIndex.value;
     };
 
     let time = 0;
@@ -114,6 +117,7 @@ export default defineComponent({
             onMouseenter={(e) => onEvent("mouseenter", e)}
             onMouseleave={(e) => onEvent("mouseleave", e)}
           >
+            <div class={bem.m("arrow")}></div>
             {ctx.slots.default?.()}
           </div>
         </Transition>
