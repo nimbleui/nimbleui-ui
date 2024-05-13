@@ -29,7 +29,7 @@ export default defineComponent({
     });
 
     const renderButton = () => {
-      const { confirmText, cancelText, confirmType, cancelType, hideCancel } = props;
+      const { confirmText, cancelText, confirmType, cancelType, hideCancel, hideConfirm } = props;
       return (
         <YFlex justify="flex-end" gap={16} class={bem.m("buttons", "body")}>
           {!hideCancel && (
@@ -37,9 +37,11 @@ export default defineComponent({
               {cancelText}
             </YButton>
           )}
-          <YButton type={confirmType} onClick={onConfirm}>
-            {confirmText}
-          </YButton>
+          {!hideConfirm && (
+            <YButton type={confirmType} onClick={onConfirm}>
+              {confirmText}
+            </YButton>
+          )}
         </YFlex>
       );
     };
@@ -94,9 +96,9 @@ export default defineComponent({
     const onCancel = () => emitHandle("cancel");
 
     return () => {
-      const { modal, modelValue } = props;
+      const { modal, modelValue, disabled } = props;
       return (
-        <Teleport to="body">
+        <Teleport disabled={disabled} to="body">
           <div class={bem.b()} style={{ zIndex: zIndex.value }}>
             {modal && <YOverlay zIndex={zIndex.value} disabled show={modelValue} />}
             {renderContent()}

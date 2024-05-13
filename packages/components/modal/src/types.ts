@@ -54,7 +54,7 @@ const modalProps = mergeCommonProp({
    * @description 插入在哪
    */
   appendTo: {
-    type: String as PropType<keyof HTMLElementTagNameMap>,
+    type: [String, Object] as PropType<string | Element>,
     default: "body",
   },
   /**
@@ -89,6 +89,18 @@ const modalProps = mergeCommonProp({
    * @description 是否隐藏取消按钮
    */
   hideCancel: {
+    type: Boolean,
+  },
+  /**
+   * @description 是否隐藏确定按钮
+   */
+  hideConfirm: {
+    type: Boolean,
+  },
+  /**
+   * @description 禁止穿梭
+   */
+  disabled: {
     type: Boolean,
   },
 });
