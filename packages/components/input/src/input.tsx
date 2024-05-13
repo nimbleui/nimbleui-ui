@@ -69,6 +69,7 @@ export default defineComponent({
       selfModel.value = value;
 
       setNativeInputValue();
+      formItemContext?.parent.events("onChange", value);
     };
 
     // 输入框失去焦点

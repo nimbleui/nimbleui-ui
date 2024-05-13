@@ -6,7 +6,7 @@ export type PopperSide = "top" | "right" | "bottom" | "left";
 export type PopperAlignedPlacement = `${PopperSide}-${PopperAlignment}`;
 export type PopperPlacement = PopperSide | PopperAlignedPlacement;
 
-export type TriggerType = "hover" | "click" | "focus" | "manual";
+export type PopperTriggerType = "hover" | "click" | "focus" | "manual";
 
 const popperProps = mergeCommonProp({
   /**
@@ -20,7 +20,7 @@ const popperProps = mergeCommonProp({
    * @description 触发方式
    */
   trigger: {
-    type: String as PropType<TriggerType>,
+    type: String as PropType<PopperTriggerType>,
     default: "click",
   },
   /***
