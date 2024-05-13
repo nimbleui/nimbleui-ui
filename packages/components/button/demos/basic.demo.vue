@@ -25,5 +25,6 @@
     <YButton round :type="'success'">Success</YButton>
     <YButton round :type="'warning'">Warning</YButton>
     <YButton round :type="'error'">Error</YButton>
+    <YButton circle>圆</YButton>
   </YSpace>
 </template>

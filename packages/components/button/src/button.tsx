@@ -23,12 +23,13 @@ export default defineComponent({
         bem.b(),
         bem.is("disabled", res.disabled),
         bem.is("block", props.block),
-        bem.is(`type-${res.type}`, res.type !== "default"),
+        bem.is(`type-${res.type}`, !!res.type && res.type !== "default"),
         bem.is(res.shape, res.shape !== "default"),
         bem.is(res.size, res.size !== "default"),
         bem.is("plain", props.plain),
         bem.is("round", props.round),
         bem.is("loading", props.loading),
+        bem.is("circle", props.circle),
       ];
     });
 
