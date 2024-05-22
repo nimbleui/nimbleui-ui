@@ -8,7 +8,7 @@
 <template>
   <div class="demo-margin">
     <YButton @click="open">Open Modal</YButton>
-    <YModal v-model="show" content-style="background: red">
+    <YModal v-model="show">
       <div style="width: 500px; height: 200px"></div>
     </YModal>
   </div>
