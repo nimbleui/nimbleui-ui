@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType, VNode } from "vue";
+import { ExtractPropTypes, HTMLAttributes, PropType, VNode } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 import { ButtonTypes } from "@nimble-ui/tokens";
 
@@ -102,6 +102,12 @@ const modalProps = mergeCommonProp({
    */
   disabled: {
     type: Boolean,
+  },
+  /**
+   * @description 提示内容的style
+   */
+  contentStyle: {
+    type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
   },
 });
 

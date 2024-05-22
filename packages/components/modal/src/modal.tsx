@@ -32,15 +32,21 @@ export default defineComponent({
       const { confirmText, cancelText, confirmType, cancelType, hideCancel, hideConfirm } = props;
       return (
         <YFlex justify="flex-end" gap={16} class={bem.m("buttons", "body")}>
-          {!hideCancel && (
-            <YButton type={cancelType} onClick={onCancel}>
-              {cancelText}
-            </YButton>
-          )}
-          {!hideConfirm && (
-            <YButton type={confirmType} onClick={onConfirm}>
-              {confirmText}
-            </YButton>
+          {ctx.slots.buttons ? (
+            ctx.slots.buttons()
+          ) : (
+            <>
+              {!hideCancel && (
+                <YButton type={cancelType} onClick={onCancel}>
+                  {cancelText}
+                </YButton>
+              )}
+              {!hideConfirm && (
+                <YButton type={confirmType} onClick={onConfirm}>
+                  {confirmText}
+                </YButton>
+              )}
+            </>
           )}
         </YFlex>
       );
@@ -52,11 +58,15 @@ export default defineComponent({
     };
 
     const renderContent = lazyRender(() => {
-      const { modelValue, content, details } = props;
+      const { modelValue, content, details, contentStyle = "" } = props;
       return (
         <div onClick={onClose} class={bem.e("body")}>
           <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
-            <div v-show={modelValue} style={{ zIndex: zIndex.value + 1 }} class={bem.m("content", "body")}>
+            <div
+              v-show={modelValue}
+              class={bem.m("content", "body")}
+              style={[{ zIndex: zIndex.value + 1 }, contentStyle]}
+            >
               <span class={bem.m("close", "body")}></span>
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
