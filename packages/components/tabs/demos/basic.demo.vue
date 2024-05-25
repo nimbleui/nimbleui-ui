@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YTabs :items="items" />
+  <YTabs :items="items" type="bar" />
 </template>
 
 <script setup lang="ts">

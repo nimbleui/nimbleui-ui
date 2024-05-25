@@ -42,6 +42,7 @@ import {
   YNumber,
   YBadge,
   YPopper,
+  YPagination,
 } from "@nimble-ui/components";
 
 export default [
@@ -88,4 +89,5 @@ export default [
   YNumber,
   YBadge,
   YPopper,
+  YPagination,
 ];

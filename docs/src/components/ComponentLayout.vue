@@ -1,8 +1,16 @@
 <template>
   <YLayout style="flex: 1">
     <YSidebar collapsed style="border-right: 1px solid var(--y-color-border-secondary)">
-      <YMenu v-model="activeMenuItem" all-open :items="items" key-field="link" label-field="text" children-field="items"
-        @select="onSelect" @open-change="onOpenChange"></YMenu>
+      <YMenu
+        v-model="activeMenuItem"
+        all-open
+        :items="items"
+        key-field="link"
+        label-field="text"
+        children-field="items"
+        @select="onSelect"
+        @open-change="onOpenChange"
+      ></YMenu>
     </YSidebar>
     <YContent style="padding: 30px 20px 0 40px">
       <RouterView />
@@ -148,6 +156,10 @@ const items = reactive<MenuItems[]>([
       {
         text: "徽标数 Badge",
         link: "/component/badge",
+      },
+      {
+        text: "分页 Pagination",
+        link: "/component/pagination",
       },
     ],
   },

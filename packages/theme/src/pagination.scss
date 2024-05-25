@@ -1,0 +1,77 @@
+@use "./mixins/mixins.scss" as *;
+@use "./mixins/function.scss" as *;
+@use "./mixins/config.scss" as *;
+@use "./mixins/utils.scss" as *;
+
+@include b(pagination) {
+  --y-pagination-item-size: 32px;
+  --y-pagination-item-size-sm: 24px;
+  --y-pagination-item-text-color: var(--y-color-text);
+  --y-pagination-item-active-text-color: var(--y-color-primary);
+  --y-pagination-item-active-bg-color: var(--y-color-primary-1);
+  --y-pagination-item-hover-bg-color: var(--y-color-fill-secondary);
+  --y-pagination-item-more-color: var(--y-color-text-tertiary);
+  --y-pagination-item-disabled-color: var(--y-color-text-quaternary);
+
+  @include e(item) {
+    height: var(--y-pagination-item-size);
+    min-width: var(--y-pagination-item-size);
+    cursor: pointer;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: var(--y-pagination-item-hover-bg-color);
+    }
+
+    @include when(active) {
+      color: var(--y-pagination-item-active-text-color);
+      background-color: var(--y-pagination-item-active-bg-color);
+    }
+
+    @include when(small) {
+      height: var(--y-pagination-item-size-sm);
+      min-width: var(--y-pagination-item-size-sm);
+    }
+
+    @include when(more) {
+      font-size: var(--y-font-size-ms);
+      color: var(--y-pagination-item-more-color);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    @include m(arrow) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 8px;
+      height: 8px;
+      border-left: 1px solid var(--y-pagination-item-text-color);
+      border-bottom: 1px solid var(--y-pagination-item-text-color);
+    }
+
+    @include m(prev) {
+      transform: rotateZ(45deg);
+      margin-left: 5px;
+    }
+
+    @include m(next) {
+      transform: rotateZ(-135deg);
+      margin-left: -5px;
+    }
+
+    @include when(disabled) {
+      cursor: not-allowed;
+
+      & > span.is-positive {
+        border-color: var(--y-pagination-item-disabled-color);
+      }
+    
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
