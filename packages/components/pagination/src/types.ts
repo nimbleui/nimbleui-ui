@@ -23,8 +23,18 @@ const paginationProps = mergeCommonProp({
     type: Number,
     default: 10,
   },
+  /**
+   * @description 大小
+   */
   size: {
     type: String as PropType<"default" | "small">,
+  },
+  /**
+   * @description 由于分页长度，如果传入的是偶数加一变成奇数，
+   */
+  pageSlot: {
+    type: Number,
+    default: 9,
   },
   /**
    * @description 页码或 pageSize 改变的回调，参数是改变后的页码及每页条数

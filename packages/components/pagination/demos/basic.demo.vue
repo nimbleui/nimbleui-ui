@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YPagination v-model="current" :total="200" size="small" @change="onChange">
+  <YPagination v-model="current" :total="400" size="small" @change="onChange">
     <template #total="{ total }">共 {{ total }} 条</template>
   </YPagination>
 </template>

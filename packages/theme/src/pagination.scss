@@ -12,6 +12,7 @@
   --y-pagination-item-hover-bg-color: var(--y-color-fill-secondary);
   --y-pagination-item-more-color: var(--y-color-text-tertiary);
   --y-pagination-item-disabled-color: var(--y-color-text-quaternary);
+  --y-pagination-item-initiate-border-color: var(--y-color-primary);
 
   @include e(item) {
     height: var(--y-pagination-item-size);
@@ -71,6 +72,25 @@
     
       &:hover {
         background-color: transparent;
+      }
+    }
+
+    @include m(initiate) {
+      display: flex;
+
+      @include when(reverse) {
+        transform: rotateZ(180deg);
+      }
+
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        height: 5px;
+        width: 5px;
+        transform: rotateZ(45deg);
+        border-left: 1px solid var(--y-pagination-item-initiate-border-color);
+        border-bottom: 1px solid var(--y-pagination-item-initiate-border-color);
       }
     }
   }

@@ -1,5 +1,5 @@
 import { createNamespace, isString } from "@nimble-ui/utils";
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import YFlex from "@nimble-ui/components/flex";
 
 import paginationProps from "./types";
@@ -23,24 +23,25 @@ export default defineComponent({
     const total = computed(() => Math.ceil(props.total / props.pageSize));
     const list = computed(() => {
       let list: Array<number | string> = [];
-      const showNme = 9;
-      const center = showNme - 3;
+      let showNum = Math.max(props.pageSlot, 7);
+      showNum = showNum % 2 == 0 ? showNum + 1 : showNum; // 确保奇数
+      const center = Math.ceil(showNum / 2);
 
-      if (total.value <= showNme) {
-        list = Array.from({ length: showNme }).map((_, i) => i + 1);
-      } else if (current.value <= center) {
+      if (total.value <= showNum) {
+        list = Array.from({ length: showNum }).map((_, i) => i + 1);
+      } else if (current.value <= showNum - 3) {
         // 首
-        list = Array.from({ length: showNme - 2 }).map((_, i) => i + 1);
-        list = [...list, "5", total.value];
-      } else if (current.value > total.value - center) {
+        list = Array.from({ length: showNum - 2 }).map((_, i) => i + 1);
+        list = [...list, `${center}`, total.value];
+      } else if (current.value > total.value - (showNum - 3)) {
         // 尾
-        list = Array.from({ length: showNme - 2 }).map((_, i) => total.value - center + i);
-        list = [1, "-5", ...list];
+        list = Array.from({ length: showNum - 2 }).map((_, i) => total.value - (showNum - 3) + i);
+        list = [1, `-${center}`, ...list];
       } else {
         // 中
-        const len = showNme - 4;
+        const len = showNum - 4;
         list = Array.from({ length: len }).map((_, i) => current.value - (len - 1) / 2 + i);
-        list = [1, "-5", ...list, "5", total.value];
+        list = [1, `-${center}`, ...list, `${center}`, total.value];
       }
 
       return list;
@@ -50,7 +51,7 @@ export default defineComponent({
       current.value = Math.max(current.value - 1, 1);
     };
     const onNext = () => {
-      current.value = Math.max(current.value + 1, total.value);
+      current.value = Math.min(current.value + 1, total.value);
     };
 
     const onItem = (val: string | number) => {
@@ -61,6 +62,11 @@ export default defineComponent({
       } else {
         current.value = val;
       }
+    };
+
+    const showList = reactive([false, false]);
+    const onMouse = (index: number, value: boolean) => {
+      showList[index] = value;
     };
 
     return () => {
@@ -78,6 +84,14 @@ export default defineComponent({
           </YFlex>
           {list.value.map((item) => {
             const isStr = isString(item);
+            const index = +item > 0 ? 1 : 0;
+            const isShowArrow = isStr ? showList[index] : false;
+            const node = isShowArrow ? (
+              <span class={[bem.m("initiate", "item"), bem.is("reverse", index == 1)]}></span>
+            ) : (
+              "•••"
+            );
+
             return (
               <YFlex
                 align="center"
@@ -89,8 +103,10 @@ export default defineComponent({
                   bem.is("active", current.value === item),
                 ]}
                 onClick={onItem.bind(null, item)}
+                onMouseenter={onMouse.bind(null, index, isStr ? true : false)}
+                onMouseleave={onMouse.bind(null, index, false)}
               >
-                {isStr ? "•••" : item}
+                {isStr ? node : item}
               </YFlex>
             );
           })}
