@@ -109,6 +109,12 @@ const modalProps = mergeCommonProp({
   contentStyle: {
     type: [Array, Object, String] as PropType<HTMLAttributes["style"]>,
   },
+  /**
+   * @description 是否隐藏关闭按钮
+   */
+  hideClose: {
+    type: Boolean,
+  },
 });
 
 export default modalProps;

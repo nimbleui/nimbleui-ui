@@ -58,7 +58,7 @@ export default defineComponent({
     };
 
     const renderContent = lazyRender(() => {
-      const { modelValue, content, details, contentStyle = "" } = props;
+      const { modelValue, content, details, contentStyle = "", hideClose } = props;
       return (
         <div onClick={onClose} class={bem.e("body")}>
           <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
@@ -67,7 +67,7 @@ export default defineComponent({
               class={bem.m("content", "body")}
               style={[{ zIndex: zIndex.value + 1 }, contentStyle]}
             >
-              <span class={bem.m("close", "body")}></span>
+              {!hideClose && <span class={bem.m("close", "body")}></span>}
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
             </div>
