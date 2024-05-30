@@ -60,14 +60,14 @@ export default defineComponent({
     const renderContent = lazyRender(() => {
       const { modelValue, content, details, contentStyle = "", hideClose } = props;
       return (
-        <div onClick={onClose} class={bem.e("body")}>
+        <div onClick={onMaskClose} class={bem.e("body")}>
           <Transition name="y-modal-fade" onEnter={handleEnter} appear onAfterLeave={onDestroy}>
             <div
               v-show={modelValue}
               class={bem.m("content", "body")}
               style={[{ zIndex: zIndex.value + 1 }, contentStyle]}
             >
-              {!hideClose && <span class={bem.m("close", "body")}></span>}
+              {!hideClose && <span onClick={onClose} class={bem.m("close", "body")}></span>}
               {content ? (isFunction(content) ? content(details) : content) : ctx.slots.default?.()}
               {renderButton()}
             </div>
@@ -95,22 +95,23 @@ export default defineComponent({
       }
     };
 
-    const onClose = (event: Event) => {
-      const el = event.target as HTMLElement;
-      if (el.className.indexOf(bem.e("body")) > -1) {
-        emitHandle("close");
-      }
+    const onClose = () => {
+      emitHandle("close");
+    };
+    const onMaskClose = () => {
+      if (!props.maskClosable) return;
+      onClose();
     };
 
     const onConfirm = () => emitHandle("confirm");
     const onCancel = () => emitHandle("cancel");
 
     return () => {
-      const { modal, modelValue, disabled } = props;
+      const { mask, modelValue, disabled } = props;
       return (
         <Teleport disabled={disabled} to="body">
           <div class={bem.b()} style={{ zIndex: zIndex.value }}>
-            {modal && <YOverlay zIndex={zIndex.value} disabled show={modelValue} />}
+            {mask && <YOverlay zIndex={zIndex.value} disabled show={modelValue} />}
             {renderContent()}
           </div>
         </Teleport>

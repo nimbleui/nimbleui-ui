@@ -1,0 +1,68 @@
+@use "./mixins/mixins.scss" as *;
+@use "./common/var.scss" as *;
+@use "./mixins/utils.scss" as *;
+
+@include b(time-picker) {
+  --y-time-picker-arrow-color: var(--y-color-text-quaternary);
+
+  @include e(content) {
+    --y-time-picker-bg-color: var(--y-color-bg-elevated);
+    --y-time-picker-item-active-bg-color: var(--y-color-primary-2);
+    --y-time-picker-item-hover-bg-color: var(--y-color-fill-tertiary);
+    --y-time-picker-color-split: var(--y-color-fill);
+    
+    background-color: var(--y-time-picker-bg-color);
+    box-shadow: $box-shadow-secondary;
+    color: var(--y-pop-confirm-text-color);
+    border-radius: 8px;
+  }
+
+  @include e(arrow) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 15px;
+    margin-top: 6px;
+    color: var(--y-select-arrow-color);
+    margin-left: 5px;
+    
+    @include utils-arrow;
+  }
+
+  @include e(list) {
+    max-height: 240px;
+    padding: 0 4px;
+
+    @include when(border) {
+      border-left: 1px solid var(--y-time-picker-color-split);
+    }
+
+    @include m(item) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px  15px 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+
+      &:hover {
+        background-color: var(--y-time-picker-item-hover-bg-color);
+      }
+
+      @include when(active) {
+        background-color: var(--y-time-picker-item-active-bg-color);
+      }
+    }
+  }
+
+  @include e(footer) {
+    margin-top: 4px;
+    border-top: 1px solid var(--y-time-picker-color-split);
+    padding: 10px 0 5px;
+
+    @include m(moment) {
+      color: var(--y-color-primary);
+      cursor: pointer;
+    }
+  }
+}

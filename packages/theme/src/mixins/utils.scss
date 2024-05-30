@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-@mixin utils-close-icon($size: 1.5px, $color: var(--y-color-text)) {
+@mixin utils-close-icon($size: 1.5px, $color: var(--y-color-text), $radius: 2px) {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -34,7 +34,7 @@
   }
 
   &:hover {
-    border-radius: 2px;
+    border-radius: $radius;
     background-color: var(--y-color-fill-secondary);
 
     &::after, &::before {

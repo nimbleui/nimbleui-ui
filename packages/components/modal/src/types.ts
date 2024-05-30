@@ -20,13 +20,6 @@ const modalProps = mergeCommonProp({
     type: Function as PropType<BeforeCloseFn>,
   },
   /**
-   * @description 是否需要遮罩层
-   */
-  modal: {
-    type: Boolean,
-    default: true,
-  },
-  /**
    * @description 是否在关闭之后将子元素全部销毁
    */
   destroyOnClose: {
@@ -113,6 +106,19 @@ const modalProps = mergeCommonProp({
    * @description 是否隐藏关闭按钮
    */
   hideClose: {
+    type: Boolean,
+  },
+  /**
+   * @description 是否展示遮罩
+   */
+  mask: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * @description 点击蒙层是否允许关闭
+   */
+  maskClosable: {
     type: Boolean,
   },
 });

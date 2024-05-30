@@ -140,6 +140,10 @@ const items = reactive<MenuItems[]>([
         text: "日期选择框 datePicker",
         link: "/component/datePicker",
       },
+      {
+        text: "时间选择器 TimePicker",
+        link: "/component/timePicker",
+      },
     ],
   },
   {

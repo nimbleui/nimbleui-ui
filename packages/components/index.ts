@@ -41,3 +41,4 @@ export * from "./badge";
 export * from "./popper";
 export * from "./slot";
 export * from "./pagination";
+export * from "./time-picker";

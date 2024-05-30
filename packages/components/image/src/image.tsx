@@ -1,5 +1,5 @@
-import { defineComponent, inject, ref } from "vue";
-import { createNamespace } from "@nimble-ui/utils";
+import { CSSProperties, computed, defineComponent, inject, ref } from "vue";
+import { createNamespace, isString } from "@nimble-ui/utils";
 import { imagePreviewContextKey } from "@nimble-ui/tokens";
 import { YImagePreview, type imagePreviewExpose } from "@nimble-ui/components/image-preview";
 
@@ -35,12 +35,10 @@ export default defineComponent({
     };
 
     const renderImage = () => {
-      const { src, width, height, objectFit, imgProps, previewDisabled } = props;
+      const { src, objectFit, imgProps, previewDisabled } = props;
       return (
         <img
           src={src}
-          width={width}
-          height={height}
           style={{ objectFit: objectFit, ...imgProps, cursor: previewDisabled ? "" : "pointer" }}
           onClick={onClick}
           onLoad={handleLoad}
@@ -50,9 +48,17 @@ export default defineComponent({
       );
     };
 
+    const styles = computed<CSSProperties>(() => {
+      const { width, height } = props;
+      return {
+        width: (isString(width) && isNaN(+width)) || !width ? width : `${width}px`,
+        height: (isString(height) && isNaN(+height)) || !height ? height : `${height}px`,
+      };
+    });
+
     return () => {
       return (
-        <div class={bem.b()}>
+        <div class={bem.b()} style={styles.value}>
           {imagePreviewContext?.isGroup ? (
             renderImage()
           ) : (

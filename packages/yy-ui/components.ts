@@ -43,6 +43,7 @@ import {
   YBadge,
   YPopper,
   YPagination,
+  YTimePicker,
 } from "@nimble-ui/components";
 
 export default [
@@ -90,4 +91,5 @@ export default [
   YBadge,
   YPopper,
   YPagination,
+  YTimePicker,
 ];
