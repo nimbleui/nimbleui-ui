@@ -116,7 +116,7 @@ export function isSymbol(el: unknown): el is symbol {
  * @param el 必填，目标
  * @returns 返回true和false
  */
-export function isEmpty(el: unknown): el is null {
+export function isEmpty(el: unknown): el is null | undefined {
   return el === null || el === undefined;
 }
 

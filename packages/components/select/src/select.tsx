@@ -70,6 +70,13 @@ export default defineComponent({
       flag && (show.value = false);
     };
 
+    const onClear = () => {
+      selfModel.value = "";
+      selfLabel.value = "";
+      ctx.emit("update:label", "");
+      ctx.emit("update:modelValue", "");
+    };
+
     const renderContent = () => {
       const { options, details, field, labelField } = props;
       return (
@@ -88,7 +95,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { disabled, name, bordered, arrowColor, placeholder, inputClass, inputStyle } = props;
+      const { disabled, name, bordered, arrowColor, placeholder, inputClass, inputStyle, allowClear } = props;
       return (
         <div class={bem.b()}>
           <YTooltip
@@ -116,9 +123,12 @@ export default defineComponent({
                   modelValue={labelCop.value}
                 >
                   {{
-                    suffix: () => (
-                      <span style={{ color: arrowColor }} class={[bem.e("arrow"), bem.is("positive")]}></span>
-                    ),
+                    suffix: () =>
+                      allowClear && labelCop.value ? (
+                        <span onClick={onClear} class={bem.e("clear")}></span>
+                      ) : (
+                        <span style={{ color: arrowColor }} class={[bem.e("arrow"), bem.is("positive")]}></span>
+                      ),
                   }}
                 </YInput>
               ),

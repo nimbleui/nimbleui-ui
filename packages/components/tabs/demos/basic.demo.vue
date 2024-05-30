@@ -6,16 +6,16 @@
 </markdown>
 
 <template>
-  <YTabs :items="items" type="bar" />
+  <YTabs v-model="active" :items="items" type="bar" />
 </template>
 
 <script setup lang="ts">
 import { TabItemType } from "@nimble-ui/vue";
-import { reactive, h } from "vue";
+import { reactive, h, ref } from "vue";
 
 const items = reactive<TabItemType[]>([
   {
-    id: "2356",
+    id: 0,
     label: h("div", { class: "name", style: "color: red" }, "Tab 1"),
     children: "Tab 1",
   },
@@ -31,4 +31,5 @@ const items = reactive<TabItemType[]>([
     children: "Tab 3",
   },
 ]);
+const active = ref(0);
 </script>

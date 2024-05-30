@@ -28,7 +28,7 @@ export default defineComponent({
       const center = Math.ceil(showNum / 2);
 
       if (total.value <= showNum) {
-        list = Array.from({ length: showNum }).map((_, i) => i + 1);
+        list = Array.from({ length: total.value }).map((_, i) => i + 1);
       } else if (current.value <= showNum - 3) {
         // 首
         list = Array.from({ length: showNum - 2 }).map((_, i) => i + 1);
@@ -70,55 +70,63 @@ export default defineComponent({
     };
 
     return () => {
-      const { size } = props;
+      const { size, total: t } = props;
       return (
-        <YFlex gap={5} class={bem.b()} align="center">
-          <YFlex align="center">{ctx.slots.total?.({ total: total.value, current: current.value })}</YFlex>
-          <YFlex
-            align="center"
-            justify="center"
-            class={[bem.e("item"), bem.is("small", size == "small"), bem.is("disabled", current.value == 1)]}
-            onClick={onPrev}
-          >
-            <span class={[bem.is("positive"), bem.m("prev", "item"), bem.m("arrow", "item")]}></span>
-          </YFlex>
-          {list.value.map((item) => {
-            const isStr = isString(item);
-            const index = +item > 0 ? 1 : 0;
-            const isShowArrow = isStr ? showList[index] : false;
-            const node = isShowArrow ? (
-              <span class={[bem.m("initiate", "item"), bem.is("reverse", index == 1)]}></span>
-            ) : (
-              "•••"
-            );
+        total.value > 1 && (
+          <YFlex gap={5} class={bem.b()} align="center">
+            <YFlex align="center">
+              {ctx.slots.total?.({ total: t, totalPage: total.value, current: current.value })}
+            </YFlex>
+            <YFlex
+              align="center"
+              justify="center"
+              class={[bem.e("item"), bem.is("small", size == "small"), bem.is("disabled", current.value == 1)]}
+              onClick={onPrev}
+            >
+              <span class={[bem.is("positive"), bem.m("prev", "item"), bem.m("arrow", "item")]}></span>
+            </YFlex>
+            {list.value.map((item) => {
+              const isStr = isString(item);
+              const index = +item > 0 ? 1 : 0;
+              const isShowArrow = isStr ? showList[index] : false;
+              const node = isShowArrow ? (
+                <span class={[bem.m("initiate", "item"), bem.is("reverse", index == 1)]}></span>
+              ) : (
+                "•••"
+              );
 
-            return (
-              <YFlex
-                align="center"
-                justify="center"
-                class={[
-                  bem.e("item"),
-                  bem.is("more", isStr),
-                  bem.is("small", size == "small"),
-                  bem.is("active", current.value === item),
-                ]}
-                onClick={onItem.bind(null, item)}
-                onMouseenter={onMouse.bind(null, index, isStr ? true : false)}
-                onMouseleave={onMouse.bind(null, index, false)}
-              >
-                {isStr ? node : item}
-              </YFlex>
-            );
-          })}
-          <YFlex
-            align="center"
-            justify="center"
-            class={[bem.e("item"), bem.is("small", size == "small"), bem.is("disabled", current.value == total.value)]}
-            onClick={onNext}
-          >
-            <span class={[bem.m("arrow", "item"), bem.m("next", "item"), bem.is("positive")]}></span>
+              return (
+                <YFlex
+                  align="center"
+                  justify="center"
+                  class={[
+                    bem.e("item"),
+                    bem.is("more", isStr),
+                    bem.is("small", size == "small"),
+                    bem.is("active", current.value === item),
+                  ]}
+                  onClick={onItem.bind(null, item)}
+                  onMouseenter={onMouse.bind(null, index, isStr ? true : false)}
+                  onMouseleave={onMouse.bind(null, index, false)}
+                >
+                  {isStr ? node : item}
+                </YFlex>
+              );
+            })}
+            <YFlex
+              align="center"
+              justify="center"
+              class={[
+                bem.e("item"),
+                bem.is("small", size == "small"),
+                bem.is("disabled", current.value == total.value),
+              ]}
+              onClick={onNext}
+            >
+              <span class={[bem.m("arrow", "item"), bem.m("next", "item"), bem.is("positive")]}></span>
+            </YFlex>
           </YFlex>
-        </YFlex>
+        )
       );
     };
   },

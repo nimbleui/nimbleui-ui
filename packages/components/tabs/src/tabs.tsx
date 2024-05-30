@@ -1,4 +1,4 @@
-import { createNamespace, isFunction } from "@nimble-ui/utils";
+import { createNamespace, isEmpty, isFunction } from "@nimble-ui/utils";
 import { defineComponent, onMounted, computed, ref, watch, nextTick, reactive } from "vue";
 
 import tabsProps, { TabItemType } from "./types";
@@ -26,7 +26,7 @@ export default defineComponent({
 
     const getCurrentEl = () => {
       const { value } = active;
-      if (!value) return;
+      if (isEmpty(value)) return;
       handelContent(value);
 
       const tabEl = tabsElRef.value?.$el.querySelector(`[data-name="${value}"]`) as HTMLElement | null;

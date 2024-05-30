@@ -85,6 +85,12 @@ const selectProps = mergeCommonProp({
   inputStyle: {
     type: [String, Array, Object] as PropType<StyleValue>,
   },
+  /**
+   * @description 是否可以清除
+   */
+  allowClear: {
+    type: Boolean,
+  },
 });
 
 export default selectProps;

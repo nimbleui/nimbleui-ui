@@ -22,12 +22,21 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 12px;
+    width: 15px;
     margin-top: 6px;
     color: var(--y-select-arrow-color);
-    margin-right: 5px;
+    margin-left: 5px;
 
     @include utils-arrow;
+  }
+
+  @include e(clear) {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+
+    @include utils-close-icon(1px);
   }
 
   @include e(list) {

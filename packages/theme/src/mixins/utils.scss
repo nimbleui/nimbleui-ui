@@ -34,6 +34,7 @@
   }
 
   &:hover {
+    border-radius: 2px;
     background-color: var(--y-color-fill-secondary);
 
     &::after, &::before {

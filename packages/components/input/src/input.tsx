@@ -9,7 +9,7 @@ import { eyeIcon, eyeInvisibleIcon } from "./icons";
 export default defineComponent({
   name: "YInput",
   props: inputProp(),
-  emits: ["blur", "focus", "change", "update:modelValue", "clear", "input"],
+  emits: ["blur", "focus", "change", "update:modelValue", "clear", "input", "suffix"],
   setup(props, ctx) {
     // 处理formItem组件传过的数据
     const formItemContext = useParent(formItemContextKey);
@@ -128,6 +128,8 @@ export default defineComponent({
       }
       return type;
     });
+
+    const onSuffix = () => ctx.emit("suffix", formValue.value, { name: props.name });
     return () => {
       const { prefix, suffix, type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } =
         props;
@@ -169,8 +171,12 @@ export default defineComponent({
               </i>
             </span>
           )}
-          {suffix && <span class={bem.e("suffix-text")}>{suffix}</span>}
-          {ctx.slots.suffix && <span class={bem.e("prefix")}>{ctx.slots.suffix?.()}</span>}
+          {suffix && (
+            <span onClick={onSuffix} class={bem.e("suffix-text")}>
+              {suffix}
+            </span>
+          )}
+          {ctx.slots.suffix && ctx.slots.suffix?.()}
         </div>
       );
     };
