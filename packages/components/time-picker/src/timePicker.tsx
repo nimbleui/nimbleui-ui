@@ -1,8 +1,8 @@
 import { createNamespace, isString } from "@nimble-ui/utils";
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, nextTick, reactive, ref, shallowRef } from "vue";
 import YTooltip from "@nimble-ui/components/tooltip";
 import YInput from "@nimble-ui/components/input";
-import YScrollbar from "@nimble-ui/components/scrollbar";
+import YScrollbar, { ScrollbarInstance } from "@nimble-ui/components/scrollbar";
 import YFlex from "@nimble-ui/components/flex";
 import YButton from "@nimble-ui/components/button";
 
@@ -13,18 +13,18 @@ export default defineComponent({
   props: timePickerProps(),
   setup(props, ctx) {
     const bem = createNamespace("time-picker");
+    const show = ref(false);
+    const selfModel = ref<string | number>();
+    const modelCop = computed(() => {
+      const value = props.modelValue ?? selfModel.value;
+      return formatValue(value);
+    });
 
     const items = computed(() => {
       return props.format.split(":").map((item) => {
         const length = item.indexOf("h") > -1 ? 24 : 60;
         return Array.from({ length }, (_, i) => (i <= 9 ? `0${i}` : `${i}`));
       });
-    });
-
-    const selfModel = ref<string | number>();
-    const modelCop = computed(() => {
-      const value = props.modelValue ?? selfModel.value;
-      return formatValue(value);
     });
 
     const formatValue = (value?: string | number) => {
@@ -56,11 +56,24 @@ export default defineComponent({
       console.log(111);
     };
 
-    const selectIndex = ref<number[]>([]);
-    const onToggle = (val: boolean) => {
+    const scrollbarRef = shallowRef<ScrollbarInstance[]>([]);
+    const getScrollbar = (el: any, index: number) => {
+      scrollbarRef.value[index] = el;
+    };
+    const selectIndex = reactive<number[]>([]);
+    const onToggle = async (val: boolean) => {
+      show.value = val;
       if (val && modelCop.value) {
-        selectIndex.value = modelCop.value.split(":").map((item) => parseInt(item));
+        await nextTick();
+        modelCop.value.split(":").forEach((el, i) => {
+          const value = parseInt(el);
+          selectIndex[i] = value;
+          scrollbarRef.value[i].setScrollTop(value * 29);
+        });
       }
+    };
+    const onSelectItem = (value: number, i: number) => {
+      selectIndex[i] = value;
     };
 
     const renderContent = () => {
@@ -68,9 +81,18 @@ export default defineComponent({
         <YFlex class={bem.e("panel")} vertical>
           <YFlex>
             {items.value.map((item, index) => (
-              <YScrollbar trigger="hover" key={index} class={[bem.e("list"), bem.is("border", index > 0)]}>
+              <YScrollbar
+                key={index}
+                trigger="hover"
+                ref={(el) => getScrollbar(el, index)}
+                class={[bem.e("list"), bem.is("border", index > 0)]}
+              >
                 {item.map((value, i) => (
-                  <div class={[bem.m("item", "list"), bem.is("active", i == selectIndex.value[index])]} key={i}>
+                  <div
+                    key={i}
+                    onClick={onSelectItem.bind(null, i, index)}
+                    class={[bem.m("item", "list"), bem.is("active", i == selectIndex[index])]}
+                  >
                     {value}
                   </div>
                 ))}
@@ -93,11 +115,12 @@ export default defineComponent({
       return (
         <div class={bem.b()}>
           <YTooltip
-            trigger="focus"
-            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
-            contentClass={bem.e("content")}
+            trigger="click"
             maxHeight={380}
             onToggle={onToggle}
+            modelValue={show.value}
+            contentClass={bem.e("content")}
+            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           >
             {{
               default: () => (

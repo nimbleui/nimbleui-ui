@@ -1,5 +1,5 @@
 import { mergeCommonProp } from "@nimble-ui/utils";
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 
 const timePickerProps = mergeCommonProp({
   modelValue: {
@@ -23,6 +23,12 @@ const timePickerProps = mergeCommonProp({
    */
   placeholder: {
     type: String,
+  },
+  /**
+   * @description 确认的回调函数
+   */
+  onConfirm: {
+    type: Function as PropType<() => void>,
   },
 });
 
