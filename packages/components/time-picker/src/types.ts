@@ -28,7 +28,10 @@ const timePickerProps = mergeCommonProp({
    * @description 确认的回调函数
    */
   onConfirm: {
-    type: Function as PropType<() => void>,
+    type: Function as PropType<(data: { h?: number; m?: number; s?: number; value: string | number }) => void>,
+  },
+  "onUpdate:modelValue": {
+    type: Function as PropType<(value: string | number) => void>,
   },
 });
 

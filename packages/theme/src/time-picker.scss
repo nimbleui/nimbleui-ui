@@ -29,6 +29,15 @@
     @include utils-arrow;
   }
 
+  @include e(clear) {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+    
+    @include utils-close-icon(1px);
+  }
+
   @include e(list) {
     max-height: 240px;
     padding: 0 4px;

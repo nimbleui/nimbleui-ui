@@ -7,7 +7,7 @@
 
 <template>
   <div class="demo-margin">
-    <YTimePicker v-model="model" format="hh:mm:ss" />
+    <YTimePicker v-model="model" placeholder="选择时间" allow-clear format="mm:ss" @confirm="onConfirm" />
   </div>
 </template>
 
@@ -15,6 +15,9 @@
 import { ref } from "vue";
 
 const model = ref(Date.now());
+const onConfirm = (data: { h?: number; m?: number; s?: number; value: string | number }) => {
+  console.log(data);
+};
 </script>
 
 <style lang="scss" scoped></style>
