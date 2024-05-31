@@ -10,6 +10,7 @@
   --y-checkbox-checked-border-color: var(--y-color-primary);
   --y-checkbox-checked-bg-color: var(--y-color-primary);
   --y-checkbox-disabled-opacity: var(--y-disabled-opacity);
+  --y-checkbox-disabled-bg-color:var(--y-color-fill-secondary);
 }
 
 @include b(checkbox) {
@@ -129,7 +130,19 @@
 
   @include when(disabled) {
     cursor: not-allowed;
-    opacity: get-css-var('checkbox', 'disabled', 'opacity');
+
+    #{'.' + $b + $element-separator + 'inner'} {
+      background-color: var(--y-checkbox-disabled-bg-color) !important;
+      border-color: var(--y-checkbox-border-color) !important;
+
+      &::after {
+        border-color: var(--y-color-text-quaternary) !important;
+      }
+    }
+
+    #{'.' + $b + $element-separator + 'label'} {
+      opacity: get-css-var('checkbox', 'disabled', 'opacity');
+    }
   }
 
   @include e(label) {

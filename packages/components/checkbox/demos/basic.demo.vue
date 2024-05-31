@@ -7,6 +7,9 @@
 
 <template>
   <YCheckbox v-model="checked">复选框</YCheckbox>
+  <YCheckbox v-model="checked" disabled>复选框</YCheckbox>
+  <YCheckbox disabled>复选框</YCheckbox>
+  <YCheckbox>复选框</YCheckbox>
 </template>
 
 <script setup lang="ts">
