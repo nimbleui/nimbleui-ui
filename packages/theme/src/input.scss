@@ -23,7 +23,7 @@
   vertical-align: middle;
   border: 1px solid;
   border-color: transparent;
-  height: var(--y-input-height);
+  min-height: var(--y-input-height);
   border-radius: 4px;
   font-size: var(--y-input-font-size);
   color: var(--y-input-text-color);
@@ -47,6 +47,32 @@
       &:focus {
         outline: none;
         outline: 0;
+      }
+    }
+
+    @include m(textarea) {
+      margin: 3px 0 4px;
+      display: block;
+      outline: none;
+      border: none;
+      width: 100%;
+      max-width: 100%;
+      background-color: transparent;
+      line-height: 1.5;
+      font-size: var(--y-input-font-size);
+      color: var(--y-input-text-color);
+      scrollbar-width: none;
+      overflow-y: auto;
+      overflow-x: hidden;
+      resize: vertical;
+
+      &:focus {
+        outline: none;
+        outline: 0;
+      }
+      
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
   }

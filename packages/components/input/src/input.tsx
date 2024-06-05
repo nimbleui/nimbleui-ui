@@ -1,10 +1,11 @@
-import { defineComponent, computed, watch, ref, onMounted, nextTick } from "vue";
-import { createNamespace, endComposing, handlePropOrContext, startComposing } from "@nimble-ui/utils";
+import { defineComponent, computed, watch, ref, onMounted, nextTick, CSSProperties, reactive } from "vue";
+import { createNamespace, endComposing, handlePropOrContext, isObject, startComposing } from "@nimble-ui/utils";
 import { formItemContextKey } from "@nimble-ui/tokens";
 import { useParent, useCreateId, useExpose } from "@nimble-ui/hooks";
 
 import inputProp from "./types";
 import { eyeIcon, eyeInvisibleIcon } from "./icons";
+import { calculateAutoSizeStyle } from "./calculateAutoSizeStyle";
 
 export default defineComponent({
   name: "YInput",
@@ -16,7 +17,7 @@ export default defineComponent({
     const isFocus = ref(false);
     const selfModel = ref("");
 
-    const inputRef = ref<HTMLInputElement>();
+    const inputRef = ref<HTMLInputElement | HTMLTextAreaElement>();
     const formValue = computed(() => (props.modelValue == null ? selfModel.value : String(props.modelValue)));
 
     // 根据props生成className
@@ -41,6 +42,22 @@ export default defineComponent({
       inputRef.value?.focus();
     };
 
+    const textareaStyle = reactive<CSSProperties>({});
+    const handelAutoSize = () => {
+      const { autoSize, type } = props;
+      if (type != "textarea" || !autoSize) return;
+      let minRows = 2;
+      let maxRows: number | undefined = undefined;
+
+      if (isObject(autoSize)) {
+        minRows = autoSize.minRows < 2 ? 2 : autoSize.minRows;
+        maxRows = autoSize.maxRows;
+      }
+
+      const style = calculateAutoSizeStyle(inputRef.value as HTMLTextAreaElement, minRows, maxRows);
+      Object.assign(textareaStyle, style);
+    };
+
     // 更新输入框内容
     const setNativeInputValue = () => {
       const input = inputRef.value;
@@ -48,6 +65,7 @@ export default defineComponent({
       if (!input || input.value === formatterValue) return;
 
       input.value = formatterValue;
+      handelAutoSize();
     };
 
     // 输入框内容发生变化
@@ -131,31 +149,64 @@ export default defineComponent({
 
     const onSuffix = () => ctx.emit("suffix", formValue.value, { name: props.name });
     return () => {
-      const { prefix, suffix, type, placeholder, maxLength, minLength, readonly, autofocus, clearTrigger, allowClear } =
-        props;
+      const {
+        prefix,
+        suffix,
+        type,
+        placeholder,
+        maxLength,
+        minLength,
+        readonly,
+        autofocus,
+        clearTrigger,
+        allowClear,
+        rows,
+      } = props;
 
       return (
         <div class={inputData.value.cls}>
           {ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>}
           {prefix && <span class={bem.e("prefix-text")}>{prefix}</span>}
           <span class={bem.e("wrapper")}>
-            <input
-              type={newType.value}
-              ref={inputRef}
-              id={inputId.value}
-              readonly={readonly}
-              maxlength={maxLength}
-              minlength={minLength}
-              autofocus={autofocus}
-              placeholder={placeholder}
-              disabled={inputData.value.disabled}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onInput={onInput}
-              onChange={onChange}
-              onCompositionend={endComposing}
-              onCompositionstart={startComposing}
-            />
+            {type === "textarea" ? (
+              <textarea
+                rows={rows}
+                ref={inputRef}
+                id={inputId.value}
+                readonly={readonly}
+                maxlength={maxLength}
+                minlength={minLength}
+                autofocus={autofocus}
+                style={textareaStyle}
+                placeholder={placeholder}
+                class={bem.m("textarea", "wrapper")}
+                disabled={inputData.value.disabled}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onInput={onInput}
+                onChange={onChange}
+                onCompositionend={endComposing}
+                onCompositionstart={startComposing}
+              ></textarea>
+            ) : (
+              <input
+                type={newType.value}
+                ref={inputRef}
+                id={inputId.value}
+                readonly={readonly}
+                maxlength={maxLength}
+                minlength={minLength}
+                autofocus={autofocus}
+                placeholder={placeholder}
+                disabled={inputData.value.disabled}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onInput={onInput}
+                onChange={onChange}
+                onCompositionend={endComposing}
+                onCompositionstart={startComposing}
+              />
+            )}
           </span>
           {allowClear &&
             formValue.value &&

@@ -47,6 +47,7 @@ export default defineComponent({
           labelCop.value = item[labelField];
         }
       }
+      if (!val) labelCop.value = "";
     };
     watch([modelCop, () => props.options], initFindLabel);
     onMounted(initFindLabel);

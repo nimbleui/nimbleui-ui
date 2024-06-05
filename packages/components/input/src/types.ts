@@ -1,7 +1,7 @@
 import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
-type InputType = "text" | "number" | "password";
+type InputType = "text" | "number" | "password" | "textarea";
 type FunType = (value: string) => string;
 
 export const inputUniqueProp = {
@@ -94,6 +94,19 @@ export const inputUniqueProp = {
    */
   suffix: {
     type: String,
+  },
+  /**
+   * @description type为textarea才生效
+   */
+  rows: {
+    type: Number,
+    default: 2,
+  },
+  /**
+   * @description 自适应内容高度，只适用于textarea
+   */
+  autoSize: {
+    type: [Boolean, Object] as PropType<boolean | { minRows: number; maxRows: number }>,
   },
 };
 
