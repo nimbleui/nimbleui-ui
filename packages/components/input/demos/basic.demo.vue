@@ -16,8 +16,6 @@
           :bordered="false"
           name="name"
           placeholder="请输入"
-          :formatter="(value) => `${Number(value) / 100}`"
-          :parser="(value) => `${Number(value) * 100}`"
         />
       </YFormItem>
       <YFormItem required="密码不能为空" vertical label="密码">

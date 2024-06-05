@@ -4,7 +4,7 @@ import { buildOutput } from "./utils.js";
 
 const pkg = {
   name: "@nimble-ui/vue",
-  version: "0.4.4",
+  version: "0.4.5",
   description: "vue3 ui组件库",
   keywords: ["nimble-ui", "vue", "vue3", "component library", "ui framework", "ui"],
   license: "MIT",

@@ -8,18 +8,19 @@
 <template>
   <YForm @submit="onSubmit">
     <YFlex vertical :gap="12">
-      <YFormItem required="账号不能为空" vertical label="账号">
+      <YFormItem :bordered="false" required="账号不能为空" vertical label="账号">
         <YInput
           v-model="value.aa"
           allow-clear
           clear-trigger="always"
-          :bordered="false"
           name="name"
           type="textarea"
           placeholder="请输入"
           :auto-size="{ maxRows: 6, minRows: 3 }"
         />
       </YFormItem>
+
+      <YInput placeholder="请输入" />
     </YFlex>
   </YForm>
 </template>

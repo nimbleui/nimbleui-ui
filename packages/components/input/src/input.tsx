@@ -163,72 +163,90 @@ export default defineComponent({
         rows,
       } = props;
 
-      return (
-        <div class={inputData.value.cls}>
-          {ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>}
-          {prefix && <span class={bem.e("prefix-text")}>{prefix}</span>}
-          <span class={bem.e("wrapper")}>
-            {type === "textarea" ? (
-              <textarea
-                rows={rows}
-                ref={inputRef}
-                id={inputId.value}
-                readonly={readonly}
-                maxlength={maxLength}
-                minlength={minLength}
-                autofocus={autofocus}
-                style={textareaStyle}
-                placeholder={placeholder}
-                class={bem.m("textarea", "wrapper")}
-                disabled={inputData.value.disabled}
-                onBlur={onBlur}
-                onFocus={onFocus}
-                onInput={onInput}
-                onChange={onChange}
-                onCompositionend={endComposing}
-                onCompositionstart={startComposing}
-              ></textarea>
-            ) : (
-              <input
-                type={newType.value}
-                ref={inputRef}
-                id={inputId.value}
-                readonly={readonly}
-                maxlength={maxLength}
-                minlength={minLength}
-                autofocus={autofocus}
-                placeholder={placeholder}
-                disabled={inputData.value.disabled}
-                onBlur={onBlur}
-                onFocus={onFocus}
-                onInput={onInput}
-                onChange={onChange}
-                onCompositionend={endComposing}
-                onCompositionstart={startComposing}
-              />
-            )}
+      const prefixSlot = ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>;
+      const prefixNode = prefix && <span class={bem.e("prefix-text")}>{prefix}</span>;
+      const passwordNode = type == "password" && (
+        <span class={bem.e("password")}>
+          <i onClick={onEye.bind(null, !isEye.value)} class={bem.m("icon", "password")}>
+            {isEye.value ? eyeIcon : eyeInvisibleIcon}
+          </i>
+        </span>
+      );
+      const clearNode =
+        allowClear &&
+        formValue.value &&
+        (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
+          <span class={bem.e("suffix-icon")}>
+            <span onClick={onClear} class={bem.e("clear")}></span>
           </span>
-          {allowClear &&
-            formValue.value &&
-            (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
-              <span class={bem.e("suffix-icon")}>
-                <span onClick={onClear} class={bem.e("clear")}></span>
-              </span>
-            ) : null)}
-          {type == "password" && (
-            <span class={bem.e("password")}>
-              <i onClick={onEye.bind(null, !isEye.value)} class={bem.m("icon", "password")}>
-                {isEye.value ? eyeIcon : eyeInvisibleIcon}
-              </i>
+        ) : null);
+      const suffixSlot = ctx.slots.suffix && <span>{ctx.slots.suffix()}</span>;
+      const suffixNode = suffix && (
+        <span onClick={onSuffix} class={bem.e("suffix-text")}>
+          {suffix}
+        </span>
+      );
+
+      const isAffix = prefixSlot || prefixNode || passwordNode || clearNode || suffixSlot || suffixNode;
+      const outlined = bem.e("input-outlined");
+      const borderCls = !isAffix && inputData.value.bordered ? outlined : undefined;
+
+      const InputNode =
+        type === "textarea" ? (
+          <textarea
+            rows={rows}
+            ref={inputRef}
+            id={inputId.value}
+            readonly={readonly}
+            maxlength={maxLength}
+            minlength={minLength}
+            autofocus={autofocus}
+            style={textareaStyle}
+            placeholder={placeholder}
+            class={[bem.e("textarea"), borderCls]}
+            disabled={inputData.value.disabled}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            onInput={onInput}
+            onChange={onChange}
+            onCompositionend={endComposing}
+            onCompositionstart={startComposing}
+          />
+        ) : (
+          <input
+            type={newType.value}
+            ref={inputRef}
+            id={inputId.value}
+            readonly={readonly}
+            maxlength={maxLength}
+            minlength={minLength}
+            autofocus={autofocus}
+            placeholder={placeholder}
+            class={[bem.e("input"), borderCls]}
+            disabled={inputData.value.disabled}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            onInput={onInput}
+            onChange={onChange}
+            onCompositionend={endComposing}
+            onCompositionstart={startComposing}
+          />
+        );
+
+      return (
+        <span class={bem.b()}>
+          {isAffix ? (
+            <span class={[bem.e("wrapper"), inputData.value.bordered ? outlined : undefined]}>
+              {prefixSlot ? prefixSlot : prefixNode}
+              {InputNode}
+              {clearNode}
+              {passwordNode}
+              {suffixSlot ? suffixSlot : suffixNode}
             </span>
+          ) : (
+            InputNode
           )}
-          {suffix && (
-            <span onClick={onSuffix} class={bem.e("suffix-text")}>
-              {suffix}
-            </span>
-          )}
-          {ctx.slots.suffix && ctx.slots.suffix?.()}
-        </div>
+        </span>
       );
     };
   },

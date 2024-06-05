@@ -3,6 +3,15 @@
 @use "./mixins/utils.scss" as *;
 
 @include b(input) {
+  --y-input-padding-block: 4px;
+  --y-input-padding-block-sm: 0px;
+  --y-input-padding-block-lg: 7px;
+  --y-input-padding-inline: 11px;
+  --y-input-padding-inline-sm: 7px;
+  --y-input-padding-inline-lg: 11px;
+  --y-input-input-font-size: 14px;
+  --y-input-input-font-size-lg: 16px;
+  --y-input-input-font-size-sm: 14px;
   --y-input-text-color: var(--y-color-text);
   --y-input-border-color: var(--y-color-border);
   --y-input-hover-border-color: var(--y-color-primary-8);
@@ -10,99 +19,72 @@
   --y-input-focus-shadow-color: var(--y-color-primary-1);
   --y-input-disabled-opacity: var(--y-disabled-opacity);
   --y-input-font-size: var(--y-font-size);
-  --y-input-height: var(--y-height-m, 32px);
   --y-input-clear: var(--y-color-text-quaternary);
-}
 
-@include b(input) {
-  position: relative;
-  display: flex;
-  align-items: center;
+  display: inline-flex;
   width: 100%;
-  box-sizing: border-box;
-  vertical-align: middle;
-  border: 1px solid;
-  border-color: transparent;
-  min-height: var(--y-input-height);
-  border-radius: 4px;
-  font-size: var(--y-input-font-size);
-  color: var(--y-input-text-color);
-  overflow: hidden;
 
   @include e(wrapper) {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    border-radius: 6px;
     flex: 1;
-    padding: 0 8px;
+  }
 
-    & > input {
-      display: inline-flex;
-      align-items: center;
-      line-height: 1.5;
+  @include e(input) {
+    padding: var(--y-input-padding-block) var(--y-input-padding-inline);
+    display: block;
+    flex: 1;
+    align-items: center;
+    line-height: 1.5714;
+    outline: none;
+    border: none;
+    font-size: var(--y-input-font-size);
+    color: var(--y-input-text-color);
+    background-color: transparent;
+    border-radius: 6px;
+
+    &:focus {
       outline: none;
-      border: none;
-      width: 100%;
-      font-size: var(--y-input-font-size);
-      color: var(--y-input-text-color);
-      background-color: transparent;
-  
-      &:focus {
-        outline: none;
-        outline: 0;
-      }
-    }
-
-    @include m(textarea) {
-      margin: 3px 0 4px;
-      display: block;
-      outline: none;
-      border: none;
-      width: 100%;
-      max-width: 100%;
-      background-color: transparent;
-      line-height: 1.5;
-      font-size: var(--y-input-font-size);
-      color: var(--y-input-text-color);
-      scrollbar-width: none;
-      overflow-y: auto;
-      overflow-x: hidden;
-      resize: vertical;
-
-      &:focus {
-        outline: none;
-        outline: 0;
-      }
-      
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      outline: 0;
     }
   }
 
-  @include when(bordered) {
-    height: var(--y-input-height);
-    border: 1px solid;
+  @include e(input-outlined) {
+    border-width: 1px;
+    border-style: solid;
     border-color: var(--y-input-border-color);
-      
-    &:not(.is-disabled):hover {
-      border-color: var(--y-input-hover-border-color);
+  }
+
+  @include e(textarea) {
+    padding: var(--y-input-padding-block) var(--y-input-padding-inline);
+    display: block;
+    outline: none;
+    border: none;
+    flex: 1;
+    max-width: 100%;
+    background-color: transparent;
+    line-height: 1.5;
+    font-size: var(--y-input-font-size);
+    color: var(--y-input-text-color);
+    scrollbar-width: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
+
+    &:focus {
+      outline: none;
+      outline: 0;
     }
 
-    &.is-focus {
-      border-color: var(--y-input-focus-border-color);
-      box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
-  @include when(disabled) {
-    cursor: not-allowed;
-    opacity: var(--y-input-disabled-opacity);
-
-    input { 
-      cursor: not-allowed;
-    }
-  }
- 
-  @include e(suffix-icon) {
-    padding: 0 5px;
+  @include e('password') {
+    margin-right: 8px;
   }
 
   @include e(prefix-text) {
@@ -124,23 +106,142 @@
   }
 
   @include e(clear) {
+    margin-right: 8px;
     border-radius: 50%;
     width: 10px;
     height: 10px;
     background-color: var(--y-input-clear);
     cursor: pointer;
-
+  
     @include utils-close-icon(1px, var(--y-color-text), 50%);
   }
-
-  @include e(password) {
-    padding-right: 8px;
-
-    @include m(icon) {
-      cursor: pointer;
-    }
-  }
 }
+
+
+// @include b(input) {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   box-sizing: border-box;
+//   vertical-align: middle;
+//   border: 1px solid;
+//   border-color: transparent;
+//   border-radius: 4px;
+//   font-size: var(--y-input-font-size);
+//   color: var(--y-input-text-color);
+//   overflow: hidden;
+
+//   @include e(wrapper) {
+//     flex: 1;
+
+//     & > input {
+//       display: inline-flex;
+//       align-items: center;
+//       line-height: 1.5714;
+//       outline: none;
+//       border: none;
+//       width: 100%;
+//       font-size: var(--y-input-font-size);
+//       color: var(--y-input-text-color);
+//       background-color: transparent;
+  
+//       &:focus {
+//         outline: none;
+//         outline: 0;
+//       }
+//     }
+
+//     @include m(textarea) {
+//       margin: 3px 0 4px;
+//       display: block;
+//       outline: none;
+//       border: none;
+//       width: 100%;
+//       max-width: 100%;
+//       background-color: transparent;
+//       line-height: 1.5;
+//       font-size: var(--y-input-font-size);
+//       color: var(--y-input-text-color);
+//       scrollbar-width: none;
+//       overflow-y: auto;
+//       overflow-x: hidden;
+//       resize: vertical;
+
+//       &:focus {
+//         outline: none;
+//         outline: 0;
+//       }
+      
+//       &::-webkit-scrollbar {
+//         display: none;
+//       }
+//     }
+//   }
+
+//   @include when(bordered) {
+//     border: 1px solid;
+//     border-color: var(--y-input-border-color);
+      
+//     &:not(.is-disabled):hover {
+//       border-color: var(--y-input-hover-border-color);
+//     }
+
+//     &.is-focus {
+//       border-color: var(--y-input-focus-border-color);
+//       box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
+//     }
+//   }
+
+//   @include when(disabled) {
+//     cursor: not-allowed;
+//     opacity: var(--y-input-disabled-opacity);
+
+//     input { 
+//       cursor: not-allowed;
+//     }
+//   }
+ 
+//   @include e(suffix-icon) {
+//     padding: 0 5px;
+//   }
+
+//   @include e(prefix-text) {
+//     display: flex;
+//     align-items: center;
+//     height: 100%;
+//     padding: 0 8px;
+//     border-right: 1px solid var(--y-input-border-color);
+//     background-color: var(--y-color-fill-tertiary);
+//   }
+
+//   @include e(suffix-text) {
+//     display: flex;
+//     align-items: center;
+//     height: 100%;
+//     padding: 0 8px;
+//     border-left: 1px solid var(--y-input-border-color);
+//     background-color: var(--y-color-fill-tertiary);
+//   }
+
+//   @include e(clear) {
+//     border-radius: 50%;
+//     width: 10px;
+//     height: 10px;
+//     background-color: var(--y-input-clear);
+//     cursor: pointer;
+
+//     @include utils-close-icon(1px, var(--y-color-text), 50%);
+//   }
+
+//   @include e(password) {
+//     padding-right: 8px;
+
+//     @include m(icon) {
+//       cursor: pointer;
+//     }
+//   }
+// }
 
 @keyframes y-shake-enter {
   0%, 100% {
