@@ -1,4 +1,4 @@
-import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType } from "vue";
+import { ComponentPublicInstance, ComputedRef, ExtractPropTypes, PropType, VNodeChild } from "vue";
 import { mergeCommonProp, mergeFunctionProp } from "@nimble-ui/utils";
 
 type InputType = "text" | "number" | "password" | "textarea";
@@ -87,13 +87,13 @@ export const inputUniqueProp = {
    * @description 前缀
    */
   prefix: {
-    type: String,
+    type: Object as PropType<VNodeChild>,
   },
   /**
    * @description 后缀
    */
   suffix: {
-    type: String,
+    type: Object as PropType<VNodeChild>,
   },
   /**
    * @description type为textarea才生效

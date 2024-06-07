@@ -73,6 +73,11 @@ const options = reactive([
     label: "测试4",
   },
 ]);
+
+setTimeout(() => {
+  model.value = 3;
+  console.log(model.value);
+}, 5000);
 </script>
 
 <style lang="scss" scoped>

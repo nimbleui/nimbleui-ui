@@ -40,14 +40,15 @@ export default defineComponent({
     const initFindLabel = () => {
       const { options, labelField, field } = props;
       const val = modelCop.value;
-      if (!labelCop.value && val != null) {
+      if (val != null) {
         const item = options?.find((el) => el[field] == val);
 
         if (item) {
           labelCop.value = item[labelField];
         }
+      } else {
+        labelCop.value = "";
       }
-      if (!val) labelCop.value = "";
     };
     watch([modelCop, () => props.options], initFindLabel);
     onMounted(initFindLabel);

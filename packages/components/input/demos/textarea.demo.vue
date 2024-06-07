@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <markdown>
-  # 基础用法
+  # 多文本框
   
-  最简单的用法。
+  设置属性type为textarea。
 </markdown>
 
 <template>

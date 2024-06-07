@@ -47,6 +47,12 @@ const spaceProps = mergeCommonProp({
     type: String as PropType<SpaceJustify>,
     default: "start",
   },
+  /**
+   * @description 紧凑布局组合
+   */
+  compact: {
+    type: Boolean,
+  },
 });
 
 export default spaceProps;

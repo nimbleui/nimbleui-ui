@@ -28,7 +28,6 @@
     display: flex;
     box-sizing: border-box;
     align-items: center;
-    border-radius: 6px;
     flex: 1;
   }
 
@@ -43,7 +42,6 @@
     font-size: var(--y-input-font-size);
     color: var(--y-input-text-color);
     background-color: transparent;
-    border-radius: 6px;
 
     &:focus {
       outline: none;
@@ -54,7 +52,26 @@
   @include e(input-outlined) {
     border-width: 1px;
     border-style: solid;
+    border-radius: 6px;
     border-color: var(--y-input-border-color);
+
+    @include when(disabled) {
+      cursor: not-allowed;
+      opacity: var(--y-input-disabled-opacity);
+
+      & * {
+        cursor: not-allowed;
+      }
+    }
+
+    @include when(focus) {
+      border-color: var(--y-input-focus-border-color);
+      box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
+    }
+
+    &:not(.is-disabled):hover {
+      border-color: var(--y-input-hover-border-color);
+    }
   }
 
   @include e(textarea) {
@@ -115,133 +132,18 @@
   
     @include utils-close-icon(1px, var(--y-color-text), 50%);
   }
+
+  @include e(prefix) {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @include e(suffix) {
+    display: inline-flex;
+    align-items: center;
+  }
+
 }
-
-
-// @include b(input) {
-//   position: relative;
-//   display: flex;
-//   align-items: center;
-//   width: 100%;
-//   box-sizing: border-box;
-//   vertical-align: middle;
-//   border: 1px solid;
-//   border-color: transparent;
-//   border-radius: 4px;
-//   font-size: var(--y-input-font-size);
-//   color: var(--y-input-text-color);
-//   overflow: hidden;
-
-//   @include e(wrapper) {
-//     flex: 1;
-
-//     & > input {
-//       display: inline-flex;
-//       align-items: center;
-//       line-height: 1.5714;
-//       outline: none;
-//       border: none;
-//       width: 100%;
-//       font-size: var(--y-input-font-size);
-//       color: var(--y-input-text-color);
-//       background-color: transparent;
-  
-//       &:focus {
-//         outline: none;
-//         outline: 0;
-//       }
-//     }
-
-//     @include m(textarea) {
-//       margin: 3px 0 4px;
-//       display: block;
-//       outline: none;
-//       border: none;
-//       width: 100%;
-//       max-width: 100%;
-//       background-color: transparent;
-//       line-height: 1.5;
-//       font-size: var(--y-input-font-size);
-//       color: var(--y-input-text-color);
-//       scrollbar-width: none;
-//       overflow-y: auto;
-//       overflow-x: hidden;
-//       resize: vertical;
-
-//       &:focus {
-//         outline: none;
-//         outline: 0;
-//       }
-      
-//       &::-webkit-scrollbar {
-//         display: none;
-//       }
-//     }
-//   }
-
-//   @include when(bordered) {
-//     border: 1px solid;
-//     border-color: var(--y-input-border-color);
-      
-//     &:not(.is-disabled):hover {
-//       border-color: var(--y-input-hover-border-color);
-//     }
-
-//     &.is-focus {
-//       border-color: var(--y-input-focus-border-color);
-//       box-shadow: 0 0 0 2px var(--y-input-focus-shadow-color);
-//     }
-//   }
-
-//   @include when(disabled) {
-//     cursor: not-allowed;
-//     opacity: var(--y-input-disabled-opacity);
-
-//     input { 
-//       cursor: not-allowed;
-//     }
-//   }
- 
-//   @include e(suffix-icon) {
-//     padding: 0 5px;
-//   }
-
-//   @include e(prefix-text) {
-//     display: flex;
-//     align-items: center;
-//     height: 100%;
-//     padding: 0 8px;
-//     border-right: 1px solid var(--y-input-border-color);
-//     background-color: var(--y-color-fill-tertiary);
-//   }
-
-//   @include e(suffix-text) {
-//     display: flex;
-//     align-items: center;
-//     height: 100%;
-//     padding: 0 8px;
-//     border-left: 1px solid var(--y-input-border-color);
-//     background-color: var(--y-color-fill-tertiary);
-//   }
-
-//   @include e(clear) {
-//     border-radius: 50%;
-//     width: 10px;
-//     height: 10px;
-//     background-color: var(--y-input-clear);
-//     cursor: pointer;
-
-//     @include utils-close-icon(1px, var(--y-color-text), 50%);
-//   }
-
-//   @include e(password) {
-//     padding-right: 8px;
-
-//     @include m(icon) {
-//       cursor: pointer;
-//     }
-//   }
-// }
 
 @keyframes y-shake-enter {
   0%, 100% {

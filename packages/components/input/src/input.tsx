@@ -180,16 +180,17 @@ export default defineComponent({
             <span onClick={onClear} class={bem.e("clear")}></span>
           </span>
         ) : null);
-      const suffixSlot = ctx.slots.suffix && <span>{ctx.slots.suffix()}</span>;
+      const suffixSlot = ctx.slots.suffix && <span class={bem.e("suffix")}>{ctx.slots.suffix()}</span>;
       const suffixNode = suffix && (
         <span onClick={onSuffix} class={bem.e("suffix-text")}>
           {suffix}
         </span>
       );
 
-      const isAffix = prefixSlot || prefixNode || passwordNode || clearNode || suffixSlot || suffixNode;
+      const { bordered, disabled } = inputData.value;
+      const isAffix = prefixNode || passwordNode || clearNode || suffixNode;
       const outlined = bem.e("input-outlined");
-      const borderCls = !isAffix && inputData.value.bordered ? outlined : undefined;
+      const borderCls = bordered ? outlined : undefined;
 
       const InputNode =
         type === "textarea" ? (
@@ -203,8 +204,8 @@ export default defineComponent({
             autofocus={autofocus}
             style={textareaStyle}
             placeholder={placeholder}
-            class={[bem.e("textarea"), borderCls]}
-            disabled={inputData.value.disabled}
+            class={[bem.e("textarea"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}
+            disabled={disabled}
             onBlur={onBlur}
             onFocus={onFocus}
             onInput={onInput}
@@ -222,8 +223,8 @@ export default defineComponent({
             minlength={minLength}
             autofocus={autofocus}
             placeholder={placeholder}
-            class={[bem.e("input"), borderCls]}
-            disabled={inputData.value.disabled}
+            class={[bem.e("input"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}
+            disabled={disabled}
             onBlur={onBlur}
             onFocus={onFocus}
             onInput={onInput}
@@ -234,18 +235,20 @@ export default defineComponent({
         );
 
       return (
-        <span class={bem.b()}>
+        <span class={[bem.b(), borderCls]}>
+          {prefixSlot}
           {isAffix ? (
-            <span class={[bem.e("wrapper"), inputData.value.bordered ? outlined : undefined]}>
-              {prefixSlot ? prefixSlot : prefixNode}
+            <span class={[bem.e("wrapper"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}>
+              {prefixNode}
               {InputNode}
               {clearNode}
               {passwordNode}
-              {suffixSlot ? suffixSlot : suffixNode}
+              {suffixNode}
             </span>
           ) : (
             InputNode
           )}
+          {suffixSlot}
         </span>
       );
     };
