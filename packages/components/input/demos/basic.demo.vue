@@ -9,14 +9,7 @@
   <YForm @submit="onSubmit">
     <YFlex vertical :gap="12">
       <YFormItem required="账号不能为空" vertical label="账号">
-        <YInput
-          v-model="value.aa"
-          allow-clear
-          clear-trigger="always"
-          :bordered="false"
-          name="name"
-          placeholder="请输入"
-        />
+        <YInput v-model="value.aa" allow-clear :bordered="false" name="name" placeholder="请输入" />
       </YFormItem>
       <YFormItem required="密码不能为空" vertical label="密码">
         <YInput v-model="value.bb" type="password" :bordered="false" name="password" placeholder="请输入" />

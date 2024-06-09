@@ -8,7 +8,7 @@
 <template>
   <YForm @submit="onSubmit">
     <YFlex vertical :gap="12">
-      <YFormItem :bordered="false" required="账号不能为空" vertical label="账号">
+      <YFormItem :bordered="false" required="账号不能为空" label="账号">
         <YInput
           v-model="value.aa"
           allow-clear

@@ -7,6 +7,7 @@ basic.vue
 disabled.vue
 textarea.vue
 compact.vue
+size.vue
 ```
 ## API
 
@@ -31,3 +32,4 @@ compact.vue
 | suffix | `string` | - | 后缀 | - |
 | rows | `number` | `2` | type为textarea才生效 | - |
 | autoSize | `boolean \| { minRows: number; maxRows: number }` | - | t自适应内容高度，只适用于textarea | - |
+| size | `"small"\|"middle"\|"large"` | `'middle'` | 组件的大小 | - |

@@ -161,6 +161,7 @@ export default defineComponent({
         clearTrigger,
         allowClear,
         rows,
+        size,
       } = props;
 
       const prefixSlot = ctx.slots.prefix && <span class={bem.e("prefix")}>{ctx.slots.prefix?.()}</span>;
@@ -188,7 +189,7 @@ export default defineComponent({
       );
 
       const { bordered, disabled } = inputData.value;
-      const isAffix = prefixNode || passwordNode || clearNode || suffixNode;
+      const isAffix = allowClear || prefixNode || passwordNode || clearNode || suffixNode;
       const outlined = bem.e("input-outlined");
       const borderCls = bordered ? outlined : undefined;
 
@@ -204,7 +205,7 @@ export default defineComponent({
             autofocus={autofocus}
             style={textareaStyle}
             placeholder={placeholder}
-            class={[bem.e("textarea"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}
+            class={[bem.e("textarea"), bem.is("focus", isFocus.value)]}
             disabled={disabled}
             onBlur={onBlur}
             onFocus={onFocus}
@@ -223,7 +224,13 @@ export default defineComponent({
             minlength={minLength}
             autofocus={autofocus}
             placeholder={placeholder}
-            class={[bem.e("input"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}
+            class={[
+              bem.e("input"),
+              bem.is("disabled", disabled),
+              bem.is("focus", isFocus.value),
+              bem.is("small", size == "small"),
+              bem.is("large", size == "large"),
+            ]}
             disabled={disabled}
             onBlur={onBlur}
             onFocus={onFocus}
@@ -235,10 +242,10 @@ export default defineComponent({
         );
 
       return (
-        <span class={[bem.b(), borderCls]}>
+        <span class={[bem.b(), borderCls, bem.is("disabled", disabled)]}>
           {prefixSlot}
           {isAffix ? (
-            <span class={[bem.e("wrapper"), bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}>
+            <span class={[bem.e("wrapper"), bem.is("focus", isFocus.value)]}>
               {prefixNode}
               {InputNode}
               {clearNode}
