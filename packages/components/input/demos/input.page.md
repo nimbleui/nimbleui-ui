@@ -8,6 +8,7 @@ disabled.vue
 textarea.vue
 compact.vue
 size.vue
+formatter.vue
 ```
 ## API
 
