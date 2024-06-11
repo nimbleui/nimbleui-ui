@@ -20,6 +20,7 @@
   --y-input-disabled-opacity: var(--y-disabled-opacity);
   --y-input-font-size: var(--y-font-size);
   --y-input-clear: var(--y-color-text-quaternary);
+  --y-input-clear-hover: var(--y-color-text-tertiary);
 
   display: inline-flex;
   width: 100%;
@@ -124,13 +125,36 @@
 
   @include e(clear) {
     margin-right: 8px;
-    border-radius: 50%;
+    position: relative;
+    display: inline-flex;
     width: 10px;
     height: 10px;
-    background-color: var(--y-input-clear);
     cursor: pointer;
-  
-    @include utils-close-icon(1px, var(--y-color-text), 50%);
+    border-radius: 50%;
+    background-color: var(--y-input-clear);
+
+    &::before,
+    &::after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 50%;
+      content: '';
+      background-color: rgb(255 255 255 / 70%);
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    
+    &::after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:hover {
+      background-color: var(--y-input-clear-hover);
+    }
   }
 
   @include e(prefix) {

@@ -91,7 +91,9 @@ export default defineComponent({
     };
 
     // 输入框失去焦点
-    const onBlur = (event: Event) => {
+    const onBlur = async (event: Event) => {
+      // 判断是否是在清除图标上
+      if (isHoverClear.value) return;
       ctx.emit("blur", event);
       isFocus.value = false;
       formItemContext?.parent.events("onBlur", formValue.value);
@@ -128,10 +130,21 @@ export default defineComponent({
       formItemDisabled: computed(() => inputData.value.disabled || false),
     });
 
+    const isHoverClear = ref(false);
+    const onClearEnter = () => {
+      isHoverClear.value = true;
+    };
+    const onClearLeave = () => {
+      isHoverClear.value = false;
+    };
     const onClear = () => {
       ctx.emit("update:modelValue", "");
       ctx.emit("clear", "");
-      inputRef.value?.focus();
+      selfModel.value = "";
+      if (inputRef.value) {
+        inputRef.value.value = "";
+        inputRef.value.focus();
+      }
     };
 
     const isEye = ref(false);
@@ -178,7 +191,12 @@ export default defineComponent({
         formValue.value &&
         (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
           <span class={bem.e("suffix-icon")}>
-            <span onClick={onClear} class={bem.e("clear")}></span>
+            <span
+              onMouseenter={onClearEnter}
+              onMouseleave={onClearLeave}
+              onClick={onClear}
+              class={bem.e("clear")}
+            ></span>
           </span>
         ) : null);
       const suffixSlot = ctx.slots.suffix && <span class={bem.e("suffix")}>{ctx.slots.suffix()}</span>;
@@ -242,10 +260,10 @@ export default defineComponent({
         );
 
       return (
-        <span class={[bem.b(), borderCls, bem.is("disabled", disabled)]}>
+        <span class={[bem.b(), borderCls, bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}>
           {prefixSlot}
           {isAffix ? (
-            <span class={[bem.e("wrapper"), bem.is("focus", isFocus.value)]}>
+            <span class={[bem.e("wrapper")]}>
               {prefixNode}
               {InputNode}
               {clearNode}
