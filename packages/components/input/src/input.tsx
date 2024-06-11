@@ -91,7 +91,7 @@ export default defineComponent({
     };
 
     // 输入框失去焦点
-    const onBlur = async (event: Event) => {
+    const onBlur = (event: Event) => {
       // 判断是否是在清除图标上
       if (isHoverClear.value) return;
       ctx.emit("blur", event);
@@ -119,6 +119,7 @@ export default defineComponent({
 
     onMounted(() => {
       setNativeInputValue();
+      handelAutoSize();
     });
 
     const { id: inputId } = useCreateId();
@@ -192,10 +193,10 @@ export default defineComponent({
         (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
           <span class={bem.e("suffix-icon")}>
             <span
+              class={bem.e("clear")}
+              onClick={onClear}
               onMouseenter={onClearEnter}
               onMouseleave={onClearLeave}
-              onClick={onClear}
-              class={bem.e("clear")}
             ></span>
           </span>
         ) : null);
