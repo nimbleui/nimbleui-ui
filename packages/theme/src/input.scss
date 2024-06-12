@@ -47,6 +47,16 @@
       outline: none;
       outline: 0;
     }
+
+    @include when(small) {
+      padding: var(--y-input-padding-block-sm) var(--y-input-padding-inline-sm);
+      font-size: var(--y-input-input-font-size-sm);
+    }
+
+    @include when(large) {
+      padding: var(--y-input-padding-block-lg) var(--y-input-padding-inline-lg);
+      font-size: var(--y-input-input-font-size-lg);
+    }
   }
 
   @include e(input-outlined) {
