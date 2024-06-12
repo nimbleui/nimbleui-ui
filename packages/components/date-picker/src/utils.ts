@@ -102,20 +102,26 @@ export function formatDate(date: Date, fmt = "yyyy-MM-dd") {
 }
 
 const REGEX_PARSE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
-function toDate(date?: Date | string | number | null): Date {
-  if (isDate(date)) return date;
-  if (isNumber(date)) return new Date(date);
-
-  if (isString(date)) {
+export const parseDate = (date: string | Date | number, utc?: boolean) => {
+  if (date === null) return new Date(NaN);
+  if (date === undefined) return new Date();
+  if (date instanceof Date) return new Date(date);
+  if (typeof date === "string" && !/Z$/i.test(date)) {
     const d = date.match(REGEX_PARSE);
     if (d) {
-      const m = d[2] || 0;
+      const y = +d[1];
+      const m = +d[2] - 1 || 0;
+      const D = +(d[3] || 1);
+      const H = +(d[4] || 0);
+      const M = +(d[5] || 0);
+      const S = +(d[6] || 0);
+      const ms = +(d[7] || "0").substring(0, 3);
+      if (utc) {
+        return new Date(Date.UTC(y, m, D, H, M, S, ms));
+      }
+      return new Date(y, m, D, H, M, S, ms);
     }
   }
 
-  return new Date();
-}
-
-export function moment(value?: Date | string | number | null) {
-  const date = toDate(value);
-}
+  return new Date(date);
+};

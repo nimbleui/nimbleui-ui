@@ -68,9 +68,10 @@ export default defineComponent({
     const setNativeInputValue = () => {
       const input = inputRef.value;
       const formatterValue = props.formatter?.(nativeValue.value) ?? nativeValue.value;
-      if (!input || input.value === formatterValue) return;
+      if (input && input.value !== formatterValue) {
+        input.value = formatterValue;
+      }
 
-      input.value = formatterValue;
       handelAutoSize();
     };
 
@@ -117,14 +118,8 @@ export default defineComponent({
       ctx.emit("change", (event.target as HTMLInputElement).value);
     };
 
-    watch(nativeValue, (val) => {
-      selfModel.value = val;
-      setNativeInputValue();
-    });
-
-    onMounted(() => {
-      setNativeInputValue();
-    });
+    watch(nativeValue, setNativeInputValue);
+    onMounted(setNativeInputValue);
 
     const { id: inputId } = useCreateId();
 

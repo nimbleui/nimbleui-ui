@@ -38,14 +38,23 @@ export default defineComponent({
     const onMonth = (num: 1 | -1) => {
       const date = selfModel.value[0];
       const month = date.getMonth();
-      const time = date.setMonth(month + num);
-      selfModel.value[0] = new Date(time);
+      selfModel.value[0] = new Date(date.setMonth(month + num));
+      if (isRange.value) {
+        selfModel.value[1] = new Date(date.setMonth(month + num + 1));
+      }
     };
     const onYear = (num: 1 | -1) => {
       const date = selfModel.value[0];
-      const month = date.getFullYear();
-      const time = date.setFullYear(month + num);
-      selfModel.value[0] = new Date(time);
+      const year = date.getFullYear() + num;
+      const month = date.getMonth();
+      selfModel.value[0] = new Date(date.setFullYear(year));
+      if (isRange.value) {
+        selfModel.value[1] = new Date(date.setFullYear(year, month + 1));
+      }
+    };
+
+    const onSelect = (date: Date) => {
+      console.log(date);
     };
 
     const renderContent = () => {
@@ -62,7 +71,7 @@ export default defineComponent({
           </YFlex>
           <YFlex gap={35}>
             {dateList.value.map((item, index) => (
-              <DatePanel {...item} key={index} disabledDate={props.disabledDate} />
+              <DatePanel {...item} key={index} onChange={onSelect} disabledDate={props.disabledDate} />
             ))}
           </YFlex>
         </YFlex>
@@ -82,18 +91,13 @@ export default defineComponent({
             {{
               default: () => (
                 <YFlex align="center" class={bem.e("title")}>
-                  <YInput
-                    readonly
-                    bordered={false}
-                    placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
-                  />
+                  <YInput bordered={false} placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder} />
                   {isRange.value && (
                     <>
                       <span class={bem.m("icon", "title")}>
                         <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
                       </span>
                       <YInput
-                        readonly
                         bordered={false}
                         placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
                       />

@@ -8,6 +8,7 @@
 <template>
   <YForm @submit="onSubmit">
     <YFlex vertical :gap="12">
+      <YInput type="textarea" auto-size placeholder="请输入" />
       <YFormItem :bordered="false" required="账号不能为空" label="账号">
         <YInput
           v-model="value.aa"
@@ -19,8 +20,6 @@
           :auto-size="{ maxRows: 6, minRows: 3 }"
         />
       </YFormItem>
-
-      <YInput placeholder="请输入" />
     </YFlex>
   </YForm>
 </template>
@@ -29,7 +28,7 @@
 import { reactive } from "vue";
 
 const value = reactive<any>({
-  aa: 22,
+  aa: "",
 });
 const onSubmit = (data: any) => {
   console.log(data);
