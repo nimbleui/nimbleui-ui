@@ -134,6 +134,10 @@
     transform: rotateZ(-90deg);
 
     @include utils-arrow;
+    
+    &::before, &::after {
+      cursor: pointer;
+    }
   }
 
   @include e(month) {

@@ -18,7 +18,13 @@ export default defineComponent({
     const selfModel = ref("");
 
     const inputRef = ref<HTMLInputElement | HTMLTextAreaElement>();
-    const formValue = computed(() => (props.modelValue == null ? selfModel.value : String(props.modelValue)));
+    const nativeValue = computed({
+      get: () => (props.modelValue == null ? selfModel.value : String(props.modelValue)),
+      set(val) {
+        selfModel.value = val;
+        ctx.emit("update:modelValue", val);
+      },
+    });
 
     // 根据props生成className
     const bem = createNamespace("input");
@@ -61,15 +67,16 @@ export default defineComponent({
     // 更新输入框内容
     const setNativeInputValue = () => {
       const input = inputRef.value;
-      const formatterValue = props.formatter?.(formValue.value) ?? formValue.value;
-      if (!input || input.value === formatterValue) return;
+      const formatterValue = props.formatter?.(nativeValue.value) ?? nativeValue.value;
+      if (input && input.value !== formatterValue) {
+        input.value = formatterValue;
+      }
 
-      input.value = formatterValue;
       handelAutoSize();
     };
 
     // 输入框内容发生变化
-    const onInput = (event: Event) => {
+    const onInput = async (event: Event) => {
       const { target } = event;
       if ((target as any).composing) return;
 
@@ -78,60 +85,65 @@ export default defineComponent({
         value = props.parser ? props.parser(value) : value;
       }
 
-      if (value === formValue.value) {
+      if (value === nativeValue.value) {
         return setNativeInputValue();
       }
 
-      ctx.emit("update:modelValue", value);
       ctx.emit("input", value);
-      selfModel.value = value;
+      nativeValue.value = value;
 
+      // 解决光标不在最后改变值，光标就跑到最后
+      await nextTick();
       setNativeInputValue();
       formItemContext?.parent.events("onChange", value);
     };
 
     // 输入框失去焦点
     const onBlur = (event: Event) => {
+      // 判断是否是在清除图标上
+      if (isHoverClear.value) return;
       ctx.emit("blur", event);
       isFocus.value = false;
-      formItemContext?.parent.events("onBlur", formValue.value);
+      formItemContext?.parent.events("onBlur", nativeValue.value);
     };
 
     // 输入框获取焦点
     const onFocus = (event: Event) => {
       ctx.emit("focus", event);
       focus();
-      formItemContext?.parent.events("onFocus", formValue.value);
+      formItemContext?.parent.events("onFocus", nativeValue.value);
     };
 
     const onChange = (event: Event) => {
       ctx.emit("change", (event.target as HTMLInputElement).value);
     };
 
-    watch(
-      () => props.modelValue,
-      () => {
-        setNativeInputValue();
-      }
-    );
-
-    onMounted(() => {
-      setNativeInputValue();
-    });
+    watch(nativeValue, setNativeInputValue);
+    onMounted(setNativeInputValue);
 
     const { id: inputId } = useCreateId();
 
     useExpose({
       focus,
       inputId,
-      formValue,
+      formValue: nativeValue,
       formItemDisabled: computed(() => inputData.value.disabled || false),
     });
 
+    const isHoverClear = ref(false);
+    const onClearEnter = () => {
+      isHoverClear.value = true;
+    };
+    const onClearLeave = () => {
+      isHoverClear.value = false;
+    };
     const onClear = () => {
-      ctx.emit("update:modelValue", "");
       ctx.emit("clear", "");
-      inputRef.value?.focus();
+      nativeValue.value = "";
+      if (inputRef.value) {
+        inputRef.value.value = "";
+        inputRef.value.focus();
+      }
     };
 
     const isEye = ref(false);
@@ -147,7 +159,7 @@ export default defineComponent({
       return type;
     });
 
-    const onSuffix = () => ctx.emit("suffix", formValue.value, { name: props.name });
+    const onSuffix = () => ctx.emit("suffix", nativeValue.value, { name: props.name });
     return () => {
       const {
         prefix,
@@ -175,10 +187,15 @@ export default defineComponent({
       );
       const clearNode =
         allowClear &&
-        formValue.value &&
+        nativeValue.value &&
         (clearTrigger === "always" || (clearTrigger === "focus" && isFocus.value) ? (
           <span class={bem.e("suffix-icon")}>
-            <span onClick={onClear} class={bem.e("clear")}></span>
+            <span
+              class={bem.e("clear")}
+              onClick={onClear}
+              onMouseenter={onClearEnter}
+              onMouseleave={onClearLeave}
+            ></span>
           </span>
         ) : null);
       const suffixSlot = ctx.slots.suffix && <span class={bem.e("suffix")}>{ctx.slots.suffix()}</span>;
@@ -242,10 +259,10 @@ export default defineComponent({
         );
 
       return (
-        <span class={[bem.b(), borderCls, bem.is("disabled", disabled)]}>
+        <span class={[bem.b(), borderCls, bem.is("disabled", disabled), bem.is("focus", isFocus.value)]}>
           {prefixSlot}
           {isAffix ? (
-            <span class={[bem.e("wrapper"), bem.is("focus", isFocus.value)]}>
+            <span class={[bem.e("wrapper")]}>
               {prefixNode}
               {InputNode}
               {clearNode}

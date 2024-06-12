@@ -33,6 +33,11 @@
       &:hover {
         z-index: 10;
       }
+
+      &.is-focus {
+        z-index: 10;
+        box-shadow: none;
+      }
     }
   }
 }

@@ -82,7 +82,7 @@ export function calculateAutoSizeStyle(node: HTMLTextAreaElement, minRows: numbe
     if (maxRows != null) {
       hiddenTextarea.rows = maxRows;
       maxHeight = hiddenTextarea.clientHeight;
-      overflowY = height < maxHeight ? "" : "hidden";
+      overflowY = height < maxHeight ? "hidden" : "";
       height = Math.min(maxHeight, height);
     }
     hiddenTextarea.rows = minRows;
