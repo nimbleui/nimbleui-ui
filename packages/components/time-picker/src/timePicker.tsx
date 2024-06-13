@@ -72,6 +72,13 @@ export default defineComponent({
     const onClear = () => {
       props["onUpdate:modelValue"]?.("");
       props.onConfirm?.({ value: "" });
+      resetSite();
+    };
+
+    const resetSite = () => {
+      props.format.split(":").forEach((item, i) => {
+        selectIndex[i] = item.replace(/[hms]/g, "0");
+      });
     };
 
     const scrollbarRef = shallowRef<ScrollbarInstance[]>([]);
@@ -89,7 +96,7 @@ export default defineComponent({
           scrollbarRef.value[i].setScrollTop(value * 29);
         });
       } else if (val && !modelCop.value) {
-        selectIndex.length = 0;
+        resetSite();
         await nextTick();
         scrollbarRef.value.forEach((item) => {
           item?.setScrollTop(0);
