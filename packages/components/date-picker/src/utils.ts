@@ -102,10 +102,22 @@ export function formatDate(date: Date, fmt = "yyyy-MM-dd") {
 }
 
 const REGEX_PARSE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
-export const parseDate = (date: string | Date | number, utc?: boolean) => {
+export const REGEX_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
+
+interface ConfigParseDate {
+  utc?: boolean;
+  format?: string;
+}
+export const parseDate = (date: string | Date | number, config: ConfigParseDate = {}) => {
+  const { utc, format } = config;
+
   if (date === null) return new Date(NaN);
   if (date === undefined) return new Date();
   if (date instanceof Date) return new Date(date);
+
+  if (format && typeof date === "string") {
+    console.log(111);
+  }
   if (typeof date === "string" && !/Z$/i.test(date)) {
     const d = date.match(REGEX_PARSE);
     if (d) {
@@ -125,3 +137,16 @@ export const parseDate = (date: string | Date | number, utc?: boolean) => {
 
   return new Date(date);
 };
+
+export function getDateInfo(date: Date) {
+  return {
+    Y: date.getFullYear(),
+    M: date.getMonth(),
+    D: date.getDate(),
+    W: date.getDay(),
+    h: date.getHours(),
+    m: date.getMinutes(),
+    s: date.getSeconds(),
+    ms: date.getMilliseconds(),
+  };
+}

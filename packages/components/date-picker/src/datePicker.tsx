@@ -5,10 +5,12 @@ import { YInput } from "@nimble-ui/components/input";
 import { YFlex } from "@nimble-ui/components/flex";
 
 import datePickerProps from "./types";
-import { getCalendar, formatModelValue, formatDate } from "./utils";
+import { getCalendar, formatModelValue, formatDate, parseDate } from "./utils";
 import DatePanel from "./datePanel";
 import DateArrowIcon from "./arrowIcon";
 
+const date = parseDate("20210102T012345");
+console.log(date);
 export default defineComponent({
   name: "YDatePicker",
   props: datePickerProps(),

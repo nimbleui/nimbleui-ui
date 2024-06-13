@@ -7,7 +7,7 @@
 
 <template>
   <div class="demo-margin">
-    <YTimePicker v-model="model" placeholder="选择时间" allow-clear format="mm:ss" @confirm="onConfirm" />
+    <YTimePicker v-model="model" placeholder="选择时间" allow-clear format="h:m:s" @confirm="onConfirm" />
   </div>
 </template>
 

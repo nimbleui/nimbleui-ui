@@ -13,4 +13,7 @@ export default defineConfig({
     }),
     vueJsx(),
   ],
+  server: {
+    host: "0.0.0.0",
+  },
 });
