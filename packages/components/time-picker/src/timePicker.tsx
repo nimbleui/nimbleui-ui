@@ -23,7 +23,8 @@ export default defineComponent({
     const items = computed(() => {
       return props.format.split(":").map((item) => {
         const length = item.indexOf("h") > -1 ? 24 : 60;
-        return Array.from({ length }, (_, i) => (i <= 9 ? `0${i}` : `${i}`));
+        const len = item.length;
+        return Array.from({ length }, (_, i) => String(i).padStart(len, "0"));
       });
     });
 
@@ -42,7 +43,7 @@ export default defineComponent({
         const result = new RegExp(`(${k})`).exec(format)?.[1];
         const value = obj[k as keyof typeof obj] + "";
         if (result) {
-          format = format.replace(result, value.padStart(2, "0"));
+          format = format.replace(result, value.padStart(result.length, "0"));
         }
       }
       return format;
@@ -56,9 +57,9 @@ export default defineComponent({
       let value: string | number = "";
       if (isNumber(props.modelValue)) {
         const date = new Date(props.modelValue);
-        res.h && date.setHours(res.h);
-        res.m && date.setMinutes(res.m);
-        res.s && date.setSeconds(res.s);
+        res.h != null && date.setHours(res.h);
+        res.m != null && date.setMinutes(res.m);
+        res.s != null && date.setSeconds(res.s);
         value = date.getTime();
         props["onUpdate:modelValue"]?.(value);
       } else {
