@@ -108,7 +108,7 @@ interface ConfigParseDate {
   utc?: boolean;
   format?: string;
 }
-export const parseDate = (date: string | Date | number, config: ConfigParseDate = {}) => {
+export const parseDate = (date: string | Date | number | undefined, config: ConfigParseDate = {}) => {
   const { utc, format } = config;
 
   if (date === null) return new Date(NaN);
@@ -149,4 +149,33 @@ export function getDateInfo(date: Date) {
     s: date.getSeconds(),
     ms: date.getMilliseconds(),
   };
+}
+
+export function calculateDate(
+  date: string | Date | number,
+  type: "year" | "month" | "day" | "hour" | "minute",
+  num: number
+) {
+  const d = parseDate(date);
+  const { Y, M, D, h, m } = getDateInfo(d);
+
+  switch (type) {
+    case "year":
+      d.setFullYear(Y + num);
+      break;
+    case "month":
+      d.setMonth(M + num);
+      break;
+    case "day":
+      d.setDate(D + num);
+      break;
+    case "hour":
+      d.setHours(h + num);
+      break;
+    case "minute":
+      d.setMinutes(m + num);
+      break;
+  }
+
+  return d;
 }

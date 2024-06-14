@@ -88,13 +88,13 @@ export const inputUniqueProp = {
    * @description 前缀
    */
   prefix: {
-    type: Object as PropType<VNodeChild>,
+    type: [Object, String] as PropType<VNodeChild>,
   },
   /**
    * @description 后缀
    */
   suffix: {
-    type: Object as PropType<VNodeChild>,
+    type: [Object, String] as PropType<VNodeChild>,
   },
   /**
    * @description type为textarea才生效

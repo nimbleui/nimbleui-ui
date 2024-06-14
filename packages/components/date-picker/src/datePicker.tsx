@@ -1,11 +1,11 @@
 import { createNamespace, isArray } from "@nimble-ui/utils";
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { YInput } from "@nimble-ui/components/input";
 import { YFlex } from "@nimble-ui/components/flex";
 
 import datePickerProps from "./types";
-import { getCalendar, formatModelValue, formatDate, parseDate } from "./utils";
+import { getCalendar, formatDate, parseDate, calculateDate } from "./utils";
 import DatePanel from "./datePanel";
 import DateArrowIcon from "./arrowIcon";
 
@@ -19,16 +19,6 @@ export default defineComponent({
     const isRange = computed(() => props.type.includes("Range"));
 
     const selfModel = ref<Array<Date>>([]);
-    watch(
-      () => props.modelValue,
-      (val) => {
-        selfModel.value = formatModelValue(props.type, val);
-      },
-      {
-        deep: true,
-        immediate: true,
-      }
-    );
 
     const dateList = computed(() => {
       return selfModel.value.map((date) => ({
@@ -57,6 +47,36 @@ export default defineComponent({
 
     const onSelect = (date: Date) => {
       console.log(date);
+    };
+
+    const focusInfo = reactive({
+      current: 0,
+      focus: false,
+      time: 0,
+    });
+    const onFocus = (num: number) => {
+      clearTimeout(focusInfo.time);
+      focusInfo.current = num;
+      if (focusInfo.focus) return;
+
+      focusInfo.focus = true;
+      const { modelValue } = props;
+      if (isRange.value) {
+        if (isArray(modelValue) || modelValue == undefined) {
+          const d = parseDate(modelValue?.[num]);
+          const date = calculateDate(d, "month", num ? -1 : 1);
+
+          selfModel.value = [num ? date : d, num ? d : date];
+        }
+      } else {
+        if (isArray(modelValue)) return;
+        selfModel.value = [parseDate(modelValue)];
+      }
+    };
+    const onBlur = async () => {
+      focusInfo.time = window.setTimeout(() => {
+        focusInfo.focus = false;
+      }, 80);
     };
 
     const renderContent = () => {
@@ -93,7 +113,12 @@ export default defineComponent({
             {{
               default: () => (
                 <YFlex align="center" class={bem.e("title")}>
-                  <YInput bordered={false} placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder} />
+                  <YInput
+                    bordered={false}
+                    placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
+                    onFocus={onFocus.bind(null, 0)}
+                    onBlur={onBlur}
+                  />
                   {isRange.value && (
                     <>
                       <span class={bem.m("icon", "title")}>
@@ -102,8 +127,16 @@ export default defineComponent({
                       <YInput
                         bordered={false}
                         placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
+                        onFocus={onFocus.bind(null, 1)}
+                        onBlur={onBlur}
                       />
                     </>
+                  )}
+                  {focusInfo.focus && (
+                    <i
+                      class={bem.m("bar", "title")}
+                      style={{ transform: `translate(calc((100% + 20px) * ${focusInfo.current}))` }}
+                    ></i>
                   )}
                 </YFlex>
               ),

@@ -5,8 +5,10 @@
 @include b(date-picker) {
   --y-date-picker-border-color: var(--y-color-border);
   --y-date-picker-icon-color: var(--y-color-text-tertiary);
+  --y-date-picker-bar-bg-color: var(--y-color-primary);
 
   @include e(title) {
+    position: relative;
     text-align: center;
     border: 1px solid var(--y-date-picker-border-color);
     border-radius: 4px;
@@ -34,6 +36,16 @@
       transform: rotateZ(90deg);
 
       @include utils-arrow;
+    }
+
+    @include m(bar) {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: calc((100% - 20px) / 2);
+      height: 2px;
+      background-color: var(--y-date-picker-bar-bg-color);
+      transition: 0.3s transform;
     }
   }
 
