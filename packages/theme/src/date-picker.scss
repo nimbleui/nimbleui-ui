@@ -95,6 +95,8 @@
   --y-date-panel-border-color: var(--y-color-border);
   --y-date-panel-date-alike-color: var(--y-color-text-tertiary);
   --y-date-panel-date-disabled-color: var(--y-color-text-tertiary);
+  --y-date-panel-date-active-color: var(--y-color-primary);
+  --y-date-panel-date-section-color: var(--y-color-primary-2);
 
   width: 252px;
 
@@ -108,11 +110,11 @@
 
   @include e(dates) {
     @include m(date) {
-      padding: 5px 0;
+      margin: 5px 0;
       width: 36px;
       height: 36px;
       text-align: center;
-      vertical-align: center;
+      line-height: 36px;
       cursor: pointer;
       box-sizing: border-box;
 
@@ -124,6 +126,26 @@
       @include when('disabled') {
         cursor: not-allowed;
         color: var(--y-date-panel-date-disabled-color);
+      }
+      
+      @include when('active') {
+        background-color: var(--y-date-panel-date-active-color);
+        color: #fff;
+        border-radius: 3px;
+      }
+
+      @include when(first) {
+        border-end-end-radius: 0;
+        border-start-end-radius: 0;
+      }
+
+      @include when(last) {
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
+      }
+
+      @include when(section) {
+        background-color: var(--y-date-panel-date-section-color);
       }
     }
   }

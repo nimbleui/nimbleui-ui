@@ -78,6 +78,8 @@ export function formatModelValue(type: DatePickerType, value?: DatePickerModelVa
 }
 
 export function formatDate(date: Date, fmt = "yyyy-MM-dd") {
+  if (!date) return;
+
   const obj = {
     "y+": date.getFullYear(), // 年份
     "M+": date.getMonth() + 1, // 月
@@ -178,4 +180,30 @@ export function calculateDate(
   }
 
   return d;
+}
+
+export function equalityDate(date: Date | undefined, date2: Date | undefined, type: "year" | "month" | "day") {
+  if (!date || !date2) return false;
+
+  const dateInfo = getDateInfo(date);
+  const date2Info = getDateInfo(date2);
+  switch (type) {
+    case "year":
+      return dateInfo.Y == date2Info.Y;
+    case "month":
+      return dateInfo.Y == date2Info.Y && dateInfo.M == date2Info.M;
+    case "day":
+      return dateInfo.Y == date2Info.Y && dateInfo.M == date2Info.M && dateInfo.D == date2Info.D;
+  }
+}
+
+export function sectionDate(date: Date, ...args: (Date | undefined)[]) {
+  if (!args[0] || !args[1]) return false;
+  const maxTime = args[0].getTime();
+  const minTime = args[1].getTime();
+
+  const min = maxTime > minTime ? minTime : maxTime;
+  const max = maxTime < minTime ? minTime : maxTime;
+
+  return min < date.getTime() && max > date.getTime();
 }
