@@ -116,11 +116,11 @@ export default defineComponent({
       if (type == "enter") {
         selfValue.value[current] = date;
       } else {
-        if (isArray(props.modelValue) && props.modelValue[current]) {
-          console.log(props.modelValue[current]);
+        if (isArray(modelCop.value) && modelCop.value[current]) {
+          selfValue.value[current] = parseDate(modelCop.value[current]);
+        } else {
+          selfValue.value[current] = undefined as any;
         }
-
-        // selfValue.value[current] =
       }
     };
 

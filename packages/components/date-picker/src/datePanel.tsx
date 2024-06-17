@@ -75,17 +75,23 @@ export default defineComponent({
                   onClick={onClick.bind(null, el)}
                   class={[
                     bem.m("date", "dates"),
-                    bem.is("last", isRange && i == 1),
-                    bem.is("first", isRange && i == 0),
                     bem.is("alike", alike),
-                    bem.is("disabled", props.disabledDate?.(el) ?? false),
-                    bem.is("active", active && !alike),
                     bem.is("section", sectionDate(el, ...values) && !alike),
                   ]}
                   onMouseenter={onMouse.bind(null, "enter", el)}
                   onMouseleave={onMouse.bind(null, "leave", el)}
                 >
-                  {el.getDate()}
+                  <span
+                    class={[
+                      bem.m("text", "dates"),
+                      bem.is("last", isRange && i == 1),
+                      bem.is("first", isRange && i == 0),
+                      bem.is("disabled", props.disabledDate?.(el) ?? false),
+                      bem.is("active", active && !alike),
+                    ]}
+                  >
+                    {el.getDate()}
+                  </span>
                 </div>
               );
             })}

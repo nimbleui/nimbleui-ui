@@ -96,7 +96,7 @@
   --y-date-panel-date-alike-color: var(--y-color-text-tertiary);
   --y-date-panel-date-disabled-color: var(--y-color-text-tertiary);
   --y-date-panel-date-active-color: var(--y-color-primary);
-  --y-date-panel-date-section-color: var(--y-color-primary-2);
+  --y-date-panel-date-section-color: var(--y-color-primary-1);
 
   width: 252px;
 
@@ -110,11 +110,13 @@
 
   @include e(dates) {
     @include m(date) {
-      margin: 5px 0;
-      width: 36px;
-      height: 36px;
+      position: relative;
+      padding: 5px 0;
+      display: flex;
+      min-width: 36px;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      line-height: 36px;
       cursor: pointer;
       box-sizing: border-box;
 
@@ -127,25 +129,43 @@
         cursor: not-allowed;
         color: var(--y-date-panel-date-disabled-color);
       }
-      
+
+      @include when(section) {
+        &::before {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 100%;
+          height: 24px;
+          z-index: 1;
+          background-color: var(--y-date-panel-date-section-color);
+        }
+      }
+    }
+
+    @include m(text) {
+      position: relative;
+      z-index: 2;
+      display: block;
+      min-width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+
       @include when('active') {
         background-color: var(--y-date-panel-date-active-color);
         color: #fff;
         border-radius: 3px;
       }
-
+      
       @include when(first) {
         border-end-end-radius: 0;
         border-start-end-radius: 0;
       }
-
+      
       @include when(last) {
         border-start-start-radius: 0;
         border-end-start-radius: 0;
-      }
-
-      @include when(section) {
-        background-color: var(--y-date-panel-date-section-color);
       }
     }
   }
