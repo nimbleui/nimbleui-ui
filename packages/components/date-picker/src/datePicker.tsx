@@ -8,6 +8,7 @@ import datePickerProps, { DatePickerModelValue } from "./types";
 import { getCalendar, formatDate, parseDate, calculateDate } from "./utils";
 import DatePanel from "./datePanel";
 import DateArrowIcon from "./arrowIcon";
+import { dateIcon } from "./icons";
 
 export default defineComponent({
   name: "YDatePicker",
@@ -161,7 +162,6 @@ export default defineComponent({
 
     const onClickPanel = () => {
       clearTimeout(focusInfo.time);
-      console.log(22222);
       if (focusInfo.current) {
         rightInputRef.value?.focus();
       } else {
@@ -211,35 +211,38 @@ export default defineComponent({
             {{
               default: () => (
                 <YFlex align="center" class={bem.e("title")}>
-                  <YInput
-                    ref={leftInputRef}
-                    bordered={false}
-                    placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
-                    onFocus={onFocus.bind(null, 0)}
-                    onBlur={onBlur}
-                    modelValue={formatDate(selfValue.value[0])}
-                  />
-                  {isRange.value && (
-                    <>
-                      <span class={bem.m("icon", "title")}>
-                        <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
-                      </span>
-                      <YInput
-                        ref={rightInputRef}
-                        bordered={false}
-                        placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
-                        onFocus={onFocus.bind(null, 1)}
-                        onBlur={onBlur}
-                        modelValue={formatDate(selfValue.value[1])}
-                      />
-                    </>
-                  )}
-                  {focusInfo.focus && (
-                    <i
-                      class={bem.m("bar", "title")}
-                      style={{ transform: `translate(calc((100% + 20px) * ${focusInfo.current}))` }}
-                    ></i>
-                  )}
+                  <YFlex align="center" flex="1">
+                    <YInput
+                      ref={leftInputRef}
+                      bordered={false}
+                      placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
+                      onFocus={onFocus.bind(null, 0)}
+                      onBlur={onBlur}
+                      modelValue={formatDate(selfValue.value[0])}
+                    />
+                    {isRange.value && (
+                      <>
+                        <span class={bem.m("icon", "title")}>
+                          <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
+                        </span>
+                        <YInput
+                          ref={rightInputRef}
+                          bordered={false}
+                          placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
+                          onFocus={onFocus.bind(null, 1)}
+                          onBlur={onBlur}
+                          modelValue={formatDate(selfValue.value[1])}
+                        />
+                      </>
+                    )}
+                    {focusInfo.focus && (
+                      <i
+                        class={bem.m("bar", "title")}
+                        style={{ transform: `translate(calc((100% + 20px) * ${focusInfo.current}))` }}
+                      ></i>
+                    )}
+                  </YFlex>
+                  <i class={bem.e("clear")}>{dateIcon}</i>
                 </YFlex>
               ),
               content: renderContent,
