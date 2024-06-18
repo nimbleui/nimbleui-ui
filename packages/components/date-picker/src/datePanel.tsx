@@ -26,7 +26,8 @@ export default defineComponent({
     const bem = createNamespace("date-panel");
     const weeks = reactive(["一", "二", "三", "四", "五", "六", "日"]);
 
-    const onClick = (date: Date) => {
+    const onClick = (date: Date, e: MouseEvent) => {
+      e.stopPropagation();
       const disabled = props.disabledDate?.(date) ?? false;
       if (disabled) return;
       ctx.emit("change", date);
@@ -72,26 +73,20 @@ export default defineComponent({
               return (
                 <div
                   key={index}
-                  onClick={onClick.bind(null, el)}
+                  onClick={(e) => onClick(el, e)}
                   class={[
                     bem.m("date", "dates"),
                     bem.is("alike", alike),
                     bem.is("section", sectionDate(el, ...values) && !alike),
+                    bem.is("active", active && !alike),
+                    bem.is("disabled", props.disabledDate?.(el) ?? false),
+                    bem.is("last", isRange && i == 1),
+                    bem.is("first", isRange && i == 0),
                   ]}
                   onMouseenter={onMouse.bind(null, "enter", el)}
                   onMouseleave={onMouse.bind(null, "leave", el)}
                 >
-                  <span
-                    class={[
-                      bem.m("text", "dates"),
-                      bem.is("last", isRange && i == 1),
-                      bem.is("first", isRange && i == 0),
-                      bem.is("disabled", props.disabledDate?.(el) ?? false),
-                      bem.is("active", active && !alike),
-                    ]}
-                  >
-                    {el.getDate()}
-                  </span>
+                  <span class={bem.m("text", "dates")}>{el.getDate()}</span>
                 </div>
               );
             })}

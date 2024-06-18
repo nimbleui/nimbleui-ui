@@ -126,6 +126,7 @@ export type InputExpose = {
   formValue: ComputedRef<unknown>;
   formItemDisabled: ComputedRef<boolean>;
   focus: () => void;
+  blur: () => void;
 };
 
 export type InputProps = ExtractPropTypes<ReturnType<typeof inputProp>>;

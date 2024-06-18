@@ -125,6 +125,7 @@ export default defineComponent({
 
     useExpose({
       focus,
+      blur: () => inputRef.value?.blur(),
       inputId,
       formValue: nativeValue,
       formItemDisabled: computed(() => inputData.value.disabled || false),

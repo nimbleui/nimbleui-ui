@@ -199,11 +199,11 @@ export function equalityDate(date: Date | undefined, date2: Date | undefined, ty
 
 export function sectionDate(date: Date, ...args: (Date | undefined)[]) {
   if (!args[0] || !args[1]) return false;
-  const maxTime = args[0].getTime();
-  const minTime = args[1].getTime();
+  const maxTime = args[0].setHours(0, 0, 0, 0);
+  const minTime = args[1].setHours(0, 0, 0, 0);
 
   const min = maxTime > minTime ? minTime : maxTime;
   const max = maxTime < minTime ? minTime : maxTime;
 
-  return min < date.getTime() && max > date.getTime();
+  return min <= date.getTime() && max >= date.getTime();
 }

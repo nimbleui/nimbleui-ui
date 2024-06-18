@@ -55,7 +55,9 @@ export default defineComponent({
       const month = date.getMonth();
       selfDate.value[0] = new Date(date.setMonth(month + num));
       if (isRange.value) {
-        selfDate.value[1] = new Date(date.setMonth(month + num + 1));
+        const date = selfDate.value[1];
+        const month = date.getMonth();
+        selfDate.value[1] = new Date(date.setMonth(month + num));
       }
     };
     const onYear = (num: 1 | -1) => {
@@ -103,6 +105,9 @@ export default defineComponent({
           ctx.emit("confirm", result);
           modelCop.value = [result[0].getTime(), result[1].getTime()];
         }
+      } else {
+        ctx.emit("confirm", date);
+        modelCop.value = date.getTime();
       }
     };
 
@@ -154,9 +159,18 @@ export default defineComponent({
       }, 200);
     };
 
+    const onClickPanel = () => {
+      clearTimeout(focusInfo.time);
+      console.log(22222);
+      if (focusInfo.current) {
+        rightInputRef.value?.focus();
+      } else {
+        leftInputRef.value?.focus();
+      }
+    };
     const renderContent = () => {
       return (
-        <YFlex vertical class={bem.e("panel")}>
+        <YFlex onClick={onClickPanel} vertical class={bem.e("panel")}>
           <YFlex class={bem.e("top")} justify={"space-between"}>
             <DateArrowIcon onMonth={onMonth.bind(null, -1)} onYear={onYear.bind(null, -1)} />
             <span class={bem.m("text", "top")}>{formatDate(dateList.value[0].date, "yyyy年 M月")}</span>

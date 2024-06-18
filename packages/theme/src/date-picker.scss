@@ -1,6 +1,7 @@
 @use "./mixins/mixins.scss" as *;
 @use "./mixins/utils.scss" as *;
 @use "./common/var.scss" as *;
+@use "./mixins/config.scss" as *;
 
 @include b(date-picker) {
   --y-date-picker-border-color: var(--y-color-border);
@@ -141,6 +142,38 @@
           background-color: var(--y-date-panel-date-section-color);
         }
       }
+
+      @include when(active) {
+        &::before {
+          width: 50%;
+        }
+
+        .#{$be + $modifier-separator + 'text'} {
+          background-color: var(--y-date-panel-date-active-color);
+          color: #fff;
+          border-radius: 3px;
+        }
+      }
+
+      @include when(first) {
+        &::before {
+          right: 0;
+        }
+        .#{$be + $modifier-separator + 'text'} {
+          border-end-end-radius: 0;
+          border-start-end-radius: 0;
+        }
+      }
+
+      @include when(last) {
+        &::before {
+          left: 0;
+        }
+        .#{$be + $modifier-separator + 'text'} {
+          border-start-start-radius: 0;
+          border-end-start-radius: 0;
+        }
+      }
     }
 
     @include m(text) {
@@ -151,22 +184,6 @@
       height: 24px;
       text-align: center;
       line-height: 24px;
-
-      @include when('active') {
-        background-color: var(--y-date-panel-date-active-color);
-        color: #fff;
-        border-radius: 3px;
-      }
-      
-      @include when(first) {
-        border-end-end-radius: 0;
-        border-start-end-radius: 0;
-      }
-      
-      @include when(last) {
-        border-start-start-radius: 0;
-        border-end-start-radius: 0;
-      }
     }
   }
 }
