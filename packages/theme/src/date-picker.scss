@@ -9,6 +9,7 @@
   --y-date-picker-bar-bg-color: var(--y-color-primary);
   --y-date-picker-clear: var(--y-color-text-quaternary);
   --y-date-picker-clear-hover: var(--y-color-text-tertiary);
+  --y-date-picker-text-color: var(--y-color-text-tertiary);
 
   @include e(title) {
     position: relative;
@@ -56,12 +57,11 @@
     margin-right: 8px;
     position: relative;
     display: inline-flex;
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
     border-radius: 50%;
     background-color: var(--y-date-picker-clear);
-    font-size: 30px;
   
     &::before,
     &::after {
@@ -85,6 +85,14 @@
     &:hover {
       background-color: var(--y-date-picker-clear-hover);
     }
+  }
+
+  @include e(icon) {
+    margin-right: 8px;
+    display: block;
+    width: 14px;
+    height: 14px;
+    color: var(--y-date-picker-text-color);
   }
 
   @include e(top) {

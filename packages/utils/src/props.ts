@@ -89,46 +89,26 @@ export const makeNumericProp = <T>(defaultVal: T) => ({
   default: defaultVal,
 });
 
+export const mergeFunctionToArray = <T>(fun: (e: T) => void) => {
+  return {
+    type: [Function, Array] as PropType<typeof fun | Array<typeof fun>>,
+  };
+};
+
 export const nativeEvents = {
-  onWheel: {
-    type: Function as PropType<(e: WheelEvent) => void>,
-  },
-  onClick: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMouseenter: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onKeydown: {
-    type: Function as PropType<(e: KeyboardEvent) => void>,
-  },
-  onKeyup: {
-    type: Function as PropType<(e: KeyboardEvent) => void>,
-  },
-  onMousedown: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMouseleave: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMousemove: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMouseout: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMouseover: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onMouseup: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-  },
-  onResize: {
-    type: Function as PropType<(e: UIEvent) => void>,
-  },
-  onScroll: {
-    type: Function as PropType<(e: Event) => void>,
-  },
+  onWheel: mergeFunctionToArray<WheelEvent>(() => void 0),
+  onClick: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMouseenter: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onKeydown: mergeFunctionToArray<KeyboardEvent>(() => void 0),
+  onKeyup: mergeFunctionToArray<KeyboardEvent>(() => void 0),
+  onMousedown: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMouseleave: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMousemove: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMouseout: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMouseover: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onMouseup: mergeFunctionToArray<MouseEvent>(() => void 0),
+  onResize: mergeFunctionToArray<UIEvent>(() => void 0),
+  onScroll: mergeFunctionToArray<Event>(() => void 0),
 };
 
 export const nativeEventsKeys = keysOf(nativeEvents);

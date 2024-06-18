@@ -13,7 +13,7 @@ import { dateIcon } from "./icons";
 export default defineComponent({
   name: "YDatePicker",
   props: datePickerProps(),
-  emits: ["change", "confirm", "update:modelValue"],
+  emits: ["change", "confirm", "update:modelValue", "clear"],
   setup(props, ctx) {
     const show = ref(false);
     const bem = createNamespace("date-picker");
@@ -35,6 +35,8 @@ export default defineComponent({
           selfValue.value = val.map((el) => parseDate(el));
         } else if (val) {
           selfValue.value = [parseDate(val)];
+        } else {
+          selfValue.value = [];
         }
       },
       {
@@ -43,6 +45,7 @@ export default defineComponent({
       }
     );
 
+    // 生成时间列表
     const selfDate = ref<Array<Date>>([]);
     const dateList = computed(() => {
       return selfDate.value.map((date) => ({
@@ -51,6 +54,7 @@ export default defineComponent({
       }));
     });
 
+    // 切换年月日
     const onMonth = (num: 1 | -1) => {
       const date = selfDate.value[0];
       const month = date.getMonth();
@@ -71,6 +75,7 @@ export default defineComponent({
       }
     };
 
+    // 点击选择
     let isLast = false;
     const leftInputRef = ref<InputInstance>();
     const rightInputRef = ref<InputInstance>();
@@ -112,6 +117,7 @@ export default defineComponent({
       }
     };
 
+    // 移动选择
     const onEvents = (type: "enter" | "leave", date: Date) => {
       if (!isRange.value || !selfValue.value) return;
       const [start, end] = selfValue.value;
@@ -168,6 +174,28 @@ export default defineComponent({
         leftInputRef.value?.focus();
       }
     };
+
+    // 处理清楚按钮的显示隐藏
+    const isShowClear = ref(false);
+    const onMouse = (bool: boolean) => {
+      const { value } = modelCop;
+      const flag = isArray(value) ? value.length > 0 : !!value;
+      isShowClear.value = bool && flag;
+    };
+    const onClear = (e: MouseEvent) => {
+      e.stopPropagation();
+      isShowClear.value = false;
+      modelCop.value = undefined;
+      ctx.emit("clear");
+    };
+
+    const onToggle = (bool: boolean) => {
+      const checked = selfValue.value.some((el) => !el);
+      if (!bool && isRange.value && checked) {
+        selfValue.value = [];
+      }
+    };
+
     const renderContent = () => {
       return (
         <YFlex onClick={onClickPanel} vertical class={bem.e("panel")}>
@@ -206,11 +234,17 @@ export default defineComponent({
             maxHeight={350}
             v-model={show.value}
             contentClass={bem.e("content")}
+            onToggle={onToggle}
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           >
             {{
               default: () => (
-                <YFlex align="center" class={bem.e("title")}>
+                <YFlex
+                  align="center"
+                  class={bem.e("title")}
+                  onMouseenter={onMouse.bind(null, true)}
+                  onMouseleave={onMouse.bind(null, false)}
+                >
                   <YFlex align="center" flex="1">
                     <YInput
                       ref={leftInputRef}
@@ -242,7 +276,11 @@ export default defineComponent({
                       ></i>
                     )}
                   </YFlex>
-                  <i class={bem.e("clear")}>{dateIcon}</i>
+                  {isShowClear.value ? (
+                    <i onClick={onClear} class={bem.e("clear")}></i>
+                  ) : (
+                    <i class={bem.e("icon")}>{dateIcon}</i>
+                  )}
                 </YFlex>
               ),
               content: renderContent,
