@@ -6,16 +6,20 @@
 </markdown>
 
 <template>
-  <YDatePicker :type="'dateRange'" :placeholder="'开始时间'" />
+  <YDatePicker
+    v-model="value"
+    :type="'dateRange'"
+    :placeholder="'开始时间'"
+    placement="bottom-end"
+    @confirm="onConfirm"
+  />
 </template>
 
 <script setup lang="ts">
-const maxDate = new Date();
-maxDate.setDate(maxDate.getDate() + 7);
-const minDate = new Date();
-minDate.setDate(minDate.getDate() - 7);
-const disabledDate = (date: Date) => {
-  const now = date.getTime();
-  return maxDate.getTime() > now && minDate.getTime() < now;
+import { ref } from "vue";
+
+const value = ref<[number, number]>();
+const onConfirm = (val: Date[]) => {
+  console.log(val);
 };
 </script>

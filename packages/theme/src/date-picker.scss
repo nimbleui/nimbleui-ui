@@ -51,6 +51,18 @@
       background-color: var(--y-date-picker-bar-bg-color);
       transition: 0.3s transform;
     }
+
+    @include m(input) {
+      input {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+
+  @include e(title-content) {
+    position: relative;
   }
 
   @include e(clear) {

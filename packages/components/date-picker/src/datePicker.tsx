@@ -226,7 +226,7 @@ export default defineComponent({
     };
 
     return () => {
-      const { placeholder = "" } = props;
+      const { placeholder = "", placement } = props;
       return (
         <div class={bem.b()}>
           <YTooltip
@@ -235,6 +235,7 @@ export default defineComponent({
             v-model={show.value}
             contentClass={bem.e("content")}
             onToggle={onToggle}
+            placement={placement}
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           >
             {{
@@ -245,10 +246,12 @@ export default defineComponent({
                   onMouseenter={onMouse.bind(null, true)}
                   onMouseleave={onMouse.bind(null, false)}
                 >
-                  <YFlex align="center" flex="1">
+                  <YFlex class={bem.e("title-content")} align="center" flex="1">
                     <YInput
+                      readonly
                       ref={leftInputRef}
                       bordered={false}
+                      class={bem.m("input", "title")}
                       placeholder={isArray(placeholder) ? placeholder[0] ?? "" : placeholder}
                       onFocus={onFocus.bind(null, 0)}
                       onBlur={onBlur}
@@ -260,8 +263,10 @@ export default defineComponent({
                           <i class={[bem.m("arrow", "title"), bem.is("opposite")]}></i>
                         </span>
                         <YInput
+                          readonly
                           ref={rightInputRef}
                           bordered={false}
+                          class={bem.m("input", "title")}
                           placeholder={isArray(placeholder) ? placeholder[1] ?? "" : placeholder}
                           onFocus={onFocus.bind(null, 1)}
                           onBlur={onBlur}

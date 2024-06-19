@@ -47,6 +47,13 @@ const datePickerProps = mergeCommonProp({
   disabledDate: {
     type: Function as PropType<(date: Date) => boolean>,
   },
+  /**
+   * @description 弹框的方向
+   */
+  placement: {
+    type: String as PropType<"bottom" | "bottom-start" | "bottom-end" | "top" | "top-start" | "top-end">,
+    default: "bottom",
+  },
 });
 
 export default datePickerProps;
