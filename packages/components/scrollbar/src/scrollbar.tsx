@@ -13,64 +13,98 @@ export default defineComponent({
     const scrollbarRef = ref<HTMLDivElement>();
     const wrapRef = ref<HTMLDivElement>();
     const resizeRef = ref<HTMLElement>();
-    const barRef = ref<HTMLDivElement>();
-    const moveRef = ref<HTMLDivElement>();
+    const barYRef = ref<HTMLDivElement>();
+    const barXRef = ref<HTMLDivElement>();
+    const moveYRef = ref<HTMLDivElement>();
+    const moveXRef = ref<HTMLDivElement>();
 
     const clientRect = reactive({
-      bar: 0,
-      wrap: 0,
-      resize: 0,
-      scroll: 0,
+      barY: 0,
+      barX: 0,
+      wrapY: 0,
+      wrapX: 0,
+      resizeY: 0,
+      resizeX: 0,
+      scrollX: 0,
+      scrollY: 0,
     });
     const onScroll = () => {
       const wrap = wrapRef.value;
       if (!wrap) return;
-      clientRect.scroll = props.xScroll ? wrap.scrollLeft : wrap.scrollTop;
-      ctx.emit("scroll", { scrollLeft: wrap.scrollLeft, scrollTop: wrap.scrollTop, scroll: clientRect.scroll });
+      clientRect.scrollX = wrap.scrollLeft;
+      clientRect.scrollY = wrap.scrollTop;
+      ctx.emit("scroll", {
+        scrollLeft: wrap.scrollLeft,
+        scrollTop: wrap.scrollTop,
+        scroll: clientRect[isMoveY.value ? "scrollY" : "scrollX"],
+      });
     };
 
     const getElementRect = () => {
-      const type = props.xScroll ? "offsetWidth" : "offsetHeight";
-      const scrollType = props.xScroll ? "scrollWidth" : "scrollHeight";
-
-      const bar = barRef.value?.[type] || 0;
-      const wrap = wrapRef.value?.[type] || 0;
-      const resize = wrapRef.value?.[scrollType] || 0;
+      const barY = barYRef.value?.offsetHeight || 0;
+      const barX = barXRef.value?.offsetWidth || 0;
+      const wrapY = wrapRef.value?.offsetHeight || 0;
+      const wrapX = wrapRef.value?.offsetWidth || 0;
+      const resizeY = wrapRef.value?.scrollHeight || 0;
+      const resizeX = wrapRef.value?.scrollWidth || 0;
       Object.assign(clientRect, {
-        bar,
-        wrap,
-        resize,
+        barY,
+        barX,
+        wrapY,
+        wrapX,
+        resizeY,
+        resizeX,
       });
     };
     useResizeObserver(resizeRef, getElementRect);
 
-    let memoYTop = 0;
-    const { isMove } = useMouseMove(moveRef, {
+    let memoTop = 0;
+    const handleMove = (data: any, isXScroll: boolean) => {
+      const { disY, disX } = data;
+      const { wrapY, wrapX, resizeY, resizeX, barY, barX } = clientRect;
+      const diff = isXScroll ? resizeX - wrapX : resizeY - wrapY;
+      const bar = isXScroll ? barX : barY;
+
+      const barSize = barSizeRef.value[isXScroll ? "x" : "y"];
+      const dis = isXScroll ? disX : disY;
+      const dScrollTop = (Math.round(dis) * diff) / Math.round(bar - barSize);
+
+      const scrollTop = dScrollTop + memoTop;
+      if (wrapRef.value) {
+        if (isXScroll) {
+          wrapRef.value.scrollLeft = scrollTop;
+        } else {
+          wrapRef.value.scrollTop = scrollTop;
+        }
+      }
+    };
+    const { isMove: isMoveY } = useMouseMove(moveYRef, {
       stop: true,
       prevent: true,
-      boundary: barRef,
+      boundary: barYRef,
       moveLimit: true,
       down() {
-        memoYTop = clientRect.scroll;
+        memoTop = clientRect.scrollY;
       },
       move(data) {
-        const { xScroll } = props;
-        const { disY, disX } = data;
-        const { wrap, resize, bar } = clientRect;
-        const diff = resize - wrap;
+        handleMove(data, false);
+      },
+      up(data, e) {
+        const checked = scrollbarRef.value?.contains(e.target as HTMLElement);
+        hoverRef.value = checked ?? false;
+      },
+    });
 
-        const barSize = barSizeRef.value;
-        const dis = xScroll ? disX : disY;
-        const dScrollTop = (Math.round(dis) * diff) / Math.round(bar - barSize);
-
-        const scrollTop = dScrollTop + memoYTop;
-        if (wrapRef.value) {
-          if (xScroll) {
-            wrapRef.value.scrollLeft = scrollTop;
-          } else {
-            wrapRef.value.scrollTop = scrollTop;
-          }
-        }
+    const { isMove: isMoveX } = useMouseMove(moveXRef, {
+      stop: true,
+      prevent: true,
+      boundary: barXRef,
+      moveLimit: true,
+      down() {
+        memoTop = clientRect.scrollX;
+      },
+      move(data) {
+        handleMove(data, true);
       },
       up(data, e) {
         const checked = scrollbarRef.value?.contains(e.target as HTMLElement);
@@ -80,49 +114,68 @@ export default defineComponent({
 
     // 滚动条的大小
     const barSizeRef = computed(() => {
-      const { bar, wrap, resize } = clientRect;
-      return Math.min(wrap, (bar * wrap) / resize + props.size * 1.5);
+      const { barY, barX, wrapY, wrapX, resizeY, resizeX } = clientRect;
+      return {
+        x: Math.min(wrapX, (barX * wrapX) / resizeX + props.size * 1.5),
+        y: Math.min(wrapY, (barY * wrapY) / resizeY + props.size * 1.5),
+      };
     });
 
     // 滚动条的距离
     const barDisRef = computed(() => {
-      const { bar, resize, scroll } = clientRect;
-      const diff = resize - bar;
+      const { barY, barX, resizeY, resizeX, scrollY, scrollX } = clientRect;
+      const diffX = resizeX - barX;
+      const diffY = resizeY - barY;
 
-      return diff ? (scroll / diff) * (bar - barSizeRef.value) : 0;
+      return {
+        x: diffX ? (scrollX / diffX) * (barX - barSizeRef.value.x) : 0,
+        y: diffY ? (scrollY / diffY) * (barY - barSizeRef.value.y) : 0,
+      };
     });
 
     // 计算滚动条的位置
     const barStyle = computed(() => {
-      const { xScroll, size } = props;
-      const barSize = barSizeRef.value;
-      const barDis = barDisRef.value;
+      const { size } = props;
+      const { x, y } = barSizeRef.value;
+      const { x: disX, y: disY } = barDisRef.value;
 
       return {
-        width: xScroll ? `${barSize}px` : `${size}px`,
-        height: xScroll ? `${size}px` : `${barSize}px`,
-        transform: `translate(${xScroll ? barDis : 0}px, ${xScroll ? 0 : barDis}px)`,
+        x: {
+          width: `${x}px`,
+          height: `${size}px`,
+          transform: `translate(${disX}px, 0px)`,
+        },
+        y: {
+          width: `${size}px`,
+          height: `${y}px`,
+          transform: `translate(0px, ${disY}px)`,
+        },
       };
     });
 
     const hoverRef = ref(false);
     const showBar = computed(() => {
       const { native, trigger } = props;
-      const { wrap, resize } = clientRect;
-      // 如果内容高度小于等于滚动的高度，隐藏
-      if (wrap >= resize) return false;
+      const { barY, barX, resizeY, resizeX } = clientRect;
+      let x = true;
+      let y = true;
+      if (barY >= resizeY) y = false;
+      if (barX >= resizeX) x = false;
 
       if (native || trigger == "hide") {
-        return false;
+        return { x: false, y: false };
       } else if (trigger == "none") {
-        return true;
+        return { x, y };
       }
-      return hoverRef.value;
+      return {
+        x: x && hoverRef.value,
+        y: y && hoverRef.value,
+      };
     });
     const handleHover = (isEnter: boolean) => {
       return () => {
         isEnter && getElementRect();
-        hoverRef.value = isMove.value ? true : isEnter;
+        hoverRef.value = isMoveY.value || isMoveX.value ? true : isEnter;
       };
     };
 
@@ -164,7 +217,7 @@ export default defineComponent({
           <div
             ref={wrapRef}
             onScroll={onScroll}
-            style={wrapStyle}
+            style={[wrapStyle ?? {}, { width: "calc(100% - 9px)", paddingBottom: "8px" }]}
             class={[bem.e("wrap"), !native ? bem.m("hidden-bar", "wrap") : undefined, wrapClass]}
           >
             <Component
@@ -175,9 +228,14 @@ export default defineComponent({
               {ctx.slots.default?.()}
             </Component>
           </div>
-          <div ref={barRef} class={[bem.e("rail"), bem.is("horizontal", xScroll)]}>
-            <div ref={moveRef} v-show={showBar.value} class={bem.m("bar", "rail")} style={barStyle.value}></div>
+          <div ref={barYRef} class={[bem.e("rail")]}>
+            <div ref={moveYRef} v-show={showBar.value.y} class={bem.m("bar", "rail")} style={barStyle.value.y}></div>
           </div>
+          {xScroll && (
+            <div ref={barXRef} class={[bem.e("rail"), bem.is("horizontal", xScroll)]}>
+              <div ref={moveXRef} v-show={showBar.value.x} class={bem.m("bar", "rail")} style={barStyle.value.x}></div>
+            </div>
+          )}
         </div>
       );
     };

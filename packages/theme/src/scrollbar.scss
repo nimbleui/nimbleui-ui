@@ -15,7 +15,6 @@
   @include e(wrap) {
     overflow: auto;
     height: 100%;
-    width: 100%;
     max-height: inherit;
 
     @include m('hidden-bar') {
@@ -43,9 +42,12 @@
     z-index: 2;
 
     @include when(horizontal) {
-      position: static; 
+      position: absolute; 
       height: 5px;
-      width: 100%; 
+      width: auto;
+      top: auto;
+      left: 4px;
+      bottom: 2px;
     }
 
     @include m(bar) {
