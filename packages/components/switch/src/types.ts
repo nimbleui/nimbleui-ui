@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes, PropType } from "vue";
 import { mergeCommonProp } from "@nimble-ui/utils";
 
 const switchProps = mergeCommonProp({
@@ -46,6 +46,12 @@ const switchProps = mergeCommonProp({
    */
   loading: {
     type: Boolean,
+  },
+  /**
+   * @description 开关大小
+   */
+  size: {
+    type: String as PropType<"small" | "medium" | "large">,
   },
 });
 

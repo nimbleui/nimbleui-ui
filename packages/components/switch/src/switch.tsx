@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from "vue";
+import { CSSProperties, computed, defineComponent, ref } from "vue";
 import { createNamespace } from "@nimble-ui/utils";
 
 import switchProps from "./types";
@@ -30,12 +30,22 @@ export default defineComponent({
       model.value = !model.value;
     };
 
+    const styles = computed<CSSProperties>(() => {
+      const { size = "medium" } = props;
+      return {
+        "--y-switch-height": size == "medium" ? "22px" : size == "small" ? "16px" : "26px",
+        "--y-switch-font-size":
+          size == "medium" ? "var(--y-font-size)" : size == "small" ? "10px" : "var(--y-font-size)",
+      };
+    });
+
     return () => {
       const { disabled, uncheckedText, checkedText, loading } = props;
       return (
         <div
           onClick={onChange}
           class={[bem.b(), bem.is("checked", model.value), bem.is("disabled", disabled), bem.is("loading", loading)]}
+          style={styles.value}
         >
           <div class={[bem.e("handle")]}></div>
           <span class={[bem.e("inner")]}>

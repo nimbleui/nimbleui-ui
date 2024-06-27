@@ -8,6 +8,7 @@ text.vue
 disabled.vue
 loading.vue
 customValue.vue
+size.vue
 ```
 
 ## API

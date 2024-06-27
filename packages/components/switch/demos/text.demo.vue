@@ -6,7 +6,7 @@
 </markdown>
 
 <template>
-  <YSwitch v-model="checked">
+  <YSwitch v-model="checked" size="large">
     <template #checked>开启</template>
     <template #unchecked>关闭</template>
   </YSwitch>

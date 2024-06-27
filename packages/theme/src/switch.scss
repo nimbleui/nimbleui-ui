@@ -31,7 +31,7 @@
   background-color: var(--y-switch-inactive-color);
   transition: all 0.2s;
   cursor: pointer;
-  font-size: var(--y-font-size);
+  font-size: var(--y-switch-font-size);
   color: var(--y-text-color-1);
   vertical-align: middle;
 
@@ -53,6 +53,7 @@
     display: block;
     overflow: hidden;
     border-radius: 100px;
+    line-height: var(--y-switch-height);
     padding-inline-start: var(--y-switch-padding-start);
     padding-inline-end: var(--y-switch-padding-end);
     color: #fff;
@@ -107,10 +108,13 @@
 
     #{'.' + $b + $element-separator + 'handle'} {
       &::after {
+        box-sizing: border-box;
         display: block;
         content: " ";
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
 
-        @include loading(10px, 10px)
+        @include loading
       }
     }
   }

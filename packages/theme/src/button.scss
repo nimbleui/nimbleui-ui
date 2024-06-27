@@ -188,8 +188,10 @@
     &::after {
       display: block;
       content: " ";
+      width: 10px;
+      height: 10px;
 
-      @include loading(10px, 10px)
+      @include loading
 
     }
   }
