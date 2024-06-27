@@ -10,36 +10,27 @@
   align-items: center;
 }
 
-@mixin utils-close-icon($size: 1.5px, $color: var(--y-color-text), $radius: 2px) {
+@mixin utils-close-icon($size: 1px, $size1: 70%, $color: var(--y-color-text-tertiary)) {
   position: relative;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
 
   &::after, &::before {
     content: "";
     position: absolute;
-    width: 70%;
-    height: $size;
-    background-color: var(--y-color-text-tertiary);
-    margin: 2% 0 0 5%;
+    left: 50%;
+    top: 50%;
+    width: $size;
+    height: $size1;
+    background-color: $color;
   }
 
   &::before {
-    transform: rotate(45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 
   &::after {
-    transform: rotate(-45deg);
-  }
-
-  &:hover {
-    border-radius: $radius;
-    background-color: var(--y-color-fill-secondary);
-
-    &::after, &::before {
-      background-color: $color;
-    }
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 }
 

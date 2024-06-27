@@ -14,7 +14,7 @@ const selectProps = mergeCommonProp({
    * @description name唯一标识，给form收集数据
    */
   name: {
-    type: String,
+    type: [String, Number],
   },
   /**
    * @description 配置项

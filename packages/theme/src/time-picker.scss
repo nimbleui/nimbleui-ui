@@ -21,7 +21,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 15px;
+    width: 14px;
     margin-top: 6px;
     color: var(--y-select-arrow-color);
     margin-left: 5px;
@@ -30,12 +30,17 @@
   }
 
   @include e(clear) {
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
+    width: 14px;
+    height: 14px;
     margin-right: 5px;
+    border-radius: 50%;
+    background-color: var(--y-input-clear);
     
-    @include utils-close-icon(1px);
+    @include utils-close-icon(1px, 55%, rgb(255 255 255 / 70%));
+
+    &:hover {
+      background-color: var(--y-input-clear-hover);
+    }
   }
 
   @include e(list) {
@@ -50,7 +55,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 5px  15px 5px 10px;
+      padding: 5px 10px;
       cursor: pointer;
       border-radius: 3px;
 

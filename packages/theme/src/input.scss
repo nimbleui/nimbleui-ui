@@ -135,32 +135,12 @@
 
   @include e(clear) {
     margin-right: 8px;
-    position: relative;
-    display: inline-flex;
     width: 10px;
     height: 10px;
-    cursor: pointer;
     border-radius: 50%;
     background-color: var(--y-input-clear);
 
-    &::before,
-    &::after {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 1px;
-      height: 50%;
-      content: '';
-      background-color: rgb(255 255 255 / 70%);
-    }
-
-    &::before {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-    
-    &::after {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
+    @include utils-close-icon(1px, 50%, rgb(255 255 255 / 70%));
 
     &:hover {
       background-color: var(--y-input-clear-hover);

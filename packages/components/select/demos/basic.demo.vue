@@ -7,7 +7,7 @@
 
 <template>
   <div class="demo-margin">
-    <YSelect v-model="model" placeholder="请选择" :options="options" allow-clear />
+    <YSelect v-model="model" style="width: 220px" placeholder="请选择" :options="options" allow-clear />
   </div>
 </template>
 

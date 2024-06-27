@@ -43,9 +43,18 @@
       cursor: pointer;
       border-radius: 3px;
 
-      @include utils-close-icon;
+      @include utils-close-icon(1.5px);
 
-      position: absolute; 
+      position: absolute;
+
+      &:hover {
+        border-radius: 2px;
+        background-color: var(--y-color-fill-secondary);
+
+        &::before, &::after {
+          background-color: var(--y-color-text);
+        }
+      }
     }
   }
 }

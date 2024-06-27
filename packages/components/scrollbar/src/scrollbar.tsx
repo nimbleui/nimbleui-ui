@@ -1,6 +1,6 @@
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import { createNamespace, isNumber, isObject } from "@nimble-ui/utils";
-import { useMouseMove, useMutationObserver } from "@nimble-ui/hooks";
+import { useMouseMove, useResizeObserver } from "@nimble-ui/hooks";
 
 import scrollbarProps from "./types";
 
@@ -56,8 +56,7 @@ export default defineComponent({
         resizeX,
       });
     };
-    useMutationObserver(resizeRef, getElementRect);
-    onMounted(getElementRect);
+    useResizeObserver(resizeRef, getElementRect);
 
     let moveDis = 0;
     const handleMove = (data: any, isXScroll: boolean) => {

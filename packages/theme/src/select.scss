@@ -4,8 +4,56 @@
 
 @include b(select) {
   --y-select-arrow-color: var(--y-color-text-quaternary);
+  --y-select-placeholder-color: var(--y-color-text-quaternary);--y-select-padding-block: 4px;
+  --y-select-padding-block-sm: 0px;
+  --y-select-padding-block-lg: 7px;
+  --y-select-padding-inline: 11px;
+  --y-select-padding-inline-sm: 7px;
+  --y-select-padding-inline-lg: 11px;
+  --y-select-font-size: 14px;
+  --y-select-font-size-lg: 16px;
+  --y-select-font-size-sm: 14px;
+  --y-select-border-color: var(--y-color-border);
+  --y-select-focus-border-color: var(--y-color-primary-8);
+  --y-select-hover-border-color: var(--y-color-primary-8);
+  --y-select-focus-shadow-color: var(--y-color-primary-1);
+  --y-select-disabled-opacity: var(--y-disabled-opacity);
+  --y-select-clear: var(--y-color-text-quaternary);
+  --y-select-clear-hover: var(--y-color-text-tertiary);
 
-  display: inline-flex;
+  display: inline-block;
+
+  @include e(title) {
+    padding: var(--y-select-padding-block) var(--y-select-padding-inline);
+    border: 1px solid var(--y-select-border-color);
+    border-radius: 6px;
+
+    @include m(inner) {
+      flex: 1;
+
+      @include when(placeholder) {
+        color: var(--y-select-placeholder-color);
+      }
+    }
+
+    @include when(focus) {
+      border-color: var(--y-select-focus-border-color);
+      box-shadow: 0 0 0 2px var(--y-select-focus-shadow-color);
+    }
+
+    &:not(.is-disabled):hover {
+      border-color: var(--y-select-hover-border-color);
+    }
+
+    @include when(disabled) {
+      cursor: not-allowed;
+      opacity: var(--y-select-disabled-opacity);
+
+      & * {
+        cursor: not-allowed;
+      }
+    }
+  }
 
   @include e(content) {
     --y-select-bg-color: var(--y-color-bg-elevated);
@@ -22,7 +70,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 15px;
+    width: 14px;
     margin-top: 6px;
     color: var(--y-select-arrow-color);
     margin-left: 5px;
@@ -31,12 +79,16 @@
   }
 
   @include e(clear) {
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--y-select-clear);
 
-    @include utils-close-icon(1px);
+    @include utils-close-icon(1px, 50%, rgb(255 255 255 / 70%));
+    
+    &:hover {
+      background-color: var(--y-select-clear-hover);
+    }
   }
 
   @include e(list) {

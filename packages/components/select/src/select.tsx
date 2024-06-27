@@ -2,6 +2,7 @@ import { createNamespace, isFunction } from "@nimble-ui/utils";
 import { CSSProperties, computed, defineComponent, onMounted, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import { InputInstance, YInput } from "@nimble-ui/components/input";
+import YFlex from "@nimble-ui/components/flex";
 import { YScrollbar } from "@nimble-ui/components/scrollbar";
 
 import selectProps, { SelectOptions } from "./types";
@@ -15,6 +16,7 @@ export default defineComponent({
     const bem = createNamespace("select");
     const selfModel = ref<number | string>("");
     const selfLabel = ref<number | string>("");
+    // multiple
 
     const modelCop = computed({
       get: () => props.modelValue ?? selfModel.value,
@@ -32,9 +34,6 @@ export default defineComponent({
     });
 
     const show = ref(false);
-    const updateShow = (val: boolean) => {
-      val && (show.value = val);
-    };
 
     // 初始化设置label的值
     const initFindLabel = () => {
@@ -68,11 +67,9 @@ export default defineComponent({
       show.value = false;
       ctx.emit("change", item);
     };
-    const onOutside = (flag: boolean) => {
-      flag && (show.value = false);
-    };
 
-    const onClear = () => {
+    const onClear = (e: Event) => {
+      e.stopPropagation();
       selfModel.value = "";
       selfLabel.value = "";
       ctx.emit("update:label", "");
@@ -97,23 +94,9 @@ export default defineComponent({
     };
 
     return () => {
-      const { disabled, name, bordered, arrowColor, placeholder, inputClass, inputStyle, allowClear } = props;
-      return (
-        <div class={bem.b()}>
-          <YTooltip
-            trigger="focus"
-            disabled={disabled}
-            modelValue={show.value}
-            contentStyle={styles.value}
-            contentClass={bem.e("content")}
-            transition={bem.name("zoom-in-top")}
-            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
-            onOutside={onOutside}
-            onUpdate:modelValue={updateShow}
-          >
-            {{
-              default: () => (
-                <YInput
+      const { disabled, bordered, arrowColor, placeholder, inputClass, inputStyle, allowClear } = props;
+      /**
+       * <YInput
                   ref={inputRef}
                   readonly
                   name={name}
@@ -133,6 +116,37 @@ export default defineComponent({
                       ),
                   }}
                 </YInput>
+       */
+      return (
+        <div class={bem.b()}>
+          <YTooltip
+            disabled={disabled}
+            v-model={show.value}
+            contentStyle={styles.value}
+            contentClass={bem.e("content")}
+            transition={bem.name("zoom-in-top")}
+            arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
+          >
+            {{
+              default: () => (
+                <YFlex
+                  class={[bem.e("title"), bem.is("disabled", disabled), bem.is("focus", show.value)]}
+                  align="center"
+                >
+                  {labelCop.value ? (
+                    <div class={bem.m("inner", "title")}>
+                      <span>{labelCop.value}</span>
+                    </div>
+                  ) : (
+                    <span class={[bem.m("inner", "title"), bem.is("placeholder")]}>{placeholder}</span>
+                  )}
+
+                  {allowClear && labelCop.value ? (
+                    <span onClick={onClear} class={bem.e("clear")}></span>
+                  ) : (
+                    <span style={{ color: arrowColor }} class={[bem.e("arrow"), bem.is("positive")]}></span>
+                  )}
+                </YFlex>
               ),
               content: renderContent,
             }}
