@@ -1,6 +1,6 @@
-import { computed, defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, onMounted, reactive, ref } from "vue";
 import { createNamespace, isNumber, isObject } from "@nimble-ui/utils";
-import { useMouseMove, useResizeObserver } from "@nimble-ui/hooks";
+import { useMouseMove, useMutationObserver } from "@nimble-ui/hooks";
 
 import scrollbarProps from "./types";
 
@@ -56,9 +56,10 @@ export default defineComponent({
         resizeX,
       });
     };
-    useResizeObserver(resizeRef, getElementRect);
+    useMutationObserver(resizeRef, getElementRect);
+    onMounted(getElementRect);
 
-    let memoTop = 0;
+    let moveDis = 0;
     const handleMove = (data: any, isXScroll: boolean) => {
       const { disY, disX } = data;
       const { wrapY, wrapX, resizeY, resizeX, barY, barX } = clientRect;
@@ -67,15 +68,11 @@ export default defineComponent({
 
       const barSize = barSizeRef.value[isXScroll ? "x" : "y"];
       const dis = isXScroll ? disX : disY;
-      const dScrollTop = (Math.round(dis) * diff) / Math.round(bar - barSize);
+      const dScrollTop = (dis * diff) / (bar - barSize);
 
-      const scrollTop = dScrollTop + memoTop;
+      const scrollTop = dScrollTop + moveDis;
       if (wrapRef.value) {
-        if (isXScroll) {
-          wrapRef.value.scrollLeft = scrollTop;
-        } else {
-          wrapRef.value.scrollTop = scrollTop;
-        }
+        wrapRef.value[isXScroll ? "scrollLeft" : "scrollTop"] = scrollTop;
       }
     };
     const { isMove: isMoveY } = useMouseMove(moveYRef, {
@@ -84,7 +81,7 @@ export default defineComponent({
       boundary: barYRef,
       moveLimit: true,
       down() {
-        memoTop = clientRect.scrollY;
+        moveDis = clientRect.scrollY;
       },
       move(data) {
         handleMove(data, false);
@@ -101,7 +98,7 @@ export default defineComponent({
       boundary: barXRef,
       moveLimit: true,
       down() {
-        memoTop = clientRect.scrollX;
+        moveDis = clientRect.scrollX;
       },
       move(data) {
         handleMove(data, true);
@@ -116,16 +113,16 @@ export default defineComponent({
     const barSizeRef = computed(() => {
       const { barY, barX, wrapY, wrapX, resizeY, resizeX } = clientRect;
       return {
-        x: Math.min(wrapX, (barX * wrapX) / resizeX + props.size * 1.5),
-        y: Math.min(wrapY, (barY * wrapY) / resizeY + props.size * 1.5),
+        x: Math.min(barX, (barX * wrapX) / resizeX + props.size * 1.5),
+        y: Math.min(barY, (barY * wrapY) / resizeY + props.size * 1.5),
       };
     });
 
     // 滚动条的距离
     const barDisRef = computed(() => {
-      const { barY, barX, resizeY, resizeX, scrollY, scrollX } = clientRect;
-      const diffX = resizeX - barX;
-      const diffY = resizeY - barY;
+      const { wrapY, wrapX, barY, barX, resizeY, resizeX, scrollY, scrollX } = clientRect;
+      const diffX = resizeX - wrapX;
+      const diffY = resizeY - wrapY;
 
       return {
         x: diffX ? (scrollX / diffX) * (barX - barSizeRef.value.x) : 0,
@@ -156,11 +153,11 @@ export default defineComponent({
     const hoverRef = ref(false);
     const showBar = computed(() => {
       const { native, trigger } = props;
-      const { barY, barX, resizeY, resizeX } = clientRect;
+      const { wrapY, wrapX, resizeY, resizeX } = clientRect;
       let x = true;
       let y = true;
-      if (barY >= resizeY) y = false;
-      if (barX >= resizeX) x = false;
+      if (wrapY >= resizeY) y = false;
+      if (wrapX >= resizeX) x = false;
 
       if (native || trigger == "hide") {
         return { x: false, y: false };
@@ -217,7 +214,13 @@ export default defineComponent({
           <div
             ref={wrapRef}
             onScroll={onScroll}
-            style={[wrapStyle ?? {}, { width: "calc(100% - 9px)", paddingBottom: "8px" }]}
+            style={[
+              wrapStyle ?? {},
+              {
+                marginRight: clientRect.wrapY >= clientRect.resizeY ? undefined : "8px",
+                marginBottom: clientRect.wrapX >= clientRect.resizeX ? undefined : "8px",
+              },
+            ]}
             class={[bem.e("wrap"), !native ? bem.m("hidden-bar", "wrap") : undefined, wrapClass]}
           >
             <Component
