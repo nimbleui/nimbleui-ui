@@ -12,3 +12,4 @@ export * from "./src/useMouseMove";
 export * from "./src/useMergePropOrContext";
 export * from "./src/useComputePosition";
 export * from "./src/useClickOutside";
+export * from "./src/useMouseInOut";

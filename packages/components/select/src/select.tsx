@@ -1,21 +1,22 @@
 import { createNamespace, isFunction } from "@nimble-ui/utils";
-import { CSSProperties, computed, defineComponent, onMounted, ref, watch } from "vue";
+import { CSSProperties, ComponentPublicInstance, computed, defineComponent, onMounted, ref, watch } from "vue";
 import { YTooltip } from "@nimble-ui/components/tooltip";
-import { InputInstance, YInput } from "@nimble-ui/components/input";
 import YFlex from "@nimble-ui/components/flex";
 import { YScrollbar } from "@nimble-ui/components/scrollbar";
 
 import selectProps, { SelectOptions } from "./types";
+import { useMouseInOut } from "@nimble-ui/hooks";
 
 export default defineComponent({
   name: "YSelect",
   props: selectProps(),
   emits: ["update:modelValue", "update:label", "change"],
   setup(props, ctx) {
-    const inputRef = ref<InputInstance>();
     const bem = createNamespace("select");
     const selfModel = ref<number | string>("");
     const selfLabel = ref<number | string>("");
+    const show = ref(false);
+
     // multiple
 
     const modelCop = computed({
@@ -32,8 +33,6 @@ export default defineComponent({
         selfLabel.value = val;
       },
     });
-
-    const show = ref(false);
 
     // 初始化设置label的值
     const initFindLabel = () => {
@@ -52,12 +51,6 @@ export default defineComponent({
     watch([modelCop, () => props.options], initFindLabel);
     onMounted(initFindLabel);
 
-    const styles = computed<CSSProperties>(() => {
-      const el = inputRef.value?.$el as HTMLElement | undefined;
-      const rect = el?.getBoundingClientRect();
-      return { width: `${rect?.width || 200}px` };
-    });
-
     const onClick = (item: SelectOptions) => {
       const { labelField, field } = props;
       if (item.disabled) return;
@@ -75,6 +68,14 @@ export default defineComponent({
       ctx.emit("update:label", "");
       ctx.emit("update:modelValue", "");
     };
+
+    const titleRef = ref<ComponentPublicInstance>();
+    const { isEnter } = useMouseInOut(titleRef);
+    const styles = computed<CSSProperties>(() => {
+      const el = titleRef.value?.$el as HTMLElement | undefined;
+      const rect = el?.getBoundingClientRect();
+      return { width: `${rect?.width || 200}px` };
+    });
 
     const renderContent = () => {
       const { options, details, field, labelField } = props;
@@ -95,28 +96,6 @@ export default defineComponent({
 
     return () => {
       const { disabled, bordered, arrowColor, placeholder, inputClass, inputStyle, allowClear } = props;
-      /**
-       * <YInput
-                  ref={inputRef}
-                  readonly
-                  name={name}
-                  class={inputClass}
-                  style={inputStyle}
-                  disabled={disabled}
-                  bordered={bordered}
-                  placeholder={placeholder}
-                  modelValue={labelCop.value}
-                >
-                  {{
-                    suffix: () =>
-                      allowClear && labelCop.value ? (
-                        <span onClick={onClear} class={bem.e("clear")}></span>
-                      ) : (
-                        <span style={{ color: arrowColor }} class={[bem.e("arrow"), bem.is("positive")]}></span>
-                      ),
-                  }}
-                </YInput>
-       */
       return (
         <div class={bem.b()}>
           <YTooltip
@@ -130,8 +109,16 @@ export default defineComponent({
             {{
               default: () => (
                 <YFlex
-                  class={[bem.e("title"), bem.is("disabled", disabled), bem.is("focus", show.value)]}
+                  ref={titleRef}
+                  class={[
+                    bem.e("title"),
+                    bem.is("disabled", disabled),
+                    bem.is("focus", show.value),
+                    bem.is("bordered", bordered),
+                    inputClass,
+                  ]}
                   align="center"
+                  style={inputStyle}
                 >
                   {labelCop.value ? (
                     <div class={bem.m("inner", "title")}>
@@ -141,7 +128,7 @@ export default defineComponent({
                     <span class={[bem.m("inner", "title"), bem.is("placeholder")]}>{placeholder}</span>
                   )}
 
-                  {allowClear && labelCop.value ? (
+                  {allowClear && labelCop.value && isEnter.value ? (
                     <span onClick={onClear} class={bem.e("clear")}></span>
                   ) : (
                     <span style={{ color: arrowColor }} class={[bem.e("arrow"), bem.is("positive")]}></span>
