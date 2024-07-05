@@ -1,4 +1,4 @@
-import { Fragment, cloneVNode, defineComponent, inject, ref, withDirectives } from "vue";
+import { Fragment, cloneVNode, defineComponent, inject, onDeactivated, ref, withDirectives } from "vue";
 import type { PropType, VNode, ObjectDirective } from "vue";
 import { isObject } from "@nimble-ui/utils";
 import type { TriggerType } from "./types";
@@ -106,6 +106,10 @@ export default defineComponent({
         }
       }
     };
+
+    onDeactivated(() => {
+      ctx.emit("toggle", null, false);
+    });
 
     return () => {
       const children = ctx.slots.default?.();

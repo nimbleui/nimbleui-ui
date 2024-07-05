@@ -33,7 +33,10 @@ export default defineComponent({
         ctx.emit("toggle", val);
       },
     });
-    const onToggle = (e: Event, toggle: boolean) => {
+    const onToggle = (e: Event | null, toggle: boolean) => {
+      if (e == null) {
+        return (show.value = toggle);
+      }
       const { details, disabled } = props;
       const res = isFunction(disabled) ? disabled(details) : disabled;
 

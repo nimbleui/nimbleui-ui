@@ -52,9 +52,8 @@ export default defineComponent({
     // 拖拽功能
     const { data, isMove } = useMouseMove(imgRef, {
       boundary: window,
-      move(data, e) {
-        e.preventDefault();
-      },
+      prevent: true,
+      stop: true,
       up(data) {
         let { disX, disY } = data;
         const { maxMoveDisB, maxMoveDisL, maxMoveDisR, maxMoveDisT } = data;
