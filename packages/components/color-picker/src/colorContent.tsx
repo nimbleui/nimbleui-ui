@@ -74,8 +74,12 @@ export default defineComponent({
     const getColor = () => {
       const canvas = canvasRef.value;
       const ctx = canvas?.getContext("2d", { willReadFrequently: true });
-      if (!ctx) return;
-      const color = ctx.getImageData(Math.round(dis.x + 8), Math.round(dis.y + 8), 1, 1).data;
+      if (!ctx || !canvas) return;
+      const { width, height } = canvas.getBoundingClientRect();
+
+      const x = Math.floor(Math.min(dis.x + 8, width - 1));
+      const y = Math.floor(Math.min(dis.y + 8, height - 1));
+      const color = ctx.getImageData(x, y, 1, 1).data;
       return [color[0], color[1], color[2], color[3] / 255];
     };
 
