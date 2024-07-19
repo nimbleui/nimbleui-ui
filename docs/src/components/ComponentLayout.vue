@@ -13,7 +13,11 @@
       ></YMenu>
     </YSidebar>
     <YContent style="padding: 30px 20px 0 40px">
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <KeepAlive>
+          <component :is="Component" />
+        </KeepAlive>
+      </RouterView>
     </YContent>
   </YLayout>
 </template>

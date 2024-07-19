@@ -1,5 +1,5 @@
 import { createNamespace, isEmpty } from "@nimble-ui/utils";
-import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed, watch } from "vue";
+import { Transition, defineComponent, ref, Teleport, reactive, CSSProperties, computed, watch, nextTick } from "vue";
 import { OnlyChildEventFn, YOnlyChild } from "@nimble-ui/components/slot";
 import {
   computePositionAutoPlacement as autoPlacement,
@@ -49,13 +49,29 @@ export default defineComponent({
     });
 
     const styles = reactive<CSSProperties>({});
-    const handlePosition = async () => {
+    const handlePosition = () => {
       if (props.trigger == "manual") return;
-      nextZIndex();
-      const { x, y } = await computePosition();
-      styles.left = `${x}px`;
-      styles.top = `${y}px`;
-      styles.zIndex = currentZIndex.value;
+      setTimeout(async () => {
+        nextZIndex();
+        const { x, y, placement } = await computePosition();
+
+        styles.left = `${x}px`;
+        styles.top = `${y}px`;
+        styles.zIndex = currentZIndex.value;
+
+        if (placement) {
+          const [direction, seat] = placement.split("-");
+          if (direction == "bottom") {
+            styles.transformOrigin = `top ${!seat ? "center" : seat == "start" ? "left" : "right"}`;
+          } else if (direction == "top") {
+            styles.transformOrigin = `bottom ${!seat ? "center" : seat == "start" ? "left" : "right"}`;
+          } else if (direction == "left") {
+            styles.transformOrigin = `right ${!seat ? "center" : seat == "start" ? "top" : "bottom"}`;
+          } else if (direction == "right") {
+            styles.transformOrigin = `left ${!seat ? "center" : seat == "start" ? "top" : "bottom"}`;
+          }
+        }
+      });
     };
 
     let time = 0;

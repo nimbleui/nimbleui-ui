@@ -1,12 +1,12 @@
 import { createNamespace, isNumber, isString } from "@nimble-ui/utils";
 import { computed, defineComponent, nextTick, reactive, ref, shallowRef } from "vue";
-import YTooltip from "@nimble-ui/components/tooltip";
 import YInput from "@nimble-ui/components/input";
 import YScrollbar, { ScrollbarInstance } from "@nimble-ui/components/scrollbar";
 import YFlex from "@nimble-ui/components/flex";
 import YButton from "@nimble-ui/components/button";
 
 import timePickerProps from "./types";
+import YPopper from "@nimble-ui/components/popper";
 
 export default defineComponent({
   name: "YTimePicker",
@@ -104,8 +104,8 @@ export default defineComponent({
         });
       }
     };
-    const onOutside = (flag: boolean) => {
-      flag && (show.value = false);
+    const onOutside = () => {
+      show.value = false;
     };
     const onSelectItem = (value: string, i: number) => {
       selectIndex[i] = value;
@@ -149,9 +149,8 @@ export default defineComponent({
       const { allowClear, placeholder } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip
+          <YPopper
             trigger="focus"
-            maxHeight={380}
             modelValue={show.value}
             contentClass={bem.e("content")}
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
@@ -159,7 +158,7 @@ export default defineComponent({
             onUpdate:modelValue={updateShow}
           >
             {{
-              default: () => (
+              trigger: () => (
                 <YInput modelValue={modelCop.value} readonly placeholder={placeholder}>
                   {{
                     suffix: () =>
@@ -171,9 +170,9 @@ export default defineComponent({
                   }}
                 </YInput>
               ),
-              content: renderContent,
+              default: renderContent,
             }}
-          </YTooltip>
+          </YPopper>
         </div>
       );
     };

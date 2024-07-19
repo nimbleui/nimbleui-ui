@@ -6,20 +6,12 @@
 </markdown>
 
 <template>
-  <YSlider
-    v-model="model"
-    show-tooltip
-    :step="20"
-    :min="20"
-    :max="200"
-    :marks="marks"
-    :format-tooltip="formatTooltip"
-  />
+  <YSlider v-model="model" show-tooltip :step="0.1" :min="0" :max="2" />
 </template>
 <script setup lang="ts">
 import { ref, reactive, h } from "vue";
 
-const model = ref([40, 80]);
+const model = ref(1);
 
 const marks = reactive({
   20: "20%",

@@ -10,7 +10,7 @@
     <div class="flex">
       <div class="flex-v">
         <YTooltip trigger="hover" placement="top-start">
-          <YButton :style="buttonStyle">TL</YButton>
+          <YButton :style="buttonStyle" @click="$router.push('/component/slider')">TL</YButton>
           <template #content>提示文本 TL</template>
         </YTooltip>
         <YTooltip trigger="hover" placement="top">

@@ -45,7 +45,7 @@
 
   @include e(list) {
     max-height: 240px;
-    padding: 0 4px;
+    padding: 0 5px;
 
     @include when(border) {
       border-left: 1px solid var(--y-time-picker-color-split);
@@ -72,7 +72,7 @@
   @include e(footer) {
     margin-top: 4px;
     border-top: 1px solid var(--y-time-picker-color-split);
-    padding: 10px 0 5px;
+    padding: 5px;
 
     @include m(moment) {
       color: var(--y-color-primary);
