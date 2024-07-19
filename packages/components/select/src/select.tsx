@@ -3,6 +3,7 @@ import { CSSProperties, ComponentPublicInstance, computed, defineComponent, onMo
 import { YTooltip } from "@nimble-ui/components/tooltip";
 import YFlex from "@nimble-ui/components/flex";
 import { YScrollbar } from "@nimble-ui/components/scrollbar";
+import YPopper from "@nimble-ui/components/popper";
 
 import selectProps, { SelectOptions } from "./types";
 import { useMouseInOut } from "@nimble-ui/hooks";
@@ -98,7 +99,7 @@ export default defineComponent({
       const { disabled, bordered, arrowColor, placeholder, inputClass, inputStyle, allowClear } = props;
       return (
         <div class={bem.b()}>
-          <YTooltip
+          <YPopper
             disabled={disabled}
             v-model={show.value}
             contentStyle={styles.value}
@@ -107,7 +108,7 @@ export default defineComponent({
             arrowStyle="--y-arrow-bg: var(--y-color-bg-elevated);"
           >
             {{
-              default: () => (
+              trigger: () => (
                 <YFlex
                   ref={titleRef}
                   class={[
@@ -135,9 +136,9 @@ export default defineComponent({
                   )}
                 </YFlex>
               ),
-              content: renderContent,
+              default: renderContent,
             }}
-          </YTooltip>
+          </YPopper>
         </div>
       );
     };

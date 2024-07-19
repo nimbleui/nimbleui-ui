@@ -63,11 +63,15 @@
     --y-select-bg-color: var(--y-color-bg-elevated);
     --y-select-item-active-bg-color: var(--y-color-primary-2);
     --y-select-item-hover-bg-color: var(--y-color-fill-tertiary);
+    --y-select-item-font-size: var(--y-font-size);
+    --y-select-item-font-color: var(--y-color-text);
 
     background-color: var(--y-select-bg-color);
     box-shadow: $box-shadow-secondary;
     color: var(--y-pop-confirm-text-color);
     border-radius: 8px;
+    box-sizing: border-box;
+    padding: 10px 0 10px 10px;
   }
 
   @include e(arrow) {
@@ -96,7 +100,10 @@
   }
 
   @include e(list) {
-    max-height: 240px; 
+    box-sizing: border-box;
+    max-height: 240px;
+    font-size: var(--y-select-item-font-size);
+    color: var(--y-select-item-font-color);
 
     @include m(item) {
       padding: 5px 12px; 
